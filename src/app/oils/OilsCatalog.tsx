@@ -1,8 +1,11 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { SlidersHorizontal, X, ChevronDown, ChevronUp, ArrowRight, Droplets, ExternalLink } from "lucide-react";
+import Image from "next/image";
+import { SlidersHorizontal, X, ChevronDown, ChevronUp, ArrowRight, Droplets, ShoppingCart, CheckCircle } from "lucide-react";
 import { oils, BRANDS, TYPES, VISCOSITIES, type OilType } from "@/data/oils";
+import { useCart } from "@/lib/cart";
+import { formatPrice } from "@/lib/utils";
 
 const TYPE_COLORS: Record<OilType, string> = {
   Синтетичне: "bg-blue-100 text-blue-700",
@@ -86,10 +89,26 @@ function Checkbox({
 }
 
 export default function OilsCatalog() {
+  const { addToCart, isInCart } = useCart();
+  const [addedId, setAddedId] = useState<number | null>(null);
   const [selectedBrands, setSelectedBrands] = useState<Set<string>>(new Set());
   const [selectedTypes, setSelectedTypes] = useState<Set<OilType>>(new Set());
   const [selectedViscosities, setSelectedViscosities] = useState<Set<string>>(new Set());
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  const handleAdd = (oil: typeof oils[0]) => {
+    addToCart({
+      productId: `oil-${oil.id}`,
+      quantity: 1,
+      price: oil.price,
+      name: `${oil.brand} ${oil.name}`,
+      image: oil.image,
+      sku: `OIL-${oil.id}`,
+      brand: oil.brand,
+    });
+    setAddedId(oil.id);
+    setTimeout(() => setAddedId(null), 1800);
+  };
 
   const toggleBrand = (b: string) =>
     setSelectedBrands((prev) => {
@@ -191,13 +210,11 @@ export default function OilsCatalog() {
 
       <div className="pt-2">
         <a
-          href="http://sprinter.org.ua/MotorOil.aspx"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="tel:+380672546266"
           className="flex items-center justify-center gap-2 w-full py-3 text-sm font-semibold text-orange-600 border border-orange-200 hover:bg-orange-50 rounded-xl transition-colors"
         >
-          Весь каталог (493+)
-          <ExternalLink className="w-3.5 h-3.5" />
+          Допомога з підбором
+          <ArrowRight className="w-3.5 h-3.5" />
         </a>
       </div>
     </div>
@@ -345,22 +362,45 @@ export default function OilsCatalog() {
                     key={product.id}
                     className="bg-white rounded-2xl border border-gray-100 hover:border-orange-200 shadow-sm hover:shadow-lg hover:shadow-orange-50 transition-all duration-300 hover:-translate-y-0.5 flex flex-col overflow-hidden group"
                   >
-                    {/* Card top band */}
-                    <div
-                      className={`h-1.5 ${BRAND_COLORS[product.brand] ?? "bg-gray-400"}`}
-                    />
+                    {/* Product image */}
+                    <div className="relative h-40 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                      <div className="absolute top-2 left-2">
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TYPE_COLORS[product.type]}`}>
+                          {product.type}
+                        </span>
+                      </div>
+                      {!product.inStock && (
+                        <div className="absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-800/80 text-gray-300">
+                          Під замовлення
+                        </div>
+                      )}
+                    </div>
 
-                    <div className="p-5 flex flex-col flex-1">
-                      {/* Brand + type */}
-                      <div className="flex items-center justify-between mb-3">
+                    {/* Card top brand bar */}
+                    <div className={`h-1 ${BRAND_COLORS[product.brand] ?? "bg-gray-400"}`} />
+
+                    <div className="p-4 flex flex-col flex-1">
+                      {/* Brand + viscosity */}
+                      <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
                           {product.brand}
                         </span>
-                        <span
-                          className={`text-xs font-semibold px-2 py-0.5 rounded-full ${TYPE_COLORS[product.type]}`}
-                        >
-                          {product.type}
-                        </span>
+                        <div className="flex gap-1">
+                          <span className="px-2 py-0.5 bg-orange-50 border border-orange-100 text-orange-700 text-xs font-bold rounded-lg">
+                            {product.viscosity}
+                          </span>
+                          <span className="px-2 py-0.5 bg-gray-50 border border-gray-100 text-gray-600 text-xs font-semibold rounded-lg">
+                            {product.volume} л
+                          </span>
+                        </div>
                       </div>
 
                       {/* Name */}
@@ -368,79 +408,78 @@ export default function OilsCatalog() {
                         {product.name}
                       </h3>
 
-                      {/* Viscosity + Volume chips */}
-                      <div className="flex flex-wrap gap-1.5 mb-4">
-                        <span className="px-2 py-0.5 bg-orange-50 border border-orange-100 text-orange-700 text-xs font-bold rounded-lg">
-                          {product.viscosity}
-                        </span>
-                        <span className="px-2 py-0.5 bg-gray-50 border border-gray-100 text-gray-600 text-xs font-semibold rounded-lg">
-                          {product.volume} л
-                        </span>
-                      </div>
-
                       {/* Specs */}
-                      <div className="space-y-1.5 mb-4 flex-1">
+                      <div className="space-y-1 mb-3 flex-1">
                         {product.acea.length > 0 && (
                           <div className="flex gap-1.5 text-xs">
                             <span className="text-gray-400 shrink-0 font-medium w-10">ACEA</span>
-                            <span className="text-gray-700 font-semibold">
-                              {product.acea.join(" | ")}
-                            </span>
+                            <span className="text-gray-700 font-semibold">{product.acea.join(" | ")}</span>
                           </div>
                         )}
                         {product.api.length > 0 && (
                           <div className="flex gap-1.5 text-xs">
                             <span className="text-gray-400 shrink-0 font-medium w-10">API</span>
-                            <span className="text-gray-700 font-semibold">
-                              {product.api.join(" | ")}
-                            </span>
+                            <span className="text-gray-700 font-semibold">{product.api.join(" | ")}</span>
                           </div>
                         )}
                         {product.oem.length > 0 && (
                           <div className="flex gap-1.5 text-xs">
                             <span className="text-gray-400 shrink-0 font-medium w-10">OEM</span>
                             <span className="text-gray-600 leading-relaxed">
-                              {product.oem.slice(0, 3).join(" · ")}
-                              {product.oem.length > 3 && (
-                                <span className="text-gray-400"> +{product.oem.length - 3}</span>
-                              )}
+                              {product.oem.slice(0, 2).join(" · ")}
+                              {product.oem.length > 2 && <span className="text-gray-400"> +{product.oem.length - 2}</span>}
                             </span>
                           </div>
                         )}
                       </div>
 
-                      {/* CTA */}
-                      <a
-                        href={product.detailUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-auto block w-full text-center py-2.5 px-4 bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold rounded-xl transition-colors"
-                      >
-                        Дізнатись ціну
-                      </a>
+                      {/* Price + Cart */}
+                      <div className="mt-auto pt-3 border-t border-gray-50 flex items-end justify-between">
+                        <div>
+                          <div className="text-lg font-black text-gray-900">{formatPrice(product.price)}</div>
+                          {product.priceOld && (
+                            <div className="text-xs text-gray-400 line-through">{formatPrice(product.priceOld)}</div>
+                          )}
+                          <div className={`text-xs font-semibold flex items-center gap-1 mt-0.5 ${product.inStock ? "text-green-600" : "text-amber-500"}`}>
+                            <CheckCircle className="w-3 h-3" />
+                            {product.inStock ? "В наявності" : "Під замовлення"}
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => handleAdd(product)}
+                          className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                            addedId === product.id
+                              ? "bg-green-500 text-white"
+                              : isInCart(`oil-${product.id}`)
+                              ? "bg-orange-100 text-orange-700 hover:bg-orange-200"
+                              : "bg-orange-500 text-white hover:bg-orange-600 hover:shadow-md hover:shadow-orange-500/20"
+                          }`}
+                        >
+                          <ShoppingCart className="w-3.5 h-3.5" />
+                          {addedId === product.id ? "Додано!" : isInCart(`oil-${product.id}`) ? "В кошику" : "Купити"}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
             )}
 
-            {/* See full catalog CTA */}
+            {/* Contact CTA */}
             {filtered.length > 0 && (
               <div className="mt-10 p-8 bg-[#0a0a0a] rounded-2xl text-center">
                 <div className="text-white font-bold text-lg mb-2">
-                  Показано {filtered.length} з 493+ позицій
+                  Потрібна допомога з підбором?
                 </div>
                 <p className="text-gray-400 text-sm mb-5">
-                  Повний каталог з фільтрами за допуском, в&apos;язкістю та обсягом — на сайті Спринтер
+                  Наш спеціаліст підбере оптимальну оливу за характеристиками вашого авто
                 </p>
                 <a
-                  href="http://sprinter.org.ua/MotorOil.aspx"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="tel:+380672546266"
                   className="inline-flex items-center gap-2 px-7 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/30 text-sm"
                 >
-                  Відкрити повний каталог
-                  <ExternalLink className="w-4 h-4" />
+                  Зателефонувати
+                  <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
             )}

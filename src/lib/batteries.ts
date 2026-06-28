@@ -12,7 +12,15 @@ export interface Battery {
   priceOld?: number;
   inStock: boolean;
   weight: number;
+  image: string;
 }
+
+const BAT_IMGS = {
+  agm: "https://images.unsplash.com/photo-1609528373702-0fd2ee1cb6e8?w=600&h=400&fit=crop&q=80",
+  wet: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&h=400&fit=crop&q=80",
+  gel: "https://images.unsplash.com/photo-1503736334260-d0a06d0c93a4?w=600&h=400&fit=crop&q=80",
+  efb: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop&q=80",
+} as const;
 
 export const BATTERY_BRANDS = ["Bosch", "Varta", "Optima", "Exide", "Banner", "Moll"] as const;
 export const BATTERY_TECHS: Battery["technology"][] = ["AGM", "EFB", "WET", "GEL"];
@@ -33,6 +41,7 @@ export const batteries: Battery[] = [
     priceOld: 8600,
     inStock: true,
     weight: 25.0,
+    image: BAT_IMGS.agm,
   },
   {
     id: 2,
@@ -47,6 +56,7 @@ export const batteries: Battery[] = [
     price: 4290,
     inStock: true,
     weight: 18.5,
+    image: BAT_IMGS.wet,
   },
   {
     id: 3,
@@ -61,6 +71,7 @@ export const batteries: Battery[] = [
     price: 3890,
     inStock: true,
     weight: 17.8,
+    image: BAT_IMGS.wet,
   },
   {
     id: 4,
@@ -76,6 +87,7 @@ export const batteries: Battery[] = [
     priceOld: 11500,
     inStock: true,
     weight: 30.2,
+    image: BAT_IMGS.agm,
   },
   {
     id: 5,
@@ -90,6 +102,7 @@ export const batteries: Battery[] = [
     price: 5600,
     inStock: true,
     weight: 20.4,
+    image: BAT_IMGS.efb,
   },
   {
     id: 6,
@@ -104,6 +117,7 @@ export const batteries: Battery[] = [
     price: 5100,
     inStock: false,
     weight: 22.0,
+    image: BAT_IMGS.wet,
   },
   {
     id: 7,
@@ -118,6 +132,7 @@ export const batteries: Battery[] = [
     price: 9800,
     inStock: true,
     weight: 15.4,
+    image: BAT_IMGS.gel,
   },
   {
     id: 8,
@@ -132,6 +147,7 @@ export const batteries: Battery[] = [
     price: 6400,
     inStock: true,
     weight: 27.5,
+    image: BAT_IMGS.wet,
   },
   {
     id: 9,
@@ -146,6 +162,7 @@ export const batteries: Battery[] = [
     price: 6200,
     inStock: true,
     weight: 21.3,
+    image: BAT_IMGS.agm,
   },
   {
     id: 10,
@@ -160,6 +177,7 @@ export const batteries: Battery[] = [
     price: 2890,
     inStock: true,
     weight: 15.0,
+    image: BAT_IMGS.wet,
   },
   {
     id: 11,
@@ -174,6 +192,7 @@ export const batteries: Battery[] = [
     price: 4800,
     inStock: true,
     weight: 24.1,
+    image: BAT_IMGS.efb,
   },
   {
     id: 12,
@@ -188,5 +207,6 @@ export const batteries: Battery[] = [
     price: 7200,
     inStock: false,
     weight: 24.0,
+    image: BAT_IMGS.gel,
   },
 ];

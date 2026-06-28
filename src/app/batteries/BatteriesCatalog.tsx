@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Image from "next/image";
 import { SlidersHorizontal, X, ChevronDown, ChevronUp, Zap, ShoppingCart, CheckCircle } from "lucide-react";
 import { batteries, BATTERY_BRANDS, BATTERY_TECHS, BATTERY_CAPACITIES } from "@/lib/batteries";
 import { useCart } from "@/lib/cart";
@@ -71,7 +72,7 @@ export default function BatteriesCatalog() {
       quantity: 1,
       price: b.price,
       name: `${b.brand} ${b.name}`,
-      image: "",
+      image: b.image,
       sku: `BAT-${b.id}`,
       brand: b.brand,
     });
@@ -243,9 +244,16 @@ export default function BatteriesCatalog() {
                       </span>
                     </div>
 
-                    {/* Icon */}
-                    <div className="h-24 flex items-center justify-center mb-4">
-                      <span className="text-6xl opacity-60">🔋</span>
+                    {/* Image */}
+                    <div className="relative h-36 -mx-6 -mt-0 mb-4 overflow-hidden rounded-t-none">
+                      <Image
+                        src={b.image}
+                        alt={`${b.brand} ${b.name}`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent" />
                     </div>
 
                     <h3 className="text-sm font-bold text-gray-900 mb-1 leading-snug">{b.brand} {b.name}</h3>

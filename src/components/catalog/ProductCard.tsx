@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { Heart, ShoppingCart, Zap } from "lucide-react";
 import { motion } from "framer-motion";
@@ -39,9 +40,19 @@ export default function ProductCard({ product: p, animate = true }: Props) {
   const card = (
     <div className="group bg-white rounded-3xl border border-gray-100 hover:border-orange-200 hover:shadow-xl hover:shadow-orange-50 transition-all duration-300 overflow-hidden flex flex-col h-full">
       {/* Image */}
-      <div className="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center overflow-hidden">
-        <div className="text-6xl opacity-40">🔧</div>
-        <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent" />
+      <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+        {p.images[0] ? (
+          <Image
+            src={p.images[0]}
+            alt={p.name}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-5xl opacity-20">🔧</div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
         <div className="absolute top-3 left-3 flex gap-1.5">
           {p.isNew && <Badge variant="blue">Новинка</Badge>}
           {p.isBestseller && (
@@ -57,7 +68,7 @@ export default function ProductCard({ product: p, animate = true }: Props) {
         </div>
         <button
           onClick={(e) => { e.preventDefault(); toggle(p.id); }}
-          className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur flex items-center justify-center hover:bg-white transition-colors"
+          className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur flex items-center justify-center hover:bg-white transition-colors shadow-sm"
         >
           <Heart className={`w-4 h-4 transition-colors ${isWishlisted(p.id) ? "fill-red-500 text-red-500" : "text-gray-400"}`} />
         </button>

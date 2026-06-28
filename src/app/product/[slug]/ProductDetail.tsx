@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ShoppingCart, Heart, Truck, Shield, ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import Image from "next/image";
+import { ShoppingCart, Heart, Truck, Shield, Zap, CheckCircle } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
 import { formatPrice } from "@/lib/utils";
@@ -51,8 +52,20 @@ export default function ProductDetail({ product: p, related }: Props) {
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-10 mb-14">
           {/* Image panel */}
           <div>
-            <div className="bg-white rounded-3xl border border-gray-200 aspect-square flex items-center justify-center relative overflow-hidden">
-              <div className="text-[120px] opacity-30">🔧</div>
+            <div className="bg-white rounded-3xl border border-gray-200 aspect-square relative overflow-hidden">
+              {p.images[0] ? (
+                <Image
+                  src={p.images[0]}
+                  alt={p.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center text-[120px] opacity-20">🔧</div>
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
               <div className="absolute top-4 left-4 flex gap-2">
                 {p.isNew && <Badge variant="blue">Новинка</Badge>}
                 {p.isBestseller && (

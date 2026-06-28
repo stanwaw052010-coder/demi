@@ -10,13 +10,27 @@ export interface OilProduct {
   acea: string[];
   api: string[];
   oem: string[];
-  detailUrl: string;
+  price: number;
+  priceOld?: number;
+  inStock: boolean;
+  image: string;
 }
 
 export const BRANDS = ["Aral", "Castrol", "Mobil 1", "Shell", "MOTUL", "KROON OIL", "Хадо"] as const;
 export const TYPES: OilType[] = ["Синтетичне", "Напівсинтетичне", "Мінеральне"];
 export const VISCOSITIES = ["0W20", "0W30", "0W40", "5W30", "5W40", "5W50", "10W40", "15W40"] as const;
 export const VOLUMES = [1, 2, 4, 5, 20, 60, 208] as const;
+
+// One curated Unsplash photo per brand
+const OIL_IMGS: Record<string, string> = {
+  Aral:      "https://images.unsplash.com/photo-1615906655593-ad0386982a0f?w=600&h=400&fit=crop&q=80",
+  Castrol:   "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&h=400&fit=crop&q=80",
+  "Mobil 1": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop&q=80",
+  Shell:     "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&h=400&fit=crop&q=80",
+  MOTUL:     "https://images.unsplash.com/photo-1503736334260-d0a06d0c93a4?w=600&h=400&fit=crop&q=80",
+  "KROON OIL": "https://images.unsplash.com/photo-1621963416951-d5f1e3a0c08e?w=600&h=400&fit=crop&q=80",
+  Хадо:      "https://images.unsplash.com/photo-1509914398892-963f53e6e2f1?w=600&h=400&fit=crop&q=80",
+};
 
 export const oils: OilProduct[] = [
   // ─── Aral ────────────────────────────────────────────────────────────────
@@ -30,7 +44,9 @@ export const oils: OilProduct[] = [
     acea: ["A1", "B1", "A5", "B5"],
     api: ["SL"],
     oem: ["Ford WSS-M2C 913-B", "ILSAC GF-2"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx/Details/482",
+    price: 680,
+    inStock: true,
+    image: OIL_IMGS.Aral,
   },
   {
     id: 486,
@@ -42,7 +58,10 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B3", "B4"],
     api: ["SL", "CF"],
     oem: ["MB 229.3", "MB 229.5", "VW 502.00", "VW 505.00", "BMW Longlife-01"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx/Details/486",
+    price: 2390,
+    priceOld: 2590,
+    inStock: true,
+    image: OIL_IMGS.Aral,
   },
   {
     id: 181,
@@ -53,8 +72,10 @@ export const oils: OilProduct[] = [
     type: "Синтетичне",
     acea: ["C3", "C2", "A3", "B3", "B4"],
     api: ["SN", "CF"],
-    oem: ["VW 502.00", "VW 505.00", "VW 503.01", "MB 229.31", "MB 229.51", "BMW Longlife-01", "Porsche A40"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx/Details/181",
+    oem: ["VW 502.00", "VW 505.00", "MB 229.31", "MB 229.51", "BMW Longlife-01"],
+    price: 620,
+    inStock: true,
+    image: OIL_IMGS.Aral,
   },
   {
     id: 177,
@@ -65,8 +86,11 @@ export const oils: OilProduct[] = [
     type: "Синтетичне",
     acea: ["C3", "C2", "A3", "B3", "B4"],
     api: ["SN", "CF"],
-    oem: ["VW 502.00", "VW 505.00", "VW 503.01", "MB 229.31", "MB 229.51", "BMW Longlife-04", "Porsche A40"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx/Details/177",
+    oem: ["VW 502.00", "VW 505.00", "MB 229.31", "MB 229.51", "BMW Longlife-04"],
+    price: 2280,
+    priceOld: 2490,
+    inStock: true,
+    image: OIL_IMGS.Aral,
   },
   {
     id: 178,
@@ -77,8 +101,11 @@ export const oils: OilProduct[] = [
     type: "Синтетичне",
     acea: ["C3", "C2", "A3", "B3", "B4"],
     api: ["SN", "CF"],
-    oem: ["VW 502.00", "VW 505.00", "MB 229.31", "MB 229.51", "BMW Longlife-04"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx/Details/178",
+    oem: ["VW 502.00", "VW 505.00", "MB 229.31", "MB 229.51"],
+    price: 9800,
+    priceOld: 10800,
+    inStock: true,
+    image: OIL_IMGS.Aral,
   },
   {
     id: 508,
@@ -90,7 +117,9 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B4"],
     api: ["SL", "CF"],
     oem: ["VW 501.01", "VW 505.00", "MB 229.1"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx/Details/508",
+    price: 390,
+    inStock: true,
+    image: OIL_IMGS.Aral,
   },
   {
     id: 509,
@@ -102,7 +131,9 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B4"],
     api: ["SL", "CF"],
     oem: ["VW 501.01", "VW 505.00", "MB 229.1"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 1390,
+    inStock: false,
+    image: OIL_IMGS.Aral,
   },
 
   // ─── Castrol ─────────────────────────────────────────────────────────────
@@ -116,7 +147,9 @@ export const oils: OilProduct[] = [
     acea: ["C3"],
     api: ["SN"],
     oem: ["BMW Longlife-04", "MB 229.31", "MB 229.51", "VW 504.00", "VW 507.00"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 720,
+    inStock: true,
+    image: OIL_IMGS.Castrol,
   },
   {
     id: 1002,
@@ -128,7 +161,10 @@ export const oils: OilProduct[] = [
     acea: ["C3"],
     api: ["SN"],
     oem: ["BMW Longlife-04", "MB 229.31", "MB 229.51", "VW 504.00", "VW 507.00"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 2590,
+    priceOld: 2890,
+    inStock: true,
+    image: OIL_IMGS.Castrol,
   },
   {
     id: 1003,
@@ -139,8 +175,10 @@ export const oils: OilProduct[] = [
     type: "Синтетичне",
     acea: ["A3", "B3", "B4"],
     api: ["SN", "CF"],
-    oem: ["MB 229.3", "MB 229.5", "VW 502.00", "VW 505.00", "Porsche A40"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    oem: ["MB 229.3", "MB 229.5", "VW 502.00", "VW 505.00"],
+    price: 680,
+    inStock: true,
+    image: OIL_IMGS.Castrol,
   },
   {
     id: 1004,
@@ -151,8 +189,11 @@ export const oils: OilProduct[] = [
     type: "Синтетичне",
     acea: ["A3", "B3", "B4"],
     api: ["SN", "CF"],
-    oem: ["MB 229.3", "MB 229.5", "VW 502.00", "VW 505.00", "Porsche A40"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    oem: ["MB 229.3", "MB 229.5", "VW 502.00", "VW 505.00"],
+    price: 2450,
+    priceOld: 2690,
+    inStock: true,
+    image: OIL_IMGS.Castrol,
   },
   {
     id: 1005,
@@ -164,7 +205,9 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B4", "C3"],
     api: ["SN", "CF"],
     oem: ["Renault RN0700", "Renault RN0710"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 2180,
+    inStock: true,
+    image: OIL_IMGS.Castrol,
   },
   {
     id: 1006,
@@ -176,7 +219,9 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B4"],
     api: ["SL", "CF"],
     oem: ["VW 501.01", "VW 505.00"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 1380,
+    inStock: true,
+    image: OIL_IMGS.Castrol,
   },
 
   // ─── Mobil 1 ─────────────────────────────────────────────────────────────
@@ -190,7 +235,9 @@ export const oils: OilProduct[] = [
     acea: ["C3"],
     api: ["SN"],
     oem: ["BMW Longlife-04", "MB 229.31", "MB 229.51", "VW 504.00", "VW 507.00"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 780,
+    inStock: true,
+    image: OIL_IMGS["Mobil 1"],
   },
   {
     id: 2002,
@@ -202,7 +249,10 @@ export const oils: OilProduct[] = [
     acea: ["C3"],
     api: ["SN"],
     oem: ["BMW Longlife-04", "MB 229.31", "MB 229.51", "VW 504.00", "VW 507.00"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 2780,
+    priceOld: 3200,
+    inStock: true,
+    image: OIL_IMGS["Mobil 1"],
   },
   {
     id: 2003,
@@ -213,8 +263,10 @@ export const oils: OilProduct[] = [
     type: "Синтетичне",
     acea: ["A3", "B3", "B4"],
     api: ["SN", "CF"],
-    oem: ["MB 229.5", "VW 502.00", "VW 505.00", "Porsche A40", "Renault RN0700"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    oem: ["MB 229.5", "VW 502.00", "VW 505.00", "Porsche A40"],
+    price: 850,
+    inStock: true,
+    image: OIL_IMGS["Mobil 1"],
   },
   {
     id: 2004,
@@ -226,7 +278,10 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B3", "B4"],
     api: ["SN", "CF"],
     oem: ["MB 229.3", "Porsche A40", "BMW Longlife-98"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 3200,
+    priceOld: 3600,
+    inStock: false,
+    image: OIL_IMGS["Mobil 1"],
   },
 
   // ─── Shell ───────────────────────────────────────────────────────────────
@@ -239,8 +294,11 @@ export const oils: OilProduct[] = [
     type: "Синтетичне",
     acea: ["A3", "B3", "B4"],
     api: ["SN", "CF"],
-    oem: ["MB 229.3", "MB 229.5", "VW 502.00", "VW 505.00", "Renault RN0700"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    oem: ["MB 229.3", "MB 229.5", "VW 502.00", "VW 505.00"],
+    price: 2680,
+    priceOld: 2980,
+    inStock: true,
+    image: OIL_IMGS.Shell,
   },
   {
     id: 3002,
@@ -252,7 +310,9 @@ export const oils: OilProduct[] = [
     acea: ["C3"],
     api: ["SN"],
     oem: ["BMW Longlife-04", "MB 229.51", "VW 504.00", "VW 507.00"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 2780,
+    inStock: true,
+    image: OIL_IMGS.Shell,
   },
   {
     id: 3003,
@@ -264,7 +324,9 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B4"],
     api: ["SL", "CF"],
     oem: ["VW 501.01", "VW 505.00", "MB 229.1"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 1480,
+    inStock: true,
+    image: OIL_IMGS.Shell,
   },
   {
     id: 3004,
@@ -276,7 +338,9 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B4"],
     api: ["SL", "CF"],
     oem: ["VW 501.01", "VW 505.00", "MB 229.1"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 420,
+    inStock: true,
+    image: OIL_IMGS.Shell,
   },
 
   // ─── MOTUL ───────────────────────────────────────────────────────────────
@@ -289,8 +353,11 @@ export const oils: OilProduct[] = [
     type: "Синтетичне",
     acea: ["A3", "B4"],
     api: ["SN", "CF"],
-    oem: ["MB 229.3", "VW 502.00", "VW 505.00", "Renault RN0700", "Porsche A40"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    oem: ["MB 229.3", "VW 502.00", "VW 505.00", "Renault RN0700"],
+    price: 3200,
+    priceOld: 3600,
+    inStock: true,
+    image: OIL_IMGS.MOTUL,
   },
   {
     id: 4002,
@@ -301,8 +368,10 @@ export const oils: OilProduct[] = [
     type: "Синтетичне",
     acea: ["A3", "B4"],
     api: ["SN", "CF"],
-    oem: ["MB 229.3", "VW 502.00", "VW 505.00", "Renault RN0700"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    oem: ["MB 229.3", "VW 502.00", "VW 505.00"],
+    price: 920,
+    inStock: true,
+    image: OIL_IMGS.MOTUL,
   },
   {
     id: 4003,
@@ -314,7 +383,9 @@ export const oils: OilProduct[] = [
     acea: ["A5", "B5"],
     api: ["SN"],
     oem: ["Ford WSS-M2C 913-C", "Renault RN0700"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 680,
+    inStock: true,
+    image: OIL_IMGS.MOTUL,
   },
   {
     id: 4004,
@@ -326,7 +397,10 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B4"],
     api: ["SN", "CF"],
     oem: [],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 2800,
+    priceOld: 3100,
+    inStock: true,
+    image: OIL_IMGS.MOTUL,
   },
 
   // ─── KROON OIL ───────────────────────────────────────────────────────────
@@ -340,7 +414,9 @@ export const oils: OilProduct[] = [
     acea: ["C2", "C3"],
     api: ["SN"],
     oem: ["BMW Longlife-04", "MB 229.51", "VW 504.00", "VW 507.00"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 580,
+    inStock: true,
+    image: OIL_IMGS["KROON OIL"],
   },
   {
     id: 5002,
@@ -352,7 +428,9 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B4"],
     api: ["SN", "CF"],
     oem: ["MB 229.3", "VW 502.00", "VW 505.00"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 2080,
+    inStock: true,
+    image: OIL_IMGS["KROON OIL"],
   },
   {
     id: 5003,
@@ -364,7 +442,9 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B3", "B4", "E3", "E7"],
     api: ["CI-4", "SL"],
     oem: ["MB 228.3", "VW 501.01", "VW 505.00", "MAN 271"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 1480,
+    inStock: true,
+    image: OIL_IMGS["KROON OIL"],
   },
 
   // ─── Хадо ────────────────────────────────────────────────────────────────
@@ -378,7 +458,9 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B4"],
     api: ["SN", "CF"],
     oem: ["MB 229.3", "VW 502.00", "VW 505.00"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 580,
+    inStock: true,
+    image: OIL_IMGS.Хадо,
   },
   {
     id: 6002,
@@ -390,7 +472,9 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B4"],
     api: ["SL", "CF"],
     oem: ["VW 501.01", "VW 505.00", "MB 229.1"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 380,
+    inStock: true,
+    image: OIL_IMGS.Хадо,
   },
   {
     id: 6003,
@@ -402,6 +486,9 @@ export const oils: OilProduct[] = [
     acea: ["A3", "B4"],
     api: ["SL", "CF"],
     oem: ["VW 501.01", "VW 505.00", "MB 229.1"],
-    detailUrl: "http://sprinter.org.ua/MotorOil.aspx",
+    price: 1280,
+    priceOld: 1490,
+    inStock: true,
+    image: OIL_IMGS.Хадо,
   },
 ];
