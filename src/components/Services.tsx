@@ -53,7 +53,7 @@ const categories = [
     emoji: "🛢️",
     title: "Моторні оливи",
     description: "Підбір масла за маркою авто, допуском і в'язкістю",
-    href: "http://sprinter.org.ua/MotorOil.aspx",
+    href: "/oils",
     accent: "from-stone-500/10 to-stone-600/5",
     badge: "Хіт",
   },
@@ -91,8 +91,7 @@ export default function Services() {
             <a
               key={cat.title}
               href={cat.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(cat.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="group relative flex flex-col p-6 bg-white rounded-2xl border border-gray-100 hover:border-orange-200 shadow-sm hover:shadow-xl hover:shadow-orange-50 transition-all duration-300 hover:-translate-y-1 animate-on-scroll"
               style={{ animationDelay: `${i * 60}ms` }}
             >

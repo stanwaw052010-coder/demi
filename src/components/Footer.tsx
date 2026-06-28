@@ -12,7 +12,7 @@ const nav = [
 
 const catalog = [
   { label: "Кузовні запчастини", href: "http://sprinter.org.ua/CarBodyCatalog.aspx" },
-  { label: "Моторна олива", href: "http://sprinter.org.ua/MotorOil.aspx" },
+  { label: "Моторна олива", href: "/oils" },
   { label: "Акумулятори", href: "http://sprinter.org.ua/CarRechargeableBattery.aspx" },
   { label: "Пошук за артикулом", href: "http://sprinter.org.ua/price" },
   { label: "Доставка та оплата", href: "http://sprinter.org.ua/DeliveryPayment.aspx" },
@@ -108,8 +108,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     className="text-sm hover:text-orange-400 transition-colors duration-200"
                   >
                     {link.label}
