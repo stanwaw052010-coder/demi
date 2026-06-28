@@ -23,8 +23,14 @@ export default function ContactPage() {
               {[
                 {
                   icon: Phone,
-                  label: "Телефон",
-                  content: <a href="tel:+380672546266" className="text-orange-500 hover:text-orange-600 font-semibold">+38 (067) 254-62-66</a>,
+                  label: "Телефони",
+                  content: (
+                    <div className="space-y-1">
+                      <a href="tel:+380672546266" className="block text-orange-500 hover:text-orange-600 font-semibold">+38 (067) 254-62-66</a>
+                      <a href="tel:+380991129526" className="block text-orange-500 hover:text-orange-600 font-semibold">+38 (099) 112-95-26</a>
+                      <a href="tel:+380962770540" className="block text-orange-500 hover:text-orange-600 font-semibold">+38 (096) 277-05-40</a>
+                    </div>
+                  ),
                 },
                 {
                   icon: Mail,

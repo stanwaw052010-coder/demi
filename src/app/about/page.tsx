@@ -50,7 +50,11 @@ export default function AboutPage() {
             <h2 className="text-xl font-bold text-gray-900 mb-5">Наша адреса</h2>
             <div className="space-y-3 text-sm text-gray-600">
               <p><strong className="text-gray-900">Адреса:</strong> м. Харків, Просп. Героїв Харкова, 210</p>
-              <p><strong className="text-gray-900">Телефон:</strong> <a href="tel:+380672546266" className="text-orange-500 hover:text-orange-600">+38 (067) 254-62-66</a></p>
+              <p><strong className="text-gray-900">Телефони:</strong>{" "}
+                <a href="tel:+380672546266" className="text-orange-500 hover:text-orange-600">+38 (067) 254-62-66</a>{" · "}
+                <a href="tel:+380991129526" className="text-orange-500 hover:text-orange-600">+38 (099) 112-95-26</a>{" · "}
+                <a href="tel:+380962770540" className="text-orange-500 hover:text-orange-600">+38 (096) 277-05-40</a>
+              </p>
               <p><strong className="text-gray-900">Email:</strong> <a href="mailto:info@sprinter.org.ua" className="text-orange-500 hover:text-orange-600">info@sprinter.org.ua</a></p>
               <p><strong className="text-gray-900">Графік роботи:</strong> Пн–Сб: 9:00–18:00</p>
             </div>

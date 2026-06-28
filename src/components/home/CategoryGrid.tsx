@@ -28,10 +28,15 @@ export default function CategoryGrid() {
           </motion.div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-            {categories.map((cat, i) => (
+            {categories.map((cat, i) => {
+              const href =
+                cat.slug === "oils-fluids"
+                  ? "/oils"
+                  : `/catalog/mercedes-sprinter/${cat.slug}`;
+              return (
               <motion.div key={cat.slug} variants={fadeUp} style={{ animationDelay: `${i * 40}ms` }}>
                 <Link
-                  href={`/catalog/mercedes-sprinter/${cat.slug}`}
+                  href={href}
                   className="group flex flex-col items-center p-5 bg-white rounded-2xl border border-gray-100 hover:border-orange-200 hover:shadow-lg hover:shadow-orange-50 transition-all duration-300 hover:-translate-y-0.5 text-center"
                 >
                   <div className="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center mb-3 text-2xl group-hover:bg-orange-100 transition-colors group-hover:scale-110 transform duration-300">
@@ -43,7 +48,8 @@ export default function CategoryGrid() {
                   <span className="text-xs text-gray-400">{cat.count?.toLocaleString()} позицій</span>
                 </Link>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </motion.div>
       </div>

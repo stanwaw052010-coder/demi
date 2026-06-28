@@ -12,10 +12,14 @@ const links = {
     { label: "Повернення", href: "/returns" },
     { label: "Блог", href: "/blog" },
   ],
-  categories: categories.slice(0, 6).map((c) => ({
-    label: c.name,
-    href: `/catalog/mercedes-sprinter/${c.slug}`,
-  })),
+  categories: [
+    ...categories.slice(0, 4).map((c) => ({
+      label: c.name,
+      href: `/catalog/mercedes-sprinter/${c.slug}`,
+    })),
+    { label: "Моторні оливи", href: "/oils" },
+    { label: "Акумулятори", href: "/batteries" },
+  ],
 };
 
 export default function Footer() {
@@ -41,10 +45,14 @@ export default function Footer() {
               Спеціалізований інтернет-магазин запчастин для Mercedes Sprinter, Vito, VW Crafter та LT. Понад 8 000 позицій в наявності.
             </p>
             <div className="space-y-3">
-              <a href="tel:+380672546266" className="flex items-center gap-2.5 text-sm hover:text-orange-400 transition-colors group">
-                <Phone className="w-4 h-4 text-orange-500 shrink-0" />
-                +38 (067) 254-62-66
-              </a>
+              <div className="flex items-start gap-2.5 text-sm">
+                <Phone className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <a href="tel:+380672546266" className="block hover:text-orange-400 transition-colors">+38 (067) 254-62-66</a>
+                  <a href="tel:+380991129526" className="block hover:text-orange-400 transition-colors">+38 (099) 112-95-26</a>
+                  <a href="tel:+380962770540" className="block hover:text-orange-400 transition-colors">+38 (096) 277-05-40</a>
+                </div>
+              </div>
               <div className="flex items-start gap-2.5 text-sm">
                 <MapPin className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
                 <span>м. Харків, Просп. Героїв Харкова, 210</span>
