@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import {
   Search, ShoppingCart, Heart, User, Menu, X, Phone, ChevronDown, Truck,
 } from "lucide-react";
@@ -213,7 +214,13 @@ export default function Header() {
                       className="flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors"
                       onClick={() => { setSearchOpen(false); setSearchQuery(""); }}
                     >
-                      <div className="w-10 h-10 rounded-xl bg-gray-100 shrink-0 flex items-center justify-center text-sm">🔧</div>
+                      <div className="w-10 h-10 rounded-xl bg-gray-100 shrink-0 overflow-hidden relative">
+                          {p.images[0] ? (
+                            <Image src={p.images[0]} alt={p.name} fill className="object-cover" sizes="40px" />
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center text-sm">🔧</div>
+                          )}
+                        </div>
                       <div className="min-w-0">
                         <div className="text-sm font-semibold text-gray-900 truncate">{p.name}</div>
                         <div className="text-xs text-gray-400">{p.brand} · {p.sku}</div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Truck, Shield, Phone } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/utils";
@@ -60,8 +61,12 @@ export default function CartView() {
         <div className="lg:col-span-2 space-y-4">
           {state.items.map((item) => (
             <div key={item.productId} className="bg-white rounded-2xl border border-gray-200 p-5 flex gap-4">
-              <div className="w-20 h-20 rounded-xl bg-gray-50 flex items-center justify-center text-3xl shrink-0">
-                🔧
+              <div className="w-20 h-20 rounded-xl bg-gray-50 overflow-hidden relative shrink-0">
+                {item.image ? (
+                  <Image src={item.image} alt={item.name} fill className="object-cover" sizes="80px" />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center text-3xl">🔧</div>
+                )}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-xs text-gray-400 mb-0.5">{item.brand} · {item.sku}</div>

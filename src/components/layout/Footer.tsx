@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Phone, MapPin, Clock, Mail, Send } from "lucide-react";
+import { Phone, MapPin, Clock, Mail } from "lucide-react";
 import { vehicles } from "@/lib/vehicles";
 import { categories } from "@/lib/categories";
+import { NewsletterForm } from "./NewsletterForm";
 
 const links = {
   catalog: vehicles.map((v) => ({ label: v.name, href: `/catalog/${v.slug}` })),
@@ -108,21 +109,7 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-            {/* Newsletter */}
-            <div className="bg-white/5 rounded-xl p-4">
-              <div className="text-white text-xs font-semibold mb-1">Новини та акції</div>
-              <p className="text-xs text-gray-500 mb-3">Підпишіться на знижки</p>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="flex-1 min-w-0 px-3 py-2 bg-white/8 border border-white/10 rounded-lg text-xs text-gray-300 placeholder-gray-600 outline-none focus:border-orange-500/50"
-                />
-                <button className="p-2 bg-orange-500 hover:bg-orange-600 rounded-lg transition-colors">
-                  <Send className="w-3.5 h-3.5 text-white" />
-                </button>
-              </div>
-            </div>
+            <NewsletterForm />
           </div>
         </div>
       </div>

@@ -55,22 +55,24 @@ export default function BlogPage() {
 
           <div className="space-y-5">
             {posts.map((post) => (
-              <article key={post.slug} className="bg-white rounded-3xl border border-gray-200 p-7 hover:border-orange-200 hover:shadow-md hover:shadow-orange-50 transition-all duration-200 group">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-xs px-2.5 py-1 bg-orange-50 text-orange-600 rounded-full font-semibold">
-                    {post.category}
-                  </span>
-                  <span className="text-xs text-gray-400">{post.date}</span>
-                  <span className="text-xs text-gray-400">· {post.readTime} читання</span>
-                </div>
-                <h2 className="text-lg font-bold text-gray-900 group-hover:text-orange-600 transition-colors mb-2 leading-snug">
-                  {post.title}
-                </h2>
-                <p className="text-sm text-gray-500 leading-relaxed mb-4">{post.excerpt}</p>
-                <div className="flex items-center gap-1 text-orange-500 text-sm font-semibold group-hover:gap-2 transition-all">
-                  Читати далі <ArrowRight className="w-4 h-4" />
-                </div>
-              </article>
+              <Link key={post.slug} href={`/blog/${post.slug}`}>
+                <article className="bg-white rounded-3xl border border-gray-200 p-7 hover:border-orange-200 hover:shadow-md hover:shadow-orange-50 transition-all duration-200 group cursor-pointer">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-xs px-2.5 py-1 bg-orange-50 text-orange-600 rounded-full font-semibold">
+                      {post.category}
+                    </span>
+                    <span className="text-xs text-gray-400">{post.date}</span>
+                    <span className="text-xs text-gray-400">· {post.readTime} читання</span>
+                  </div>
+                  <h2 className="text-lg font-bold text-gray-900 group-hover:text-orange-600 transition-colors mb-2 leading-snug">
+                    {post.title}
+                  </h2>
+                  <p className="text-sm text-gray-500 leading-relaxed mb-4">{post.excerpt}</p>
+                  <div className="flex items-center gap-1 text-orange-500 text-sm font-semibold group-hover:gap-2 transition-all">
+                    Читати далі <ArrowRight className="w-4 h-4" />
+                  </div>
+                </article>
+              </Link>
             ))}
           </div>
         </div>
