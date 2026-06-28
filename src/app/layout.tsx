@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { CartProvider } from "@/lib/cart";
+import { WishlistProvider } from "@/lib/wishlist";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -9,15 +11,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Спринтер — Автозапчастини в Харкові | Пошук за кодом",
+  title: "Спринтер — Запчастини для Mercedes Sprinter, Vito, VW Crafter | Харків",
   description:
-    "Інтернет-магазин автозапчастин у Харкові. Понад 100 000 позицій у наявності. Пошук за артикулом, швидка доставка по Україні. Телефон: +38 (067) 254-62-66",
+    "Інтернет-магазин запчастин для Mercedes Sprinter, Vito, Volkswagen Crafter та LT. Понад 8 000 позицій в наявності. Доставка по Україні 1–2 дні. Харків: Просп. Героїв Харкова, 210.",
   keywords:
-    "автозапчастини Харків, запчастини для іномарок, купити автозапчастини, пошук за кодом, кузовні запчастини, моторна олива, акумулятори",
+    "запчастини Mercedes Sprinter, запчастини Vito, запчастини VW Crafter, запчастини для мерседес спрінтер, автозапчастини Харків, запчастини для комерційного транспорту",
   openGraph: {
-    title: "Спринтер — Автозапчастини в Харкові",
+    title: "Спринтер — Запчастини для комерційного транспорту",
     description:
-      "Понад 100 000 позицій автозапчастин. Швидка доставка по Україні.",
+      "Понад 8 000 позицій запчастин для Mercedes та VW. Швидка доставка по Україні.",
     type: "website",
     locale: "uk_UA",
   },
@@ -31,7 +33,11 @@ export default function RootLayout({
   return (
     <html lang="uk" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-gray-900">
-        {children}
+        <CartProvider>
+          <WishlistProvider>
+            {children}
+          </WishlistProvider>
+        </CartProvider>
       </body>
     </html>
   );

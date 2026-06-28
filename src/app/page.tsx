@@ -1,27 +1,29 @@
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Stats from "@/components/Stats";
-import Services from "@/components/Services";
-import WhyUs from "@/components/WhyUs";
-import HowItWorks from "@/components/HowItWorks";
-import Testimonials from "@/components/Testimonials";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import ScrollObserver from "@/components/ScrollObserver";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import Hero from "@/components/home/Hero";
+import VehicleSelector from "@/components/home/VehicleSelector";
+import CategoryGrid from "@/components/home/CategoryGrid";
+import FeaturedProducts from "@/components/home/FeaturedProducts";
+import WhyUs from "@/components/home/WhyUs";
+import HowItWorks from "@/components/home/HowItWorks";
+import Testimonials from "@/components/home/Testimonials";
+import FAQ from "@/components/home/FAQ";
+import ContactBanner from "@/components/home/ContactBanner";
 
 export default function Home() {
   return (
     <>
-      <ScrollObserver />
       <Header />
       <main className="flex flex-col">
         <Hero />
-        <Stats />
-        <Services />
+        <VehicleSelector />
+        <CategoryGrid />
+        <FeaturedProducts />
         <WhyUs />
         <HowItWorks />
         <Testimonials />
-        <Contact />
+        <FAQ />
+        <ContactBanner />
       </main>
       <Footer />
     </>
