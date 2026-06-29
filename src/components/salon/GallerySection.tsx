@@ -2,124 +2,243 @@
 
 import { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import { X } from 'lucide-react';
 import { InstagramIcon } from './Icons';
 
-// Real salon photos — place files in /public/images/salon/
-// Names: brows.jpg, interior.jpg, black-hair.jpg, wavy-hair.jpg, ponytail.jpg
+// Each card has a layered CSS gradient that creates a rich, photo-like feel
 const galleryItems = [
   {
-    src: '/images/salon/brows.jpg',
+    id: 1,
     label: 'Ламінування брів',
     category: 'Брови',
-    fallback: 'from-[#B5C5D8]/40 via-[#9EB0C5]/25 to-[#8A9EB5]/15',
     tall: true,
+    style: {
+      background: 'linear-gradient(160deg, #2C2018 0%, #3D2E1A 30%, #1A140D 65%, #0D0A06 100%)',
+      overlay: 'radial-gradient(ellipse 70% 55% at 55% 40%, rgba(180,145,95,0.35) 0%, transparent 65%)',
+      accent: '#B4915F',
+    },
+    detail: 'Ідеальна форма та колір',
   },
   {
-    src: '/images/salon/interior.jpg',
-    label: 'Наш салон',
-    category: "Інтер'єр",
-    fallback: 'from-[#3D3D45]/70 via-[#4A4460]/50 to-[#5C5070]/30',
-    tall: false,
-  },
-  {
-    src: '/images/salon/black-hair.jpg',
-    label: 'Стрижка + укладка',
+    id: 2,
+    label: 'Стрижка та укладка',
     category: 'Волосся',
-    fallback: 'from-[#1A1A1A]/80 via-[#2D2D2D]/60 to-[#3D3020]/30',
     tall: false,
+    style: {
+      background: 'linear-gradient(145deg, #0D0D0D 0%, #1A1515 40%, #120F0A 100%)',
+      overlay: 'radial-gradient(ellipse 80% 60% at 40% 60%, rgba(201,169,110,0.18) 0%, transparent 70%)',
+      accent: '#C9A96E',
+    },
+    detail: 'Від стрижки до укладки',
   },
   {
-    src: '/images/salon/wavy-hair.jpg',
-    label: 'Локони та укладка',
-    category: 'Волосся',
-    fallback: 'from-[#C9A96E]/30 via-[#B8956A]/20 to-[#8B6B45]/15',
-    tall: true,
+    id: 3,
+    label: 'Гель-лак nail-art',
+    category: 'Манікюр',
+    tall: false,
+    style: {
+      background: 'linear-gradient(135deg, #1C0F14 0%, #2D1520 45%, #1A0D12 100%)',
+      overlay: 'radial-gradient(ellipse 65% 65% at 60% 45%, rgba(212,165,165,0.3) 0%, transparent 60%)',
+      accent: '#D4A5A5',
+    },
+    detail: 'Акуратно та стильно',
   },
   {
-    src: '/images/salon/ponytail.jpg',
+    id: 4,
     label: 'Вечірня зачіска',
     category: 'Волосся',
-    fallback: 'from-[#1C1A2E]/70 via-[#2A2840]/50 to-[#3A3050]/30',
-    tall: false,
+    tall: true,
+    style: {
+      background: 'linear-gradient(155deg, #12101A 0%, #1E1828 50%, #0D0B14 100%)',
+      overlay:
+        'radial-gradient(ellipse 70% 50% at 50% 35%, rgba(180,160,220,0.22) 0%, transparent 60%),' +
+        'radial-gradient(ellipse 50% 70% at 30% 70%, rgba(201,169,110,0.15) 0%, transparent 55%)',
+      accent: '#B4A0DC',
+    },
+    detail: 'Елегантність у кожній деталі',
   },
   {
-    src: '/images/salon/manicure.jpg',
-    label: 'Гель-лак / nail-art',
-    category: 'Манікюр',
-    fallback: 'from-[#D4A5A5]/40 via-[#E0B8B8]/25 to-[#F0D0D0]/12',
+    id: 5,
+    label: 'Фарбування волосся',
+    category: 'Волосся',
     tall: false,
+    style: {
+      background: 'linear-gradient(140deg, #1A0E08 0%, #2E1A0A 40%, #140C06 100%)',
+      overlay: 'radial-gradient(ellipse 75% 60% at 45% 50%, rgba(201,169,110,0.28) 0%, transparent 65%)',
+      accent: '#C9A96E',
+    },
+    detail: 'Відтінки, які підкреслять вас',
+  },
+  {
+    id: 6,
+    label: 'Весільний образ',
+    category: 'Макіяж',
+    tall: false,
+    style: {
+      background: 'linear-gradient(150deg, #1A1510 0%, #28201A 35%, #120E0A 100%)',
+      overlay:
+        'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(240,216,150,0.22) 0%, transparent 60%),' +
+        'radial-gradient(ellipse 40% 40% at 75% 70%, rgba(212,165,165,0.18) 0%, transparent 50%)',
+      accent: '#F0D896',
+    },
+    detail: 'Незабутній образ на ваш день',
+  },
+  {
+    id: 7,
+    label: 'Класичний манікюр',
+    category: 'Манікюр',
+    tall: true,
+    style: {
+      background: 'linear-gradient(145deg, #180A12 0%, #2A1020 45%, #100810 100%)',
+      overlay: 'radial-gradient(ellipse 70% 55% at 55% 45%, rgba(220,140,160,0.28) 0%, transparent 65%)',
+      accent: '#DC8CA0',
+    },
+    detail: 'Доглянуті нігті щодня',
+  },
+  {
+    id: 8,
+    label: 'Корекція брів',
+    category: 'Брови',
+    tall: false,
+    style: {
+      background: 'linear-gradient(160deg, #0E1018 0%, #161A28 45%, #0A0D16 100%)',
+      overlay: 'radial-gradient(ellipse 65% 60% at 45% 45%, rgba(160,180,220,0.25) 0%, transparent 60%)',
+      accent: '#A0B4DC',
+    },
+    detail: 'Чіткі лінії та форма',
+  },
+  {
+    id: 9,
+    label: 'Денний макіяж',
+    category: 'Макіяж',
+    tall: false,
+    style: {
+      background: 'linear-gradient(140deg, #18140C 0%, #2A2014 45%, #140F0A 100%)',
+      overlay: 'radial-gradient(ellipse 75% 65% at 50% 45%, rgba(230,195,140,0.22) 0%, transparent 65%)',
+      accent: '#E6C38C',
+    },
+    detail: 'Природна краса щодня',
   },
 ];
 
-const categories = ['Всі', 'Волосся', 'Брови', 'Манікюр', "Інтер'єр"];
+const categories = ['Всі', 'Волосся', 'Манікюр', 'Брови', 'Макіяж'];
 
-function GalleryCard({
-  item,
-  onClick,
-}: {
-  item: typeof galleryItems[0];
-  onClick: () => void;
-}) {
-  const [imgError, setImgError] = useState(false);
+// Dot pattern SVG used as texture overlay
+const DOT_PATTERN =
+  "url(\"data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='1' fill='rgba(255,255,255,0.04)'/%3E%3C/svg%3E\")";
+
+type GalleryItem = typeof galleryItems[0];
+
+function GalleryCard({ item, onClick }: { item: GalleryItem; onClick: () => void }) {
+  const [hovered, setHovered] = useState(false);
 
   return (
     <div
       onClick={onClick}
-      className={`relative group cursor-pointer rounded-xl overflow-hidden ${
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className={`relative group cursor-pointer rounded-xl overflow-hidden break-inside-avoid mb-4 ${
         item.tall ? 'aspect-[3/4]' : 'aspect-square'
-      } break-inside-avoid mb-4`}
+      }`}
+      style={{ background: item.style.background }}
     >
-      {!imgError ? (
-        <Image
-          src={item.src}
-          alt={item.label}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-          onError={() => setImgError(true)}
-          sizes="(max-width: 768px) 50vw, 33vw"
-        />
-      ) : (
-        <div className={`absolute inset-0 bg-gradient-to-br ${item.fallback}`}>
-          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10" />
-        </div>
-      )}
+      {/* Gradient overlay layer */}
+      <div className="absolute inset-0" style={{ background: item.style.overlay }} />
 
-      {/* Always-on subtle bottom gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0D]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+      {/* Dot texture */}
+      <div className="absolute inset-0 opacity-60" style={{ backgroundImage: DOT_PATTERN }} />
 
-      {/* Hover overlay center */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-400">
-        <div className="w-12 h-12 rounded-full border-2 border-white/70 flex items-center justify-center backdrop-blur-sm bg-white/10">
+      {/* Decorative circle element */}
+      <motion.div
+        animate={{ scale: hovered ? 1.1 : 1, opacity: hovered ? 0.55 : 0.3 }}
+        transition={{ duration: 0.5 }}
+        className="absolute rounded-full border pointer-events-none"
+        style={{
+          borderColor: item.style.accent,
+          width: item.tall ? 160 : 120,
+          height: item.tall ? 160 : 120,
+          top: item.tall ? '18%' : '15%',
+          right: '12%',
+        }}
+      />
+      <motion.div
+        animate={{ scale: hovered ? 1.08 : 1, opacity: hovered ? 0.3 : 0.15 }}
+        transition={{ duration: 0.5, delay: 0.05 }}
+        className="absolute rounded-full border pointer-events-none"
+        style={{
+          borderColor: item.style.accent,
+          width: item.tall ? 220 : 160,
+          height: item.tall ? 220 : 160,
+          top: item.tall ? '12%' : '9%',
+          right: '6%',
+        }}
+      />
+
+      {/* Center icon / monogram */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <motion.div
+          animate={{ opacity: hovered ? 0 : 1, scale: hovered ? 0.9 : 1 }}
+          transition={{ duration: 0.35 }}
+          className="font-display italic select-none"
+          style={{
+            fontSize: item.tall ? '6rem' : '4.5rem',
+            color: item.style.accent,
+            opacity: 0.2,
+            lineHeight: 1,
+          }}
+        >
+          {item.label[0]}
+        </motion.div>
+      </div>
+
+      {/* Hover: "view" icon */}
+      <motion.div
+        animate={{ opacity: hovered ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        className="absolute inset-0 flex items-center justify-center"
+      >
+        <div
+          className="w-12 h-12 rounded-full border-2 flex items-center justify-center backdrop-blur-sm"
+          style={{ borderColor: `${item.style.accent}90`, background: `${item.style.accent}18` }}
+        >
           <span className="text-white text-xl leading-none">+</span>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Label */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-1 group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-[#0D0D0D]/80 to-transparent">
+      {/* Bottom label — always visible, rises on hover */}
+      <motion.div
+        animate={{ y: hovered ? 0 : 4 }}
+        transition={{ duration: 0.3 }}
+        className="absolute bottom-0 left-0 right-0 p-4"
+        style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.75), transparent)' }}
+      >
         <p className="text-white text-sm font-medium">{item.label}</p>
-        <p className="text-[#C9A96E] text-xs mt-0.5">{item.category}</p>
-      </div>
+        <motion.p
+          animate={{ opacity: hovered ? 1 : 0.6 }}
+          transition={{ duration: 0.3 }}
+          className="text-xs mt-0.5"
+          style={{ color: item.style.accent }}
+        >
+          {item.category}
+        </motion.p>
+      </motion.div>
     </div>
   );
 }
 
 export default function GallerySection() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.1 });
-  const [activeCategory, setActiveCategory] = useState('Всі');
-  const [lightbox, setLightbox] = useState<typeof galleryItems[0] | null>(null);
-  const [lightboxImgError, setLightboxImgError] = useState(false);
+  const isInView = useInView(ref, { once: true, amount: 0.08 });
+  const [active, setActive] = useState('Всі');
+  const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
 
   const filtered =
-    activeCategory === 'Всі'
-      ? galleryItems
-      : galleryItems.filter((i) => i.category === activeCategory);
+    active === 'Всі' ? galleryItems : galleryItems.filter((i) => i.category === active);
 
   return (
     <section id="gallery" className="py-28 bg-[#0D0D0D]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+
         {/* Header */}
         <div ref={ref} className="text-center mb-16">
           <motion.div
@@ -146,13 +265,13 @@ export default function GallerySection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-white/40 text-lg max-w-md mx-auto"
           >
-            Кожна робота — це мистецтво, яке підкреслює вашу унікальність
+            Кожна робота — це мистецтво. Більше фото в нашому Instagram
           </motion.p>
         </div>
 
-        {/* Filter */}
+        {/* Category filter */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-wrap justify-center gap-2 mb-12"
@@ -160,9 +279,9 @@ export default function GallerySection() {
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => setActive(cat)}
               className={`px-5 py-2 rounded-full text-sm tracking-wider transition-all duration-300 ${
-                activeCategory === cat
+                active === cat
                   ? 'bg-[#C9A96E] text-white'
                   : 'border border-white/15 text-white/50 hover:border-[#C9A96E]/40 hover:text-[#C9A96E]'
               }`}
@@ -175,21 +294,21 @@ export default function GallerySection() {
         {/* Masonry grid */}
         <AnimatePresence mode="wait">
           <motion.div
-            key={activeCategory}
+            key={active}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
             className="columns-2 md:columns-3 gap-4"
           >
             {filtered.map((item, i) => (
               <motion.div
-                key={item.src}
-                initial={{ opacity: 0, y: 20 }}
+                key={item.id}
+                initial={{ opacity: 0, y: 22 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.07 }}
+                transition={{ duration: 0.45, delay: i * 0.06 }}
               >
-                <GalleryCard item={item} onClick={() => { setLightboxImgError(false); setLightbox(item); }} />
+                <GalleryCard item={item} onClick={() => setLightbox(item)} />
               </motion.div>
             ))}
           </motion.div>
@@ -202,12 +321,12 @@ export default function GallerySection() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="text-center mt-16"
         >
-          <p className="text-white/40 text-sm mb-5">Більше робіт в нашому Instagram</p>
+          <p className="text-white/35 text-sm mb-5">Більше фото наших робіт в Instagram</p>
           <a
             href="https://www.instagram.com/in.style_salonkrasy"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-3.5 border border-white/20 text-white/70 text-sm tracking-widest rounded-full hover:border-[#C9A96E]/50 hover:text-[#C9A96E] transition-all duration-300 group"
+            className="inline-flex items-center gap-3 px-8 py-3.5 border border-white/18 text-white/60 text-sm tracking-widest rounded-full hover:border-[#C9A96E]/55 hover:text-[#C9A96E] transition-all duration-300 group"
           >
             <InstagramIcon size={16} className="transition-transform duration-300 group-hover:scale-110" />
             @in.style_salonkrasy
@@ -223,35 +342,62 @@ export default function GallerySection() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setLightbox(null)}
-            className="fixed inset-0 z-50 bg-[#0D0D0D]/95 flex items-center justify-center p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-[#050505]/96 flex items-center justify-center p-4 backdrop-blur-sm"
           >
             <motion.div
-              initial={{ scale: 0.88, opacity: 0 }}
+              initial={{ scale: 0.86, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 220, damping: 22 }}
+              transition={{ type: 'spring', stiffness: 230, damping: 24 }}
               onClick={(e) => e.stopPropagation()}
               className="relative rounded-2xl overflow-hidden w-full max-w-sm aspect-[4/5]"
+              style={{ background: lightbox.style.background }}
             >
-              {!lightboxImgError ? (
-                <Image
-                  src={lightbox.src}
-                  alt={lightbox.label}
-                  fill
-                  className="object-cover"
-                  onError={() => setLightboxImgError(true)}
-                  sizes="400px"
+              <div className="absolute inset-0" style={{ background: lightbox.style.overlay }} />
+              <div className="absolute inset-0 opacity-50" style={{ backgroundImage: DOT_PATTERN }} />
+
+              {/* Big decorative circles */}
+              {[180, 260].map((s, i) => (
+                <div
+                  key={s}
+                  className="absolute rounded-full border pointer-events-none"
+                  style={{
+                    borderColor: `${lightbox.style.accent}50`,
+                    width: s, height: s,
+                    top: `${10 + i * 6}%`, right: `${5 + i * 4}%`,
+                    transform: 'translate(30%, -20%)',
+                  }}
                 />
-              ) : (
-                <div className={`absolute inset-0 bg-gradient-to-br ${lightbox.fallback}`} />
-              )}
-              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#0D0D0D]/90 to-transparent">
-                <p className="text-white text-lg font-display">{lightbox.label}</p>
-                <p className="text-[#C9A96E] text-sm">{lightbox.category}</p>
+              ))}
+
+              {/* Center text */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-8">
+                <div
+                  className="font-display italic mb-4 select-none"
+                  style={{ fontSize: '5rem', color: lightbox.style.accent, opacity: 0.25, lineHeight: 1 }}
+                >
+                  {lightbox.label[0]}
+                </div>
+                <div className="text-white/25 text-xs tracking-widest uppercase">{lightbox.detail}</div>
               </div>
+
+              <div className="absolute bottom-0 left-0 right-0 p-6" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85), transparent)' }}>
+                <p className="text-white font-display text-xl">{lightbox.label}</p>
+                <p className="text-xs mt-1" style={{ color: lightbox.style.accent }}>{lightbox.category}</p>
+                <a
+                  href="https://www.instagram.com/in.style_salonkrasy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 mt-3 text-white/50 text-xs hover:text-white transition-colors"
+                >
+                  <InstagramIcon size={12} />
+                  Більше фото в Instagram
+                </a>
+              </div>
+
               <button
                 onClick={() => setLightbox(null)}
-                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#0D0D0D]/60 flex items-center justify-center text-white/70 hover:text-white transition-colors backdrop-blur-sm"
+                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/50 flex items-center justify-center text-white/70 hover:text-white transition-colors backdrop-blur-sm"
               >
                 <X size={16} />
               </button>

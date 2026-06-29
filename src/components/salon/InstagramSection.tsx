@@ -1,63 +1,18 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import Image from 'next/image';
 import { Heart, MessageCircle } from 'lucide-react';
 import { InstagramIcon } from './Icons';
 
-// Place real salon photos in /public/images/salon/
-// insta-1.jpg through insta-6.jpg (or reuse gallery photos)
 const posts = [
-  { src: '/images/salon/wavy-hair.jpg', fallback: 'from-[#C9A96E]/35 via-[#D4B882]/20 to-[#E8D098]/10', likes: 203, comments: 31 },
-  { src: '/images/salon/brows.jpg', fallback: 'from-[#B5C5D8]/35 via-[#C8D8E4]/20 to-[#DDE8F0]/10', likes: 147, comments: 23 },
-  { src: '/images/salon/black-hair.jpg', fallback: 'from-[#1A1A1A]/70 via-[#2D2D2D]/40 to-[#404040]/20', likes: 89, comments: 14 },
-  { src: '/images/salon/ponytail.jpg', fallback: 'from-[#1C1A2E]/70 via-[#2A2840]/50 to-[#3A3050]/30', likes: 312, comments: 44 },
-  { src: '/images/salon/interior.jpg', fallback: 'from-[#3D3D45]/70 via-[#4A4460]/50 to-[#5C5070]/30', likes: 76, comments: 9 },
-  { src: '/images/salon/manicure.jpg', fallback: 'from-[#D4A5A5]/40 via-[#E0B8B8]/25 to-[#F0D0D0]/10', likes: 158, comments: 27 },
+  { bg: 'linear-gradient(145deg,#1A1208 0%,#2E1E08 50%,#100C06 100%)', glow: 'rgba(201,169,110,0.28)', likes: 203, comments: 31, letter: 'В' },
+  { bg: 'linear-gradient(155deg,#0E1018 0%,#161A28 50%,#0A0D16 100%)', glow: 'rgba(160,180,220,0.22)', likes: 147, comments: 23, letter: 'Б' },
+  { bg: 'linear-gradient(140deg,#0D0D0D 0%,#1A1515 50%,#120F0A 100%)', glow: 'rgba(201,169,110,0.2)', likes: 89, comments: 14, letter: 'С' },
+  { bg: 'linear-gradient(150deg,#12101A 0%,#1E1828 50%,#0D0B14 100%)', glow: 'rgba(180,160,220,0.25)', likes: 312, comments: 44, letter: 'З' },
+  { bg: 'linear-gradient(160deg,#180A12 0%,#2A1020 50%,#100810 100%)', glow: 'rgba(212,165,165,0.28)', likes: 76, comments: 9, letter: 'М' },
+  { bg: 'linear-gradient(135deg,#1C0F14 0%,#2D1520 50%,#1A0D12 100%)', glow: 'rgba(220,140,160,0.25)', likes: 158, comments: 27, letter: 'Н' },
 ];
-
-function InstaPost({ post }: { post: typeof posts[0] }) {
-  const [imgError, setImgError] = useState(false);
-
-  return (
-    <a
-      href="https://www.instagram.com/in.style_salonkrasy"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group relative aspect-square rounded-xl overflow-hidden cursor-pointer block"
-    >
-      {!imgError ? (
-        <Image
-          src={post.src}
-          alt="In.Style Salon work"
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-          onError={() => setImgError(true)}
-          sizes="(max-width: 640px) 50vw, 33vw"
-        />
-      ) : (
-        <div className={`absolute inset-0 bg-gradient-to-br ${post.fallback}`}>
-          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10" />
-        </div>
-      )}
-
-      <div className="absolute inset-0 bg-[#0D0D0D]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col items-center justify-center gap-3">
-        <div className="flex items-center gap-5 text-white">
-          <div className="flex items-center gap-1.5">
-            <Heart size={15} fill="white" />
-            <span className="text-sm font-medium">{post.likes}</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <MessageCircle size={15} fill="white" />
-            <span className="text-sm font-medium">{post.comments}</span>
-          </div>
-        </div>
-        <InstagramIcon size={18} className="text-white/60" />
-      </div>
-    </a>
-  );
-}
 
 export default function InstagramSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -66,6 +21,7 @@ export default function InstagramSection() {
   return (
     <section className="py-28 bg-[#0D0D0D]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+
         <div ref={ref} className="text-center mb-14">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -99,30 +55,69 @@ export default function InstagramSection() {
           </motion.a>
         </div>
 
+        {/* Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-12">
           {posts.map((post, i) => (
-            <motion.div
+            <motion.a
               key={i}
-              initial={{ opacity: 0, scale: 0.95 }}
+              href="https://www.instagram.com/in.style_salonkrasy"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, scale: 0.93 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+              className="group relative aspect-square rounded-xl overflow-hidden cursor-pointer block"
+              style={{ background: post.bg }}
             >
-              <InstaPost post={post} />
-            </motion.div>
+              {/* Glow layer */}
+              <div
+                className="absolute inset-0 transition-opacity duration-500 opacity-70 group-hover:opacity-100"
+                style={{ background: `radial-gradient(ellipse 70% 60% at 50% 45%, ${post.glow}, transparent 70%)` }}
+              />
+
+              {/* Letter monogram */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span
+                  className="font-display italic select-none pointer-events-none opacity-20 group-hover:opacity-30 transition-opacity duration-500"
+                  style={{ fontSize: '5rem', color: '#C9A96E', lineHeight: 1 }}
+                >
+                  {post.letter}
+                </span>
+              </div>
+
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-[#0D0D0D]/62 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col items-center justify-center gap-3">
+                <div className="flex items-center gap-5 text-white">
+                  <div className="flex items-center gap-1.5">
+                    <Heart size={14} fill="white" />
+                    <span className="text-sm font-medium">{post.likes}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <MessageCircle size={14} fill="white" />
+                    <span className="text-sm font-medium">{post.comments}</span>
+                  </div>
+                </div>
+                <InstagramIcon size={17} className="text-white/55" />
+              </div>
+            </motion.a>
           ))}
         </div>
 
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
           className="text-center"
         >
+          <p className="text-white/35 text-sm mb-5">
+            Переглядайте всі наші роботи та записуйтесь через Instagram
+          </p>
           <a
             href="https://www.instagram.com/in.style_salonkrasy"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-10 py-4 border border-white/20 text-white/70 text-sm tracking-widest rounded-full hover:border-[#C9A96E]/60 hover:text-[#C9A96E] transition-all duration-300 group"
+            className="inline-flex items-center gap-3 px-10 py-4 border border-white/18 text-white/65 text-sm tracking-widest rounded-full hover:border-[#C9A96E]/60 hover:text-[#C9A96E] transition-all duration-300 group"
           >
             <InstagramIcon size={16} className="transition-transform duration-300 group-hover:scale-110" />
             Підписатися на Instagram
