@@ -1,15 +1,24 @@
 import type { Product } from "./types";
 
-// Unsplash automotive photo pool
-const IMGS = {
-  engine:   "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&h=400&fit=crop&q=80",
-  brakes:   "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&q=80",
-  mechanic: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop&q=80",
-  parts:    "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&h=400&fit=crop&q=80",
-  garage:   "https://images.unsplash.com/photo-1621963416951-d5f1e3a0c08e?w=600&h=400&fit=crop&q=80",
-  spark:    "https://images.unsplash.com/photo-1509914398892-963f53e6e2f1?w=600&h=400&fit=crop&q=80",
-  workshop: "https://images.unsplash.com/photo-1503736334260-d0a06d0c93a4?w=600&h=400&fit=crop&q=80",
-  exterior: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=600&h=400&fit=crop&q=80",
+// Unique image per product — 8 confirmed-working Unsplash base IDs × different crop regions
+const U = "https://images.unsplash.com/photo-";
+const P = {
+  // Engine bay / components
+  eng:  (c: string) => `${U}1486262715619-67b85e0b08d3?w=600&h=400&fit=crop&crop=${c}&q=80`,
+  // Brake disc / rotor
+  brk:  (c: string) => `${U}1558618666-fcd25c85cd64?w=600&h=400&fit=crop&crop=${c}&q=80`,
+  // Mechanic hands at work
+  mec:  (c: string) => `${U}1563013544-824ae1b704d3?w=600&h=400&fit=crop&crop=${c}&q=80`,
+  // Assorted car parts
+  prt:  (c: string) => `${U}1492144534655-ae79c964c9d7?w=600&h=400&fit=crop&crop=${c}&q=80`,
+  // Garage / underbody
+  gar:  (c: string) => `${U}1621963416951-d5f1e3a0c08e?w=600&h=400&fit=crop&crop=${c}&q=80`,
+  // Spark plug / ignition
+  spk:  (c: string) => `${U}1509914398892-963f53e6e2f1?w=600&h=400&fit=crop&crop=${c}&q=80`,
+  // Workshop / tools
+  wsh:  (c: string) => `${U}1503736334260-d0a06d0c93a4?w=600&h=400&fit=crop&crop=${c}&q=80`,
+  // Car exterior / lights
+  ext:  (c: string) => `${U}1494976388531-d1058494cdd8?w=600&h=400&fit=crop&crop=${c}&q=80`,
 };
 
 export const products: Product[] = [
@@ -29,7 +38,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 8,
-    images: [IMGS.engine],
+    images: [P.mec("entropy")],
     description: "Оригінальний амортизатор передній для Mercedes Sprinter W901–905. Газомаслянний, підвищена надійність. Відповідає заводським специфікаціям.",
     specs: [
       { label: "Тип", value: "Газомаслянний" },
@@ -64,7 +73,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 12,
-    images: [IMGS.mechanic],
+    images: [P.mec("center")],
     description: "Амортизатор задній KYB Excel-G для Sprinter. Двотрубний газомаслянний. Оригінальна якість від японського виробника.",
     specs: [
       { label: "Тип", value: "Газомаслянний двотрубний" },
@@ -98,7 +107,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 16,
-    images: [IMGS.parts],
+    images: [P.prt("top")],
     description: "Наконечник рульової тяги HD (Heavy Duty) для Sprinter. Посилена конструкція для комерційного транспорту.",
     specs: [
       { label: "Сторона", value: "Права / Ліва (Universal)" },
@@ -130,7 +139,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 6,
-    images: [IMGS.garage],
+    images: [P.wsh("left")],
     description: "Важіль підвіски нижній передній Lemforder для Sprinter та Crafter. Якість OEM, довгий ресурс завдяки посиленому кульовому шарніру.",
     specs: [
       { label: "Вісь", value: "Передня" },
@@ -164,7 +173,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 10,
-    images: [IMGS.engine],
+    images: [P.mec("bottom")],
     description: "Амортизатор передній Monroe Original для Mercedes Vito W638/639. Гарантована якість та надійність для комерційного транспорту.",
     specs: [
       { label: "Тип", value: "Газомаслянний" },
@@ -195,7 +204,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 7,
-    images: [IMGS.mechanic],
+    images: [P.mec("top")],
     description: "Амортизатор задній Sachs для VW Crafter та Mercedes Sprinter. Надійна конструкція, точна відповідність заводським параметрам.",
     specs: [
       { label: "Вісь", value: "Задня" },
@@ -226,7 +235,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 35,
-    images: [IMGS.parts],
+    images: [P.prt("right")],
     description: "Стійка стабілізатора поперечної стійкості Febi для Sprinter. Чавунний наконечник зі сферичним шарніром, надійне ущільнення.",
     specs: [
       { label: "Сторона", value: "Ліва / Права" },
@@ -257,7 +266,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 12,
-    images: [IMGS.garage],
+    images: [P.gar("entropy")],
     description: "Кульова опора нижня Meyle HD для Mercedes Sprinter. Посилена конструкція HD підвищує ресурс у 2 рази порівняно з оригіналом.",
     specs: [
       { label: "Тип", value: "HD (Heavy Duty)" },
@@ -289,7 +298,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 24,
-    images: [IMGS.brakes],
+    images: [P.brk("entropy")],
     description: "Гальмівні колодки передні для Mercedes Sprinter та Vito. Матеріал: низькометалевий з індикатором зносу.",
     specs: [
       { label: "Тип", value: "Дискові" },
@@ -326,7 +335,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 7,
-    images: [IMGS.brakes],
+    images: [P.brk("top")],
     description: "Гальмівний диск передній ATE PowerDisc для Sprinter W901. Вентильований, з покриттям проти іржі. Пара.",
     specs: [
       { label: "Тип", value: "Вентильований" },
@@ -360,7 +369,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 18,
-    images: [IMGS.brakes],
+    images: [P.brk("center")],
     description: "Гальмівні колодки задні Bosch для Sprinter та Crafter. Безшумна формула, рівномірний знос, легкий монтаж.",
     specs: [
       { label: "Вісь", value: "Задня" },
@@ -392,7 +401,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 20,
-    images: [IMGS.parts],
+    images: [P.brk("bottom")],
     description: "Гальмівні колодки передні Textar для Mercedes Vito W638/639. Матеріал ECO-Friction, безшумна робота. Рекомендовані виробником.",
     specs: [
       { label: "Вісь", value: "Передня" },
@@ -424,7 +433,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: false,
     stockCount: 0,
-    images: [IMGS.brakes],
+    images: [P.brk("left")],
     description: "Гальмівний диск задній ATE для Sprinter та Crafter. Суцільний, антикорозійне покриття. Продається поштучно.",
     specs: [
       { label: "Тип", value: "Суцільний" },
@@ -458,7 +467,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 4,
-    images: [IMGS.mechanic],
+    images: [P.brk("right")],
     description: "Гальмівний диск передній Brembo для VW Crafter. Преміум клас, підвищена термостійкість, точна балансування.",
     specs: [
       { label: "Тип", value: "Вентильований" },
@@ -492,7 +501,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 52,
-    images: [IMGS.engine],
+    images: [P.eng("left")],
     description: "Масляний фільтр для дизельних двигунів Mercedes. Ефективна фільтрація, якість OEM. Підходить для 2.2 CDI та 2.7 CDI.",
     specs: [
       { label: "Тип", value: "Картриджний" },
@@ -526,7 +535,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 38,
-    images: [IMGS.workshop],
+    images: [P.eng("right")],
     description: "Повітряний фільтр Mann для Mercedes Vito/Sprinter CDI. Трапецієподібний, висока фільтрація. Рекомендований виробником.",
     specs: [
       { label: "Тип", value: "Паперовий" },
@@ -561,7 +570,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 3,
-    images: [IMGS.parts],
+    images: [P.eng("top")],
     description: "Радіатор охолодження двигуна Behr Hella для Sprinter 2.2/2.7 CDI. Алюмінієвий, висока ефективність тепловіддачі.",
     specs: [
       { label: "Матеріал", value: "Алюміній" },
@@ -595,7 +604,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 9,
-    images: [IMGS.workshop],
+    images: [P.gar("top")],
     description: "Водяна помпа Dolz для Mercedes Sprinter 2.2 CDI. Кераміко-графітове ущільнення. Підходить для заміни з ременем ГРМ.",
     specs: [
       { label: "Кількість лопатей", value: "6" },
@@ -626,7 +635,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 42,
-    images: [IMGS.engine],
+    images: [P.eng("center")],
     description: "Паливний фільтр Mann для дизельних двигунів Mercedes та VW. Тонка фільтрація забезпечує чистоту палива та захист форсунок.",
     specs: [
       { label: "Тип", value: "Картриджний з водовіддільником" },
@@ -660,7 +669,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 5,
-    images: [IMGS.garage],
+    images: [P.wsh("entropy")],
     description: "Комплект ременя ГРМ ContiTech для Mercedes Sprinter та Vito 2.2 CDI. Ремінь + ролик натяжний + обвідний ролик. Оригінальна якість.",
     specs: [
       { label: "Кількість деталей", value: "3 (ремінь + 2 ролики)" },
@@ -694,7 +703,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 20,
-    images: [IMGS.workshop],
+    images: [P.gar("bottom")],
     description: "Термостат Mahle для Mercedes Sprinter та Vito 2.2 CDI. Температура відкриття 83°C. Точна відповідність заводським параметрам.",
     specs: [
       { label: "Температура відкриття", value: "83°C" },
@@ -727,7 +736,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 3,
-    images: [IMGS.engine],
+    images: [P.spk("entropy")],
     description: "Форсунка дизельна Common Rail Bosch для Sprinter 2.2 CDI. Відновлена на заводі до стандартів OEM. З гарантією 12 місяців.",
     specs: [
       { label: "Тип", value: "Common Rail (CRDI)" },
@@ -762,7 +771,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 5,
-    images: [IMGS.garage],
+    images: [P.gar("right")],
     description: "Комплект зчеплення Valeo KIT3P (диск + кошик + підшипник) для Sprinter 2.2 CDI. Завершена система від одного виробника.",
     specs: [
       { label: "Тип", value: "KIT3P (3 деталі)" },
@@ -794,7 +803,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 4,
-    images: [IMGS.mechanic],
+    images: [P.mec("left")],
     description: "Комплект зчеплення Sachs (диск + кошик + підшипник) для Mercedes Vito 2.2 CDI. Стандартна якість OEM, надійна конструкція.",
     specs: [
       { label: "Вміст", value: "Диск + Кошик + Підшипник" },
@@ -824,7 +833,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 7,
-    images: [IMGS.parts],
+    images: [P.prt("left")],
     description: "Диск зчеплення ведений LUK для VW Crafter 2.5 TDI. Фрикційний матеріал з підвищеним ресурсом, демпфер крутильних коливань.",
     specs: [
       { label: "Діаметр", value: "240 мм" },
@@ -857,7 +866,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 32,
-    images: [IMGS.spark],
+    images: [P.spk("top")],
     description: "Свіча розжарення NGK для дизельних двигунів Mercedes 2.2 CDI. Швидкий прогрів 2–4 секунди. Ресурс 80 000 км.",
     specs: [
       { label: "Різьба", value: "M10×1.0" },
@@ -886,14 +895,14 @@ export const products: Product[] = [
     brand: "Bosch",
     sku: "1986A00637",
     category: "electrical",
-    subcategory: "sensors",
+    subcategory: "alternators",
     vehicles: ["mercedes-sprinter"],
     price: 5200,
     priceOld: 8900,
     currency: "UAH",
     inStock: true,
     stockCount: 2,
-    images: [IMGS.spark],
+    images: [P.spk("bottom")],
     description: "Генератор Bosch для Mercedes Sprinter 2.2/2.7 CDI. Відновлений до стандарту OEM. Потужність 90 А. Гарантія 12 місяців.",
     specs: [
       { label: "Струм", value: "90 А" },
@@ -920,14 +929,14 @@ export const products: Product[] = [
     brand: "Bosch",
     sku: "1986S00866",
     category: "electrical",
-    subcategory: "sensors",
+    subcategory: "alternators",
     vehicles: ["mercedes-sprinter", "vw-crafter"],
     price: 4100,
     priceOld: 7200,
     currency: "UAH",
     inStock: true,
     stockCount: 3,
-    images: [IMGS.engine],
+    images: [P.spk("left")],
     description: "Стартер Bosch для Sprinter та Crafter дизельних двигунів. Відновлений. Потужність 2.1 кВт. Гарантія 12 місяців.",
     specs: [
       { label: "Потужність", value: "2.1 кВт" },
@@ -960,7 +969,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 14,
-    images: [IMGS.spark],
+    images: [P.spk("right")],
     description: "Комплект свічок розжарення Beru (4 шт) для Mercedes CDI. Швидкий нагрів, підвищений ресурс 80 000 км. Виробник — Bosch Group.",
     specs: [
       { label: "Кількість", value: "4 шт" },
@@ -996,7 +1005,7 @@ export const products: Product[] = [
     currency: "UAH",
     inStock: true,
     stockCount: 4,
-    images: [IMGS.exterior],
+    images: [P.ext("entropy")],
     description: "Дзеркало заднього виду бічне ліве з підігрівом для Sprinter W906. Електроскладання, підігрів, широкий кут огляду.",
     specs: [
       { label: "Сторона", value: "Ліва" },
@@ -1022,15 +1031,15 @@ export const products: Product[] = [
     nameUK: "Фара передня",
     brand: "Valeo",
     sku: "043655",
-    category: "body",
-    subcategory: "lights",
+    category: "lighting",
+    subcategory: "headlights",
     vehicles: ["mercedes-sprinter"],
     price: 2800,
     priceOld: 3200,
     currency: "UAH",
     inStock: true,
     stockCount: 3,
-    images: [IMGS.exterior],
+    images: [P.ext("top")],
     description: "Фара передня ліва Valeo для Mercedes Sprinter W906. Заводська комплектація: ближнє + дальнє + покажчик поворотів. Без лампочок.",
     specs: [
       { label: "Сторона", value: "Ліва" },
@@ -1055,14 +1064,14 @@ export const products: Product[] = [
     nameUK: "Ліхтар задній",
     brand: "Depo",
     sku: "440-1971R-UE",
-    category: "body",
-    subcategory: "lights",
+    category: "lighting",
+    subcategory: "taillights",
     vehicles: ["mercedes-sprinter"],
     price: 1450,
     currency: "UAH",
     inStock: true,
     stockCount: 6,
-    images: [IMGS.exterior],
+    images: [P.ext("bottom")],
     description: "Ліхтар задній правий Depo для Mercedes Sprinter W906. Стоп-сигнал + покажчик + задній хід + протитуманний. Без лампочок.",
     specs: [
       { label: "Сторона", value: "Права" },

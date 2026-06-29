@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import ProductCard from "@/components/catalog/ProductCard";
+import CategoryCatalog from "./CategoryCatalog";
 import { vehicles } from "@/lib/vehicles";
 import { categories } from "@/lib/categories";
 import { getAllProducts } from "@/lib/products";
@@ -40,7 +40,7 @@ export default async function CategoryProductsPage({ params }: Props) {
 
   const allProducts = getAllProducts();
   const products = allProducts.filter(
-    (p) => p.vehicles.includes(vSlug) || p.vehicles.includes("all")
+    (p) => p.category === cSlug && (p.vehicles.includes(vSlug) || p.vehicles.includes("all"))
   );
 
   return (
@@ -66,36 +66,12 @@ export default async function CategoryProductsPage({ params }: Props) {
             </p>
           </div>
 
-          {/* Subcategory filters */}
-          {(cat.subcategories?.length ?? 0) > 0 && (
-            <div className="flex flex-wrap gap-2 mb-8">
-              <button className="px-4 py-2 bg-orange-500 text-white text-sm font-semibold rounded-xl">
-                Всі
-              </button>
-              {cat.subcategories?.map((sub) => (
-                <button
-                  key={sub.slug}
-                  className="px-4 py-2 bg-white border border-gray-200 text-gray-600 hover:border-orange-300 hover:text-orange-600 text-sm font-medium rounded-xl transition-colors"
-                >
-                  {sub.name}
-                </button>
-              ))}
-            </div>
-          )}
-
-          {products.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {products.map((p) => (
-                <ProductCard key={p.id} product={p} animate={false} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20">
-              <div className="text-5xl mb-4">🔍</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Товари не знайдено</h3>
-              <p className="text-gray-500">Спробуйте іншу категорію або зверніться до нас</p>
-            </div>
-          )}
+          <CategoryCatalog
+            products={products}
+            subcategories={cat.subcategories ?? []}
+            categoryName={cat.name}
+            vehicleName={v.name}
+          />
         </div>
       </main>
       <Footer />
