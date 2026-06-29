@@ -11,16 +11,16 @@ import { useCart } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
 import { vehicles } from "@/lib/vehicles";
 import { categories } from "@/lib/categories";
-import { searchProducts } from "@/lib/products";
+import { searchAll, isCatalogItem } from "@/lib/search";
+import type { SearchResult } from "@/lib/search";
 import { cn } from "@/lib/utils";
-import type { Product } from "@/lib/types";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [vehicleMenuOpen, setVehicleMenuOpen] = useState(false);
   const [catalogMenuOpen, setCatalogMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -43,7 +43,7 @@ export default function Header() {
 
   useEffect(() => {
     if (searchQuery.length >= 2) {
-      setSearchResults(searchProducts(searchQuery).slice(0, 6));
+      setSearchResults(searchAll(searchQuery, 6));
     } else {
       setSearchResults([]);
     }
@@ -207,27 +207,49 @@ export default function Header() {
               </div>
               {searchOpen && searchResults.length > 0 && (
                 <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50">
-                  {searchResults.map((p) => (
-                    <Link
-                      key={p.id}
-                      href={`/product/${p.slug}`}
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors"
-                      onClick={() => { setSearchOpen(false); setSearchQuery(""); }}
-                    >
-                      <div className="w-10 h-10 rounded-xl bg-gray-100 shrink-0 overflow-hidden relative">
-                          {p.images[0] ? (
-                            <Image src={p.images[0]} alt={p.name} fill className="object-cover" sizes="40px" />
+                  {searchResults.map((r) => {
+                    if (isCatalogItem(r)) {
+                      return (
+                        <Link
+                          key={r.sku}
+                          href={`/catalog-item/${encodeURIComponent(r.sku)}`}
+                          className="flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors"
+                          onClick={() => { setSearchOpen(false); setSearchQuery(""); }}
+                        >
+                          <div className="w-10 h-10 rounded-xl bg-gray-100 shrink-0 flex items-center justify-center text-lg">🔧</div>
+                          <div className="min-w-0">
+                            <div className="text-sm font-semibold text-gray-900 truncate">{r.name}</div>
+                            <div className="text-xs text-gray-400">{r.brand} · {r.sku}</div>
+                          </div>
+                          <div className="ml-auto flex flex-col items-end gap-0.5 shrink-0">
+                            <div className="text-sm font-bold text-orange-600">{r.price.toLocaleString()} ₴</div>
+                            <span className="text-[10px] font-medium text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full">Замовити</span>
+                          </div>
+                        </Link>
+                      );
+                    }
+                    return (
+                      <Link
+                        key={r.id}
+                        href={`/product/${r.slug}`}
+                        className="flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors"
+                        onClick={() => { setSearchOpen(false); setSearchQuery(""); }}
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-gray-100 shrink-0 overflow-hidden relative">
+                          {r.images[0] ? (
+                            <Image src={r.images[0]} alt={r.name} fill className="object-cover" sizes="40px" />
                           ) : (
                             <div className="absolute inset-0 flex items-center justify-center text-sm">🔧</div>
                           )}
                         </div>
-                      <div className="min-w-0">
-                        <div className="text-sm font-semibold text-gray-900 truncate">{p.name}</div>
-                        <div className="text-xs text-gray-400">{p.brand} · {p.sku}</div>
-                      </div>
-                      <div className="ml-auto text-sm font-bold text-orange-600 shrink-0">{p.price.toLocaleString()} ₴</div>
-                    </Link>
-                  ))}
+                        <div className="min-w-0">
+                          <div className="text-sm font-semibold text-gray-900 truncate">{r.name}</div>
+                          <div className="text-xs text-gray-400">{r.brand} · {r.sku}</div>
+                        </div>
+                        <div className="ml-auto text-sm font-bold text-orange-600 shrink-0">{r.price.toLocaleString()} ₴</div>
+                      </Link>
+                    );
+                  })}
                   <Link
                     href={`/search?q=${encodeURIComponent(searchQuery)}`}
                     className="flex items-center justify-center gap-1.5 py-3 text-sm font-semibold text-orange-500 border-t border-gray-100 hover:bg-orange-50 transition-colors"
