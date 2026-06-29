@@ -1,29 +1,25 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import Hero from "@/components/home/Hero";
-import VehicleSelector from "@/components/home/VehicleSelector";
-import CategoryGrid from "@/components/home/CategoryGrid";
-import FeaturedProducts from "@/components/home/FeaturedProducts";
-import WhyUs from "@/components/home/WhyUs";
-import HowItWorks from "@/components/home/HowItWorks";
-import Testimonials from "@/components/home/Testimonials";
-import FAQ from "@/components/home/FAQ";
-import ContactBanner from "@/components/home/ContactBanner";
+import Navigation from '@/components/salon/Navigation';
+import HeroSection from '@/components/salon/HeroSection';
+import ServicesSection from '@/components/salon/ServicesSection';
+import GallerySection from '@/components/salon/GallerySection';
+import BookingSection from '@/components/salon/BookingSection';
+import WhyUsSection from '@/components/salon/WhyUsSection';
+import InstagramSection from '@/components/salon/InstagramSection';
+import ContactSection from '@/components/salon/ContactSection';
+import Footer from '@/components/salon/Footer';
 
 export default function Home() {
   return (
     <>
-      <Header />
-      <main className="flex flex-col">
-        <Hero />
-        <VehicleSelector />
-        <CategoryGrid />
-        <FeaturedProducts />
-        <WhyUs />
-        <HowItWorks />
-        <Testimonials />
-        <FAQ />
-        <ContactBanner />
+      <Navigation />
+      <main>
+        <HeroSection />
+        <ServicesSection />
+        <GallerySection />
+        <BookingSection />
+        <WhyUsSection />
+        <InstagramSection />
+        <ContactSection />
       </main>
       <Footer />
     </>

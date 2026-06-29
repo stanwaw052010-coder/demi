@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart";
 import { WishlistProvider } from "@/lib/wishlist";
@@ -8,18 +8,27 @@ const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin", "cyrillic"],
   display: "swap",
+  weight: ["300", "400", "500", "600"],
+});
+
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin", "cyrillic"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
-  title: "Спринтер — Запчастини для Mercedes Sprinter, Vito, VW Crafter | Харків",
+  title: "In.Style Salon Krasy — Салон краси у Коростені",
   description:
-    "Інтернет-магазин запчастин для Mercedes Sprinter, Vito, Volkswagen Crafter та LT. Понад 8 000 позицій в наявності. Доставка по Україні 1–2 дні. Харків: Просп. Героїв Харкова, 210.",
+    "Преміальний салон краси In.Style у Коростені. Волосся, манікюр, брови, макіяж, весільні образи. Запишіться онлайн — вул. Михайла Грушевського, 33. Тел: (98) 950 63 32.",
   keywords:
-    "запчастини Mercedes Sprinter, запчастини Vito, запчастини VW Crafter, запчастини для мерседес спрінтер, автозапчастини Харків, запчастини для комерційного транспорту",
+    "салон краси Коростень, манікюр Коростень, зачіска Коростень, брови Коростень, макіяж Коростень, весільний образ, In Style Salon",
   openGraph: {
-    title: "Спринтер — Запчастини для комерційного транспорту",
+    title: "In.Style Salon Krasy — Преміальний салон краси",
     description:
-      "Понад 8 000 позицій запчастин для Mercedes та VW. Швидка доставка по Україні.",
+      "Ваш простір для трансформації у Коростені. Записуйтесь онлайн!",
     type: "website",
     locale: "uk_UA",
   },
@@ -27,12 +36,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="uk" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
+    <html lang="uk" className={`${inter.variable} ${cormorant.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-[#FBF8F5] text-[#1A1A1A]">
         <CartProvider>
           <WishlistProvider>
             {children}
