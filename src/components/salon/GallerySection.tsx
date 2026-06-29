@@ -2,36 +2,125 @@
 
 import { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { X } from 'lucide-react';
 import { InstagramIcon } from './Icons';
 
+// Real salon photos — place files in /public/images/salon/
+// Names: brows.jpg, interior.jpg, black-hair.jpg, wavy-hair.jpg, ponytail.jpg
 const galleryItems = [
-  { label: 'Фарбування волосся', category: 'Волосся', gradient: 'from-[#C9A96E]/30 via-[#E8C88A]/20 to-[#F5E4BC]/10', span: 'row-span-2' },
-  { label: 'Класичний манікюр', category: 'Манікюр', gradient: 'from-[#D4A5A5]/30 via-[#E8B8B8]/20 to-[#F5D8D8]/10', span: '' },
-  { label: 'Гель-лак', category: 'Манікюр', gradient: 'from-[#D4A5A5]/40 via-[#C49090]/20 to-[#E8C0C0]/10', span: '' },
-  { label: 'Укладка та стрижка', category: 'Волосся', gradient: 'from-[#B8C4D0]/30 via-[#C8D8E4]/20 to-[#DDE8F0]/10', span: 'row-span-2' },
-  { label: 'Ламінування брів', category: 'Брови', gradient: 'from-[#1A1A1A]/60 via-[#2D2D2D]/40 to-[#404040]/20', span: '' },
-  { label: 'Весільний образ', category: 'Макіяж', gradient: 'from-[#C9A96E]/40 via-[#D4B882]/25 to-[#E8D098]/12', span: '' },
-  { label: 'Вечірня зачіска', category: 'Волосся', gradient: 'from-[#8B7355]/40 via-[#A08A6A]/25 to-[#C4A882]/12', span: 'row-span-2' },
-  { label: 'Nail-art', category: 'Манікюр', gradient: 'from-[#C9A96E]/30 via-[#E0C080]/20 to-[#F5E0A0]/10', span: '' },
-  { label: 'Пудровий макіяж', category: 'Макіяж', gradient: 'from-[#D4A5A5]/40 via-[#E0B8B8]/25 to-[#F0D0D0]/10', span: '' },
+  {
+    src: '/images/salon/brows.jpg',
+    label: 'Ламінування брів',
+    category: 'Брови',
+    fallback: 'from-[#B5C5D8]/40 via-[#9EB0C5]/25 to-[#8A9EB5]/15',
+    tall: true,
+  },
+  {
+    src: '/images/salon/interior.jpg',
+    label: 'Наш салон',
+    category: "Інтер'єр",
+    fallback: 'from-[#3D3D45]/70 via-[#4A4460]/50 to-[#5C5070]/30',
+    tall: false,
+  },
+  {
+    src: '/images/salon/black-hair.jpg',
+    label: 'Стрижка + укладка',
+    category: 'Волосся',
+    fallback: 'from-[#1A1A1A]/80 via-[#2D2D2D]/60 to-[#3D3020]/30',
+    tall: false,
+  },
+  {
+    src: '/images/salon/wavy-hair.jpg',
+    label: 'Локони та укладка',
+    category: 'Волосся',
+    fallback: 'from-[#C9A96E]/30 via-[#B8956A]/20 to-[#8B6B45]/15',
+    tall: true,
+  },
+  {
+    src: '/images/salon/ponytail.jpg',
+    label: 'Вечірня зачіска',
+    category: 'Волосся',
+    fallback: 'from-[#1C1A2E]/70 via-[#2A2840]/50 to-[#3A3050]/30',
+    tall: false,
+  },
+  {
+    src: '/images/salon/manicure.jpg',
+    label: 'Гель-лак / nail-art',
+    category: 'Манікюр',
+    fallback: 'from-[#D4A5A5]/40 via-[#E0B8B8]/25 to-[#F0D0D0]/12',
+    tall: false,
+  },
 ];
 
-const categories = ['Всі', 'Волосся', 'Манікюр', 'Брови', 'Макіяж'];
+const categories = ['Всі', 'Волосся', 'Брови', 'Манікюр', "Інтер'єр"];
+
+function GalleryCard({
+  item,
+  onClick,
+}: {
+  item: typeof galleryItems[0];
+  onClick: () => void;
+}) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <div
+      onClick={onClick}
+      className={`relative group cursor-pointer rounded-xl overflow-hidden ${
+        item.tall ? 'aspect-[3/4]' : 'aspect-square'
+      } break-inside-avoid mb-4`}
+    >
+      {!imgError ? (
+        <Image
+          src={item.src}
+          alt={item.label}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          onError={() => setImgError(true)}
+          sizes="(max-width: 768px) 50vw, 33vw"
+        />
+      ) : (
+        <div className={`absolute inset-0 bg-gradient-to-br ${item.fallback}`}>
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10" />
+        </div>
+      )}
+
+      {/* Always-on subtle bottom gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0D]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+
+      {/* Hover overlay center */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-400">
+        <div className="w-12 h-12 rounded-full border-2 border-white/70 flex items-center justify-center backdrop-blur-sm bg-white/10">
+          <span className="text-white text-xl leading-none">+</span>
+        </div>
+      </div>
+
+      {/* Label */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-1 group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-[#0D0D0D]/80 to-transparent">
+        <p className="text-white text-sm font-medium">{item.label}</p>
+        <p className="text-[#C9A96E] text-xs mt-0.5">{item.category}</p>
+      </div>
+    </div>
+  );
+}
 
 export default function GallerySection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
   const [activeCategory, setActiveCategory] = useState('Всі');
   const [lightbox, setLightbox] = useState<typeof galleryItems[0] | null>(null);
+  const [lightboxImgError, setLightboxImgError] = useState(false);
 
-  const filtered = activeCategory === 'Всі'
-    ? galleryItems
-    : galleryItems.filter((i) => i.category === activeCategory);
+  const filtered =
+    activeCategory === 'Всі'
+      ? galleryItems
+      : galleryItems.filter((i) => i.category === activeCategory);
 
   return (
     <section id="gallery" className="py-28 bg-[#0D0D0D]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+        {/* Header */}
         <div ref={ref} className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -61,7 +150,7 @@ export default function GallerySection() {
           </motion.p>
         </div>
 
-        {/* Category filter */}
+        {/* Filter */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -83,51 +172,28 @@ export default function GallerySection() {
           ))}
         </motion.div>
 
-        {/* Masonry-style grid */}
-        <motion.div
-          layout
-          className="columns-2 md:columns-3 gap-4 space-y-4"
-        >
-          <AnimatePresence>
+        {/* Masonry grid */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCategory}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="columns-2 md:columns-3 gap-4"
+          >
             {filtered.map((item, i) => (
               <motion.div
-                key={item.label}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
+                key={item.src}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.07 }}
-                onClick={() => setLightbox(item)}
-                className={`break-inside-avoid mb-4 group cursor-pointer ${item.span}`}
               >
-                <div
-                  className={`relative rounded-xl overflow-hidden bg-gradient-to-br ${item.gradient} ${
-                    item.span === 'row-span-2' ? 'aspect-[3/4]' : 'aspect-square'
-                  } flex items-end`}
-                >
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10" />
-
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-[#0D0D0D]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-center justify-center">
-                    <div className="text-white text-center">
-                      <div className="w-10 h-10 rounded-full border border-white/60 flex items-center justify-center mx-auto mb-3">
-                        <span className="text-xl">+</span>
-                      </div>
-                      <p className="text-sm tracking-wider">Переглянути</p>
-                    </div>
-                  </div>
-
-                  {/* Label */}
-                  <div className="relative p-4 w-full bg-gradient-to-t from-[#0D0D0D]/80 to-transparent translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                    <p className="text-white text-sm font-medium">{item.label}</p>
-                    <p className="text-[#C9A96E] text-xs mt-0.5">{item.category}</p>
-                  </div>
-                </div>
+                <GalleryCard item={item} onClick={() => { setLightboxImgError(false); setLightbox(item); }} />
               </motion.div>
             ))}
-          </AnimatePresence>
-        </motion.div>
+          </motion.div>
+        </AnimatePresence>
 
         {/* Instagram CTA */}
         <motion.div
@@ -157,23 +223,35 @@ export default function GallerySection() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setLightbox(null)}
-            className="fixed inset-0 z-50 bg-[#0D0D0D]/95 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-[#0D0D0D]/95 flex items-center justify-center p-4 backdrop-blur-sm"
           >
             <motion.div
-              initial={{ scale: 0.85, opacity: 0 }}
+              initial={{ scale: 0.88, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 220, damping: 22 }}
               onClick={(e) => e.stopPropagation()}
-              className={`relative rounded-2xl overflow-hidden bg-gradient-to-br ${lightbox.gradient} w-full max-w-md aspect-[4/5]`}
+              className="relative rounded-2xl overflow-hidden w-full max-w-sm aspect-[4/5]"
             >
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10" />
+              {!lightboxImgError ? (
+                <Image
+                  src={lightbox.src}
+                  alt={lightbox.label}
+                  fill
+                  className="object-cover"
+                  onError={() => setLightboxImgError(true)}
+                  sizes="400px"
+                />
+              ) : (
+                <div className={`absolute inset-0 bg-gradient-to-br ${lightbox.fallback}`} />
+              )}
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#0D0D0D]/90 to-transparent">
                 <p className="text-white text-lg font-display">{lightbox.label}</p>
                 <p className="text-[#C9A96E] text-sm">{lightbox.category}</p>
               </div>
               <button
                 onClick={() => setLightbox(null)}
-                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#0D0D0D]/60 flex items-center justify-center text-white/70 hover:text-white transition-colors"
+                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#0D0D0D]/60 flex items-center justify-center text-white/70 hover:text-white transition-colors backdrop-blur-sm"
               >
                 <X size={16} />
               </button>

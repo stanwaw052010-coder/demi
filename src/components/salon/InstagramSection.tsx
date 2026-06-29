@@ -1,18 +1,63 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
 import { Heart, MessageCircle } from 'lucide-react';
 import { InstagramIcon } from './Icons';
 
+// Place real salon photos in /public/images/salon/
+// insta-1.jpg through insta-6.jpg (or reuse gallery photos)
 const posts = [
-  { gradient: 'from-[#C9A96E]/35 via-[#D4B882]/20 to-[#E8D098]/10', likes: 147, comments: 23, label: 'Фарбування' },
-  { gradient: 'from-[#D4A5A5]/35 via-[#E0B8B8]/20 to-[#F0D0D0]/10', likes: 89, comments: 14, label: 'Манікюр' },
-  { gradient: 'from-[#8B7355]/35 via-[#A08A6A]/20 to-[#C4A882]/10', likes: 203, comments: 31, label: 'Укладка' },
-  { gradient: 'from-[#B5C5D8]/35 via-[#C8D8E4]/20 to-[#DDE8F0]/10', likes: 76, comments: 9, label: 'Брови' },
-  { gradient: 'from-[#1A1A1A]/70 via-[#2D2D2D]/40 to-[#404040]/20', likes: 312, comments: 44, label: 'Весільний образ' },
-  { gradient: 'from-[#C9A96E]/40 via-[#E8C88A]/25 to-[#F5E4BC]/10', likes: 158, comments: 27, label: 'Nail-art' },
+  { src: '/images/salon/wavy-hair.jpg', fallback: 'from-[#C9A96E]/35 via-[#D4B882]/20 to-[#E8D098]/10', likes: 203, comments: 31 },
+  { src: '/images/salon/brows.jpg', fallback: 'from-[#B5C5D8]/35 via-[#C8D8E4]/20 to-[#DDE8F0]/10', likes: 147, comments: 23 },
+  { src: '/images/salon/black-hair.jpg', fallback: 'from-[#1A1A1A]/70 via-[#2D2D2D]/40 to-[#404040]/20', likes: 89, comments: 14 },
+  { src: '/images/salon/ponytail.jpg', fallback: 'from-[#1C1A2E]/70 via-[#2A2840]/50 to-[#3A3050]/30', likes: 312, comments: 44 },
+  { src: '/images/salon/interior.jpg', fallback: 'from-[#3D3D45]/70 via-[#4A4460]/50 to-[#5C5070]/30', likes: 76, comments: 9 },
+  { src: '/images/salon/manicure.jpg', fallback: 'from-[#D4A5A5]/40 via-[#E0B8B8]/25 to-[#F0D0D0]/10', likes: 158, comments: 27 },
 ];
+
+function InstaPost({ post }: { post: typeof posts[0] }) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <a
+      href="https://www.instagram.com/in.style_salonkrasy"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative aspect-square rounded-xl overflow-hidden cursor-pointer block"
+    >
+      {!imgError ? (
+        <Image
+          src={post.src}
+          alt="In.Style Salon work"
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          onError={() => setImgError(true)}
+          sizes="(max-width: 640px) 50vw, 33vw"
+        />
+      ) : (
+        <div className={`absolute inset-0 bg-gradient-to-br ${post.fallback}`}>
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10" />
+        </div>
+      )}
+
+      <div className="absolute inset-0 bg-[#0D0D0D]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col items-center justify-center gap-3">
+        <div className="flex items-center gap-5 text-white">
+          <div className="flex items-center gap-1.5">
+            <Heart size={15} fill="white" />
+            <span className="text-sm font-medium">{post.likes}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <MessageCircle size={15} fill="white" />
+            <span className="text-sm font-medium">{post.comments}</span>
+          </div>
+        </div>
+        <InstagramIcon size={18} className="text-white/60" />
+      </div>
+    </a>
+  );
+}
 
 export default function InstagramSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -54,46 +99,19 @@ export default function InstagramSection() {
           </motion.a>
         </div>
 
-        {/* Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-12">
           {posts.map((post, i) => (
-            <motion.a
+            <motion.div
               key={i}
-              href="https://www.instagram.com/in.style_salonkrasy"
-              target="_blank"
-              rel="noopener noreferrer"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
-              className="group relative aspect-square rounded-xl overflow-hidden cursor-pointer"
             >
-              <div className={`absolute inset-0 bg-gradient-to-br ${post.gradient}`} />
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10" />
-
-              {/* Hover overlay */}
-              <div className="absolute inset-0 bg-[#0D0D0D]/65 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col items-center justify-center gap-3">
-                <div className="flex items-center gap-5 text-white">
-                  <div className="flex items-center gap-1.5">
-                    <Heart size={16} fill="white" />
-                    <span className="text-sm font-medium">{post.likes}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <MessageCircle size={16} fill="white" />
-                    <span className="text-sm font-medium">{post.comments}</span>
-                  </div>
-                </div>
-                <InstagramIcon size={20} className="text-white/60" />
-              </div>
-
-              {/* Label */}
-              <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-[#0D0D0D]/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="text-white/80 text-xs">{post.label}</p>
-              </div>
-            </motion.a>
+              <InstaPost post={post} />
+            </motion.div>
           ))}
         </div>
 
-        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
