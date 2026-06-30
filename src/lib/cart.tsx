@@ -1,12 +1,7 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useReducer,
-  useEffect,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, useReducer, useEffect, type ReactNode } from "react";
+import { toast } from "sonner";
 import type { CartItem, CartState } from "./types";
 
 type CartAction =
@@ -37,9 +32,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
       break;
     case "UPDATE_QTY":
       items = state.items
-        .map((i) =>
-          i.productId === action.productId ? { ...i, quantity: action.quantity } : i
-        )
+        .map((i) => (i.productId === action.productId ? { ...i, quantity: action.quantity } : i))
         .filter((i) => i.quantity > 0);
       break;
     case "CLEAR":
@@ -87,11 +80,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
     <CartContext.Provider
       value={{
         cart,
-        addToCart: (item) => dispatch({ type: "ADD", item }),
-        removeFromCart: (id) => dispatch({ type: "REMOVE", productId: id }),
-        updateQuantity: (id, qty) =>
-          dispatch({ type: "UPDATE_QTY", productId: id, quantity: qty }),
-        clearCart: () => dispatch({ type: "CLEAR" }),
+        addToCart: (item) => {
+          dispatch({ type: "ADD", item });
+          toast.success(`${item.name} додано в кошик`);
+        },
+        removeFromCart: (id) => {
+          const item = cart.items.find((i) => i.productId === id);
+          dispatch({ type: "REMOVE", productId: id });
+          if (item) toast(`${item.name} видалено з кошика`);
+        },
+        updateQuantity: (id, qty) => dispatch({ type: "UPDATE_QTY", productId: id, quantity: qty }),
+        clearCart: () => {
+          dispatch({ type: "CLEAR" });
+          toast("Кошик очищено");
+        },
         isInCart: (id) => cart.items.some((i) => i.productId === id),
       }}
     >
