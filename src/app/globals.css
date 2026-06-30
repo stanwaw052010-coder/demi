@@ -9,6 +9,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
   --color-brand: #f97316;
   --color-brand-dark: #ea580c;
   --color-dark: #0a0a0a;
@@ -28,15 +29,23 @@ body {
 }
 
 ::selection {
-  background-color: #f97316;
+  background-color: #8B5CF6;
   color: #ffffff;
+}
+
+/* Violet gradient text */
+.text-gradient-violet {
+  background: linear-gradient(135deg, #7C3AED, #A78BFA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f1f1f1; }
-::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #f97316; }
+::-webkit-scrollbar-track { background: #F5F3FF; }
+::-webkit-scrollbar-thumb { background: #C4B5FD; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #8B5CF6; }
 
 /* No-scrollbar utility */
 .no-scrollbar::-webkit-scrollbar { display: none; }

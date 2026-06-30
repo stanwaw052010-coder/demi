@@ -1,31 +1,27 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import Hero from "@/components/home/Hero";
-import VehicleSelector from "@/components/home/VehicleSelector";
-import CategoryGrid from "@/components/home/CategoryGrid";
-import FeaturedProducts from "@/components/home/FeaturedProducts";
-import WhyUs from "@/components/home/WhyUs";
-import HowItWorks from "@/components/home/HowItWorks";
-import Testimonials from "@/components/home/Testimonials";
-import FAQ from "@/components/home/FAQ";
-import ContactBanner from "@/components/home/ContactBanner";
+import FialkaNavbar from "@/components/fialka/Navbar";
+import FialkaHero from "@/components/fialka/Hero";
+import FialkaServices from "@/components/fialka/Services";
+import FialkaReviews from "@/components/fialka/Reviews";
+import FialkaInstagram from "@/components/fialka/Instagram";
+import FialkaWhyUs from "@/components/fialka/WhyUs";
+import FialkaContacts from "@/components/fialka/Contacts";
+import FialkaFinalCTA from "@/components/fialka/FinalCTA";
+import FialkaFooter from "@/components/fialka/Footer";
 
 export default function Home() {
   return (
     <>
-      <Header />
-      <main className="flex flex-col">
-        <Hero />
-        <VehicleSelector />
-        <CategoryGrid />
-        <FeaturedProducts />
-        <WhyUs />
-        <HowItWorks />
-        <Testimonials />
-        <FAQ />
-        <ContactBanner />
+      <FialkaNavbar />
+      <main>
+        <FialkaHero />
+        <FialkaServices />
+        <FialkaReviews />
+        <FialkaInstagram />
+        <FialkaWhyUs />
+        <FialkaContacts />
+        <FialkaFinalCTA />
       </main>
-      <Footer />
+      <FialkaFooter />
     </>
   );
 }

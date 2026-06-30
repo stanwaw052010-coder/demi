@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart";
 import { WishlistProvider } from "@/lib/wishlist";
@@ -10,16 +10,23 @@ const inter = Inter({
   display: "swap",
 });
 
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin", "cyrillic"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
-  title: "Спринтер — Запчастини для Mercedes Sprinter, Vito, VW Crafter | Харків",
+  title: "Fialka Beauty Bar — студія краси у Житомирі | вул. Покровська, 57б",
   description:
-    "Інтернет-магазин запчастин для Mercedes Sprinter, Vito, Volkswagen Crafter та LT. Понад 8 000 позицій в наявності. Доставка по Україні 1–2 дні. Харків: Просп. Героїв Харкова, 210.",
+    "Студія краси Fialka Beauty Bar у Житомирі. Манікюр, педикюр, брови, вії. Стерильність, досвідчені майстри, затишна атмосфера. Вулиця Покровська, 57б. Тел: +380 97 675 72 27",
   keywords:
-    "запчастини Mercedes Sprinter, запчастини Vito, запчастини VW Crafter, запчастини для мерседес спрінтер, автозапчастини Харків, запчастини для комерційного транспорту",
+    "студія краси Житомир, манікюр Житомир, педикюр Житомир, нарощування вій Житомир, брови Житомир, Fialka Beauty Bar, nail bar Житомир",
   openGraph: {
-    title: "Спринтер — Запчастини для комерційного транспорту",
+    title: "Fialka Beauty Bar — студія краси з фіолетовим настроєм",
     description:
-      "Понад 8 000 позицій запчастин для Mercedes та VW. Швидка доставка по Україні.",
+      "Манікюр, педикюр, брови, вії у Житомирі. Запишись зараз: +380 97 675 72 27",
     type: "website",
     locale: "uk_UA",
   },
@@ -31,12 +38,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uk" className={`${inter.variable} h-full antialiased`}>
+    <html
+      lang="uk"
+      className={`${inter.variable} ${playfair.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col bg-white text-gray-900">
         <CartProvider>
-          <WishlistProvider>
-            {children}
-          </WishlistProvider>
+          <WishlistProvider>{children}</WishlistProvider>
         </CartProvider>
       </body>
     </html>
