@@ -5,7 +5,8 @@ import { Shield, Truck, Award, Users } from "lucide-react";
 
 export const metadata = {
   title: "Про компанію | Спринтер",
-  description: "Про магазин запчастин Спринтер — 15 років досвіду, Харків, запчастини для Mercedes та VW.",
+  description:
+    "Про магазин запчастин Спринтер — 15 років досвіду, Харків, запчастини для Mercedes та VW.",
 };
 
 export default function AboutPage() {
@@ -13,50 +14,82 @@ export default function AboutPage() {
     <>
       <Header />
       <main className="min-h-screen bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
           <Breadcrumb items={[{ label: "Про компанію" }]} />
 
-          <div className="mt-8 bg-white rounded-3xl border border-gray-200 p-8 sm:p-12 mb-8">
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6">Про компанію</h1>
-            <div className="prose prose-gray max-w-none text-gray-600 leading-relaxed space-y-4">
+          <div className="mt-8 mb-8 rounded-3xl border border-gray-200 bg-white p-8 sm:p-12">
+            <h1 className="mb-6 text-3xl font-extrabold text-gray-900 sm:text-4xl">Про компанію</h1>
+            <div className="prose prose-gray max-w-none space-y-4 leading-relaxed text-gray-600">
               <p>
-                <strong className="text-gray-900">«Спринтер — Автозапчастини»</strong> — спеціалізований інтернет-магазин запчастин для комерційного транспорту Mercedes та Volkswagen. Ми працюємо з 2008 року і за цей час стали одним із найнадійніших постачальників у Харківському регіоні та по всій Україні.
+                <strong className="text-gray-900">«Спринтер — Автозапчастини»</strong> —
+                спеціалізований інтернет-магазин запчастин для комерційного транспорту Mercedes та
+                Volkswagen. Ми працюємо з 2008 року і за цей час стали одним із найнадійніших
+                постачальників у Харківському регіоні та по всій Україні.
               </p>
               <p>
-                Наша спеціалізація — Mercedes Sprinter (W901–W907), Mercedes Vito, Volkswagen Crafter та LT. Ми не займаємось усіма марками підряд — ми глибоко знаємо ці автомобілі, їхні технічні особливості та слабкі місця.
+                Наша спеціалізація — Mercedes Sprinter (W901–W907), Mercedes Vito, Volkswagen
+                Crafter та LT. Ми не займаємось усіма марками підряд — ми глибоко знаємо ці
+                автомобілі, їхні технічні особливості та слабкі місця.
               </p>
               <p>
-                Понад 8 000 позицій у наявності на нашому складі в Харкові. Ми працюємо з офіційними дистриб'юторами Bosch, Febi Bilstein, Mahle, Meyle, Valeo, Mann-Filter та інших провідних виробників.
+                Понад 8 000 позицій у наявності на нашому складі в Харкові. Ми працюємо з офіційними
+                дистриб&apos;юторами Bosch, Febi Bilstein, Mahle, Meyle, Valeo, Mann-Filter та інших
+                провідних виробників.
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 mb-8">
+          <div className="mb-8 grid grid-cols-2 gap-5 sm:grid-cols-4">
             {[
               { icon: Award, num: "15+", label: "Років досвіду" },
               { icon: Users, num: "8 500+", label: "Клієнтів щороку" },
               { icon: Shield, num: "8 000+", label: "Позицій у наявності" },
               { icon: Truck, num: "1–2", label: "Дні доставки" },
             ].map(({ icon: Icon, num, label }) => (
-              <div key={label} className="bg-white rounded-2xl border border-gray-200 p-6 text-center">
-                <Icon className="w-6 h-6 text-orange-500 mx-auto mb-3" />
-                <div className="text-2xl font-black text-gray-900 mb-1">{num}</div>
+              <div
+                key={label}
+                className="rounded-2xl border border-gray-200 bg-white p-6 text-center"
+              >
+                <Icon className="mx-auto mb-3 h-6 w-6 text-orange-500" />
+                <div className="mb-1 text-2xl font-black text-gray-900">{num}</div>
                 <div className="text-xs text-gray-500">{label}</div>
               </div>
             ))}
           </div>
 
-          <div className="bg-white rounded-3xl border border-gray-200 p-8 sm:p-10">
-            <h2 className="text-xl font-bold text-gray-900 mb-5">Наша адреса</h2>
+          <div className="rounded-3xl border border-gray-200 bg-white p-8 sm:p-10">
+            <h2 className="mb-5 text-xl font-bold text-gray-900">Наша адреса</h2>
             <div className="space-y-3 text-sm text-gray-600">
-              <p><strong className="text-gray-900">Адреса:</strong> м. Харків, Просп. Героїв Харкова, 210</p>
-              <p><strong className="text-gray-900">Телефони:</strong>{" "}
-                <a href="tel:+380672546266" className="text-orange-500 hover:text-orange-600">+38 (067) 254-62-66</a>{" · "}
-                <a href="tel:+380991129526" className="text-orange-500 hover:text-orange-600">+38 (099) 112-95-26</a>{" · "}
-                <a href="tel:+380962770540" className="text-orange-500 hover:text-orange-600">+38 (096) 277-05-40</a>
+              <p>
+                <strong className="text-gray-900">Адреса:</strong> м. Харків, Просп. Героїв Харкова,
+                210
               </p>
-              <p><strong className="text-gray-900">Email:</strong> <a href="mailto:info@sprinter.org.ua" className="text-orange-500 hover:text-orange-600">info@sprinter.org.ua</a></p>
-              <p><strong className="text-gray-900">Графік роботи:</strong> Пн–Сб: 9:00–18:00</p>
+              <p>
+                <strong className="text-gray-900">Телефони:</strong>{" "}
+                <a href="tel:+380672546266" className="text-orange-500 hover:text-orange-600">
+                  +38 (067) 254-62-66
+                </a>
+                {" · "}
+                <a href="tel:+380991129526" className="text-orange-500 hover:text-orange-600">
+                  +38 (099) 112-95-26
+                </a>
+                {" · "}
+                <a href="tel:+380962770540" className="text-orange-500 hover:text-orange-600">
+                  +38 (096) 277-05-40
+                </a>
+              </p>
+              <p>
+                <strong className="text-gray-900">Email:</strong>{" "}
+                <a
+                  href="mailto:info@sprinter.org.ua"
+                  className="text-orange-500 hover:text-orange-600"
+                >
+                  info@sprinter.org.ua
+                </a>
+              </p>
+              <p>
+                <strong className="text-gray-900">Графік роботи:</strong> Пн–Сб: 9:00–18:00
+              </p>
             </div>
           </div>
         </div>

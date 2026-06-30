@@ -13,11 +13,11 @@ export default function ContactPage() {
     <>
       <Header />
       <main className="min-h-screen bg-gray-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
           <Breadcrumb items={[{ label: "Контакти" }]} />
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-8 mb-10">Контакти</h1>
+          <h1 className="mt-8 mb-10 text-3xl font-extrabold text-gray-900 sm:text-4xl">Контакти</h1>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
             {/* Contact info */}
             <div className="space-y-5">
               {[
@@ -26,40 +26,67 @@ export default function ContactPage() {
                   label: "Телефони",
                   content: (
                     <div className="space-y-1">
-                      <a href="tel:+380672546266" className="block text-orange-500 hover:text-orange-600 font-semibold">+38 (067) 254-62-66</a>
-                      <a href="tel:+380991129526" className="block text-orange-500 hover:text-orange-600 font-semibold">+38 (099) 112-95-26</a>
-                      <a href="tel:+380962770540" className="block text-orange-500 hover:text-orange-600 font-semibold">+38 (096) 277-05-40</a>
+                      <a
+                        href="tel:+380672546266"
+                        className="block font-semibold text-orange-500 hover:text-orange-600"
+                      >
+                        +38 (067) 254-62-66
+                      </a>
+                      <a
+                        href="tel:+380991129526"
+                        className="block font-semibold text-orange-500 hover:text-orange-600"
+                      >
+                        +38 (099) 112-95-26
+                      </a>
+                      <a
+                        href="tel:+380962770540"
+                        className="block font-semibold text-orange-500 hover:text-orange-600"
+                      >
+                        +38 (096) 277-05-40
+                      </a>
                     </div>
                   ),
                 },
                 {
                   icon: Mail,
                   label: "Email",
-                  content: <a href="mailto:info@sprinter.org.ua" className="text-orange-500 hover:text-orange-600 font-semibold">info@sprinter.org.ua</a>,
+                  content: (
+                    <a
+                      href="mailto:info@sprinter.org.ua"
+                      className="font-semibold text-orange-500 hover:text-orange-600"
+                    >
+                      info@sprinter.org.ua
+                    </a>
+                  ),
                 },
                 {
                   icon: MapPin,
                   label: "Адреса",
-                  content: <span className="text-gray-700">м. Харків, Просп. Героїв Харкова, 210</span>,
+                  content: (
+                    <span className="text-gray-700">м. Харків, Просп. Героїв Харкова, 210</span>
+                  ),
                 },
                 {
                   icon: Clock,
                   label: "Графік роботи",
                   content: (
-                    <div className="text-gray-700 space-y-1">
-                      <div>Пн–П'ят: 9:00–18:00</div>
+                    <div className="space-y-1 text-gray-700">
+                      <div>Пн–П&apos;ят: 9:00–18:00</div>
                       <div>Субота: 9:00–16:00</div>
                       <div className="text-gray-400">Неділя: вихідний</div>
                     </div>
                   ),
                 },
               ].map(({ icon: Icon, label, content }) => (
-                <div key={label} className="bg-white rounded-2xl border border-gray-200 p-6 flex gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center shrink-0">
-                    <Icon className="w-5 h-5 text-orange-500" />
+                <div
+                  key={label}
+                  className="flex gap-4 rounded-2xl border border-gray-200 bg-white p-6"
+                >
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50">
+                    <Icon className="h-5 w-5 text-orange-500" />
                   </div>
                   <div>
-                    <div className="text-xs text-gray-400 font-medium mb-1">{label}</div>
+                    <div className="mb-1 text-xs font-medium text-gray-400">{label}</div>
                     <div className="text-sm">{content}</div>
                   </div>
                 </div>

@@ -2,7 +2,17 @@
 
 import { useState, useMemo } from "react";
 import Image from "next/image";
-import { SlidersHorizontal, X, ChevronDown, ChevronUp, ArrowRight, Droplets, ShoppingCart, CheckCircle } from "lucide-react";
+import Link from "next/link";
+import {
+  SlidersHorizontal,
+  X,
+  ChevronDown,
+  ChevronUp,
+  ArrowRight,
+  Droplets,
+  ShoppingCart,
+  CheckCircle,
+} from "lucide-react";
 import { oils, BRANDS, TYPES, VISCOSITIES, type OilType } from "@/data/oils";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/utils";
@@ -23,27 +33,21 @@ const BRAND_COLORS: Record<string, string> = {
   Хадо: "bg-orange-600",
 };
 
-function FilterSection({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function FilterSection({ title, children }: { title: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(true);
   return (
-    <div className="border-b border-gray-100 pb-4 mb-4">
+    <div className="mb-4 border-b border-gray-100 pb-4">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center justify-between w-full text-left mb-3 group"
+        className="group mb-3 flex w-full items-center justify-between text-left"
       >
-        <span className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+        <span className="text-xs font-semibold tracking-widest text-gray-500 uppercase">
           {title}
         </span>
         {open ? (
-          <ChevronUp className="w-3.5 h-3.5 text-gray-400 group-hover:text-orange-500 transition-colors" />
+          <ChevronUp className="h-3.5 w-3.5 text-gray-400 transition-colors group-hover:text-orange-500" />
         ) : (
-          <ChevronDown className="w-3.5 h-3.5 text-gray-400 group-hover:text-orange-500 transition-colors" />
+          <ChevronDown className="h-3.5 w-3.5 text-gray-400 transition-colors group-hover:text-orange-500" />
         )}
       </button>
       {open && children}
@@ -61,30 +65,127 @@ function Checkbox({
   onChange: () => void;
 }) {
   return (
-    <label className="flex items-center gap-2.5 cursor-pointer group mb-2">
+    <label className="group mb-2 flex cursor-pointer items-center gap-2.5">
       <div
-        className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-all ${
+        className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-all ${
           checked
-            ? "bg-orange-500 border-orange-500"
+            ? "border-orange-500 bg-orange-500"
             : "border-gray-300 group-hover:border-orange-400"
         }`}
         onClick={onChange}
       >
         {checked && (
-          <svg viewBox="0 0 10 8" className="w-2.5 h-2 text-white fill-current">
-            <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <svg viewBox="0 0 10 8" className="h-2 w-2.5 fill-current text-white">
+            <path
+              d="M1 4L3.5 6.5L9 1"
+              stroke="white"
+              strokeWidth="1.5"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         )}
       </div>
       <span
         onClick={onChange}
         className={`text-sm transition-colors ${
-          checked ? "text-gray-900 font-medium" : "text-gray-600 group-hover:text-gray-900"
+          checked ? "font-medium text-gray-900" : "text-gray-600 group-hover:text-gray-900"
         }`}
       >
         {label}
       </span>
     </label>
+  );
+}
+
+function Sidebar({
+  activeFiltersCount,
+  clearFilters,
+  selectedBrands,
+  toggleBrand,
+  selectedTypes,
+  toggleType,
+  selectedViscosities,
+  toggleViscosity,
+}: {
+  activeFiltersCount: number;
+  clearFilters: () => void;
+  selectedBrands: Set<string>;
+  toggleBrand: (b: string) => void;
+  selectedTypes: Set<OilType>;
+  toggleType: (t: OilType) => void;
+  selectedViscosities: Set<string>;
+  toggleViscosity: (v: string) => void;
+}) {
+  return (
+    <div className="space-y-0">
+      <div className="mb-5 flex items-center justify-between">
+        <h3 className="text-sm font-bold text-gray-900">Фільтри</h3>
+        {activeFiltersCount > 0 && (
+          <button
+            onClick={clearFilters}
+            className="flex items-center gap-1 text-xs font-semibold text-orange-500 transition-colors hover:text-orange-700"
+          >
+            <X className="h-3 w-3" /> Скинути ({activeFiltersCount})
+          </button>
+        )}
+      </div>
+
+      <FilterSection title="Бренд">
+        <div>
+          {BRANDS.map((b) => (
+            <Checkbox
+              key={b}
+              label={b}
+              checked={selectedBrands.has(b)}
+              onChange={() => toggleBrand(b)}
+            />
+          ))}
+        </div>
+      </FilterSection>
+
+      <FilterSection title="Тип оливи">
+        <div>
+          {TYPES.map((t) => (
+            <Checkbox
+              key={t}
+              label={t}
+              checked={selectedTypes.has(t)}
+              onChange={() => toggleType(t)}
+            />
+          ))}
+        </div>
+      </FilterSection>
+
+      <FilterSection title="В'язкість">
+        <div className="flex flex-wrap gap-2">
+          {VISCOSITIES.map((v) => (
+            <button
+              key={v}
+              onClick={() => toggleViscosity(v)}
+              className={`rounded-lg border px-2.5 py-1 text-xs font-semibold transition-all ${
+                selectedViscosities.has(v)
+                  ? "border-orange-500 bg-orange-500 text-white"
+                  : "border-gray-200 text-gray-600 hover:border-orange-400 hover:text-orange-600"
+              }`}
+            >
+              {v}
+            </button>
+          ))}
+        </div>
+      </FilterSection>
+
+      <div className="pt-2">
+        <a
+          href="tel:+380672546266"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-orange-200 py-3 text-sm font-semibold text-orange-600 transition-colors hover:bg-orange-50"
+        >
+          Допомога з підбором
+          <ArrowRight className="h-3.5 w-3.5" />
+        </a>
+      </div>
+    </div>
   );
 }
 
@@ -96,7 +197,7 @@ export default function OilsCatalog() {
   const [selectedViscosities, setSelectedViscosities] = useState<Set<string>>(new Set());
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
-  const handleAdd = (oil: typeof oils[0]) => {
+  const handleAdd = (oil: (typeof oils)[0]) => {
     addToCart({
       productId: `oil-${oil.id}`,
       quantity: 1,
@@ -137,147 +238,75 @@ export default function OilsCatalog() {
     setSelectedViscosities(new Set());
   };
 
-  const activeFiltersCount =
-    selectedBrands.size + selectedTypes.size + selectedViscosities.size;
+  const activeFiltersCount = selectedBrands.size + selectedTypes.size + selectedViscosities.size;
 
   const filtered = useMemo(() => {
     return oils.filter((p) => {
       if (selectedBrands.size > 0 && !selectedBrands.has(p.brand)) return false;
       if (selectedTypes.size > 0 && !selectedTypes.has(p.type)) return false;
-      if (selectedViscosities.size > 0 && !selectedViscosities.has(p.viscosity))
-        return false;
+      if (selectedViscosities.size > 0 && !selectedViscosities.has(p.viscosity)) return false;
       return true;
     });
   }, [selectedBrands, selectedTypes, selectedViscosities]);
 
-  const Sidebar = () => (
-    <div className="space-y-0">
-      <div className="flex items-center justify-between mb-5">
-        <h3 className="font-bold text-gray-900 text-sm">Фільтри</h3>
-        {activeFiltersCount > 0 && (
-          <button
-            onClick={clearFilters}
-            className="flex items-center gap-1 text-xs text-orange-500 hover:text-orange-700 font-semibold transition-colors"
-          >
-            <X className="w-3 h-3" /> Скинути ({activeFiltersCount})
-          </button>
-        )}
-      </div>
-
-      <FilterSection title="Бренд">
-        <div>
-          {BRANDS.map((b) => (
-            <Checkbox
-              key={b}
-              label={b}
-              checked={selectedBrands.has(b)}
-              onChange={() => toggleBrand(b)}
-            />
-          ))}
-        </div>
-      </FilterSection>
-
-      <FilterSection title="Тип оливи">
-        <div>
-          {TYPES.map((t) => (
-            <Checkbox
-              key={t}
-              label={t}
-              checked={selectedTypes.has(t)}
-              onChange={() => toggleType(t)}
-            />
-          ))}
-        </div>
-      </FilterSection>
-
-      <FilterSection title="В'язкість">
-        <div className="flex flex-wrap gap-2">
-          {VISCOSITIES.map((v) => (
-            <button
-              key={v}
-              onClick={() => toggleViscosity(v)}
-              className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all ${
-                selectedViscosities.has(v)
-                  ? "bg-orange-500 border-orange-500 text-white"
-                  : "border-gray-200 text-gray-600 hover:border-orange-400 hover:text-orange-600"
-              }`}
-            >
-              {v}
-            </button>
-          ))}
-        </div>
-      </FilterSection>
-
-      <div className="pt-2">
-        <a
-          href="tel:+380672546266"
-          className="flex items-center justify-center gap-2 w-full py-3 text-sm font-semibold text-orange-600 border border-orange-200 hover:bg-orange-50 rounded-xl transition-colors"
-        >
-          Допомога з підбором
-          <ArrowRight className="w-3.5 h-3.5" />
-        </a>
-      </div>
-    </div>
-  );
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Page header banner */}
-      <div className="bg-[#0a0a0a] border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="border-b border-white/5 bg-[#0a0a0a]">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-gray-500 mb-4">
-            <a href="/" className="hover:text-orange-400 transition-colors">
+          <nav className="mb-4 flex items-center gap-2 text-sm text-gray-500">
+            <Link href="/" className="transition-colors hover:text-orange-400">
               Головна
-            </a>
+            </Link>
             <span>/</span>
-            <a href="/#catalog" className="hover:text-orange-400 transition-colors">
+            <Link href="/#catalog" className="transition-colors hover:text-orange-400">
               Каталог
-            </a>
+            </Link>
             <span>/</span>
-            <span className="text-orange-400 font-medium">Моторна олива</span>
+            <span className="font-medium text-orange-400">Моторна олива</span>
           </nav>
 
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center">
-                  <Droplets className="w-5 h-5 text-orange-400" />
+              <div className="mb-2 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/20">
+                  <Droplets className="h-5 w-5 text-orange-400" />
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                <h1 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
                   Моторна олива
                 </h1>
               </div>
-              <p className="text-gray-400 text-sm max-w-xl">
-                Понад <span className="text-orange-400 font-semibold">493 позиції</span> від провідних брендів.
-                Підбір за в&apos;язкістю, допуском OEM та типом двигуна.
+              <p className="max-w-xl text-sm text-gray-400">
+                Понад <span className="font-semibold text-orange-400">493 позиції</span> від
+                провідних брендів. Підбір за в&apos;язкістю, допуском OEM та типом двигуна.
               </p>
             </div>
             <a
               href="tel:+380672546266"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold rounded-xl transition-colors shrink-0"
+              className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-orange-500 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-orange-600"
             >
               Допомога з підбором
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="h-4 w-4" />
             </a>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Mobile filter bar */}
-        <div className="flex items-center justify-between mb-6 lg:hidden">
+        <div className="mb-6 flex items-center justify-between lg:hidden">
           <p className="text-sm text-gray-600">
             <span className="font-bold text-gray-900">{filtered.length}</span> позицій
           </p>
           <button
             onClick={() => setMobileSidebarOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 bg-white rounded-xl text-sm font-semibold text-gray-700 hover:border-orange-300 transition-colors"
+            className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 transition-colors hover:border-orange-300"
           >
-            <SlidersHorizontal className="w-4 h-4" />
+            <SlidersHorizontal className="h-4 w-4" />
             Фільтри
             {activeFiltersCount > 0 && (
-              <span className="ml-1 w-5 h-5 rounded-full bg-orange-500 text-white text-xs flex items-center justify-center font-bold">
+              <span className="ml-1 flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white">
                 {activeFiltersCount}
               </span>
             )}
@@ -291,20 +320,29 @@ export default function OilsCatalog() {
               className="absolute inset-0 bg-black/40"
               onClick={() => setMobileSidebarOpen(false)}
             />
-            <div className="absolute inset-y-0 left-0 w-80 bg-white shadow-2xl p-6 overflow-y-auto">
-              <div className="flex items-center justify-between mb-6">
+            <div className="absolute inset-y-0 left-0 w-80 overflow-y-auto bg-white p-6 shadow-2xl">
+              <div className="mb-6 flex items-center justify-between">
                 <h2 className="font-bold text-gray-900">Фільтри</h2>
                 <button
                   onClick={() => setMobileSidebarOpen(false)}
-                  className="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="h-4 w-4" />
                 </button>
               </div>
-              <Sidebar />
+              <Sidebar
+                activeFiltersCount={activeFiltersCount}
+                clearFilters={clearFilters}
+                selectedBrands={selectedBrands}
+                toggleBrand={toggleBrand}
+                selectedTypes={selectedTypes}
+                toggleType={toggleType}
+                selectedViscosities={selectedViscosities}
+                toggleViscosity={toggleViscosity}
+              />
               <button
                 onClick={() => setMobileSidebarOpen(false)}
-                className="w-full mt-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-colors text-sm"
+                className="mt-6 w-full rounded-xl bg-orange-500 py-3 text-sm font-bold text-white transition-colors hover:bg-orange-600"
               >
                 Показати {filtered.length} результатів
               </button>
@@ -314,24 +352,31 @@ export default function OilsCatalog() {
 
         <div className="flex gap-8">
           {/* Desktop sidebar */}
-          <aside className="hidden lg:block w-60 shrink-0">
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sticky top-24">
-              <Sidebar />
+          <aside className="hidden w-60 shrink-0 lg:block">
+            <div className="sticky top-24 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+              <Sidebar
+                activeFiltersCount={activeFiltersCount}
+                clearFilters={clearFilters}
+                selectedBrands={selectedBrands}
+                toggleBrand={toggleBrand}
+                selectedTypes={selectedTypes}
+                toggleType={toggleType}
+                selectedViscosities={selectedViscosities}
+                toggleViscosity={toggleViscosity}
+              />
             </div>
           </aside>
 
           {/* Product grid */}
-          <div className="flex-1 min-w-0">
+          <div className="min-w-0 flex-1">
             {/* Result count */}
-            <div className="hidden lg:flex items-center justify-between mb-5">
+            <div className="mb-5 hidden items-center justify-between lg:flex">
               <p className="text-sm text-gray-600">
-                Знайдено{" "}
-                <span className="font-bold text-gray-900">{filtered.length}</span>{" "}
-                позицій
+                Знайдено <span className="font-bold text-gray-900">{filtered.length}</span> позицій
                 {activeFiltersCount > 0 && (
                   <button
                     onClick={clearFilters}
-                    className="ml-3 text-orange-500 hover:text-orange-700 font-semibold transition-colors"
+                    className="ml-3 font-semibold text-orange-500 transition-colors hover:text-orange-700"
                   >
                     Скинути фільтри
                   </button>
@@ -341,44 +386,44 @@ export default function OilsCatalog() {
 
             {filtered.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-20 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center mb-4">
-                  <Droplets className="w-7 h-7 text-gray-300" />
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100">
+                  <Droplets className="h-7 w-7 text-gray-300" />
                 </div>
-                <h3 className="font-bold text-gray-900 mb-2">Нічого не знайдено</h3>
-                <p className="text-sm text-gray-500 mb-4">
-                  Спробуйте змінити або скинути фільтри
-                </p>
+                <h3 className="mb-2 font-bold text-gray-900">Нічого не знайдено</h3>
+                <p className="mb-4 text-sm text-gray-500">Спробуйте змінити або скинути фільтри</p>
                 <button
                   onClick={clearFilters}
-                  className="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold rounded-xl transition-colors"
+                  className="rounded-xl bg-orange-500 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-orange-600"
                 >
                   Скинути фільтри
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 {filtered.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white rounded-2xl border border-gray-100 hover:border-orange-200 shadow-sm hover:shadow-lg hover:shadow-orange-50 transition-all duration-300 hover:-translate-y-0.5 flex flex-col overflow-hidden group"
+                    className="group flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-lg hover:shadow-orange-50"
                   >
                     {/* Product image */}
-                    <div className="relative h-40 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+                    <div className="relative h-40 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
                       <Image
                         src={product.image}
                         alt={product.name}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                         sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                       <div className="absolute top-2 left-2">
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TYPE_COLORS[product.type]}`}>
+                        <span
+                          className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${TYPE_COLORS[product.type]}`}
+                        >
                           {product.type}
                         </span>
                       </div>
                       {!product.inStock && (
-                        <div className="absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-800/80 text-gray-300">
+                        <div className="absolute top-2 right-2 rounded-full bg-gray-800/80 px-2 py-0.5 text-[10px] font-bold text-gray-300">
                           Під замовлення
                         </div>
                       )}
@@ -387,76 +432,92 @@ export default function OilsCatalog() {
                     {/* Card top brand bar */}
                     <div className={`h-1 ${BRAND_COLORS[product.brand] ?? "bg-gray-400"}`} />
 
-                    <div className="p-4 flex flex-col flex-1">
+                    <div className="flex flex-1 flex-col p-4">
                       {/* Brand + viscosity */}
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                      <div className="mb-2 flex items-center justify-between">
+                        <span className="text-xs font-bold tracking-widest text-gray-400 uppercase">
                           {product.brand}
                         </span>
                         <div className="flex gap-1">
-                          <span className="px-2 py-0.5 bg-orange-50 border border-orange-100 text-orange-700 text-xs font-bold rounded-lg">
+                          <span className="rounded-lg border border-orange-100 bg-orange-50 px-2 py-0.5 text-xs font-bold text-orange-700">
                             {product.viscosity}
                           </span>
-                          <span className="px-2 py-0.5 bg-gray-50 border border-gray-100 text-gray-600 text-xs font-semibold rounded-lg">
+                          <span className="rounded-lg border border-gray-100 bg-gray-50 px-2 py-0.5 text-xs font-semibold text-gray-600">
                             {product.volume} л
                           </span>
                         </div>
                       </div>
 
                       {/* Name */}
-                      <h3 className="text-sm font-bold text-gray-900 leading-snug mb-3 group-hover:text-orange-600 transition-colors">
+                      <h3 className="mb-3 text-sm leading-snug font-bold text-gray-900 transition-colors group-hover:text-orange-600">
                         {product.name}
                       </h3>
 
                       {/* Specs */}
-                      <div className="space-y-1 mb-3 flex-1">
+                      <div className="mb-3 flex-1 space-y-1">
                         {product.acea.length > 0 && (
                           <div className="flex gap-1.5 text-xs">
-                            <span className="text-gray-400 shrink-0 font-medium w-10">ACEA</span>
-                            <span className="text-gray-700 font-semibold">{product.acea.join(" | ")}</span>
+                            <span className="w-10 shrink-0 font-medium text-gray-400">ACEA</span>
+                            <span className="font-semibold text-gray-700">
+                              {product.acea.join(" | ")}
+                            </span>
                           </div>
                         )}
                         {product.api.length > 0 && (
                           <div className="flex gap-1.5 text-xs">
-                            <span className="text-gray-400 shrink-0 font-medium w-10">API</span>
-                            <span className="text-gray-700 font-semibold">{product.api.join(" | ")}</span>
+                            <span className="w-10 shrink-0 font-medium text-gray-400">API</span>
+                            <span className="font-semibold text-gray-700">
+                              {product.api.join(" | ")}
+                            </span>
                           </div>
                         )}
                         {product.oem.length > 0 && (
                           <div className="flex gap-1.5 text-xs">
-                            <span className="text-gray-400 shrink-0 font-medium w-10">OEM</span>
-                            <span className="text-gray-600 leading-relaxed">
+                            <span className="w-10 shrink-0 font-medium text-gray-400">OEM</span>
+                            <span className="leading-relaxed text-gray-600">
                               {product.oem.slice(0, 2).join(" · ")}
-                              {product.oem.length > 2 && <span className="text-gray-400"> +{product.oem.length - 2}</span>}
+                              {product.oem.length > 2 && (
+                                <span className="text-gray-400"> +{product.oem.length - 2}</span>
+                              )}
                             </span>
                           </div>
                         )}
                       </div>
 
                       {/* Price + Cart */}
-                      <div className="mt-auto pt-3 border-t border-gray-50 flex items-end justify-between">
+                      <div className="mt-auto flex items-end justify-between border-t border-gray-50 pt-3">
                         <div>
-                          <div className="text-lg font-black text-gray-900">{formatPrice(product.price)}</div>
+                          <div className="text-lg font-black text-gray-900">
+                            {formatPrice(product.price)}
+                          </div>
                           {product.priceOld && (
-                            <div className="text-xs text-gray-400 line-through">{formatPrice(product.priceOld)}</div>
+                            <div className="text-xs text-gray-400 line-through">
+                              {formatPrice(product.priceOld)}
+                            </div>
                           )}
-                          <div className={`text-xs font-semibold flex items-center gap-1 mt-0.5 ${product.inStock ? "text-green-600" : "text-amber-500"}`}>
-                            <CheckCircle className="w-3 h-3" />
+                          <div
+                            className={`mt-0.5 flex items-center gap-1 text-xs font-semibold ${product.inStock ? "text-green-600" : "text-amber-500"}`}
+                          >
+                            <CheckCircle className="h-3 w-3" />
                             {product.inStock ? "В наявності" : "Під замовлення"}
                           </div>
                         </div>
                         <button
                           onClick={() => handleAdd(product)}
-                          className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                          className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition-all duration-200 ${
                             addedId === product.id
                               ? "bg-green-500 text-white"
                               : isInCart(`oil-${product.id}`)
-                              ? "bg-orange-100 text-orange-700 hover:bg-orange-200"
-                              : "bg-orange-500 text-white hover:bg-orange-600 hover:shadow-md hover:shadow-orange-500/20"
+                                ? "bg-orange-100 text-orange-700 hover:bg-orange-200"
+                                : "bg-orange-500 text-white hover:bg-orange-600 hover:shadow-md hover:shadow-orange-500/20"
                           }`}
                         >
-                          <ShoppingCart className="w-3.5 h-3.5" />
-                          {addedId === product.id ? "Додано!" : isInCart(`oil-${product.id}`) ? "В кошику" : "Купити"}
+                          <ShoppingCart className="h-3.5 w-3.5" />
+                          {addedId === product.id
+                            ? "Додано!"
+                            : isInCart(`oil-${product.id}`)
+                              ? "В кошику"
+                              : "Купити"}
                         </button>
                       </div>
                     </div>
@@ -467,19 +528,19 @@ export default function OilsCatalog() {
 
             {/* Contact CTA */}
             {filtered.length > 0 && (
-              <div className="mt-10 p-8 bg-[#0a0a0a] rounded-2xl text-center">
-                <div className="text-white font-bold text-lg mb-2">
+              <div className="mt-10 rounded-2xl bg-[#0a0a0a] p-8 text-center">
+                <div className="mb-2 text-lg font-bold text-white">
                   Потрібна допомога з підбором?
                 </div>
-                <p className="text-gray-400 text-sm mb-5">
+                <p className="mb-5 text-sm text-gray-400">
                   Наш спеціаліст підбере оптимальну оливу за характеристиками вашого авто
                 </p>
                 <a
                   href="tel:+380672546266"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/30 text-sm"
+                  className="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-7 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-500/30"
                 >
                   Зателефонувати
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
             )}
