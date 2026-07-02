@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/lib/cart";
-import { WishlistProvider } from "@/lib/wishlist";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -10,16 +8,22 @@ const inter = Inter({
   display: "swap",
 });
 
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin", "cyrillic"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Спринтер — Запчастини для Mercedes Sprinter, Vito, VW Crafter | Харків",
+  title: "FORMA3D — Дизайнерський декор на 3D-друку",
   description:
-    "Інтернет-магазин запчастин для Mercedes Sprinter, Vito, Volkswagen Crafter та LT. Понад 8 000 позицій в наявності. Доставка по Україні 1–2 дні. Харків: Просп. Героїв Харкова, 210.",
+    "FORMA3D — студія 3D-друку дизайнерського декору: вази, скульптури та предмети інтер'єру. Індивідуальні кольори та розміри, доставка по Україні.",
   keywords:
-    "запчастини Mercedes Sprinter, запчастини Vito, запчастини VW Crafter, запчастини для мерседес спрінтер, автозапчастини Харків, запчастини для комерційного транспорту",
+    "3д друк, 3d друк ваз, дизайнерські вази, декор 3d друк, замовити 3d друк, вироби з пластику 3d принтер",
   openGraph: {
-    title: "Спринтер — Запчастини для комерційного транспорту",
+    title: "FORMA3D — Дизайнерський декор на 3D-друку",
     description:
-      "Понад 8 000 позицій запчастин для Mercedes та VW. Швидка доставка по Україні.",
+      "Вази та скульптурний декор, надруковані на 3D-принтері. Індивідуальні кольори та розміри.",
     type: "website",
     locale: "uk_UA",
   },
@@ -31,13 +35,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uk" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
-        <CartProvider>
-          <WishlistProvider>
-            {children}
-          </WishlistProvider>
-        </CartProvider>
+    <html lang="uk" className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-sand text-ink">
+        {children}
       </body>
     </html>
   );
