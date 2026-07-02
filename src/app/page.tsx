@@ -1,14 +1,11 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import Hero from "@/components/home/Hero";
-import VehicleSelector from "@/components/home/VehicleSelector";
-import CategoryGrid from "@/components/home/CategoryGrid";
-import FeaturedProducts from "@/components/home/FeaturedProducts";
-import WhyUs from "@/components/home/WhyUs";
-import HowItWorks from "@/components/home/HowItWorks";
-import Testimonials from "@/components/home/Testimonials";
-import FAQ from "@/components/home/FAQ";
-import ContactBanner from "@/components/home/ContactBanner";
+import Header from "@/components/grooming/Header";
+import Hero from "@/components/grooming/Hero";
+import About from "@/components/grooming/About";
+import Services from "@/components/grooming/Services";
+import Gallery from "@/components/grooming/Gallery";
+import Contact from "@/components/grooming/Contact";
+import CtaBanner from "@/components/grooming/CtaBanner";
+import Footer from "@/components/grooming/Footer";
 
 export default function Home() {
   return (
@@ -16,14 +13,11 @@ export default function Home() {
       <Header />
       <main className="flex flex-col">
         <Hero />
-        <VehicleSelector />
-        <CategoryGrid />
-        <FeaturedProducts />
-        <WhyUs />
-        <HowItWorks />
-        <Testimonials />
-        <FAQ />
-        <ContactBanner />
+        <About />
+        <Services />
+        <Gallery />
+        <Contact />
+        <CtaBanner />
       </main>
       <Footer />
     </>
