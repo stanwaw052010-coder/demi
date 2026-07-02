@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Cinzel } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/lib/cart";
-import { WishlistProvider } from "@/lib/wishlist";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -10,16 +8,22 @@ const inter = Inter({
   display: "swap",
 });
 
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Спринтер — Запчастини для Mercedes Sprinter, Vito, VW Crafter | Харків",
+  title: "AMELI — Handcrafted amulets & talismans",
   description:
-    "Інтернет-магазин запчастин для Mercedes Sprinter, Vito, Volkswagen Crafter та LT. Понад 8 000 позицій в наявності. Доставка по Україні 1–2 дні. Харків: Просп. Героїв Харкова, 210.",
+    "AMELI — унікальні рунічні обереги та кулони ручної роботи з дерева, епоксидної смоли та мідної поталі. Створено в Україні. Shipping across Europe.",
   keywords:
-    "запчастини Mercedes Sprinter, запчастини Vito, запчастини VW Crafter, запчастини для мерседес спрінтер, автозапчастини Харків, запчастини для комерційного транспорту",
+    "рунічні обереги, амулети ручної роботи, талісмани, кулони з рунами, epoxy resin jewelry, handcrafted amulets, AMELI",
   openGraph: {
-    title: "Спринтер — Запчастини для комерційного транспорту",
+    title: "AMELI — Handcrafted amulets & talismans",
     description:
-      "Понад 8 000 позицій запчастин для Mercedes та VW. Швидка доставка по Україні.",
+      "Унікальні прикраси з особливою атмосферою. Створено в Україні. Shipping across Europe.",
     type: "website",
     locale: "uk_UA",
   },
@@ -31,13 +35,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uk" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
-        <CartProvider>
-          <WishlistProvider>
-            {children}
-          </WishlistProvider>
-        </CartProvider>
+    <html lang="uk" className={`${inter.variable} ${cinzel.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-void text-parchment">
+        {children}
       </body>
     </html>
   );
