@@ -1,6 +1,6 @@
 import { HeartHandshake, Sparkles, TrendingUp } from "lucide-react";
-import { EXPERIENCE_YEARS, NAME } from "@/lib/mentor";
-import PhotoSlot from "./PhotoSlot";
+import { EXPERIENCE_YEARS, NAME, PHOTOS } from "@/lib/mentor";
+import Photo from "./Photo";
 import Reveal from "./Reveal";
 
 const POINTS = [
@@ -26,7 +26,11 @@ export default function About() {
     <section id="about" className="mx-auto max-w-6xl px-5 py-24">
       <div className="grid items-start gap-14 lg:grid-cols-[0.9fr_1.1fr]">
         <Reveal>
-          <PhotoSlot label="Портрет Катерини" className="aspect-[4/5] w-full" />
+          <Photo
+            src={PHOTOS.portrait.src}
+            alt={PHOTOS.portrait.alt}
+            className="aspect-[4/5] w-full"
+          />
         </Reveal>
 
         <div>

@@ -1,7 +1,7 @@
 import { Instagram } from "./icons";
-import PhotoSlot from "./PhotoSlot";
+import Photo from "./Photo";
 import Reveal from "./Reveal";
-import { EXPERIENCE_YEARS, INSTAGRAM_STATS, PERSONAL_INSTAGRAM_URL } from "@/lib/mentor";
+import { EXPERIENCE_YEARS, INSTAGRAM_STATS, PERSONAL_INSTAGRAM_URL, PHOTOS } from "@/lib/mentor";
 
 export default function Hero() {
   return (
@@ -56,8 +56,10 @@ export default function Hero() {
           </Reveal>
 
           <Reveal delay={0.15} className="relative">
-            <PhotoSlot
-              label="Фото Катерини за роботою"
+            <Photo
+              src={PHOTOS.hero.src}
+              alt={PHOTOS.hero.alt}
+              priority
               className="aspect-[4/5] w-full max-w-sm mx-auto"
             />
             <div className="absolute -left-4 top-8 rounded-2xl border border-white/10 bg-concrete-2/95 px-5 py-4 shadow-xl backdrop-blur sm:-left-8">

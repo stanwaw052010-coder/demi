@@ -1,12 +1,13 @@
-import PhotoSlot from "./PhotoSlot";
+import Photo from "./Photo";
 import Reveal from "./Reveal";
+import { PHOTOS } from "@/lib/mentor";
 
 const SLOTS = [
-  { label: "Робота майстра", span: "sm:row-span-2" },
-  { label: "Салон BEAUTY FORMULA" },
-  { label: "Результат нарощування" },
-  { label: "Навчання учениць" },
-  { label: "Катерина за роботою" },
+  { photo: PHOTOS.workMaster, span: "sm:row-span-2" },
+  { photo: PHOTOS.salon },
+  { photo: PHOTOS.result },
+  { photo: PHOTOS.training },
+  { photo: PHOTOS.process },
 ];
 
 export default function Gallery() {
@@ -24,8 +25,13 @@ export default function Gallery() {
 
         <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:grid-rows-2">
           {SLOTS.map((slot, i) => (
-            <Reveal key={slot.label} delay={i * 0.08} className={slot.span}>
-              <PhotoSlot label={slot.label} className="aspect-square h-full w-full" />
+            <Reveal key={slot.photo.src} delay={i * 0.08} className={slot.span}>
+              <Photo
+                src={slot.photo.src}
+                alt={slot.photo.alt}
+                sizes="(min-width: 640px) 33vw, 50vw"
+                className="aspect-square h-full w-full"
+              />
             </Reveal>
           ))}
         </div>

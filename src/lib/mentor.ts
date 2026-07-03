@@ -59,6 +59,16 @@ export const PROGRAM_MODULES = [
   },
 ];
 
+export const PHOTOS = {
+  hero: { src: "/photos/hero.jpg", alt: "Катерина Матюшко — головне фото" },
+  portrait: { src: "/photos/portrait.jpg", alt: "Портрет Катерини Матюшко" },
+  workMaster: { src: "/photos/work-master.jpg", alt: "Робота майстра нарощування волосся" },
+  salon: { src: "/photos/salon.jpg", alt: "Салон краси BEAUTY FORMULA" },
+  result: { src: "/photos/result.jpg", alt: "Результат нарощування волосся" },
+  training: { src: "/photos/training.jpg", alt: "Навчання учениць" },
+  process: { src: "/photos/process.jpg", alt: "Катерина у процесі роботи" },
+};
+
 export const WHY_POINTS = [
   {
     title: `${EXPERIENCE_YEARS} років у beauty-індустрії`,
