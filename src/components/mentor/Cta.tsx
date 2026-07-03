@@ -4,7 +4,7 @@ import Reveal from "./Reveal";
 
 export default function Cta() {
   return (
-    <section id="contacts" className="py-24">
+    <section className="py-24">
       <Reveal className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-green/30 bg-concrete-2 px-8 py-16 text-center">
         <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-green/15 blur-3xl" />
         <div className="pointer-events-none absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-green/10 blur-3xl" />

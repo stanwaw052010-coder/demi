@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Instagram } from "./icons";
 import Photo from "./Photo";
 import Reveal from "./Reveal";
@@ -35,12 +36,12 @@ export default function Hero() {
                 <Instagram className="h-4 w-4" />
                 Записатись на навчання
               </a>
-              <a
-                href="#program"
+              <Link
+                href="/navchannya"
                 className="rounded-full border border-white/20 px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:border-green-light hover:text-green-light"
               >
                 Що входить у навчання
-              </a>
+              </Link>
             </div>
 
             <div className="mt-10 flex flex-wrap gap-x-10 gap-y-3">

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope, Unbounded } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/mentor/Header";
+import Footer from "@/components/mentor/Footer";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -16,7 +18,10 @@ const unbounded = Unbounded({
 });
 
 export const metadata: Metadata = {
-  title: "Катерина Матюшко — Навчання нарощуванню волосся",
+  title: {
+    default: "Катерина Матюшко — Навчання нарощуванню волосся",
+    template: "%s — Катерина Матюшко",
+  },
   description:
     "Навчаю нарощуванню волосся з нуля. Допомагаю вийти на стабільний дохід у beauty-бізнесі. 20+ років досвіду, власний салон краси BEAUTY FORMULA.",
   keywords:
@@ -38,7 +43,9 @@ export default function RootLayout({
   return (
     <html lang="uk" className={`${manrope.variable} ${unbounded.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-concrete text-cream">
-        {children}
+        <Header />
+        <main className="flex flex-1 flex-col">{children}</main>
+        <Footer />
       </body>
     </html>
   );

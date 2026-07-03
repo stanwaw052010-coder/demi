@@ -1,20 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { NAME, PERSONAL_INSTAGRAM_URL } from "@/lib/mentor";
 
 const NAV_LINKS = [
-  { href: "#about", label: "Про мене" },
-  { href: "#program", label: "Програма" },
-  { href: "#why", label: "Чому я" },
-  { href: "#salon", label: "Салон" },
-  { href: "#contacts", label: "Контакти" },
+  { href: "/pro-mene", label: "Про мене" },
+  { href: "/navchannya", label: "Навчання" },
+  { href: "/salon", label: "Салон" },
+  { href: "/contacts", label: "Контакти" },
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -30,24 +32,26 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-        <a href="#top" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-green font-display text-sm text-cream">
             КМ
           </span>
           <span className="font-display text-sm uppercase tracking-wide text-cream sm:text-base">
             {NAME}
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-7 lg:flex">
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-cream-soft transition-colors hover:text-green-light"
+              className={`text-sm font-medium transition-colors hover:text-green-light ${
+                pathname === link.href ? "text-green-light" : "text-cream-soft"
+              }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -75,14 +79,16 @@ export default function Header() {
         <div className="border-t border-white/10 bg-concrete px-5 pb-6 pt-2 lg:hidden">
           <nav className="flex flex-col gap-4">
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="text-base font-medium text-cream-soft"
+                className={`text-base font-medium ${
+                  pathname === link.href ? "text-green-light" : "text-cream-soft"
+                }`}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <a
               href={PERSONAL_INSTAGRAM_URL}
