@@ -1,25 +1,30 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Manrope, Unbounded } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/lib/cart";
-import { WishlistProvider } from "@/lib/wishlist";
 
-const inter = Inter({
-  variable: "--font-inter",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin", "cyrillic"],
   display: "swap",
 });
 
+const unbounded = Unbounded({
+  variable: "--font-unbounded",
+  subsets: ["latin", "cyrillic"],
+  weight: ["500", "600", "700", "800"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Спринтер — Запчастини для Mercedes Sprinter, Vito, VW Crafter | Харків",
+  title: "Катерина Матюшко — Навчання нарощуванню волосся",
   description:
-    "Інтернет-магазин запчастин для Mercedes Sprinter, Vito, Volkswagen Crafter та LT. Понад 8 000 позицій в наявності. Доставка по Україні 1–2 дні. Харків: Просп. Героїв Харкова, 210.",
+    "Навчаю нарощуванню волосся з нуля. Допомагаю вийти на стабільний дохід у beauty-бізнесі. 20+ років досвіду, власний салон краси BEAUTY FORMULA.",
   keywords:
-    "запчастини Mercedes Sprinter, запчастини Vito, запчастини VW Crafter, запчастини для мерседес спрінтер, автозапчастини Харків, запчастини для комерційного транспорту",
+    "навчання нарощуванню волосся, курс нарощування волосся, beauty бізнес навчання, Катерина Матюшко, BEAUTY FORMULA",
   openGraph: {
-    title: "Спринтер — Запчастини для комерційного транспорту",
+    title: "Катерина Матюшко — Навчання нарощуванню волосся",
     description:
-      "Понад 8 000 позицій запчастин для Mercedes та VW. Швидка доставка по Україні.",
+      "Трансформую жінок, вчу професії, що змінює життя. 20+ років досвіду в beauty-індустрії.",
     type: "website",
     locale: "uk_UA",
   },
@@ -31,13 +36,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uk" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
-        <CartProvider>
-          <WishlistProvider>
-            {children}
-          </WishlistProvider>
-        </CartProvider>
+    <html lang="uk" className={`${manrope.variable} ${unbounded.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-concrete text-cream">
+        {children}
       </body>
     </html>
   );
