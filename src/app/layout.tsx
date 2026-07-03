@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Oswald } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart";
-import { WishlistProvider } from "@/lib/wishlist";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -10,16 +9,22 @@ const inter = Inter({
   display: "swap",
 });
 
+const oswald = Oswald({
+  variable: "--font-oswald",
+  subsets: ["latin", "cyrillic"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Спринтер — Запчастини для Mercedes Sprinter, Vito, VW Crafter | Харків",
+  title: "Nata-Sushi — Суші-бар у Перещепиному",
   description:
-    "Інтернет-магазин запчастин для Mercedes Sprinter, Vito, Volkswagen Crafter та LT. Понад 8 000 позицій в наявності. Доставка по Україні 1–2 дні. Харків: Просп. Героїв Харкова, 210.",
+    "Nata-Sushi — суші-бар у Перещепиному. Роли, сети, гарячі удони та напої. Замовлення телефоном або в Instagram.",
   keywords:
-    "запчастини Mercedes Sprinter, запчастини Vito, запчастини VW Crafter, запчастини для мерседес спрінтер, автозапчастини Харків, запчастини для комерційного транспорту",
+    "суші Перещепине, роли Перещепине, суші-бар Nata-Sushi, замовити суші, удон Перещепине",
   openGraph: {
-    title: "Спринтер — Запчастини для комерційного транспорту",
-    description:
-      "Понад 8 000 позицій запчастин для Mercedes та VW. Швидка доставка по Україні.",
+    title: "Nata-Sushi — Суші-бар у Перещепиному",
+    description: "Роли, сети, гарячі удони та напої. Замовлення телефоном або в Instagram.",
     type: "website",
     locale: "uk_UA",
   },
@@ -31,13 +36,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uk" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
-        <CartProvider>
-          <WishlistProvider>
-            {children}
-          </WishlistProvider>
-        </CartProvider>
+    <html lang="uk" className={`${inter.variable} ${oswald.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-charcoal text-cream">
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );

@@ -2,106 +2,88 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
-  useReducer,
-  useEffect,
+  useMemo,
+  useState,
   type ReactNode,
 } from "react";
-import type { CartItem, CartState } from "./types";
+import type { MenuItem } from "./menu";
 
-type CartAction =
-  | { type: "ADD"; item: CartItem }
-  | { type: "REMOVE"; productId: string }
-  | { type: "UPDATE_QTY"; productId: string; quantity: number }
-  | { type: "CLEAR" }
-  | { type: "LOAD"; items: CartItem[] };
+type CartLine = {
+  item: MenuItem;
+  qty: number;
+};
 
-function cartReducer(state: CartState, action: CartAction): CartState {
-  let items: CartItem[];
-  switch (action.type) {
-    case "ADD": {
-      const existing = state.items.find((i) => i.productId === action.item.productId);
-      if (existing) {
-        items = state.items.map((i) =>
-          i.productId === action.item.productId
-            ? { ...i, quantity: i.quantity + action.item.quantity }
-            : i
-        );
-      } else {
-        items = [...state.items, action.item];
-      }
-      break;
-    }
-    case "REMOVE":
-      items = state.items.filter((i) => i.productId !== action.productId);
-      break;
-    case "UPDATE_QTY":
-      items = state.items
-        .map((i) =>
-          i.productId === action.productId ? { ...i, quantity: action.quantity } : i
-        )
-        .filter((i) => i.quantity > 0);
-      break;
-    case "CLEAR":
-      items = [];
-      break;
-    case "LOAD":
-      items = action.items;
-      break;
-    default:
-      return state;
-  }
-  const total = items.reduce((s, i) => s + i.price * i.quantity, 0);
-  const count = items.reduce((s, i) => s + i.quantity, 0);
-  return { items, total, count };
-}
-
-const initial: CartState = { items: [], total: 0, count: 0 };
-
-interface CartContextValue {
-  cart: CartState;
-  addToCart: (item: CartItem) => void;
-  removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
-  clearCart: () => void;
-  isInCart: (productId: string) => boolean;
-}
+type CartContextValue = {
+  lines: CartLine[];
+  isOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
+  addItem: (item: MenuItem) => void;
+  removeItem: (id: string) => void;
+  setQty: (id: string, qty: number) => void;
+  totalCount: number;
+  totalPrice: number;
+};
 
 const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [cart, dispatch] = useReducer(cartReducer, initial);
+  const [lines, setLines] = useState<CartLine[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("cart");
-      if (stored) dispatch({ type: "LOAD", items: JSON.parse(stored) });
-    } catch {}
+  const addItem = useCallback((item: MenuItem) => {
+    setLines((prev) => {
+      const existing = prev.find((l) => l.item.id === item.id);
+      if (existing) {
+        return prev.map((l) =>
+          l.item.id === item.id ? { ...l, qty: l.qty + 1 } : l
+        );
+      }
+      return [...prev, { item, qty: 1 }];
+    });
+    setIsOpen(true);
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart.items));
-  }, [cart.items]);
+  const removeItem = useCallback((id: string) => {
+    setLines((prev) => prev.filter((l) => l.item.id !== id));
+  }, []);
 
-  return (
-    <CartContext.Provider
-      value={{
-        cart,
-        addToCart: (item) => dispatch({ type: "ADD", item }),
-        removeFromCart: (id) => dispatch({ type: "REMOVE", productId: id }),
-        updateQuantity: (id, qty) =>
-          dispatch({ type: "UPDATE_QTY", productId: id, quantity: qty }),
-        clearCart: () => dispatch({ type: "CLEAR" }),
-        isInCart: (id) => cart.items.some((i) => i.productId === id),
-      }}
-    >
-      {children}
-    </CartContext.Provider>
+  const setQty = useCallback((id: string, qty: number) => {
+    setLines((prev) =>
+      qty <= 0
+        ? prev.filter((l) => l.item.id !== id)
+        : prev.map((l) => (l.item.id === id ? { ...l, qty } : l))
+    );
+  }, []);
+
+  const totalCount = useMemo(
+    () => lines.reduce((sum, l) => sum + l.qty, 0),
+    [lines]
   );
+  const totalPrice = useMemo(
+    () => lines.reduce((sum, l) => sum + l.qty * l.item.price, 0),
+    [lines]
+  );
+
+  const value: CartContextValue = {
+    lines,
+    isOpen,
+    openCart: () => setIsOpen(true),
+    closeCart: () => setIsOpen(false),
+    addItem,
+    removeItem,
+    setQty,
+    totalCount,
+    totalPrice,
+  };
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
 export function useCart() {
   const ctx = useContext(CartContext);
-  if (!ctx) throw new Error("useCart must be inside CartProvider");
+  if (!ctx) throw new Error("useCart must be used within CartProvider");
   return ctx;
 }
