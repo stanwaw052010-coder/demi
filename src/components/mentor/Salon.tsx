@@ -11,12 +11,13 @@ import {
   SALON_TAGLINE,
 } from "@/lib/mentor";
 import { Instagram } from "./icons";
+import Reveal from "./Reveal";
 
 export default function Salon() {
   return (
     <section id="salon" className="bg-concrete-2 py-24">
       <div className="mx-auto max-w-6xl px-5">
-        <div className="mx-auto max-w-2xl text-center">
+        <Reveal className="mx-auto max-w-2xl text-center">
           <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-green-light">
             Мій салон
           </p>
@@ -24,10 +25,10 @@ export default function Salon() {
             {SALON_NAME}
           </h2>
           <p className="mt-3 text-cream-soft">{SALON_TAGLINE}</p>
-        </div>
+        </Reveal>
 
         <div className="mt-14 grid gap-8 lg:grid-cols-2">
-          <div className="overflow-hidden rounded-3xl border border-white/10">
+          <Reveal className="overflow-hidden rounded-3xl border border-white/10">
             <iframe
               src={SALON_MAP_EMBED_SRC}
               title={`${SALON_NAME} на карті`}
@@ -36,7 +37,7 @@ export default function Salon() {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
-          </div>
+          </Reveal>
 
           <div className="space-y-6">
             <div className="rounded-2xl border border-white/10 bg-concrete p-6">

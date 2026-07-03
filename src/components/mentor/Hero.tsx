@@ -1,24 +1,28 @@
 import { Instagram } from "./icons";
-import { EXPERIENCE_YEARS, INSTAGRAM_STATS, PERSONAL_INSTAGRAM_HANDLE, PERSONAL_INSTAGRAM_URL } from "@/lib/mentor";
+import PhotoSlot from "./PhotoSlot";
+import Reveal from "./Reveal";
+import { EXPERIENCE_YEARS, INSTAGRAM_STATS, PERSONAL_INSTAGRAM_URL } from "@/lib/mentor";
 
 export default function Hero() {
   return (
     <section id="top" className="relative overflow-hidden border-b border-white/10">
-      <div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-green/10 blur-3xl" />
-      <div className="pointer-events-none absolute -left-32 bottom-0 h-72 w-72 rounded-full bg-green/10 blur-3xl" />
+      <div className="pointer-events-none absolute -right-24 -top-24 h-[28rem] w-[28rem] rounded-full bg-green/15 blur-3xl" />
+      <div className="pointer-events-none absolute -left-40 bottom-0 h-80 w-80 rounded-full bg-green/10 blur-3xl" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-green-light/40 to-transparent" />
 
-      <div className="relative mx-auto max-w-6xl px-5 py-24">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.2fr_0.8fr]">
-          <div>
+      <div className="relative mx-auto max-w-6xl px-5 py-20 sm:py-28">
+        <div className="grid items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
+          <Reveal>
             <p className="inline-flex w-fit items-center gap-2 rounded-full border border-green/40 bg-green/10 px-4 py-1.5 text-sm font-medium text-green-light">
               Навчання нарощуванню волосся
             </p>
-            <h1 className="mt-6 font-display text-4xl uppercase leading-[1.15] text-cream sm:text-5xl">
-              Навчаю нарощуванню волосся з нуля
+            <h1 className="mt-6 font-display text-4xl uppercase leading-[1.12] text-cream sm:text-6xl">
+              Навчаю нарощуванню волосся{" "}
+              <span className="text-gradient">з нуля</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg text-cream-soft">
-              Допомагаю вийти на стабільний дохід у beauty-бізнесі. Трансформую
-              жінок і вчу професії, що змінює життя.
+              Допомагаю вийти на стабільний дохід у beauty-бізнесі.
+              Трансформую жінок і вчу професії, що змінює життя.
             </p>
 
             <div className="mt-9 flex flex-wrap gap-4">
@@ -26,7 +30,7 @@ export default function Hero() {
                 href={PERSONAL_INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full bg-green px-7 py-3.5 text-sm font-semibold text-cream shadow-lg shadow-green/20 transition-colors hover:bg-green-dark"
+                className="flex items-center gap-2 rounded-full bg-green px-7 py-3.5 text-sm font-semibold text-cream shadow-lg shadow-green/20 transition-transform hover:-translate-y-0.5 hover:bg-green-dark"
               >
                 <Instagram className="h-4 w-4" />
                 Записатись на навчання
@@ -49,20 +53,28 @@ export default function Hero() {
                 </div>
               ))}
             </div>
-          </div>
+          </Reveal>
 
-          <div className="relative mx-auto flex h-64 w-64 items-center justify-center rounded-full border border-green/30 bg-concrete-2 sm:h-80 sm:w-80">
-            <div className="absolute inset-4 rounded-full border border-dashed border-green/30" />
-            <div className="text-center">
-              <p className="font-display text-6xl text-green-light sm:text-7xl">
+          <Reveal delay={0.15} className="relative">
+            <PhotoSlot
+              label="Фото Катерини за роботою"
+              className="aspect-[4/5] w-full max-w-sm mx-auto"
+            />
+            <div className="absolute -left-4 top-8 rounded-2xl border border-white/10 bg-concrete-2/95 px-5 py-4 shadow-xl backdrop-blur sm:-left-8">
+              <p className="font-display text-3xl text-green-light">
                 {EXPERIENCE_YEARS}
               </p>
-              <p className="mt-2 text-sm uppercase tracking-wide text-cream-soft">
+              <p className="text-xs uppercase tracking-wide text-cream-soft">
                 років у beauty
               </p>
-              <p className="mt-6 text-sm text-cream-soft">{PERSONAL_INSTAGRAM_HANDLE}</p>
             </div>
-          </div>
+            <div className="absolute -right-4 bottom-8 rounded-2xl border border-white/10 bg-concrete-2/95 px-5 py-4 shadow-xl backdrop-blur sm:-right-8">
+              <p className="font-display text-sm uppercase tracking-wide text-cream">
+                Власний салон
+              </p>
+              <p className="text-xs text-cream-soft">BEAUTY FORMULA</p>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>
