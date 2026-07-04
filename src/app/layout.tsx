@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display, Dancing_Script } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart";
 import { WishlistProvider } from "@/lib/wishlist";
@@ -10,16 +10,28 @@ const inter = Inter({
   display: "swap",
 });
 
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin", "cyrillic"],
+  display: "swap",
+});
+
+const script = Dancing_Script({
+  variable: "--font-script",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Спринтер — Запчастини для Mercedes Sprinter, Vito, VW Crafter | Харків",
+  title: "Наталія Пархуц | Манікюр та Педикюр — Бурштин",
   description:
-    "Інтернет-магазин запчастин для Mercedes Sprinter, Vito, Volkswagen Crafter та LT. Понад 8 000 позицій в наявності. Доставка по Україні 1–2 дні. Харків: Просп. Героїв Харкова, 210.",
+    "Студія манікюру та педикюру Наталії Пархуц у Бурштині (Юнашків). Гігієнічний манікюр, покриття гель-лаком, нарощення, педикюр. Запис за телефоном 098 972 39 43.",
   keywords:
-    "запчастини Mercedes Sprinter, запчастини Vito, запчастини VW Crafter, запчастини для мерседес спрінтер, автозапчастини Харків, запчастини для комерційного транспорту",
+    "манікюр Бурштин, педикюр Бурштин, нарощення нігтів Бурштин, гель лак Бурштин, манікюр Юнашків, студія манікюру",
   openGraph: {
-    title: "Спринтер — Запчастини для комерційного транспорту",
+    title: "Наталія Пархуц — Манікюр та Педикюр у Бурштині",
     description:
-      "Понад 8 000 позицій запчастин для Mercedes та VW. Швидка доставка по Україні.",
+      "Гігієнічний манікюр, покриття гель-лаком, нарощення та педикюр. Бурштин, Юнашків.",
     type: "website",
     locale: "uk_UA",
   },
@@ -31,12 +43,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uk" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
+    <html
+      lang="uk"
+      className={`${inter.variable} ${playfair.variable} ${script.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col bg-cream text-foreground">
         <CartProvider>
-          <WishlistProvider>
-            {children}
-          </WishlistProvider>
+          <WishlistProvider>{children}</WishlistProvider>
         </CartProvider>
       </body>
     </html>

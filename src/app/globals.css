@@ -1,16 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #111827;
+  --background: #fffaf7;
+  --foreground: #3a2c2e;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
-  --color-brand: #f97316;
-  --color-brand-dark: #ea580c;
+  --font-serif: var(--font-playfair);
+  --font-script: var(--font-script);
+  --color-brand: #f4a6bd;
+  --color-brand-dark: #e37c9c;
+  --color-pink-50: #fff5f8;
+  --color-pink-100: #fde8ee;
+  --color-pink-200: #f9d3e0;
+  --color-pink-300: #f4a6bd;
+  --color-yellow-50: #fffdf3;
+  --color-yellow-100: #fdf6da;
+  --color-yellow-200: #faecb8;
+  --color-cream: #fffaf7;
   --color-dark: #0a0a0a;
   --color-dark-2: #111111;
 }
@@ -28,15 +38,15 @@ body {
 }
 
 ::selection {
-  background-color: #f97316;
+  background-color: #f4a6bd;
   color: #ffffff;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f1f1f1; }
-::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #f97316; }
+::-webkit-scrollbar-track { background: #fdf6da; }
+::-webkit-scrollbar-thumb { background: #f9d3e0; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #f4a6bd; }
 
 /* No-scrollbar utility */
 .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -104,6 +114,6 @@ body {
 
 /* Focus ring */
 *:focus-visible {
-  outline: 2px solid #f97316;
+  outline: 2px solid #e37c9c;
   outline-offset: 2px;
 }
