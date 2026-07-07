@@ -1,107 +1,62 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Star } from "lucide-react";
-import { staggerContainer, fadeUp } from "@/lib/utils";
+import { Star, Quote } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-const reviews = [
-  {
-    name: "Олександр Петренко",
-    role: "Власник СТО, Харків",
-    text: "Замовляємо запчастини вже 4 роки. Ціни нижчі ніж у конкурентів, якість не підводила жодного разу. Доставка завжди вчасно. Рекомендую всім майстрам!",
-    rating: 5,
-    initials: "ОП",
-    color: "bg-orange-500",
-  },
-  {
-    name: "Сергій Ковальчук",
-    role: "Водій-підприємець, Київ",
-    text: "Маю Sprinter 2018 року. Завжди знаходжу потрібні деталі на цьому сайті. Менеджери допомогли підібрати ремкомплект підвіски — все підійшло ідеально.",
-    rating: 5,
-    initials: "СК",
-    color: "bg-blue-500",
-  },
-  {
-    name: "Максим Іваненко",
-    role: "Логістична компанія, Одеса",
-    text: "Закупляємо запчастини для парку з 6 Кравтерів. Великий асортимент, швидко обробляють замовлення. Виставляють рахунок на підприємство без проблем.",
-    rating: 5,
-    initials: "МІ",
-    color: "bg-green-500",
-  },
-  {
-    name: "Ігор Дмитренко",
-    role: "Механік, Дніпро",
-    text: "Давно шукав якісні гальмівні колодки Bosch за нормальною ціною. Тут знайшов з доставкою наступного дня. Стало постійним постачальником нашого сервісу.",
-    rating: 5,
-    initials: "ІД",
-    color: "bg-purple-500",
-  },
-];
+import { SectionHeading } from "@/components/shared/SectionHeading";
+import { TESTIMONIALS } from "@/data/testimonials";
 
-export default function Testimonials() {
+export function Testimonials() {
   return (
-    <section className="py-20 lg:py-28 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
-        >
-          <motion.div variants={fadeUp} className="text-center mb-14">
-            <span className="inline-block text-sm font-semibold text-orange-500 uppercase tracking-widest mb-3">
-              Відгуки
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-4">
-              Нам довіряють тисячі клієнтів
-            </h2>
-            <p className="text-lg text-gray-500 max-w-xl mx-auto">
-              Понад 8 500 задоволених замовлень щороку
-            </p>
-          </motion.div>
+    <section className="section-y section-x bg-navy-950" id="testimonials">
+      <div className="container-lux flex flex-col gap-14">
+        <SectionHeading
+          kicker="Відгуки"
+          title="Що кажуть наші гості"
+          light
+          description="Довіра гостей — головна цінність, яку ми плекаємо в кожній деталі сервісу."
+        />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {reviews.map((r) => (
-              <motion.div
-                key={r.name}
-                variants={fadeUp}
-                className="bg-gray-50 rounded-3xl p-6 border border-gray-100 flex flex-col"
-              >
-                <div className="flex gap-0.5 mb-4">
-                  {Array.from({ length: r.rating }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-orange-400 text-orange-400" />
+        <Swiper
+          modules={[Navigation, Pagination, A11y, Autoplay]}
+          spaceBetween={24}
+          slidesPerView={1.05}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 6000, disableOnInteraction: true }}
+          breakpoints={{
+            640: { slidesPerView: 1.6 },
+            1024: { slidesPerView: 2.4 },
+            1280: { slidesPerView: 3 },
+          }}
+          className="testimonials-swiper w-full min-w-0 !pb-12"
+        >
+          {TESTIMONIALS.map((testimonial) => (
+            <SwiperSlide key={testimonial.name}>
+              <div className="flex h-full flex-col gap-5 border border-white/10 bg-white/[0.03] p-8">
+                <Quote className="h-6 w-6 text-gold-500" strokeWidth={1.5} />
+                <p className="flex-1 text-sm leading-relaxed text-white/75">
+                  {testimonial.text}
+                </p>
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: testimonial.rating }).map((_, i) => (
+                    <Star key={i} className="h-3.5 w-3.5 fill-gold-500 text-gold-500" />
                   ))}
                 </div>
-                <p className="text-sm text-gray-600 leading-relaxed flex-1 mb-5">&ldquo;{r.text}&rdquo;</p>
-                <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-full ${r.color} flex items-center justify-center text-white text-xs font-bold shrink-0`}>
-                    {r.initials}
-                  </div>
-                  <div>
-                    <div className="text-sm font-bold text-gray-900">{r.name}</div>
-                    <div className="text-xs text-gray-400">{r.role}</div>
-                  </div>
+                <div className="flex flex-col">
+                  <span className="font-serif text-base text-white">{testimonial.name}</span>
+                  <span className="text-xs uppercase tracking-wider text-white/40">
+                    {testimonial.service}
+                  </span>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Stats bar */}
-          <motion.div variants={fadeUp} className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 bg-gradient-to-r from-orange-500 to-orange-600 rounded-3xl p-8 text-white">
-            {[
-              { num: "8 500+", label: "Замовлень на рік" },
-              { num: "98%", label: "Задоволених клієнтів" },
-              { num: "15", label: "Років на ринку" },
-              { num: "8 000+", label: "Позицій у наявності" },
-            ].map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="text-3xl font-black mb-1">{s.num}</div>
-                <div className="text-sm text-orange-100">{s.label}</div>
               </div>
-            ))}
-          </motion.div>
-        </motion.div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </section>
   );

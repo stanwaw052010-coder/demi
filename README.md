@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Спабель — салон краси та SPA
 
-## Getting Started
+Production-ready сайт салону краси «Спабель» (Запоріжжя): Next.js App Router, TypeScript, TailwindCSS v4, shadcn/ui-стиль компонентів, Framer Motion, Swiper.
 
-First, run the development server:
+## Стек
+
+- **Next.js 16** (App Router, Turbopack) + React 19 + TypeScript
+- **TailwindCSS v4** (CSS-first theme, токени в `src/app/globals.css`)
+- Компоненти в стилі **shadcn/ui** (Radix primitives): `src/components/ui/*`
+- **Framer Motion** — scroll-reveal анімації (`src/components/shared/Reveal.tsx`)
+- **Swiper** — каруселі спеціалістів та відгуків
+
+## Запуск
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Структура сторінок
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Маршрут | Опис |
+|---|---|
+| `/` | Головна: Hero, Переваги, Послуги, SPA, Про нас, Спеціалісти, Прайс, Відгуки, Контакти, Форма запису |
+| `/services` | Каталог усіх напрямів |
+| `/services/[slug]` | Окрема сторінка послуги (6 напрямів, `src/data/services.ts`) |
+| `/about` | Повний текст «Про нас» |
+| `/contacts` | Карта, контакти, форма запису |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Дані сайту (текст, ціни, контакти) винесені в `src/data/*.ts` — редагувати сайт можна майже повністю через ці файли, не чіпаючи розмітку.
 
-## Learn More
+## Фото: де саме розмістити файли
 
-To learn more about Next.js, take a look at the following resources:
+Реальних фотографій під час збірки сайту не було передано (посилання на imgur заблоковані мережевою політикою середовища розробки). Замість заглушок-картинок використано компонент `PhotoSlot` (`src/components/shared/PhotoSlot.tsx`): він намагається завантажити фото за фіксованим шляхом і, поки файлу немає, **сам** показує акуратну підписану заглушку в кольорах бренду — жодних биті посилань. Щойно ви покладете файл у потрібне місце (**без зміни коду**), фото з'явиться на сайті автоматично.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Формат — `.jpg`, рекомендована ширина від 1600px для великих (hero/SPA) фото і від 800px для карток.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Покласти файли потрібно в `public/images/<категорія>/<номер>.jpg`:
 
-## Deploy on Vercel
+| Категорія (з фото-альбомів) | Файли, які використовує сайт |
+|---|---|
+| `podolog` (подолог) | `public/images/podolog/1.jpg`, `2.jpg`, `3.jpg` |
+| `cosmetolog` (косметолог) | `public/images/cosmetolog/1.jpg`, `2.jpg`, `3.jpg`, `4.jpg` |
+| `hairdresser` (перукар) | `public/images/hairdresser/1.jpg`, `2.jpg`, `3.jpg` |
+| `spa` (спа) | `public/images/spa/1.jpg`, `2.jpg`, `3.jpg`, `4.jpg` |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Де саме що використовується:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `spa/1` — Hero головної сторінки, картка «SPA-програми та масаж»
+- `spa/2` — блок SPA-капсули Neoqi Medic, спеціаліст «SPA-терапевт»
+- `spa/3` — hero сторінки «Про нас»
+- `spa/4` — hero сторінки «Контакти»
+- `cosmetolog/1` — картка «Косметологія», спеціаліст «Косметолог-естетист», фото на сторінці «Про нас»
+- `cosmetolog/2` — блок «Про нас» на головній, картка «Лазерна епіляція»
+- `cosmetolog/3` — картка «IPL Shiny», галерея послуги «Лазерна епіляція»
+- `cosmetolog/4` — hero сторінки «Всі послуги», галерея «IPL Shiny»
+- `hairdresser/1` — картка «Перукарські послуги», спеціаліст «Стиліст-перукар», фото на сторінці «Про нас»
+- `hairdresser/2`, `3` — галерея послуги «Перукарські послуги»
+- `podolog/1` — картка «Нігтьовий сервіс та подологія», спеціаліст «Майстер-подолог», фото на сторінці «Про нас»
+- `podolog/2`, `3` — галерея послуги «Нігтьовий сервіс та подологія»
+
+Повний перелік викликів `<PhotoSlot category=... index=... />` можна знайти пошуком по `src/components` — кожен виклик підписаний `label`, який видно прямо на заглушці на сайті.
+
+## Google Maps
+
+Карта вбудована через публічний embed без API-ключа (`SITE.mapsEmbedSrc` у `src/data/site.ts`), побудований із назви локації «СПАБЕЛЬ Салон Краси в Запоріжжі». За потреби замінити на офіційний iframe-код з Google Maps (Поділитися → Вставити карту) або підключити Maps Embed API ключ.
+
+## Форма запису
+
+Форма запису (`src/components/home/BookingForm.tsx`) наразі фронтенд-лише: по сабміту показує підтвердження без відправки кудись. Для продакшена потрібно підключити бекенд/CRM (наприклад, API route у `src/app/api/booking/route.ts`, інтеграцію з Telegram-ботом або CRM салону) — форма вже валідовано збирає ім'я, телефон, послугу, дату й коментар.
+
+## SEO
+
+- Метадані, OpenGraph і `alternates.canonical` на кожній сторінці (`src/app/layout.tsx` + кожен `page.tsx`)
+- JSON-LD `BeautySalon` на головній та `Service` на сторінках послуг (`src/components/shared/JsonLd.tsx`)
+- `sitemap.xml` і `robots.txt` генеруються автоматично (`src/app/sitemap.ts`, `src/app/robots.ts`)
+- Фавікон генерується на льоту (`src/app/icon.tsx`)
+
+## Адаптив
+
+Перевірено без горизонтального скролу на 320 / 375 / 768 / 1024 / 1440 / 1920px на всіх типах сторінок.

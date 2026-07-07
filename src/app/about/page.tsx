@@ -1,67 +1,100 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import { Shield, Truck, Award, Users } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
 
-export const metadata = {
-  title: "Про компанію | Спринтер",
-  description: "Про магазин запчастин Спринтер — 15 років досвіду, Харків, запчастини для Mercedes та VW.",
+import { PhotoSlot } from "@/components/shared/PhotoSlot";
+import { Reveal } from "@/components/shared/Reveal";
+import { Button } from "@/components/ui/button";
+import { ABOUT_TEXT } from "@/data/about";
+import { SITE } from "@/data/site";
+
+export const metadata: Metadata = {
+  title: "Про нас",
+  description:
+    "Спабель — салон краси повного циклу в Запоріжжі. SPA-капсула Neoqi Medic, косметологія, перукарня та нігтьовий сервіс в атмосфері спокою та турботи.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: `Про нас — ${SITE.name}`,
+    description: "Історія та філософія салону краси та SPA Спабель у Запоріжжі.",
+  },
 };
 
 export default function AboutPage() {
   return (
     <>
-      <Header />
-      <main className="min-h-screen bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <Breadcrumb items={[{ label: "Про компанію" }]} />
-
-          <div className="mt-8 bg-white rounded-3xl border border-gray-200 p-8 sm:p-12 mb-8">
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6">Про компанію</h1>
-            <div className="prose prose-gray max-w-none text-gray-600 leading-relaxed space-y-4">
-              <p>
-                <strong className="text-gray-900">«Спринтер — Автозапчастини»</strong> — спеціалізований інтернет-магазин запчастин для комерційного транспорту Mercedes та Volkswagen. Ми працюємо з 2008 року і за цей час стали одним із найнадійніших постачальників у Харківському регіоні та по всій Україні.
-              </p>
-              <p>
-                Наша спеціалізація — Mercedes Sprinter (W901–W907), Mercedes Vito, Volkswagen Crafter та LT. Ми не займаємось усіма марками підряд — ми глибоко знаємо ці автомобілі, їхні технічні особливості та слабкі місця.
-              </p>
-              <p>
-                Понад 8 000 позицій у наявності на нашому складі в Харкові. Ми працюємо з офіційними дистриб'юторами Bosch, Febi Bilstein, Mahle, Meyle, Valeo, Mann-Filter та інших провідних виробників.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 mb-8">
-            {[
-              { icon: Award, num: "15+", label: "Років досвіду" },
-              { icon: Users, num: "8 500+", label: "Клієнтів щороку" },
-              { icon: Shield, num: "8 000+", label: "Позицій у наявності" },
-              { icon: Truck, num: "1–2", label: "Дні доставки" },
-            ].map(({ icon: Icon, num, label }) => (
-              <div key={label} className="bg-white rounded-2xl border border-gray-200 p-6 text-center">
-                <Icon className="w-6 h-6 text-orange-500 mx-auto mb-3" />
-                <div className="text-2xl font-black text-gray-900 mb-1">{num}</div>
-                <div className="text-xs text-gray-500">{label}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="bg-white rounded-3xl border border-gray-200 p-8 sm:p-10">
-            <h2 className="text-xl font-bold text-gray-900 mb-5">Наша адреса</h2>
-            <div className="space-y-3 text-sm text-gray-600">
-              <p><strong className="text-gray-900">Адреса:</strong> м. Харків, Просп. Героїв Харкова, 210</p>
-              <p><strong className="text-gray-900">Телефони:</strong>{" "}
-                <a href="tel:+380672546266" className="text-orange-500 hover:text-orange-600">+38 (067) 254-62-66</a>{" · "}
-                <a href="tel:+380991129526" className="text-orange-500 hover:text-orange-600">+38 (099) 112-95-26</a>{" · "}
-                <a href="tel:+380962770540" className="text-orange-500 hover:text-orange-600">+38 (096) 277-05-40</a>
-              </p>
-              <p><strong className="text-gray-900">Email:</strong> <a href="mailto:info@sprinter.org.ua" className="text-orange-500 hover:text-orange-600">info@sprinter.org.ua</a></p>
-              <p><strong className="text-gray-900">Графік роботи:</strong> Пн–Сб: 9:00–18:00</p>
-            </div>
-          </div>
+      <section className="relative flex min-h-[42vh] items-end overflow-hidden bg-navy-950">
+        <PhotoSlot
+          category="spa"
+          index={3}
+          alt="Про салон Спабель"
+          label="Спа — фото 3"
+          className="absolute inset-0"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/75 to-navy-950/30" />
+        <div className="container-lux section-x relative z-10 flex flex-col gap-4 pb-16 pt-32">
+          <span className="text-xs sm:text-sm tracking-[0.4em] uppercase text-gold-400">
+            Спабель
+          </span>
+          <h1 className="max-w-2xl text-4xl font-medium leading-[1.1] text-white sm:text-5xl">
+            Про нас
+          </h1>
         </div>
-      </main>
-      <Footer />
+      </section>
+
+      <section className="section-y section-x bg-white">
+        <div className="container-lux grid grid-cols-1 gap-16 lg:grid-cols-[1.05fr_0.95fr]">
+          <Reveal className="flex flex-col gap-6">
+            {ABOUT_TEXT.map((paragraph) => (
+              <p
+                key={paragraph}
+                className="text-sm sm:text-base leading-relaxed text-muted-foreground"
+              >
+                {paragraph}
+              </p>
+            ))}
+          </Reveal>
+
+          <Reveal delay={0.1} className="flex flex-col gap-4">
+            <PhotoSlot
+              category="cosmetolog"
+              index={1}
+              alt="Косметолог Спабель"
+              label="Косметолог — фото 1"
+              className="aspect-[4/5] w-full"
+            />
+            <div className="grid grid-cols-2 gap-4">
+              <PhotoSlot
+                category="hairdresser"
+                index={1}
+                alt="Перукар Спабель"
+                label="Перукар — фото 1"
+                className="aspect-square"
+              />
+              <PhotoSlot
+                category="podolog"
+                index={1}
+                alt="Подолог Спабель"
+                label="Подолог — фото 1"
+                className="aspect-square"
+              />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section-x pb-20 sm:pb-28">
+        <div className="container-lux flex flex-col items-center gap-4 border border-border bg-navy-950 p-10 text-center sm:p-14">
+          <h2 className="font-serif text-2xl text-white sm:text-3xl">
+            Ласкаво просимо до «Спабель»
+          </h2>
+          <p className="max-w-md text-sm text-white/70">
+            Запишіться на процедуру та відчуйте турботу з першої хвилини.
+          </p>
+          <Button variant="gold" size="lg" asChild className="mt-2">
+            <Link href="/#booking">Записатися</Link>
+          </Button>
+        </div>
+      </section>
     </>
   );
 }
