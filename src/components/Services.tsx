@@ -47,7 +47,8 @@ export default function Services() {
             >
               <div className="relative h-64 overflow-hidden">
                 <SmartImage
-                  src={s.image}
+                  src={s.image.src}
+                  fallbackSrc={s.image.fallback}
                   alt={s.title}
                   className="absolute inset-0"
                   imgClassName="transition-transform duration-700 ease-out group-hover:scale-[1.06]"

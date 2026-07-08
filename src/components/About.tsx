@@ -66,7 +66,8 @@ export default function About() {
           />
           <div className="relative h-[460px] overflow-hidden rounded-[40px] shadow-[0_36px_80px_rgba(34,39,25,0.16)] md:h-[600px]">
             <SmartImage
-              src={IMAGES.about}
+              src={IMAGES.about.src}
+              fallbackSrc={IMAGES.about.fallback}
               alt="Атмосфера догляду в Rayskaya Beauty Space"
               className="absolute -inset-y-12 inset-x-0"
               imgClassName=""

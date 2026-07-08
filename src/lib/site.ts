@@ -26,26 +26,60 @@ export const NAV = [
 ] as const;
 
 /**
- * Усі фотографії сайту зібрані тут — щоб замінити будь-яке фото,
- * достатньо змінити URL у цьому файлі (або покласти файл у /public
- * і вказати локальний шлях, напр. "/images/hero.jpg").
+ * Усі фотографії сайту зібрані тут.
+ *
+ * Кожне фото має два джерела:
+ *  - src      — ВАШЕ фото з папки /public/images (покладіть туди файл
+ *               із відповідною назвою — і воно підхопиться автоматично);
+ *  - fallback — стокове фото, яке показується, доки власного файлу немає.
+ *
+ * Напр., щоб поставити фото салону на перший екран, просто покладіть
+ * файл public/images/hero.jpg — жодних змін у коді не потрібно.
  */
+export type Photo = { src: string; fallback: string };
+
 export const IMAGES = {
-  hero: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1600&q=80",
-  about:
-    "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1600&q=80",
+  hero: {
+    src: "/images/hero.jpg",
+    fallback:
+      "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1600&q=80",
+  },
+  about: {
+    src: "/images/about.jpg",
+    fallback:
+      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1600&q=80",
+  },
   services: {
-    injection:
-      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80",
-    hardware:
-      "https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1200&q=80",
-    laser:
-      "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=1200&q=80",
-    face: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1200&q=80",
-    massage:
-      "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1200&q=80",
-    antiage:
-      "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?auto=format&fit=crop&w=1200&q=80",
+    injection: {
+      src: "/images/services/injection.jpg",
+      fallback:
+        "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80",
+    },
+    hardware: {
+      src: "/images/services/hardware.jpg",
+      fallback:
+        "https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1200&q=80",
+    },
+    laser: {
+      src: "/images/services/laser.jpg",
+      fallback:
+        "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=1200&q=80",
+    },
+    face: {
+      src: "/images/services/face.jpg",
+      fallback:
+        "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1200&q=80",
+    },
+    massage: {
+      src: "/images/services/massage.jpg",
+      fallback:
+        "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1200&q=80",
+    },
+    antiage: {
+      src: "/images/services/antiage.jpg",
+      fallback:
+        "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?auto=format&fit=crop&w=1200&q=80",
+    },
   },
 } as const;
 

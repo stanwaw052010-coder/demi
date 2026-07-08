@@ -168,7 +168,8 @@ export default function Hero() {
         <div className="relative lg:h-[calc(100svh-76px)] lg:min-h-[620px]">
           <div className="hero-photo relative h-[440px] overflow-hidden rounded-[40px] shadow-[0_40px_90px_rgba(34,39,25,0.18)] sm:h-[540px] lg:absolute lg:inset-y-10 lg:left-0 lg:right-[-40px] lg:h-auto lg:rounded-[48px]">
             <SmartImage
-              src={IMAGES.hero}
+              src={IMAGES.hero.src}
+              fallbackSrc={IMAGES.hero.fallback}
               alt="Косметологічна процедура у Rayskaya Beauty Space"
               className="hero-photo-inner absolute -inset-y-10 inset-x-0"
               loading="eager"
