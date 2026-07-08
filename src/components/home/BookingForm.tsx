@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { CheckCircle2, AlertCircle } from "lucide-react";
+import { useRef, useState } from "react";
 
 import { Reveal } from "@/components/shared/Reveal";
 import { Input } from "@/components/ui/input";
@@ -16,45 +15,56 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { SERVICES } from "@/data/services";
+import { SITE } from "@/data/site";
+import { WhatsAppIcon, ViberIcon } from "@/components/shared/SocialIcons";
+
+type Messenger = "whatsapp" | "viber";
+
+function buildMessage(form: HTMLFormElement) {
+  const data = new FormData(form);
+  const name = String(data.get("name") ?? "").trim();
+  const phone = String(data.get("phone") ?? "").trim();
+  const serviceSlug = String(data.get("service") ?? "");
+  const date = String(data.get("date") ?? "").trim();
+  const comment = String(data.get("comment") ?? "").trim();
+  const serviceTitle = SERVICES.find((s) => s.slug === serviceSlug)?.shortTitle;
+
+  const lines = [
+    `Запис до ${SITE.name}`,
+    `Ім'я: ${name}`,
+    `Телефон: ${phone}`,
+    serviceTitle ? `Послуга: ${serviceTitle}` : null,
+    date ? `Бажана дата: ${date}` : null,
+    comment ? `Коментар: ${comment}` : null,
+  ].filter(Boolean);
+
+  return lines.join("\n");
+}
 
 export function BookingForm() {
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [sentVia, setSentVia] = useState<Messenger | null>(null);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const data = new FormData(form);
-    const payload = {
-      name: data.get("name"),
-      phone: data.get("phone"),
-      service: data.get("service"),
-      date: data.get("date"),
-      comment: data.get("comment"),
-    };
+  async function handleMessenger(messenger: Messenger) {
+    const form = formRef.current;
+    if (!form || !form.reportValidity()) return;
 
-    setSubmitting(true);
-    setError(null);
+    const message = buildMessage(form);
 
     try {
-      const response = await fetch("/api/booking", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        const body = await response.json().catch(() => null);
-        throw new Error(body?.error || "Не вдалося надіслати заявку.");
-      }
-
-      setSubmitted(true);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Не вдалося надіслати заявку.");
-    } finally {
-      setSubmitting(false);
+      await navigator.clipboard.writeText(message);
+    } catch {
+      // clipboard access can fail (e.g. insecure context) — deep link still opens
     }
+
+    const phoneDigits = SITE.phoneHref.replace(/\D/g, "");
+    const url =
+      messenger === "whatsapp"
+        ? `https://wa.me/${phoneDigits}?text=${encodeURIComponent(message)}`
+        : `viber://chat?number=%2B${phoneDigits}`;
+
+    window.open(url, "_blank", "noopener,noreferrer");
+    setSentVia(messenger);
   }
 
   return (
@@ -67,121 +77,126 @@ export function BookingForm() {
           </h2>
           <div className="gold-divider" />
           <p className="max-w-md text-sm sm:text-base leading-relaxed text-white/70">
-            Залиште заявку — наш адміністратор зв&rsquo;яжеться з вами для підтвердження
-            зручного часу візиту.
+            Заповніть форму та надішліть заявку у зручний месенджер — WhatsApp чи
+            Viber. Наш адміністратор одразу побачить повідомлення та зв&rsquo;яжеться
+            з вами для підтвердження часу візиту.
           </p>
         </Reveal>
 
         <Reveal delay={0.1}>
-          {submitted ? (
-            <div className="flex flex-col items-center gap-4 border border-white/10 bg-white/[0.03] p-10 text-center">
-              <CheckCircle2 className="h-10 w-10 text-gold-500" strokeWidth={1.25} />
-              <h3 className="font-serif text-xl text-white">Дякуємо за заявку!</h3>
-              <p className="max-w-sm text-sm text-white/70">
-                Ми зв&rsquo;яжемося з вами найближчим часом, щоб узгодити зручний час
-                візиту.
-              </p>
-            </div>
-          ) : (
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col gap-5 border border-white/10 bg-white/[0.03] p-6 sm:p-8"
-            >
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="name" className="text-white/70">
-                    Ім&rsquo;я
-                  </Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    required
-                    placeholder="Ваше ім'я"
-                    className="border-white/15 bg-white/5 text-white placeholder:text-white/40"
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="phone" className="text-white/70">
-                    Телефон
-                  </Label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    required
-                    placeholder="+38 (0__) ___ __ __"
-                    className="border-white/15 bg-white/5 text-white placeholder:text-white/40"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="service" className="text-white/70">
-                    Послуга
-                  </Label>
-                  <Select name="service">
-                    <SelectTrigger
-                      id="service"
-                      className="border-white/15 bg-white/5 text-white data-[placeholder]:text-white/40"
-                    >
-                      <SelectValue placeholder="Оберіть напрям" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {SERVICES.map((service) => (
-                        <SelectItem key={service.slug} value={service.slug}>
-                          {service.shortTitle}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="date" className="text-white/70">
-                    Бажана дата
-                  </Label>
-                  <Input
-                    id="date"
-                    name="date"
-                    type="date"
-                    className="border-white/15 bg-white/5 text-white [color-scheme:dark]"
-                  />
-                </div>
-              </div>
-
+          <form
+            ref={formRef}
+            onSubmit={(event) => event.preventDefault()}
+            className="flex flex-col gap-5 border border-white/10 bg-white/[0.03] p-6 sm:p-8"
+          >
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="comment" className="text-white/70">
-                  Коментар
+                <Label htmlFor="name" className="text-white/70">
+                  Ім&rsquo;я
                 </Label>
-                <Textarea
-                  id="comment"
-                  name="comment"
-                  placeholder="Побажання щодо запису"
+                <Input
+                  id="name"
+                  name="name"
+                  required
+                  placeholder="Ваше ім'я"
                   className="border-white/15 bg-white/5 text-white placeholder:text-white/40"
                 />
               </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="phone" className="text-white/70">
+                  Телефон
+                </Label>
+                <Input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  required
+                  placeholder="+38 (0__) ___ __ __"
+                  className="border-white/15 bg-white/5 text-white placeholder:text-white/40"
+                />
+              </div>
+            </div>
 
-              {error ? (
-                <p className="flex items-center gap-2 text-sm text-red-400">
-                  <AlertCircle className="h-4 w-4 shrink-0" />
-                  {error}
-                </p>
-              ) : null}
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="service" className="text-white/70">
+                  Послуга
+                </Label>
+                <Select name="service">
+                  <SelectTrigger
+                    id="service"
+                    className="border-white/15 bg-white/5 text-white data-[placeholder]:text-white/40"
+                  >
+                    <SelectValue placeholder="Оберіть напрям" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SERVICES.map((service) => (
+                      <SelectItem key={service.slug} value={service.slug}>
+                        {service.shortTitle}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="date" className="text-white/70">
+                  Бажана дата
+                </Label>
+                <Input
+                  id="date"
+                  name="date"
+                  type="date"
+                  className="border-white/15 bg-white/5 text-white [color-scheme:dark]"
+                />
+              </div>
+            </div>
 
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="comment" className="text-white/70">
+                Коментар
+              </Label>
+              <Textarea
+                id="comment"
+                name="comment"
+                placeholder="Побажання щодо запису"
+                className="border-white/15 bg-white/5 text-white placeholder:text-white/40"
+              />
+            </div>
+
+            <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2">
               <Button
-                type="submit"
-                variant="gold"
+                type="button"
                 size="lg"
-                disabled={submitting}
-                className="mt-2 w-full sm:w-auto"
+                onClick={() => handleMessenger("whatsapp")}
+                className="w-full bg-[#25D366] text-navy-950 hover:bg-[#1ebe5a]"
               >
-                {submitting ? "Надсилаємо…" : "Записатися"}
+                <WhatsAppIcon className="h-5 w-5" />
+                Написати у WhatsApp
               </Button>
-              <p className="text-xs text-white/40">
-                Надсилаючи заявку, ви погоджуєтесь на обробку персональних даних.
+              <Button
+                type="button"
+                size="lg"
+                onClick={() => handleMessenger("viber")}
+                className="w-full bg-[#7360F2] text-white hover:bg-[#5f4fd6]"
+              >
+                <ViberIcon className="h-5 w-5" />
+                Написати у Viber
+              </Button>
+            </div>
+
+            {sentVia ? (
+              <p className="text-sm text-gold-400">
+                Повідомлення скопійовано і {sentVia === "whatsapp" ? "WhatsApp" : "Viber"}{" "}
+                відкрито в новій вкладці — залишилось натиснути «Надіслати» у чаті. Якщо
+                текст не підставився автоматично — просто вставте його (він вже в
+                буфері обміну).
               </p>
-            </form>
-          )}
+            ) : null}
+
+            <p className="text-xs text-white/40">
+              Натискаючи кнопку, ви погоджуєтесь на обробку персональних даних.
+            </p>
+          </form>
         </Reveal>
       </div>
     </section>
