@@ -1,29 +1,29 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import Hero from "@/components/home/Hero";
-import VehicleSelector from "@/components/home/VehicleSelector";
-import CategoryGrid from "@/components/home/CategoryGrid";
-import FeaturedProducts from "@/components/home/FeaturedProducts";
-import WhyUs from "@/components/home/WhyUs";
-import HowItWorks from "@/components/home/HowItWorks";
-import Testimonials from "@/components/home/Testimonials";
-import FAQ from "@/components/home/FAQ";
-import ContactBanner from "@/components/home/ContactBanner";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import About from "@/components/About";
+import Advantages from "@/components/Advantages";
+import Services from "@/components/Services";
+import Testimonials from "@/components/Testimonials";
+import AppShowcase from "@/components/AppShowcase";
+import CTA from "@/components/CTA";
+import Booking from "@/components/Booking";
+import MapSection from "@/components/MapSection";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
     <>
       <Header />
-      <main className="flex flex-col">
+      <main>
         <Hero />
-        <VehicleSelector />
-        <CategoryGrid />
-        <FeaturedProducts />
-        <WhyUs />
-        <HowItWorks />
+        <About />
+        <Advantages />
+        <Services />
         <Testimonials />
-        <FAQ />
-        <ContactBanner />
+        <AppShowcase />
+        <CTA />
+        <Booking />
+        <MapSection />
       </main>
       <Footer />
     </>

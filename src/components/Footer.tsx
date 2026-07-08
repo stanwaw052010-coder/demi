@@ -1,187 +1,150 @@
 "use client";
 
-import { Phone, MapPin, Clock } from "lucide-react";
+import Image from "next/image";
+import { Phone } from "lucide-react";
+import { LINKS, NAV, PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
-const nav = [
-  { label: "Головна", href: "#hero" },
-  { label: "Каталог", href: "#catalog" },
-  { label: "Чому ми", href: "#why-us" },
-  { label: "Доставка", href: "#delivery" },
-  { label: "Контакти", href: "#contact" },
-];
+function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      aria-hidden
+    >
+      <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
+      <circle cx="12" cy="12" r="4.25" />
+      <circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
 
-const catalog = [
-  { label: "Кузовні запчастини", href: "http://sprinter.org.ua/CarBodyCatalog.aspx" },
-  { label: "Моторна олива", href: "/oils" },
-  { label: "Акумулятори", href: "http://sprinter.org.ua/CarRechargeableBattery.aspx" },
-  { label: "Пошук за артикулом", href: "http://sprinter.org.ua/price" },
-  { label: "Доставка та оплата", href: "http://sprinter.org.ua/DeliveryPayment.aspx" },
-  { label: "Повернення", href: "http://sprinter.org.ua/MoneyBack.aspx" },
-];
+function TikTokIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+      <path d="M19.32 5.56a4.8 4.8 0 0 1-2.85-2.43 4.73 4.73 0 0 1-.42-1.63h-3.1v13.03a2.86 2.86 0 0 1-2.85 2.75 2.86 2.86 0 0 1-2.85-2.86 2.86 2.86 0 0 1 3.72-2.72V8.53a6.03 6.03 0 0 0-.87-.07 5.99 5.99 0 0 0-5.98 5.99 5.99 5.99 0 0 0 5.98 5.98 5.99 5.99 0 0 0 5.98-5.98V8.72a7.83 7.83 0 0 0 4.4 1.35V6.98a4.8 4.8 0 0 1-1.16-1.42z" />
+    </svg>
+  );
+}
 
 export default function Footer() {
-  const scrollTo = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <footer className="bg-[#0a0a0a] text-gray-400 border-t border-white/5">
-      {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-
-          {/* Brand */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-orange-500 flex items-center justify-center">
-                <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-white" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-                </svg>
-              </div>
-              <div>
-                <div className="text-white font-bold text-lg leading-none tracking-wide">
-                  СПРИНТЕР
-                </div>
-                <div className="text-[10px] text-orange-400 font-medium tracking-widest uppercase leading-none">
-                  Автозапчастини
-                </div>
-              </div>
-            </div>
-            <p className="text-sm leading-relaxed text-gray-500 mb-6">
-              Інтернет-магазин автозапчастин у Харкові. Понад 100 000 позицій у
-              наявності. Допоможемо підібрати деталь для будь-якого авто.
+    <footer className="relative mt-8 overflow-hidden bg-deep text-white">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 right-[-10%] size-[480px] rounded-full bg-brand/20 blur-3xl"
+      />
+      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-20">
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr_1fr]">
+          <div>
+            <Image
+              src="/logo-light.svg"
+              alt="Rayskaya Beauty Space"
+              width={200}
+              height={112}
+              className="h-14 w-auto"
+            />
+            <p className="mt-6 max-w-sm leading-relaxed text-white/70">
+              Косметологія і естетика обличчя та тіла. Індивідуальний підхід —
+              сучасні методики.
             </p>
-
-            {/* Contact quick */}
-            <div className="space-y-3">
+            <div className="mt-7 flex gap-3">
               <a
-                href="tel:+380672546266"
-                className="flex items-center gap-2.5 text-sm hover:text-orange-400 transition-colors group"
+                href={LINKS.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="flex size-11 items-center justify-center rounded-full border border-white/20 text-white/80 transition-all duration-300 hover:border-brand hover:bg-brand hover:text-white"
               >
-                <Phone className="w-4 h-4 text-orange-500 group-hover:text-orange-400 shrink-0" />
-                +38 (067) 254-62-66
+                <InstagramIcon className="size-5" />
               </a>
-              <div className="flex items-start gap-2.5 text-sm">
-                <MapPin className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
-                <span>м. Харків, Проспект Героїв Харкова, 210</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-sm">
-                <Clock className="w-4 h-4 text-orange-500 shrink-0" />
-                Пн–Сб: 9:00–18:00
-              </div>
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-5 uppercase tracking-wider">
-              Навігація
-            </h4>
-            <ul className="space-y-3">
-              {nav.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => {
-                      if (link.href.startsWith("#")) {
-                        e.preventDefault();
-                        scrollTo(link.href);
-                      }
-                    }}
-                    className="text-sm hover:text-orange-400 transition-colors duration-200"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Catalog */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-5 uppercase tracking-wider">
-              Каталог
-            </h4>
-            <ul className="space-y-3">
-              {catalog.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    className="text-sm hover:text-orange-400 transition-colors duration-200"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Прийоми оплати + заклик до дії */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-5 uppercase tracking-wider">
-              Оплата
-            </h4>
-            <div className="space-y-2 mb-8">
-              {["Готівка", "Картка (Visa/MC)", "Банківський переказ", "Рахунок для юр. осіб"].map((m) => (
-                <div key={m} className="flex items-center gap-2 text-sm">
-                  <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
-                  {m}
-                </div>
-              ))}
-            </div>
-
-            <div className="p-5 rounded-2xl bg-orange-500/10 border border-orange-500/20">
-              <div className="text-white font-semibold text-sm mb-2">
-                Потрібна допомога?
-              </div>
-              <p className="text-xs text-gray-400 mb-4">
-                Зателефонуйте або залиште заявку — підберемо деталь для вашого авто.
-              </p>
               <a
-                href="tel:+380672546266"
-                className="block text-center px-4 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm rounded-xl transition-colors"
+                href={LINKS.tiktok}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+                className="flex size-11 items-center justify-center rounded-full border border-white/20 text-white/80 transition-all duration-300 hover:border-brand hover:bg-brand hover:text-white"
               >
-                Зателефонувати
+                <TikTokIcon className="size-4.5" />
+              </a>
+            </div>
+          </div>
+
+          <nav aria-label="Меню у футері">
+            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-soft">
+              Навігація
+            </p>
+            <ul className="mt-5 space-y-3">
+              {NAV.map((item) => (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    className="text-white/75 transition-colors duration-300 hover:text-white"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a
+                  href="#booking"
+                  className="text-white/75 transition-colors duration-300 hover:text-white"
+                >
+                  Онлайн-запис
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-soft">
+              Контакти
+            </p>
+            <a
+              href={`tel:${PHONE_TEL}`}
+              className="mt-5 flex items-center gap-3 font-display text-2xl text-white transition-colors hover:text-brand-soft"
+            >
+              <Phone className="size-5 text-brand" strokeWidth={1.5} />
+              {PHONE_DISPLAY}
+            </a>
+            <a
+              href={LINKS.maps}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 block text-white/70 transition-colors hover:text-white"
+            >
+              Rayskaya Beauty Space — відкрити в Google Maps →
+            </a>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <a
+                href={LINKS.appStore}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white/85 transition-all duration-300 hover:border-brand hover:bg-brand"
+              >
+                App Store
+              </a>
+              <a
+                href={LINKS.googlePlay}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white/85 transition-all duration-300 hover:border-brand hover:bg-brand"
+              >
+                Google Play
               </a>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-gray-600">
-            © {new Date().getFullYear()} Спринтер — Автозапчастини. Всі права захищені.
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-white/50 sm:flex-row">
+          <p>
+            © {new Date().getFullYear()} Rayskaya Beauty Space. Усі права
+            захищено.
           </p>
-          <div className="flex items-center gap-6">
-            <a
-              href="http://sprinter.org.ua/MoneyBack.aspx"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-gray-600 hover:text-gray-400 transition-colors"
-            >
-              Повернення товару
-            </a>
-            <a
-              href="http://sprinter.org.ua/DeliveryPayment.aspx"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-gray-600 hover:text-gray-400 transition-colors"
-            >
-              Умови доставки
-            </a>
-            <a
-              href="http://sprinter.org.ua/Misc/OfferToSuppliers.aspx"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-gray-600 hover:text-gray-400 transition-colors"
-            >
-              Співробітництво
-            </a>
-          </div>
+          <p className="italic">Beauty space, де турбота — це естетика</p>
         </div>
       </div>
     </footer>

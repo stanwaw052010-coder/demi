@@ -1,113 +1,124 @@
-const reviews = [
-  {
-    name: "Олексій Дмитренко",
-    role: "Власник СТО, Харків",
-    avatar: "ОД",
-    stars: 5,
-    text: "Замовляємо запчастини у Спринтера вже 5 років. Менеджери завжди допоможуть підібрати аналог, ціни адекватні, доставка швидка. Рекомендую всім майстрам!",
-    date: "Лютий 2025",
-  },
-  {
-    name: "Марина Коваль",
-    role: "Приватний клієнт",
-    avatar: "МК",
-    stars: 5,
-    text: "Шукала гальмівні диски для BMW. Підібрали по коду за 5 хвилин, прийшли наступного дня. Дуже зручний сервіс і приємні ціни порівняно з іншими магазинами.",
-    date: "Березень 2025",
-  },
-  {
-    name: "Сергій Бондаренко",
-    role: "Автомеханік, Харків",
-    avatar: "СБ",
-    stars: 5,
-    text: "Давній клієнт. Велике різноманіття запчастин, завжди є в наявності те, що треба. Зручний пошук по артикулу. Дякую колективу за якісну роботу!",
-    date: "Квітень 2025",
-  },
-  {
-    name: "Наталія Яковенко",
-    role: "Приватний клієнт, Полтава",
-    avatar: "НЯ",
-    stars: 5,
-    text: "Замовляла фільтри та оливу дистанційно. Упакували добре, доставка Новою Поштою за 2 дні. Все відповідало опису. Однозначно буду замовляти ще!",
-    date: "Травень 2025",
-  },
-];
+"use client";
 
-function Stars({ count }: { count: number }) {
-  return (
-    <div className="flex gap-0.5">
-      {[...Array(5)].map((_, i) => (
-        <svg
-          key={i}
-          className={`w-4 h-4 ${i < count ? "text-orange-400" : "text-gray-200"}`}
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
-      ))}
-    </div>
-  );
-}
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
+import { REVIEWS } from "@/lib/site";
+import { Eyebrow, Reveal } from "./Reveal";
 
 export default function Testimonials() {
+  const track = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  const scrollTo = useCallback((i: number) => {
+    const el = track.current;
+    if (!el) return;
+    const card = el.children[i] as HTMLElement | undefined;
+    if (card) {
+      el.scrollTo({ left: card.offsetLeft - el.offsetLeft, behavior: "smooth" });
+    }
+  }, []);
+
+  useEffect(() => {
+    const el = track.current;
+    if (!el) return;
+    const onScroll = () => {
+      const cards = Array.from(el.children) as HTMLElement[];
+      const x = el.scrollLeft + 40;
+      let idx = 0;
+      cards.forEach((c, i) => {
+        if (c.offsetLeft - el.offsetLeft <= x) idx = i;
+      });
+      setActive(idx);
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <section id="reviews" className="py-20 lg:py-28 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 animate-on-scroll">
+    <section id="reviews" className="relative overflow-hidden py-24 lg:py-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
-            <span className="inline-block text-sm font-semibold text-orange-500 uppercase tracking-widest mb-3">
-              Відгуки
-            </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">
-              Що кажуть клієнти
-            </h2>
+            <Reveal>
+              <Eyebrow>Відгуки</Eyebrow>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <h2 className="mt-6 font-display text-4xl leading-[1.12] font-medium tracking-tight text-ink text-balance sm:text-5xl">
+                Нам довіряють{" "}
+                <em className="font-normal italic text-olive">найцінніше</em>
+              </h2>
+            </Reveal>
           </div>
-          {/* Summary */}
-          <div className="flex items-center gap-4 shrink-0 bg-white rounded-2xl px-6 py-4 border border-gray-100 shadow-sm">
-            <div className="text-center">
-              <div className="text-3xl font-extrabold text-gray-900">5.0</div>
-              <Stars count={5} />
-              <div className="text-xs text-gray-400 mt-1">50 000+ клієнтів</div>
+          <Reveal delay={0.16}>
+            <div className="flex gap-3">
+              <button
+                onClick={() => scrollTo(Math.max(0, active - 1))}
+                aria-label="Попередній відгук"
+                className="flex size-13 items-center justify-center rounded-full border border-ink/15 text-ink transition-all duration-300 hover:border-brand hover:bg-brand hover:text-white"
+              >
+                <ChevronLeft className="size-5" strokeWidth={1.5} />
+              </button>
+              <button
+                onClick={() => scrollTo(Math.min(REVIEWS.length - 1, active + 1))}
+                aria-label="Наступний відгук"
+                className="flex size-13 items-center justify-center rounded-full border border-ink/15 text-ink transition-all duration-300 hover:border-brand hover:bg-brand hover:text-white"
+              >
+                <ChevronRight className="size-5" strokeWidth={1.5} />
+              </button>
             </div>
-          </div>
+          </Reveal>
         </div>
+      </div>
 
-        {/* Reviews grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-          {reviews.map((review, i) => (
-            <div
-              key={review.name}
-              className="flex flex-col bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-lg hover:border-orange-100 transition-all duration-300 hover:-translate-y-1 animate-on-scroll"
-              style={{ animationDelay: `${i * 80}ms` }}
+      <Reveal delay={0.14} y={44}>
+        <div
+          ref={track}
+          className="mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-6 [scrollbar-width:none] sm:px-8 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))] [&::-webkit-scrollbar]:hidden"
+        >
+          {REVIEWS.map((r) => (
+            <article
+              key={r.name + r.service}
+              className="relative flex w-[86%] shrink-0 snap-start flex-col rounded-[2rem] border border-ink/8 bg-white/80 p-8 shadow-[0_24px_60px_-40px_rgba(52,66,31,0.35)] sm:w-[440px] lg:p-10"
             >
-              {/* Stars */}
-              <Stars count={review.stars} />
-
-              {/* Text */}
-              <p className="mt-4 text-sm text-gray-600 leading-relaxed flex-1 italic">
-                &ldquo;{review.text}&rdquo;
+              <Quote
+                className="size-9 text-brand/50"
+                strokeWidth={1.25}
+                aria-hidden
+              />
+              <p className="mt-5 flex-1 text-[17px] leading-relaxed text-ink/85">
+                {r.text}
               </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3 mt-6 pt-5 border-t border-gray-50">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
-                  {review.avatar}
+              <div className="mt-8 flex items-center justify-between border-t border-ink/8 pt-6">
+                <div>
+                  <p className="font-display text-lg text-ink">{r.name}</p>
+                  <p className="mt-0.5 text-sm text-stone">{r.service}</p>
                 </div>
-                <div className="min-w-0">
-                  <div className="text-sm font-bold text-gray-900 truncate">
-                    {review.name}
-                  </div>
-                  <div className="text-xs text-gray-400 truncate">{review.role}</div>
-                </div>
-                <div className="ml-auto text-xs text-gray-300 shrink-0">
-                  {review.date}
+                <div className="flex gap-1" aria-label="Оцінка 5 з 5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className="size-4 fill-brand text-brand"
+                      strokeWidth={1}
+                    />
+                  ))}
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
+      </Reveal>
+
+      <div className="mt-4 flex justify-center gap-2">
+        {REVIEWS.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => scrollTo(i)}
+            aria-label={`Відгук ${i + 1}`}
+            className={`h-1.5 rounded-full transition-all duration-400 ${
+              i === active ? "w-8 bg-brand" : "w-3 bg-ink/15 hover:bg-ink/30"
+            }`}
+          />
+        ))}
       </div>
     </section>
   );
