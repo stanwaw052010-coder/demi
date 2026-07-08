@@ -29,7 +29,7 @@ export function LocalBusinessJsonLd() {
         closes: "20:00",
       },
     ],
-    sameAs: [SITE.social.instagram, SITE.social.facebook, SITE.social.telegram],
+    sameAs: [SITE.social.instagram],
   };
 
   return (

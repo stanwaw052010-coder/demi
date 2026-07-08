@@ -3,7 +3,7 @@ import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
 import { NAV_LINKS, SITE } from "@/data/site";
 import { SERVICES } from "@/data/services";
-import { InstagramIcon, FacebookIcon, TelegramIcon } from "@/components/shared/SocialIcons";
+import { InstagramIcon } from "@/components/shared/SocialIcons";
 
 export function Footer() {
   return (
@@ -26,24 +26,6 @@ export function Footer() {
               className="flex h-9 w-9 items-center justify-center border border-white/15 transition-colors hover:border-gold-500 hover:text-gold-400"
             >
               <InstagramIcon className="h-4 w-4" />
-            </a>
-            <a
-              href={SITE.social.facebook}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Facebook"
-              className="flex h-9 w-9 items-center justify-center border border-white/15 transition-colors hover:border-gold-500 hover:text-gold-400"
-            >
-              <FacebookIcon className="h-4 w-4" />
-            </a>
-            <a
-              href={SITE.social.telegram}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Telegram"
-              className="flex h-9 w-9 items-center justify-center border border-white/15 transition-colors hover:border-gold-500 hover:text-gold-400"
-            >
-              <TelegramIcon className="h-4 w-4" />
             </a>
           </div>
         </div>
