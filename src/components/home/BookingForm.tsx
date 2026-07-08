@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, AlertCircle } from "lucide-react";
 
 import { Reveal } from "@/components/shared/Reveal";
 import { Input } from "@/components/ui/input";
@@ -19,10 +19,42 @@ import { SERVICES } from "@/data/services";
 
 export function BookingForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: data.get("name"),
+      phone: data.get("phone"),
+      service: data.get("service"),
+      date: data.get("date"),
+      comment: data.get("comment"),
+    };
+
+    setSubmitting(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const body = await response.json().catch(() => null);
+        throw new Error(body?.error || "Не вдалося надіслати заявку.");
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Не вдалося надіслати заявку.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -129,8 +161,21 @@ export function BookingForm() {
                 />
               </div>
 
-              <Button type="submit" variant="gold" size="lg" className="mt-2 w-full sm:w-auto">
-                Записатися
+              {error ? (
+                <p className="flex items-center gap-2 text-sm text-red-400">
+                  <AlertCircle className="h-4 w-4 shrink-0" />
+                  {error}
+                </p>
+              ) : null}
+
+              <Button
+                type="submit"
+                variant="gold"
+                size="lg"
+                disabled={submitting}
+                className="mt-2 w-full sm:w-auto"
+              >
+                {submitting ? "Надсилаємо…" : "Записатися"}
               </Button>
               <p className="text-xs text-white/40">
                 Надсилаючи заявку, ви погоджуєтесь на обробку персональних даних.
