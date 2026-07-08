@@ -29,10 +29,9 @@ export function SpaHighlight() {
           </h2>
           <div className="gold-divider" />
           <p className="max-w-xl text-sm sm:text-base leading-relaxed text-white/70">
-            Спабель пишається тим, що є одним із небагатьох салонів, де представлена
-            SPA-капсула Neoqi Medic. Це більше, ніж процедура — це комплексний ритуал
-            відновлення, який поєднує сучасні технології, глибоке розслаблення та
-            турботу про фізичне й емоційне самопочуття.
+            Спабель пишається тим, що є єдиним в Запоріжжі салоном, де представлена
+            SPA-капсула Neoqi Medic. Це поєднання сучасних технологій, глибокого
+            розслаблення та турботи про фізичне й емоційне самопочуття.
           </p>
           <ul className="flex flex-col gap-2 text-sm text-white/70">
             <li className="flex items-center gap-2">
