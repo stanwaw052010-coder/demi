@@ -12,7 +12,7 @@ import { SITE } from "@/data/site";
 export const metadata: Metadata = {
   title: "Всі послуги",
   description:
-    "Повний перелік напрямів салону Спабель: лазерна епіляція, IPL Shiny, косметологія, SPA та масаж, перукарські послуги, нігтьовий сервіс і подологія.",
+    "Повний перелік напрямів салону Спабель: лазерна епіляція, IPL Shiny, косметологія, SPA та масаж, перукарські послуги, нігтьовий сервіс.",
   alternates: { canonical: "/services" },
   openGraph: {
     title: `Всі послуги — ${SITE.name}`,
