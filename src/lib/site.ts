@@ -26,60 +26,17 @@ export const NAV = [
 ] as const;
 
 /**
- * Усі фотографії сайту зібрані тут.
+ * Єдине фото сайту — фото салону на першому екрані (Hero).
  *
- * Кожне фото має два джерела:
- *  - src      — ВАШЕ фото з папки /public/images (покладіть туди файл
- *               із відповідною назвою — і воно підхопиться автоматично);
+ *  - src      — ваше фото: просто покладіть файл public/images/hero.jpg,
+ *               і воно підхопиться автоматично, без змін у коді;
  *  - fallback — стокове фото, яке показується, доки власного файлу немає.
- *
- * Напр., щоб поставити фото салону на перший екран, просто покладіть
- * файл public/images/hero.jpg — жодних змін у коді не потрібно.
  */
-export type Photo = { src: string; fallback: string };
-
 export const IMAGES = {
   hero: {
     src: "/images/hero.jpg",
     fallback:
       "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1600&q=80",
-  },
-  about: {
-    src: "/images/about.jpg",
-    fallback:
-      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1600&q=80",
-  },
-  services: {
-    injection: {
-      src: "/images/services/injection.jpg",
-      fallback:
-        "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80",
-    },
-    hardware: {
-      src: "/images/services/hardware.jpg",
-      fallback:
-        "https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1200&q=80",
-    },
-    laser: {
-      src: "/images/services/laser.jpg",
-      fallback:
-        "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=1200&q=80",
-    },
-    face: {
-      src: "/images/services/face.jpg",
-      fallback:
-        "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1200&q=80",
-    },
-    massage: {
-      src: "/images/services/massage.jpg",
-      fallback:
-        "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1200&q=80",
-    },
-    antiage: {
-      src: "/images/services/antiage.jpg",
-      fallback:
-        "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?auto=format&fit=crop&w=1200&q=80",
-    },
   },
 } as const;
 
@@ -88,37 +45,31 @@ export const SERVICES = [
     id: "injection",
     title: "Ін’єкційна косметологія",
     text: "Біоревіталізація, мезотерапія та контурна пластика — делікатна корекція зі збереженням природних рис.",
-    image: IMAGES.services.injection,
   },
   {
     id: "hardware",
     title: "Апаратна косметологія",
     text: "Процедури на обладнанні провідних світових брендів для ліфтингу, відновлення та якості шкіри.",
-    image: IMAGES.services.hardware,
   },
   {
     id: "laser",
     title: "Лазерна епіляція",
     text: "Гладенька шкіра надовго — безпечні протоколи та комфортні відчуття під час процедури.",
-    image: IMAGES.services.laser,
   },
   {
     id: "face",
     title: "Догляд за обличчям",
     text: "Чистки, пілінги та персональні доглядові програми для здорового сяяння шкіри.",
-    image: IMAGES.services.face,
   },
   {
     id: "massage",
     title: "Масаж та обгортання",
     text: "Ритуали для тіла: пружність шкіри, релакс і помітний естетичний результат.",
-    image: IMAGES.services.massage,
   },
   {
     id: "antiage",
     title: "Anti-age програми",
     text: "Індивідуальні протоколи омолодження — комплексний підхід до збереження молодості.",
-    image: IMAGES.services.antiage,
   },
 ] as const;
 

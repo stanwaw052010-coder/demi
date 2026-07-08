@@ -1,5 +1,4 @@
 import { ArrowUpRight } from "lucide-react";
-import SmartImage from "./SmartImage";
 import { SERVICES } from "@/lib/site";
 
 export default function Services() {
@@ -10,6 +9,10 @@ export default function Services() {
     >
       <div
         className="pointer-events-none absolute -left-56 bottom-0 h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,rgba(141,183,72,0.14)_0%,transparent_65%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -right-48 top-10 h-[480px] w-[480px] rounded-full bg-[radial-gradient(circle,rgba(141,183,72,0.1)_0%,transparent_65%)]"
         aria-hidden
       />
       <div className="mx-auto max-w-[1360px] px-5 md:px-10">
@@ -36,39 +39,33 @@ export default function Services() {
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="border-t border-ink/10">
           {SERVICES.map((s, i) => (
             <a
               key={s.id}
               href="#booking"
               data-reveal="up"
-              data-reveal-delay={`${(i % 3) * 0.12}`}
-              className="group relative flex flex-col overflow-hidden rounded-[32px] border border-line/70 bg-white shadow-[0_10px_40px_rgba(34,39,25,0.05)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_36px_80px_rgba(34,39,25,0.14)]"
+              data-reveal-delay={`${(i % 2) * 0.08}`}
+              className="group relative grid items-center gap-x-8 gap-y-2 border-b border-ink/10 py-9 transition-all duration-500 hover:border-brand/40 md:grid-cols-[72px_1.1fr_1.3fr_auto] md:py-11"
             >
-              <div className="relative h-64 overflow-hidden">
-                <SmartImage
-                  src={s.image.src}
-                  fallbackSrc={s.image.fallback}
-                  alt={s.title}
-                  className="absolute inset-0"
-                  imgClassName="transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/30 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-40" />
-              </div>
-              <div className="flex flex-1 flex-col p-8">
-                <h3 className="font-display text-[1.55rem] leading-snug text-ink">
-                  {s.title}
-                </h3>
-                <p className="mt-3 flex-1 leading-relaxed text-olive">
-                  {s.text}
-                </p>
-                <span className="mt-6 inline-flex items-center gap-2 text-[15px] font-semibold text-brand-deep">
-                  Записатися
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-brand-soft transition-all duration-300 group-hover:bg-brand group-hover:text-white">
-                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
-                  </span>
+              {/* Підсвітка рядка на hover */}
+              <span
+                className="pointer-events-none absolute -inset-x-6 inset-y-2 -z-10 rounded-[28px] bg-white opacity-0 shadow-[0_24px_60px_rgba(34,39,25,0.08)] transition-all duration-500 group-hover:opacity-100"
+                aria-hidden
+              />
+              <span className="font-display text-lg italic text-brand-deep/60 transition-colors duration-300 group-hover:text-brand-deep max-md:hidden">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="font-display text-[clamp(1.5rem,2.4vw,2.1rem)] leading-tight text-ink transition-transform duration-500 group-hover:translate-x-1.5">
+                {s.title}
+              </h3>
+              <p className="max-w-xl leading-relaxed text-olive">{s.text}</p>
+              <span className="mt-2 inline-flex items-center gap-3 text-[15px] font-semibold text-brand-deep md:mt-0 md:justify-self-end">
+                <span className="md:hidden">Записатися</span>
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-brand/40 bg-white/70 transition-all duration-400 group-hover:border-brand group-hover:bg-brand group-hover:text-white">
+                  <ArrowUpRight className="h-5 w-5 transition-transform duration-400 group-hover:rotate-45" />
                 </span>
-              </div>
+              </span>
             </a>
           ))}
         </div>

@@ -1,5 +1,5 @@
-import SmartImage from "./SmartImage";
-import { IMAGES } from "@/lib/site";
+import Image from "next/image";
+import { Leaf, HeartHandshake, Sparkles } from "lucide-react";
 
 export default function About() {
   return (
@@ -59,23 +59,64 @@ export default function About() {
           </div>
         </div>
 
+        {/* Фірмова декоративна панель */}
         <div className="relative" data-reveal="scale">
           <div
             className="absolute -left-6 -top-6 h-full w-full rounded-[40px] border border-brand/30"
             aria-hidden
           />
-          <div className="relative h-[460px] overflow-hidden rounded-[40px] shadow-[0_36px_80px_rgba(34,39,25,0.16)] md:h-[600px]">
-            <SmartImage
-              src={IMAGES.about.src}
-              fallbackSrc={IMAGES.about.fallback}
-              alt="Атмосфера догляду в Rayskaya Beauty Space"
-              className="absolute -inset-y-12 inset-x-0"
-              imgClassName=""
-            />
+          <div className="relative flex h-[460px] flex-col items-center justify-center overflow-hidden rounded-[40px] bg-[linear-gradient(150deg,#2a331c_0%,#3a4826_55%,#4c5f2e_100%)] px-10 text-center shadow-[0_36px_80px_rgba(34,39,25,0.25)] md:h-[600px]">
+            {/* Декор */}
             <div
-              className="absolute inset-0 bg-gradient-to-t from-ink/20 via-transparent to-transparent"
+              className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(141,183,72,0.35)_0%,transparent_65%)]"
               aria-hidden
             />
+            <div
+              className="pointer-events-none absolute -bottom-28 -left-24 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(141,183,72,0.22)_0%,transparent_65%)]"
+              aria-hidden
+            />
+            <svg
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 text-brand/30 animate-spin-slow"
+              viewBox="0 0 200 200"
+              fill="none"
+              aria-hidden
+            >
+              <circle
+                cx="100"
+                cy="100"
+                r="96"
+                stroke="currentColor"
+                strokeWidth="0.6"
+                strokeDasharray="2 7"
+              />
+            </svg>
+
+            <Image
+              src="/logo/rayskaya-light.svg"
+              alt="Rayskaya Beauty Space"
+              width={300}
+              height={88}
+              className="relative w-[240px] md:w-[300px]"
+            />
+            <p className="relative mt-8 max-w-[260px] font-display text-lg italic leading-relaxed text-white/75">
+              краса, здоров’я та індивідуальність — у кожній процедурі
+            </p>
+
+            <div className="relative mt-10 flex flex-wrap items-center justify-center gap-2.5">
+              {[
+                { icon: Leaf, label: "природний результат" },
+                { icon: HeartHandshake, label: "уважний сервіс" },
+                { icon: Sparkles, label: "сучасні методики" },
+              ].map((c) => (
+                <span
+                  key={c.label}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[13px] font-medium text-white/85 backdrop-blur"
+                >
+                  <c.icon className="h-3.5 w-3.5 text-brand" strokeWidth={1.8} />
+                  {c.label}
+                </span>
+              ))}
+            </div>
           </div>
           <div className="absolute -bottom-8 -left-8 animate-floaty-soft rounded-3xl border border-white/60 bg-white/85 px-7 py-5 shadow-[0_24px_60px_rgba(34,39,25,0.16)] backdrop-blur-xl max-md:-left-2">
             <p className="font-display text-lg italic text-brand-deep">
