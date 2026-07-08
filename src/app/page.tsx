@@ -5,7 +5,6 @@ import { Advantages } from "@/components/home/Advantages";
 import { ServicesGrid } from "@/components/home/ServicesGrid";
 import { SpaHighlight } from "@/components/home/SpaHighlight";
 import { AboutPreview } from "@/components/home/AboutPreview";
-import { Specialists } from "@/components/home/Specialists";
 import { PriceList } from "@/components/home/PriceList";
 import { Testimonials } from "@/components/home/Testimonials";
 import { Contacts } from "@/components/home/Contacts";
@@ -28,7 +27,6 @@ export default function Home() {
       <ServicesGrid />
       <SpaHighlight />
       <AboutPreview />
-      <Specialists />
       <PriceList />
       <Testimonials />
       <Contacts />
