@@ -10,7 +10,7 @@ export function Advantages() {
         <SectionHeading
           kicker="Чому саме ми"
           title="Переваги Спабель"
-          description="Кожна деталь нашого салону працює на ваш комфорт — від першого дзвінка до останньої процедури."
+          description="Кожна деталь нашого салону працює на ваш комфорт."
         />
 
         <div className="grid grid-cols-1 gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">

@@ -15,7 +15,7 @@ export const ADVANTAGES: Advantage[] = [
     icon: "sparkles",
     title: "SPA-капсула Neoqi Medic",
     description:
-      "Один із небагатьох салонів Запоріжжя з комплексним ритуалом відновлення на SPA-капсулі.",
+      "Єдиний в Запоріжжі салон з комплексним ритуалом відновлення в спа-капсулі.",
   },
   {
     icon: "users",
