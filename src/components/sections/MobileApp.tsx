@@ -1,6 +1,7 @@
 import { Bell, Calendar, Download, Sparkle } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import SplitReveal from "@/components/ui/SplitReveal";
+import { APP_STORE_URL, GOOGLE_PLAY_URL } from "@/lib/site";
 
 const DAYS = ["Пн", "Вт", "Ср", "Чт", "Пт"];
 const SPECIALISTS = [
@@ -48,14 +49,18 @@ export default function MobileApp() {
           <Reveal variant="up" delay={0.2}>
             <div className="mt-10 flex flex-wrap gap-4">
               <a
-                href="#booking"
+                href={APP_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 rounded-full border border-warm/25 px-6 py-3.5 text-[13px] font-semibold uppercase tracking-[0.06em] text-warm transition-colors hover:border-warm/60"
               >
                 <Download size={16} />
                 App Store
               </a>
               <a
-                href="#booking"
+                href={GOOGLE_PLAY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 rounded-full border border-warm/25 px-6 py-3.5 text-[13px] font-semibold uppercase tracking-[0.06em] text-warm transition-colors hover:border-warm/60"
               >
                 <Download size={16} />

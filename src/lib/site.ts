@@ -7,6 +7,11 @@ export const INSTAGRAM_URL =
   "https://www.instagram.com/rayskaya_beauty_space?igsh=MWxkbTJ5dG9yZXRxeQ==";
 export const TIKTOK_URL = "https://www.tiktok.com/@dr.rayskaya?_r=1&_t=ZS-97rpLI2QDCR";
 
+export const APP_STORE_URL =
+  "https://apps.apple.com/ua/app/rayskaya-beauty-space/id6760716856?l=ru";
+export const GOOGLE_PLAY_URL =
+  "https://play.google.com/store/apps/details?id=com.binotel.bookon.rayskaya&pcampaignid=web_share";
+
 export const MAPS_EMBED_URL =
   "https://www.google.com/maps?q=Rayskaya+Beauty+Space,49.9839299,36.1848165&z=17&output=embed";
 export const MAPS_LINK_URL =
