@@ -1,44 +1,38 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Playfair_Display, Manrope } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/lib/cart";
-import { WishlistProvider } from "@/lib/wishlist";
 
-const inter = Inter({
-  variable: "--font-inter",
+const playfair = Playfair_Display({
   subsets: ["latin", "cyrillic"],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
+const manrope = Manrope({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-manrope",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Спринтер — Запчастини для Mercedes Sprinter, Vito, VW Crafter | Харків",
+  title: "Rayskaya Beauty Space — косметологія і естетика обличчя та тіла",
   description:
-    "Інтернет-магазин запчастин для Mercedes Sprinter, Vito, Volkswagen Crafter та LT. Понад 8 000 позицій в наявності. Доставка по Україні 1–2 дні. Харків: Просп. Героїв Харкова, 210.",
-  keywords:
-    "запчастини Mercedes Sprinter, запчастини Vito, запчастини VW Crafter, запчастини для мерседес спрінтер, автозапчастини Харків, запчастини для комерційного транспорту",
+    "Rayskaya Beauty Space — простір косметології та естетики у Харкові. Ін’єкційна та апаратна косметологія, лазерна епіляція, догляд за обличчям і тілом. Індивідуальний підхід — сучасні методики.",
   openGraph: {
-    title: "Спринтер — Запчастини для комерційного транспорту",
+    title: "Rayskaya Beauty Space",
     description:
-      "Понад 8 000 позицій запчастин для Mercedes та VW. Швидка доставка по Україні.",
-    type: "website",
+      "Косметологія і естетика обличчя та тіла. Індивідуальний підхід — сучасні методики.",
     locale: "uk_UA",
+    type: "website",
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="uk" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
-        <CartProvider>
-          <WishlistProvider>
-            {children}
-          </WishlistProvider>
-        </CartProvider>
-      </body>
+    <html lang="uk" className={`${playfair.variable} ${manrope.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }

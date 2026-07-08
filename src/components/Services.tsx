@@ -1,140 +1,75 @@
-import { ArrowRight } from "lucide-react";
-
-const categories = [
-  {
-    emoji: "🔧",
-    title: "Запчастини за артикулом",
-    description: "Точний пошук деталей за OEM або кодом виробника",
-    href: "http://sprinter.org.ua/price",
-    accent: "from-orange-500/10 to-orange-600/5",
-    badge: "Популярне",
-  },
-  {
-    emoji: "🚗",
-    title: "Кузовні запчастини",
-    description: "Бампери, крила, капоти, двері та скло для всіх марок",
-    href: "http://sprinter.org.ua/CarBodyCatalog.aspx",
-    accent: "from-blue-500/10 to-blue-600/5",
-    badge: null,
-  },
-  {
-    emoji: "🛞",
-    title: "Ходова частина",
-    description: "Амортизатори, ресори, кермові наконечники, стійки",
-    href: "http://sprinter.org.ua/price",
-    accent: "from-purple-500/10 to-purple-600/5",
-    badge: null,
-  },
-  {
-    emoji: "🛑",
-    title: "Гальмівна система",
-    description: "Колодки, диски, барабани, супорти та РТЦ",
-    href: "http://sprinter.org.ua/price",
-    accent: "from-red-500/10 to-red-600/5",
-    badge: null,
-  },
-  {
-    emoji: "⚡",
-    title: "Електрика та освітлення",
-    description: "Генератори, стартери, датчики, фари та LED лампи",
-    href: "http://sprinter.org.ua/price",
-    accent: "from-yellow-500/10 to-yellow-600/5",
-    badge: null,
-  },
-  {
-    emoji: "🔩",
-    title: "Двигун та КПП",
-    description: "Поршнева група, прокладки, ремні ГРМ, фільтри",
-    href: "http://sprinter.org.ua/price",
-    accent: "from-green-500/10 to-green-600/5",
-    badge: null,
-  },
-  {
-    emoji: "🛢️",
-    title: "Моторні оливи",
-    description: "Підбір масла за маркою авто, допуском і в'язкістю",
-    href: "/oils",
-    accent: "from-stone-500/10 to-stone-600/5",
-    badge: "Хіт",
-  },
-  {
-    emoji: "🔋",
-    title: "Акумулятори",
-    description: "Акумулятори для легкових та вантажних авто, мото",
-    href: "http://sprinter.org.ua/CarRechargeableBattery.aspx",
-    accent: "from-teal-500/10 to-teal-600/5",
-    badge: null,
-  },
-];
+import { ArrowUpRight } from "lucide-react";
+import SmartImage from "./SmartImage";
+import { SERVICES } from "@/lib/site";
 
 export default function Services() {
   return (
-    <section id="catalog" className="py-20 lg:py-28 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-14 animate-on-scroll">
-          <span className="inline-block text-sm font-semibold text-orange-500 uppercase tracking-widest mb-3">
-            Каталог
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
-            Категорії запчастин
-          </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Оригінальні та аналогові деталі для іномарок і вітчизняних авто.
-            Швидкий підбір за маркою, моделлю або артикулом.
+    <section
+      id="services"
+      className="relative overflow-hidden bg-mist py-24 md:py-36"
+    >
+      <div
+        className="pointer-events-none absolute -left-56 bottom-0 h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,rgba(141,183,72,0.14)_0%,transparent_65%)]"
+        aria-hidden
+      />
+      <div className="mx-auto max-w-[1360px] px-5 md:px-10">
+        <div className="mb-16 flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p className="eyebrow mb-7" data-reveal="up">
+              Наші послуги
+            </p>
+            <h2
+              className="h-display max-w-2xl text-[clamp(2rem,4.4vw,3.6rem)]"
+              data-reveal="blur"
+            >
+              Повний спектр{" "}
+              <span className="italic text-brand-deep">косметології</span>
+            </h2>
+          </div>
+          <p
+            className="max-w-sm text-base leading-relaxed text-olive"
+            data-reveal="up"
+            data-reveal-delay="0.15"
+          >
+            Обличчя та тіло. Апаратні, ін’єкційні та доглядові методики —
+            підібрані індивідуально для вас.
           </p>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {categories.map((cat, i) => (
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {SERVICES.map((s, i) => (
             <a
-              key={cat.title}
-              href={cat.href}
-              {...(cat.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="group relative flex flex-col p-6 bg-white rounded-2xl border border-gray-100 hover:border-orange-200 shadow-sm hover:shadow-xl hover:shadow-orange-50 transition-all duration-300 hover:-translate-y-1 animate-on-scroll"
-              style={{ animationDelay: `${i * 60}ms` }}
+              key={s.id}
+              href="#booking"
+              data-reveal="up"
+              data-reveal-delay={`${(i % 3) * 0.12}`}
+              className="group relative flex flex-col overflow-hidden rounded-[32px] border border-line/70 bg-white shadow-[0_10px_40px_rgba(34,39,25,0.05)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_36px_80px_rgba(34,39,25,0.14)]"
             >
-              {/* Badge */}
-              {cat.badge && (
-                <span className="absolute top-4 right-4 text-xs font-semibold px-2.5 py-1 bg-orange-100 text-orange-600 rounded-full">
-                  {cat.badge}
-                </span>
-              )}
-
-              {/* Icon bg */}
-              <div
-                className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${cat.accent} flex items-center justify-center mb-5 text-2xl group-hover:scale-110 transition-transform duration-300`}
-              >
-                {cat.emoji}
+              <div className="relative h-64 overflow-hidden">
+                <SmartImage
+                  src={s.image}
+                  alt={s.title}
+                  className="absolute inset-0"
+                  imgClassName="transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/30 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-40" />
               </div>
-
-              <h3 className="text-base font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors leading-snug">
-                {cat.title}
-              </h3>
-              <p className="text-sm text-gray-500 leading-relaxed flex-1">
-                {cat.description}
-              </p>
-
-              <div className="flex items-center gap-1 mt-4 text-orange-500 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Переглянути
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+              <div className="flex flex-1 flex-col p-8">
+                <h3 className="font-display text-[1.55rem] leading-snug text-ink">
+                  {s.title}
+                </h3>
+                <p className="mt-3 flex-1 leading-relaxed text-olive">
+                  {s.text}
+                </p>
+                <span className="mt-6 inline-flex items-center gap-2 text-[15px] font-semibold text-brand-deep">
+                  Записатися
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-brand-soft transition-all duration-300 group-hover:bg-brand group-hover:text-white">
+                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
+                  </span>
+                </span>
               </div>
             </a>
           ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-12">
-          <a
-            href="http://sprinter.org.ua/price"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white font-bold rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/25"
-          >
-            Весь каталог запчастин
-            <ArrowRight className="w-4 h-4" />
-          </a>
         </div>
       </div>
     </section>
