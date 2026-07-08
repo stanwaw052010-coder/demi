@@ -1,27 +1,34 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Playfair_Display, Manrope } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/lib/cart";
-import { WishlistProvider } from "@/lib/wishlist";
+import SmoothScroll from "@/components/layout/SmoothScroll";
 
-const inter = Inter({
-  variable: "--font-inter",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin", "cyrillic"],
+  display: "swap",
+});
+
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin", "cyrillic"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Спринтер — Запчастини для Mercedes Sprinter, Vito, VW Crafter | Харків",
+  metadataBase: new URL("https://rayskaya-beauty.space"),
+  title: "Rayskaya Beauty Space — Косметологія і естетика обличчя та тіла",
   description:
-    "Інтернет-магазин запчастин для Mercedes Sprinter, Vito, Volkswagen Crafter та LT. Понад 8 000 позицій в наявності. Доставка по Україні 1–2 дні. Харків: Просп. Героїв Харкова, 210.",
+    "Rayskaya Beauty Space — місце, де ви можете отримати повний спектр косметологічних послуг для відновлення та збереження молодості, краси та здоров'я. Індивідуальний підхід, сучасні методики.",
   keywords:
-    "запчастини Mercedes Sprinter, запчастини Vito, запчастини VW Crafter, запчастини для мерседес спрінтер, автозапчастини Харків, запчастини для комерційного транспорту",
+    "косметологія Харків, естетична медицина, догляд за обличчям, апаратна косметологія, ін'єкційна косметологія, Rayskaya Beauty Space",
   openGraph: {
-    title: "Спринтер — Запчастини для комерційного транспорту",
+    title: "Rayskaya Beauty Space — Косметологія і естетика обличчя та тіла",
     description:
-      "Понад 8 000 позицій запчастин для Mercedes та VW. Швидка доставка по Україні.",
+      "Індивідуальний підхід — сучасні методики. Записуйтесь на консультацію в Rayskaya Beauty Space.",
     type: "website",
     locale: "uk_UA",
+    siteName: "Rayskaya Beauty Space",
   },
 };
 
@@ -31,13 +38,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uk" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
-        <CartProvider>
-          <WishlistProvider>
-            {children}
-          </WishlistProvider>
-        </CartProvider>
+    <html lang="uk" className={`${playfair.variable} ${manrope.variable} h-full`}>
+      <body className="min-h-full flex flex-col bg-warm text-ink antialiased">
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );
