@@ -92,6 +92,8 @@ export const REVIEWS = [
 ] as const;
 
 export const HOURS = [
-  { days: "Понеділок — П’ятниця", time: "08:00–20:00", closed: false },
-  { days: "Субота — Неділя", time: "Зачинено", closed: true },
+  { days: "Понеділок — Субота", time: "08:00–20:00", closed: false },
+  { days: "Неділя", time: "Зачинено", closed: true },
 ] as const;
+
+export const ADDRESS = "м. Харків, вул. Полтавський Шлях, 1А";

@@ -48,27 +48,9 @@ export default function Advantages() {
   return (
     <section id="advantages" className="relative py-24 md:py-36">
       <div className="mx-auto max-w-[1360px] px-5 md:px-10">
-        <div className="mb-16 flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p className="eyebrow mb-7" data-reveal="up">
-              Чому обирають нас
-            </p>
-            <h2
-              className="h-display max-w-2xl text-[clamp(2rem,4.4vw,3.6rem)]"
-              data-reveal="blur"
-            >
-              Наші <span className="italic text-brand-deep">переваги</span>
-            </h2>
-          </div>
-          <p
-            className="max-w-sm text-base leading-relaxed text-olive"
-            data-reveal="up"
-            data-reveal-delay="0.15"
-          >
-            П’ять причин, чому клієнти довіряють нам найцінніше — свою красу та
-            здоров’я.
-          </p>
-        </div>
+        <p className="eyebrow mb-16" data-reveal="up">
+          Чому обирають нас
+        </p>
 
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-6">
           {ITEMS.map((item, i) => (

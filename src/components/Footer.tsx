@@ -8,7 +8,7 @@ import {
   AppleIcon,
   GooglePlayIcon,
 } from "./icons";
-import { NAV, LINKS, PHONE_DISPLAY, HOURS, SERVICES } from "@/lib/site";
+import { NAV, LINKS, PHONE_DISPLAY, HOURS, SERVICES, ADDRESS } from "@/lib/site";
 
 export default function Footer() {
   return (
@@ -134,7 +134,7 @@ export default function Footer() {
               className="mt-4 flex items-start gap-3 text-[15px] text-white/70 transition-colors hover:text-brand"
             >
               <MapPin className="mt-0.5 h-4.5 w-4.5 shrink-0 text-brand" strokeWidth={1.8} />
-              м. Харків — відкрити в Google Maps
+              {ADDRESS} — відкрити в Google Maps
             </a>
             <div className="mt-5 border-t border-white/10 pt-5">
               {HOURS.map((h) => (

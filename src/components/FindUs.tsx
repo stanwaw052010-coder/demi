@@ -1,5 +1,5 @@
 import { MapPin, Phone, Navigation } from "lucide-react";
-import { LINKS, PHONE_DISPLAY } from "@/lib/site";
+import { LINKS, PHONE_DISPLAY, ADDRESS } from "@/lib/site";
 
 export default function FindUs() {
   return (
@@ -9,13 +9,12 @@ export default function FindUs() {
           Як нас знайти
         </p>
         <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
-          <h2
-            className="h-display max-w-2xl text-[clamp(2rem,4.4vw,3.6rem)]"
+          <p
+            className="font-display text-[clamp(1.3rem,2.4vw,1.9rem)] italic text-ink"
             data-reveal="blur"
           >
-            Чекаємо на вас у{" "}
-            <span className="italic text-brand-deep">Харкові</span>
-          </h2>
+            {ADDRESS}
+          </p>
           <a
             href={LINKS.maps}
             target="_blank"
@@ -53,16 +52,16 @@ export default function FindUs() {
                     Rayskaya Beauty Space
                   </p>
                   <p className="mt-1 text-sm leading-relaxed text-olive">
-                    м. Харків ·{" "}
-                    <a
-                      href={LINKS.maps}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-semibold text-brand-deep underline-offset-4 hover:underline"
-                    >
-                      відкрити в Google Maps
-                    </a>
+                    {ADDRESS}
                   </p>
+                  <a
+                    href={LINKS.maps}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 inline-block text-sm font-semibold text-brand-deep underline-offset-4 hover:underline"
+                  >
+                    відкрити в Google Maps
+                  </a>
                   <a
                     href={LINKS.phone}
                     className="mt-3 inline-flex items-center gap-2 text-[15px] font-semibold text-ink transition-colors hover:text-brand-deep"

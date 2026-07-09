@@ -38,19 +38,10 @@ export default function Reviews() {
   return (
     <section id="reviews" className="relative overflow-hidden py-24 md:py-36">
       <div className="mx-auto max-w-[1360px] px-5 md:px-10">
-        <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p className="eyebrow mb-7" data-reveal="up">
-              Відгуки
-            </p>
-            <h2
-              className="h-display max-w-2xl text-[clamp(2rem,4.4vw,3.6rem)]"
-              data-reveal="blur"
-            >
-              Нам довіряють{" "}
-              <span className="italic text-brand-deep">найцінніше</span>
-            </h2>
-          </div>
+        <div className="mb-14 flex flex-wrap items-center justify-between gap-6">
+          <p className="eyebrow" data-reveal="up">
+            Відгуки
+          </p>
           <div className="flex gap-3" data-reveal="up" data-reveal-delay="0.15">
             <button
               type="button"
