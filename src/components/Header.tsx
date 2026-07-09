@@ -6,8 +6,11 @@ import { NAV, LINKS, PHONE_DISPLAY } from "@/lib/site";
 
 function Wordmark({ className = "" }: { className?: string }) {
   return (
-    <span className={`font-display leading-none ${className}`}>
-      Rayskaya <em className="italic text-brand-deep">Beauty Space</em>
+    <span
+      className={`inline-flex items-center gap-2.5 whitespace-nowrap font-semibold uppercase leading-none text-brand-deep ${className}`}
+    >
+      <span className="h-px w-5 shrink-0 bg-brand" aria-hidden />
+      Rayskaya Beauty Space
     </span>
   );
 }
@@ -38,7 +41,7 @@ export default function Header() {
       >
         <div className="mx-auto flex h-[76px] max-w-[1360px] items-center justify-between px-5 md:px-10">
           <a href="#top" aria-label="Rayskaya Beauty Space — на початок">
-            <Wordmark className="text-xl md:text-2xl" />
+            <Wordmark className="text-[10px] tracking-[0.2em] sm:text-[11px] sm:tracking-[0.24em]" />
           </a>
 
           <nav className="hidden items-center gap-9 lg:flex">
@@ -94,7 +97,7 @@ export default function Header() {
         }`}
       >
         <div className="flex h-[76px] items-center justify-between px-5">
-          <Wordmark className="text-xl" />
+          <Wordmark className="text-[11px] tracking-[0.22em]" />
           <button
             type="button"
             onClick={() => setOpen(false)}

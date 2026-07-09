@@ -95,7 +95,7 @@ export default function Hero() {
 
       <div className="mx-auto grid max-w-[1360px] items-center gap-14 px-5 pb-16 pt-10 md:px-10 lg:min-h-[calc(100svh-76px)] lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pb-20 lg:pt-0">
         {/* Ліва частина */}
-        <div className="relative z-10">
+        <div className="relative z-10 flex flex-col items-center text-center lg:items-start lg:text-left">
           <Image
             src="/logo/rayskaya-dark.svg"
             alt="Rayskaya Beauty Space"
@@ -116,7 +116,7 @@ export default function Hero() {
               href="#booking"
               className="items-center justify-center rounded-full bg-brand px-9 py-4.5 text-base font-semibold text-white shadow-[0_16px_40px_rgba(141,183,72,0.4)] transition-colors duration-300 hover:bg-brand-deep"
             >
-              Записатися
+              Записатися онлайн
             </MagneticButton>
           </div>
         </div>
