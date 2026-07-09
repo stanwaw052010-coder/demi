@@ -42,7 +42,7 @@ export const IMAGES = {
 
 /**
  * Галерея інтер'єру — гортається горизонтально, як карусель відгуків.
- * Покладіть файли public/images/gallery/gallery-1.jpg … gallery-5.jpg
+ * Покладіть файли public/images/gallery/gallery-1.jpg … gallery-6.jpg
  * (можна більше — просто додайте ще один об'єкт у цей масив), і вони
  * підхопляться автоматично.
  */
@@ -52,6 +52,7 @@ export const GALLERY = [
   { src: "/images/gallery/gallery-3.jpg", alt: "Процедурний кабінет" },
   { src: "/images/gallery/gallery-4.jpg", alt: "Кабінет апаратної косметології" },
   { src: "/images/gallery/gallery-5.jpg", alt: "Кабінет косметологічних процедур" },
+  { src: "/images/gallery/gallery-6.jpg", alt: "Інтер'єр Rayskaya Beauty Space" },
 ] as const;
 
 export const SERVICES = [
@@ -110,4 +111,4 @@ export const HOURS = [
   { days: "Неділя", time: "Зачинено", closed: true },
 ] as const;
 
-export const ADDRESS = "м. Харків, вул. Полтавський Шлях, 1А";
+export const ADDRESS = "м. Харків, вул. Полтавський Шлях, 144";

@@ -19,18 +19,17 @@ export default function About() {
             data-reveal="up"
             data-reveal-delay="0.1"
           >
-            Rayskaya Beauty Space — місце, де ви можете отримати повний спектр
-            косметологічних послуг для відновлення та збереження молодості,
-            краси та здоров’я, зберігаючи вашу індивідуальність та природну
-            привабливість.
+            <span className="font-semibold text-ink">Rayskaya Beauty Space</span> — місце, де ви
+            можете отримати повний спектр косметологічних послуг для відновлення
+            та збереження молодості, краси та здоров’я, зберігаючи вашу
+            індивідуальність та природну привабливість.
           </p>
           <p
             className="mt-6 text-lg leading-relaxed text-olive md:text-xl"
             data-reveal="up"
             data-reveal-delay="0.18"
           >
-            Ми поєднуємо <span className="font-semibold text-ink">медичний підхід</span> та{" "}
-            <span className="font-semibold text-ink">естетику luxury</span>. Кожна процедура
+            Ми поєднуємо медичний підхід та естетику luxury. Кожна процедура
             підбирається індивідуально — з урахуванням типу шкіри, її стану та
             ваших побажань. Жодних шаблонних рішень.
           </p>

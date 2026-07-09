@@ -25,17 +25,14 @@ function PhoneScreen() {
       </div>
 
       {/* Шапка застосунку */}
-      <div className="flex items-center justify-between px-6 pt-3">
-        <div>
-          <p className="text-[11px] text-olive">Вітаємо 👋</p>
-          <Image
-            src="/logo/rayskaya-dark.svg"
-            alt="Rayskaya"
-            width={90}
-            height={26}
-            className="mt-1.5 h-[16px] w-auto"
-          />
-        </div>
+      <div className="flex items-center justify-between px-6 pt-4">
+        <Image
+          src="/logo/rayskaya-dark.svg"
+          alt="Rayskaya"
+          width={100}
+          height={29}
+          className="h-[20px] w-auto"
+        />
         <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-sm">
           <Bell className="h-4 w-4 text-ink" strokeWidth={1.8} />
           <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-brand" />
