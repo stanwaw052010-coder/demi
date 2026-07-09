@@ -5,15 +5,9 @@ export default function FindUs() {
   return (
     <section id="location" className="relative py-24 md:py-36">
       <div className="mx-auto max-w-[1360px] px-5 md:px-10">
-        <p className="eyebrow mb-7" data-reveal="up">
-          Як нас знайти
-        </p>
         <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
-          <p
-            className="font-display text-[clamp(1.3rem,2.4vw,1.9rem)] italic text-ink"
-            data-reveal="blur"
-          >
-            {ADDRESS}
+          <p className="eyebrow" data-reveal="up">
+            Як нас знайти
           </p>
           <a
             href={LINKS.maps}
