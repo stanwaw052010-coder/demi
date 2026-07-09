@@ -1,9 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
 import { NAV, LINKS, PHONE_DISPLAY } from "@/lib/site";
+
+function Wordmark({ className = "" }: { className?: string }) {
+  return (
+    <span className={`font-display leading-none ${className}`}>
+      Rayskaya <em className="italic text-brand-deep">Beauty Space</em>
+    </span>
+  );
+}
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -31,14 +38,7 @@ export default function Header() {
       >
         <div className="mx-auto flex h-[76px] max-w-[1360px] items-center justify-between px-5 md:px-10">
           <a href="#top" aria-label="Rayskaya Beauty Space — на початок">
-            <Image
-              src="/logo/rayskaya-dark.svg"
-              alt="Rayskaya Beauty Space"
-              width={168}
-              height={49}
-              priority
-              className="h-10 w-auto md:h-11"
-            />
+            <Wordmark className="text-xl md:text-2xl" />
           </a>
 
           <nav className="hidden items-center gap-9 lg:flex">
@@ -68,6 +68,13 @@ export default function Header() {
             >
               Записатися
             </a>
+            <a
+              href={LINKS.phone}
+              aria-label="Подзвонити"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white/70 text-ink transition-colors hover:border-brand hover:text-brand-deep lg:hidden"
+            >
+              <Phone className="h-4.5 w-4.5" />
+            </a>
             <button
               type="button"
               onClick={() => setOpen(true)}
@@ -87,13 +94,7 @@ export default function Header() {
         }`}
       >
         <div className="flex h-[76px] items-center justify-between px-5">
-          <Image
-            src="/logo/rayskaya-dark.svg"
-            alt="Rayskaya Beauty Space"
-            width={150}
-            height={44}
-            className="h-10 w-auto"
-          />
+          <Wordmark className="text-xl" />
           <button
             type="button"
             onClick={() => setOpen(false)}

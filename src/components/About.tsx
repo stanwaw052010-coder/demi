@@ -13,16 +13,9 @@ export default function About() {
           <p className="eyebrow mb-7" data-reveal="up">
             Про нас
           </p>
-          <h2
-            className="h-display text-[clamp(2rem,4.4vw,3.6rem)]"
-            data-reveal="blur"
-          >
-            Простір, де краса зустрічається{" "}
-            <span className="italic text-brand-deep">зі здоров’ям</span>
-          </h2>
 
           <p
-            className="mt-9 text-lg leading-relaxed text-olive md:text-xl"
+            className="text-lg leading-relaxed text-olive md:text-xl"
             data-reveal="up"
             data-reveal-delay="0.1"
           >
@@ -41,22 +34,6 @@ export default function About() {
             підбирається індивідуально — з урахуванням типу шкіри, її стану та
             ваших побажань. Жодних шаблонних рішень.
           </p>
-
-          <div
-            className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-[28px] border border-line bg-line max-sm:grid-cols-1"
-            data-reveal="up"
-            data-reveal-delay="0.25"
-          >
-            {[
-              ["13+", "років досвіду фахівців"],
-              ["100%", "сертифіковані препарати"],
-            ].map(([num, label]) => (
-              <div key={num} className="bg-white/80 px-8 py-7">
-                <p className="font-display text-4xl text-brand-deep">{num}</p>
-                <p className="mt-1.5 text-sm text-olive">{label}</p>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Фірмова декоративна панель */}
@@ -98,9 +75,6 @@ export default function About() {
               height={88}
               className="relative w-[240px] md:w-[300px]"
             />
-            <p className="relative mt-8 max-w-[260px] font-display text-lg italic leading-relaxed text-white/75">
-              краса, здоров’я та індивідуальність — у кожній процедурі
-            </p>
 
             <div className="relative mt-10 flex flex-wrap items-center justify-center gap-2.5">
               {[
@@ -117,14 +91,6 @@ export default function About() {
                 </span>
               ))}
             </div>
-          </div>
-          <div className="absolute -bottom-8 -left-8 animate-floaty-soft rounded-3xl border border-white/60 bg-white/85 px-7 py-5 shadow-[0_24px_60px_rgba(34,39,25,0.16)] backdrop-blur-xl max-md:-left-2">
-            <p className="font-display text-lg italic text-brand-deep">
-              beauty space
-            </p>
-            <p className="mt-1 text-[13px] font-medium text-olive">
-              затишна атмосфера та уважний сервіс
-            </p>
           </div>
         </div>
       </div>
