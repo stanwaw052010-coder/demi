@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import OrganicBlob from "@/components/decorative/OrganicBlob";
 import BotanicalLine from "@/components/decorative/BotanicalLine";
@@ -25,8 +25,20 @@ export default function PhotoSlot({
   imgClassName,
   blobVariant = 1,
 }: PhotoSlotProps) {
+  const imgRef = useRef<HTMLImageElement>(null);
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
+
+  // Small images can finish loading before React attaches onLoad, leaving the
+  // handler to never fire. Reconcile with the element's real state on mount.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img) return;
+    if (img.complete) {
+      if (img.naturalWidth > 0) setLoaded(true);
+      else setErrored(true);
+    }
+  }, []);
 
   return (
     <div className={cn("relative overflow-hidden bg-green-dark", className)}>
@@ -46,12 +58,13 @@ export default function PhotoSlot({
       {!errored && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
+          ref={imgRef}
           src={src}
           alt={alt}
           onLoad={() => setLoaded(true)}
           onError={() => setErrored(true)}
           className={cn(
-            "h-full w-full object-cover transition-opacity duration-700",
+            "relative h-full w-full object-cover transition-opacity duration-700",
             loaded ? "opacity-100" : "opacity-0",
             imgClassName
           )}
