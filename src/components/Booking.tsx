@@ -1,15 +1,9 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { CheckCircle2, Phone, Send } from "lucide-react";
-import {
-  LINKS,
-  PHONE_DISPLAY,
-  PHONE_TEL,
-  SERVICES,
-} from "@/lib/site";
-import MagneticButton from "./MagneticButton";
-import { Eyebrow, Reveal } from "./Reveal";
+import { CheckCircle2, Phone } from "lucide-react";
+import { LINKS, PHONE_DISPLAY, PHONE_TEL, SCHEDULE, SERVICES } from "@/lib/site";
+import { Eyebrow, Reveal, SectionTitle } from "./Reveal";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -27,28 +21,8 @@ function TelegramIcon({ className }: { className?: string }) {
   );
 }
 
-const CONTACT_CARDS = [
-  {
-    href: LINKS.whatsapp,
-    label: "WhatsApp",
-    value: PHONE_DISPLAY,
-    icon: WhatsAppIcon,
-    accent: "bg-brand-mist text-olive",
-  },
-  {
-    href: LINKS.telegram,
-    label: "Telegram",
-    value: "Написати в Telegram",
-    icon: TelegramIcon,
-    accent: "bg-[#e3eef7] text-[#2f7bb5]",
-  },
-];
-
-const SCHEDULE = [
-  { day: "Понеділок — П'ятниця", time: "08:00–20:00", closed: false },
-  { day: "Субота", time: "08:00–20:00", closed: false },
-  { day: "Неділя", time: "Зачинено", closed: true },
-];
+const inputCls =
+  "w-full border-[0.5px] border-ink/15 bg-warm px-4 py-3.5 text-sm font-light text-ink outline-none transition-colors duration-200 placeholder:text-muted-light focus:border-brand";
 
 export default function Booking() {
   const [sent, setSent] = useState(false);
@@ -69,81 +43,92 @@ export default function Booking() {
   };
 
   return (
-    <section id="booking" className="relative py-24 lg:py-32">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute right-[-10%] top-24 size-[420px] rounded-full bg-brand-mist/70 blur-3xl"
-      />
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+    <section
+      id="booking"
+      className="px-6 py-24 sm:px-10"
+      style={{
+        background: "linear-gradient(135deg, #f7f8f2 0%, #e9efd7 100%)",
+      }}
+    >
+      <div className="mx-auto max-w-[1040px]">
         <Reveal>
           <Eyebrow>Онлайн-запис</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.08}>
-          <h2 className="mt-6 font-display text-4xl leading-[1.12] font-medium tracking-tight text-ink sm:text-5xl lg:text-[3.4rem]">
-            Запишіться{" "}
-            <em className="font-normal italic text-olive">зараз</em>
-          </h2>
+          <SectionTitle>Запишіться зараз</SectionTitle>
         </Reveal>
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-12">
-          {/* form */}
-          <Reveal delay={0.12} y={44}>
-            <div className="relative h-full rounded-[2rem] border border-ink/8 bg-white/85 p-8 shadow-[0_30px_70px_-45px_rgba(52,66,31,0.5)] sm:p-10">
+        <div className="mt-14 grid items-start gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
+          <Reveal delay={0.08}>
+            <div className="hairline border-[0.5px] bg-warm px-6 py-8 sm:px-10 sm:py-11">
               {sent ? (
-                <div className="flex h-full min-h-[380px] flex-col items-center justify-center text-center">
-                  <span className="flex size-16 items-center justify-center rounded-full bg-brand-mist text-olive">
-                    <CheckCircle2 className="size-8" strokeWidth={1.5} />
-                  </span>
-                  <h3 className="mt-6 font-display text-3xl text-ink">
+                <div className="flex min-h-[360px] flex-col items-center justify-center text-center">
+                  <CheckCircle2
+                    className="size-12 text-brand"
+                    strokeWidth={1}
+                  />
+                  <div className="mt-6 font-display text-3xl font-light text-ink">
                     Дякуємо за заявку!
-                  </h3>
-                  <p className="mt-3 max-w-sm text-stone">
+                  </div>
+                  <p className="mt-3 max-w-xs text-sm text-muted">
                     Ми передзвонимо протягом 15 хвилин у робочий час.
                   </p>
                   <button
                     onClick={() => setSent(false)}
-                    className="mt-8 text-sm font-semibold text-olive underline-offset-4 hover:underline"
+                    className="mt-8 text-xs uppercase tracking-[0.14em] text-brand-deep hover:underline"
                   >
                     Надіслати ще одну заявку
                   </button>
                 </div>
               ) : (
                 <>
-                  <h3 className="font-display text-2xl text-ink">
+                  <div className="mb-8 font-display text-[28px] font-light text-ink">
                     Форма запису
-                  </h3>
-                  <form onSubmit={onSubmit} className="mt-8 space-y-6">
-                    <label className="block">
-                      <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-stone">
+                  </div>
+                  <form onSubmit={onSubmit}>
+                    <div className="mb-5">
+                      <label
+                        htmlFor="f-name"
+                        className="mb-2 block text-[10px] uppercase tracking-[0.18em] text-muted"
+                      >
                         Ваше ім&rsquo;я
-                      </span>
+                      </label>
                       <input
+                        id="f-name"
                         name="name"
                         required
-                        placeholder="Як до вас звертатися?"
-                        className="mt-2.5 w-full rounded-2xl border border-ink/12 bg-cream px-5 py-4 text-ink outline-none transition-all duration-300 placeholder:text-stone/60 focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/15"
+                        placeholder="Ольга"
+                        autoComplete="given-name"
+                        className={inputCls}
                       />
-                    </label>
-                    <label className="block">
-                      <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-stone">
+                    </div>
+                    <div className="mb-5">
+                      <label
+                        htmlFor="f-phone"
+                        className="mb-2 block text-[10px] uppercase tracking-[0.18em] text-muted"
+                      >
                         Номер телефону
-                      </span>
+                      </label>
                       <input
+                        id="f-phone"
                         name="phone"
                         type="tel"
                         required
-                        placeholder="+380 __ ___ __ __"
-                        className="mt-2.5 w-full rounded-2xl border border-ink/12 bg-cream px-5 py-4 text-ink outline-none transition-all duration-300 placeholder:text-stone/60 focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/15"
+                        placeholder="+380 63 000 0000"
+                        autoComplete="tel"
+                        className={inputCls}
                       />
-                    </label>
-                    <label className="block">
-                      <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-stone">
+                    </div>
+                    <div className="mb-6">
+                      <label
+                        htmlFor="f-service"
+                        className="mb-2 block text-[10px] uppercase tracking-[0.18em] text-muted"
+                      >
                         Послуга
-                      </span>
+                      </label>
                       <select
+                        id="f-service"
                         name="service"
                         defaultValue=""
-                        className="mt-2.5 w-full appearance-none rounded-2xl border border-ink/12 bg-cream px-5 py-4 text-ink outline-none transition-all duration-300 focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/15"
+                        className={`${inputCls} cursor-pointer appearance-none`}
                       >
                         <option value="" disabled>
                           Оберіть послугу
@@ -153,17 +138,18 @@ export default function Booking() {
                             {s.title}
                           </option>
                         ))}
-                        <option value="Консультація">Консультація</option>
+                        <option value="Консультація косметолога">
+                          Консультація косметолога
+                        </option>
                       </select>
-                    </label>
-                    <MagneticButton
+                    </div>
+                    <button
                       type="submit"
-                      className="w-full gap-2.5 rounded-full bg-brand py-4.5 text-base font-semibold text-white shadow-[0_18px_44px_-14px_rgba(141,183,72,0.95)] transition-colors duration-300 hover:bg-olive"
+                      className="w-full bg-brand py-4 text-[12px] uppercase tracking-[0.14em] text-white transition-colors duration-200 hover:bg-brand-deep"
                     >
                       Надіслати заявку
-                      <Send className="size-4.5" strokeWidth={1.75} />
-                    </MagneticButton>
-                    <p className="text-center text-sm text-stone">
+                    </button>
+                    <p className="mt-3.5 text-center text-[11px] leading-relaxed text-muted-light">
                       Ми передзвонимо протягом 15 хвилин у робочий час
                     </p>
                   </form>
@@ -172,78 +158,87 @@ export default function Booking() {
             </div>
           </Reveal>
 
-          {/* contacts + schedule */}
-          <div className="flex flex-col gap-5">
-            <Reveal delay={0.16}>
-              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-olive">
+          <div>
+            <Reveal delay={0.12}>
+              <p className="mb-7 text-[10px] uppercase tracking-[0.24em] text-brand-deep">
                 Або зв&rsquo;яжіться одразу
               </p>
             </Reveal>
-            {CONTACT_CARDS.map((c, i) => (
-              <Reveal key={c.label} delay={0.2 + i * 0.07}>
+            {[
+              {
+                href: LINKS.whatsapp,
+                icon: <WhatsAppIcon className="size-5.5" />,
+                iconCls: "bg-[#e8f5e9] text-[#2e7d32]",
+                name: "WhatsApp",
+                sub: PHONE_DISPLAY,
+                label: "Написати у WhatsApp",
+              },
+              {
+                href: LINKS.telegram,
+                icon: <TelegramIcon className="size-5.5" />,
+                iconCls: "bg-[#e3f2fd] text-[#1565c0]",
+                name: "Telegram",
+                sub: "Написати в Telegram",
+                label: "Написати у Telegram",
+              },
+              {
+                href: `tel:${PHONE_TEL}`,
+                icon: <Phone className="size-5" strokeWidth={1.5} />,
+                iconCls: "bg-[#fbe9e7] text-[#bf360c]",
+                name: "Подзвонити",
+                sub: PHONE_DISPLAY,
+                label: "Подзвонити",
+              },
+            ].map((c, i) => (
+              <Reveal key={c.name} delay={0.16 + i * 0.06}>
                 <a
                   href={c.href}
-                  target="_blank"
+                  target={c.href.startsWith("tel:") ? undefined : "_blank"}
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-5 rounded-[1.75rem] border border-ink/8 bg-white/80 px-6 py-5 transition-all duration-400 hover:-translate-y-0.5 hover:border-brand/50 hover:shadow-[0_24px_50px_-30px_rgba(94,122,52,0.5)]"
+                  aria-label={c.label}
+                  className="hairline mb-3 flex items-center gap-4.5 border-[0.5px] bg-warm px-5.5 py-5 transition-all duration-200 hover:translate-x-[3px] hover:border-brand"
                 >
                   <span
-                    className={`flex size-12 items-center justify-center rounded-full ${c.accent}`}
+                    className={`flex size-10.5 shrink-0 items-center justify-center rounded-full ${c.iconCls}`}
                   >
-                    <c.icon className="size-6" />
+                    {c.icon}
                   </span>
-                  <span>
-                    <span className="block font-semibold text-ink">
-                      {c.label}
+                  <span className="flex flex-col">
+                    <span className="text-sm font-normal text-ink">
+                      {c.name}
                     </span>
-                    <span className="mt-0.5 block text-sm text-stone">
-                      {c.value}
-                    </span>
+                    <span className="mt-0.5 text-xs text-muted">{c.sub}</span>
                   </span>
                 </a>
               </Reveal>
             ))}
-            <Reveal delay={0.34}>
-              <a
-                href={`tel:${PHONE_TEL}`}
-                className="group flex items-center gap-5 rounded-[1.75rem] border border-ink/8 bg-white/80 px-6 py-5 transition-all duration-400 hover:-translate-y-0.5 hover:border-brand/50 hover:shadow-[0_24px_50px_-30px_rgba(94,122,52,0.5)]"
-              >
-                <span className="flex size-12 items-center justify-center rounded-full bg-[#fdeaea] text-[#c2564f]">
-                  <Phone className="size-5.5" strokeWidth={1.75} />
-                </span>
-                <span>
-                  <span className="block font-semibold text-ink">
-                    Подзвонити
-                  </span>
-                  <span className="mt-0.5 block text-sm text-stone">
-                    {PHONE_DISPLAY}
-                  </span>
-                </span>
-              </a>
-            </Reveal>
 
-            <Reveal delay={0.4}>
-              <div className="rounded-[1.75rem] border border-ink/8 bg-white/80 px-6 py-6">
-                <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-olive">
+            <Reveal delay={0.36}>
+              <div className="hairline mt-6 border-[0.5px] bg-warm px-5.5 py-5.5">
+                <div className="mb-4 text-[10px] uppercase tracking-[0.18em] text-brand-deep">
                   Графік роботи
-                </p>
-                <dl className="mt-4 divide-y divide-ink/8">
-                  {SCHEDULE.map((s) => (
-                    <div
-                      key={s.day}
-                      className="flex items-center justify-between py-3.5"
+                </div>
+                {SCHEDULE.map((s, i) => (
+                  <div
+                    key={s.day}
+                    className={`flex items-center justify-between py-2 text-[13px] text-muted ${
+                      i < SCHEDULE.length - 1
+                        ? "hairline-dark border-b-[0.5px]"
+                        : ""
+                    }`}
+                  >
+                    <span>{s.day}</span>
+                    <span
+                      className={
+                        s.closed
+                          ? "font-normal text-[#c97b7b]"
+                          : "font-normal text-ink"
+                      }
                     >
-                      <dt className="text-[15px] text-stone">{s.day}</dt>
-                      <dd
-                        className={`text-[15px] font-semibold ${
-                          s.closed ? "text-[#c2564f]" : "text-ink"
-                        }`}
-                      >
-                        {s.time}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
+                      {s.time}
+                    </span>
+                  </div>
+                ))}
               </div>
             </Reveal>
           </div>

@@ -1,8 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { Phone } from "lucide-react";
-import { LINKS, NAV, PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
+import {
+  ADDRESS,
+  CITY,
+  LINKS,
+  PHONE_DISPLAY,
+  PHONE_TEL,
+} from "@/lib/site";
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -32,120 +37,79 @@ function TikTokIcon({ className }: { className?: string }) {
 
 export default function Footer() {
   return (
-    <footer className="relative mt-8 overflow-hidden bg-deep text-white">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 right-[-10%] size-[480px] rounded-full bg-brand/20 blur-3xl"
-      />
-      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-20">
-        <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr_1fr]">
-          <div>
-            <Image
-              src="/logo-light.svg"
-              alt="Rayskaya Beauty Space"
-              width={200}
-              height={112}
-              className="h-14 w-auto"
-            />
-            <p className="mt-6 max-w-sm leading-relaxed text-white/70">
-              Косметологія і естетика обличчя та тіла. Індивідуальний підхід —
-              сучасні методики.
-            </p>
-            <div className="mt-7 flex gap-3">
-              <a
-                href={LINKS.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="flex size-11 items-center justify-center rounded-full border border-white/20 text-white/80 transition-all duration-300 hover:border-brand hover:bg-brand hover:text-white"
-              >
-                <InstagramIcon className="size-5" />
-              </a>
-              <a
-                href={LINKS.tiktok}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="TikTok"
-                className="flex size-11 items-center justify-center rounded-full border border-white/20 text-white/80 transition-all duration-300 hover:border-brand hover:bg-brand hover:text-white"
-              >
-                <TikTokIcon className="size-4.5" />
-              </a>
-            </div>
-          </div>
-
-          <nav aria-label="Меню у футері">
-            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-soft">
-              Навігація
-            </p>
-            <ul className="mt-5 space-y-3">
-              {NAV.map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    className="text-white/75 transition-colors duration-300 hover:text-white"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-              <li>
-                <a
-                  href="#booking"
-                  className="text-white/75 transition-colors duration-300 hover:text-white"
-                >
-                  Онлайн-запис
-                </a>
-              </li>
-            </ul>
-          </nav>
-
-          <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-soft">
-              Контакти
-            </p>
+    <footer className="bg-dark px-6 py-14 sm:px-10" role="contentinfo">
+      <div className="mx-auto flex max-w-[1040px] flex-wrap items-center justify-between gap-6">
+        <div>
+          <Image
+            src="/logo-light.svg"
+            alt="Rayskaya Beauty Space"
+            width={170}
+            height={95}
+            className="h-12 w-auto"
+          />
+          <div className="mt-3 flex items-center gap-2.5">
             <a
-              href={`tel:${PHONE_TEL}`}
-              className="mt-5 flex items-center gap-3 font-display text-2xl text-white transition-colors hover:text-brand-soft"
-            >
-              <Phone className="size-5 text-brand" strokeWidth={1.5} />
-              {PHONE_DISPLAY}
-            </a>
-            <a
-              href={LINKS.maps}
+              href={LINKS.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 block text-white/70 transition-colors hover:text-white"
+              aria-label="Instagram"
+              className="flex size-9 items-center justify-center border-[0.5px] border-brand/30 text-[#f3f5ec]/70 transition-colors duration-200 hover:border-brand hover:text-brand-soft"
             >
-              Rayskaya Beauty Space — відкрити в Google Maps →
+              <InstagramIcon className="size-4" />
             </a>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <a
-                href={LINKS.appStore}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white/85 transition-all duration-300 hover:border-brand hover:bg-brand"
-              >
-                App Store
-              </a>
-              <a
-                href={LINKS.googlePlay}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white/85 transition-all duration-300 hover:border-brand hover:bg-brand"
-              >
-                Google Play
-              </a>
-            </div>
+            <a
+              href={LINKS.tiktok}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TikTok"
+              className="flex size-9 items-center justify-center border-[0.5px] border-brand/30 text-[#f3f5ec]/70 transition-colors duration-200 hover:border-brand hover:text-brand-soft"
+            >
+              <TikTokIcon className="size-3.5" />
+            </a>
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-white/50 sm:flex-row">
-          <p>
-            © {new Date().getFullYear()} Rayskaya Beauty Space. Усі права
-            захищено.
-          </p>
-          <p className="italic">Beauty space, де турбота — це естетика</p>
+        <div className="text-[11px] uppercase tracking-[0.18em] text-[#f3f5ec]/35">
+          Косметологія · {CITY}
         </div>
+
+        <div className="sm:text-right">
+          <a
+            href={`tel:${PHONE_TEL}`}
+            className="text-[15px] font-light tracking-[0.04em] text-brand-soft transition-opacity hover:opacity-80"
+          >
+            {PHONE_DISPLAY}
+          </a>
+          <div className="mt-1 text-xs text-[#f3f5ec]/40">{ADDRESS}</div>
+          <div className="mt-3 flex gap-2 sm:justify-end">
+            <a
+              href={LINKS.appStore}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-[0.5px] border-brand/30 px-3.5 py-1.5 text-[10px] uppercase tracking-[0.12em] text-[#f3f5ec]/70 transition-colors duration-200 hover:border-brand hover:text-brand-soft"
+            >
+              App Store
+            </a>
+            <a
+              href={LINKS.googlePlay}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-[0.5px] border-brand/30 px-3.5 py-1.5 text-[10px] uppercase tracking-[0.12em] text-[#f3f5ec]/70 transition-colors duration-200 hover:border-brand hover:text-brand-soft"
+            >
+              Google Play
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto mt-9 flex max-w-[1040px] flex-wrap justify-between gap-2 border-t-[0.5px] border-brand/15 pt-6">
+        <span className="text-[11px] tracking-[0.06em] text-[#f3f5ec]/25">
+          © {new Date().getFullYear()} Rayskaya Beauty Space. Усі права
+          захищені.
+        </span>
+        <span className="text-[11px] tracking-[0.06em] text-[#f3f5ec]/25">
+          {CITY}, Україна
+        </span>
       </div>
     </footer>
   );

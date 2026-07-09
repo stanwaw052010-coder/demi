@@ -1,110 +1,73 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Eyebrow, Reveal } from "./Reveal";
-
-gsap.registerPlugin(ScrollTrigger);
+import { ADDRESS } from "@/lib/site";
+import { DividerGold, Eyebrow, Reveal, SectionTitle } from "./Reveal";
 
 export default function About() {
-  const root = useRef<HTMLElement>(null);
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.to(".about-visual-inner", {
-        yPercent: -8,
-        ease: "none",
-        scrollTrigger: {
-          trigger: root.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.4,
-        },
-      });
-    }, root);
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section ref={root} id="about" className="relative py-24 lg:py-36">
-      <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20">
-        <div>
+    <section id="about" className="bg-warm px-6 py-24 sm:px-10">
+      <div className="mx-auto max-w-[1040px]">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
           <Reveal>
-            <Eyebrow>Про нас</Eyebrow>
+            <div
+              aria-hidden
+              className="relative flex h-[260px] items-center justify-center overflow-hidden rounded-[2px] lg:h-[440px]"
+              style={{
+                background:
+                  "linear-gradient(135deg, #eff3e4 0%, #dfe9c8 50%, #cfdfae 100%)",
+              }}
+            >
+              <div className="absolute inset-0 flex items-center justify-center opacity-40">
+                <svg width="220" height="220" viewBox="0 0 200 200" fill="none">
+                  <circle cx="100" cy="100" r="95" stroke="#6e9634" strokeWidth="0.6" />
+                  <circle cx="100" cy="100" r="70" stroke="#6e9634" strokeWidth="0.4" />
+                  <circle cx="100" cy="100" r="45" stroke="#6e9634" strokeWidth="0.4" />
+                  <ellipse cx="100" cy="100" rx="18" ry="95" stroke="#6e9634" strokeWidth="0.5" />
+                  <ellipse cx="100" cy="100" rx="95" ry="18" stroke="#6e9634" strokeWidth="0.3" />
+                  <circle cx="100" cy="100" r="5" fill="#6e9634" opacity="0.5" />
+                </svg>
+              </div>
+              <div className="hairline absolute right-6 bottom-6 left-6 border-[0.5px] bg-warm/90 px-5 py-4 backdrop-blur-sm">
+                <div className="mb-1.5 text-[10px] uppercase tracking-[0.2em] text-brand-deep">
+                  Косметологія і естетика обличчя та тіла
+                </div>
+                <div className="text-sm leading-normal font-light text-ink">
+                  Пн–Пт: 08:00–20:00 · {ADDRESS}
+                </div>
+              </div>
+            </div>
           </Reveal>
-          <Reveal delay={0.08}>
-            <h2 className="mt-6 font-display text-4xl leading-[1.12] font-medium tracking-tight text-ink text-balance sm:text-5xl lg:text-[3.4rem]">
-              Місце, де краса зберігає вашу{" "}
-              <em className="font-normal italic text-olive">
-                індивідуальність
-              </em>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.16}>
-            <p className="mt-8 text-lg leading-relaxed text-stone">
-              Rayskaya Beauty Space — місце, де ви можете отримати повний
-              спектр косметологічних послуг для відновлення та збереження
-              молодості, краси та здоров&rsquo;я, зберігаючи вашу
-              індивідуальність та природну привабливість.
-            </p>
-          </Reveal>
-          <Reveal delay={0.24}>
-            <div className="mt-7 border-l-2 border-brand pl-6">
-              <p className="text-lg leading-relaxed text-ink/85">
+
+          <div>
+            <Reveal>
+              <Eyebrow>Про нас</Eyebrow>
+              <SectionTitle>
+                Краса, якій
+                <br />
+                можна довіритись
+              </SectionTitle>
+              <DividerGold />
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mb-6 max-w-md text-[15px] leading-[1.85] text-muted">
+                Rayskaya Beauty Space — місце, де ви можете отримати повний
+                спектр косметологічних послуг для відновлення та збереження
+                молодості, краси та здоров&rsquo;я, зберігаючи вашу
+                індивідуальність та природну привабливість.
+              </p>
+            </Reveal>
+            <Reveal delay={0.18}>
+              <p className="max-w-md text-[15px] leading-[1.85] text-muted">
                 Ми поєднуємо медичний підхід та естетику luxury. Кожна
                 процедура підбирається індивідуально — з урахуванням типу
                 шкіри, її стану та ваших побажань.{" "}
-                <span className="font-semibold text-deep">
+                <span className="font-normal text-ink">
                   Жодних шаблонних рішень.
                 </span>
               </p>
-            </div>
-          </Reveal>
-          <Reveal delay={0.32}>
-            <a
-              href="#services"
-              className="group mt-10 inline-flex items-center gap-3 text-[15px] font-semibold text-olive"
-            >
-              Дізнатися про послуги
-              <span className="h-px w-12 bg-brand transition-all duration-400 group-hover:w-20" />
-            </a>
-          </Reveal>
-        </div>
-
-        <Reveal delay={0.1} y={50}>
-          <div className="relative">
-            <div className="grain relative aspect-[5/6] overflow-hidden rounded-[2.5rem] shadow-[0_36px_80px_-32px_rgba(52,66,31,0.4)] sm:aspect-[6/6.5]">
-              <div
-                className="about-visual-inner absolute -inset-y-[8%] inset-x-0 bg-cover bg-center"
-                style={{ backgroundImage: "url(/about-visual.jpg)" }}
-              />
-              <svg
-                viewBox="0 0 400 440"
-                className="absolute inset-0 h-full w-full"
-                aria-hidden
-              >
-                <g fill="none" stroke="#5e7a34" strokeWidth="1">
-                  <path
-                    d="M200 356 C 200 268 240 236 306 220 C 244 226 214 200 206 132 C 198 200 168 226 106 220 C 172 236 200 268 200 356 Z"
-                    strokeOpacity="0.55"
-                  />
-                  <circle cx="206" cy="238" r="128" strokeOpacity="0.22" />
-                  <circle cx="206" cy="238" r="164" strokeOpacity="0.12" />
-                </g>
-              </svg>
-              <div className="absolute bottom-6 left-6 rounded-3xl bg-white/75 px-5 py-4 backdrop-blur-md">
-                <p className="font-display text-base italic text-deep">
-                  «Медичний підхід та естетика luxury»
-                </p>
-              </div>
-            </div>
-            <div
-              aria-hidden
-              className="absolute -right-6 top-12 -z-10 h-64 w-40 rounded-[2rem] bg-brand-mist"
-            />
+            </Reveal>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
