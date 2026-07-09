@@ -90,7 +90,7 @@ export default function Footer() {
                   href="#booking"
                   className="text-[15px] text-white/70 transition-colors hover:text-brand"
                 >
-                  Онлайн-запис
+                  Графік роботи
                 </a>
               </li>
               <li>
@@ -98,7 +98,7 @@ export default function Footer() {
                   href="#booking"
                   className="text-[15px] text-white/70 transition-colors hover:text-brand"
                 >
-                  Графік роботи
+                  Онлайн-запис
                 </a>
               </li>
             </ul>
