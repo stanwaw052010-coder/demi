@@ -93,6 +93,14 @@ export default function Footer() {
                   Онлайн-запис
                 </a>
               </li>
+              <li>
+                <a
+                  href="#booking"
+                  className="text-[15px] text-white/70 transition-colors hover:text-brand"
+                >
+                  Графік роботи
+                </a>
+              </li>
             </ul>
           </nav>
 

@@ -16,28 +16,9 @@ export default function Services() {
         aria-hidden
       />
       <div className="mx-auto max-w-[1360px] px-5 md:px-10">
-        <div className="mb-16 flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p className="eyebrow mb-7" data-reveal="up">
-              Наші послуги
-            </p>
-            <h2
-              className="h-display max-w-2xl text-[clamp(2rem,4.4vw,3.6rem)]"
-              data-reveal="blur"
-            >
-              Повний спектр{" "}
-              <span className="italic text-brand-deep">косметології</span>
-            </h2>
-          </div>
-          <p
-            className="max-w-sm text-base leading-relaxed text-olive"
-            data-reveal="up"
-            data-reveal-delay="0.15"
-          >
-            Обличчя та тіло. Апаратні, ін’єкційні та доглядові методики —
-            підібрані індивідуально для вас.
-          </p>
-        </div>
+        <p className="eyebrow mb-16" data-reveal="up">
+          Наші послуги
+        </p>
 
         <div className="border-t border-ink/10">
           {SERVICES.map((s, i) => (
