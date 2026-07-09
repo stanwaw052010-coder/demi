@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import About from "@/components/About";
+import Gallery from "@/components/Gallery";
 import Advantages from "@/components/Advantages";
 import Services from "@/components/Services";
 import Reviews from "@/components/Reviews";
@@ -20,6 +21,7 @@ export default function Home() {
         <Hero />
         <Marquee />
         <About />
+        <Gallery />
         <Advantages />
         <Services />
         <Reviews />

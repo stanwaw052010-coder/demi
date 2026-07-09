@@ -40,6 +40,20 @@ export const IMAGES = {
   },
 } as const;
 
+/**
+ * Галерея інтер'єру — гортається горизонтально, як карусель відгуків.
+ * Покладіть файли public/images/gallery/gallery-1.jpg … gallery-5.jpg
+ * (можна більше — просто додайте ще один об'єкт у цей масив), і вони
+ * підхопляться автоматично.
+ */
+export const GALLERY = [
+  { src: "/images/gallery/gallery-1.jpg", alt: "Зона очікування Rayskaya Beauty Space" },
+  { src: "/images/gallery/gallery-2.jpg", alt: "Рецепція Rayskaya Beauty Space" },
+  { src: "/images/gallery/gallery-3.jpg", alt: "Процедурний кабінет" },
+  { src: "/images/gallery/gallery-4.jpg", alt: "Кабінет апаратної косметології" },
+  { src: "/images/gallery/gallery-5.jpg", alt: "Кабінет косметологічних процедур" },
+] as const;
+
 export const SERVICES = [
   {
     id: "care",
