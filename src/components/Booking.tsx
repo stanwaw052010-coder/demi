@@ -42,17 +42,11 @@ export default function Booking() {
         aria-hidden
       />
       <div className="mx-auto max-w-[1360px] px-5 md:px-10">
-        <p className="eyebrow mb-7" data-reveal="up">
+        <p className="eyebrow mb-16" data-reveal="up">
           Онлайн-запис
         </p>
-        <h2
-          className="h-display max-w-3xl text-[clamp(2rem,4.4vw,3.6rem)]"
-          data-reveal="blur"
-        >
-          Запишіться <span className="italic text-brand-deep">зараз</span>
-        </h2>
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
+        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
           {/* Форма запису */}
           <div
             className="rounded-[36px] border border-line/70 bg-white p-9 shadow-[0_30px_70px_rgba(34,39,25,0.08)] md:p-12"
