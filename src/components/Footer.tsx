@@ -87,7 +87,7 @@ export default function Footer() {
               ))}
               <li>
                 <a
-                  href="#booking"
+                  href="#hours"
                   className="text-[15px] text-white/70 transition-colors hover:text-brand"
                 >
                   Графік роботи

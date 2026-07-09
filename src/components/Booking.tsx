@@ -141,7 +141,7 @@ export default function Booking() {
 
           {/* Контакти + графік */}
           <div className="flex flex-col gap-8">
-            <div>
+            <div id="contacts" className="scroll-mt-24">
               <p
                 className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-brand-deep"
                 data-reveal="up"
@@ -201,7 +201,8 @@ export default function Booking() {
 
             {/* Графік роботи */}
             <div
-              className="rounded-[28px] border border-line/70 bg-white px-8 py-7"
+              id="hours"
+              className="scroll-mt-24 rounded-[28px] border border-line/70 bg-white px-8 py-7"
               data-reveal="up"
               data-reveal-delay="0.25"
             >

@@ -3,7 +3,7 @@ import { LINKS, PHONE_DISPLAY, ADDRESS } from "@/lib/site";
 
 export default function FindUs() {
   return (
-    <section id="contacts" className="relative py-24 md:py-36">
+    <section id="location" className="relative py-24 md:py-36">
       <div className="mx-auto max-w-[1360px] px-5 md:px-10">
         <p className="eyebrow mb-7" data-reveal="up">
           Як нас знайти
