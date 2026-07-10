@@ -1,29 +1,33 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import Hero from "@/components/home/Hero";
-import VehicleSelector from "@/components/home/VehicleSelector";
-import CategoryGrid from "@/components/home/CategoryGrid";
-import FeaturedProducts from "@/components/home/FeaturedProducts";
-import WhyUs from "@/components/home/WhyUs";
-import HowItWorks from "@/components/home/HowItWorks";
-import Testimonials from "@/components/home/Testimonials";
-import FAQ from "@/components/home/FAQ";
-import ContactBanner from "@/components/home/ContactBanner";
+import { Cursor } from "@/components/fx/Cursor";
+import { Header } from "@/components/Header";
+import { Preloader } from "@/components/Preloader";
+import { BeforeAfter } from "@/components/sections/BeforeAfter";
+import { Booking } from "@/components/sections/Booking";
+import { Footer } from "@/components/sections/Footer";
+import { Gallery } from "@/components/sections/Gallery";
+import { Hero } from "@/components/sections/Hero";
+import { Manifesto } from "@/components/sections/Manifesto";
+import { Services } from "@/components/sections/Services";
+import { Stats } from "@/components/sections/Stats";
+import { Testimonials } from "@/components/sections/Testimonials";
 
 export default function Home() {
   return (
     <>
+      <Preloader />
+      <Cursor />
       <Header />
-      <main className="flex flex-col">
+      <div className="grain" aria-hidden />
+
+      <main>
         <Hero />
-        <VehicleSelector />
-        <CategoryGrid />
-        <FeaturedProducts />
-        <WhyUs />
-        <HowItWorks />
+        <Manifesto />
+        <Services />
+        <Gallery />
+        <BeforeAfter />
         <Testimonials />
-        <FAQ />
-        <ContactBanner />
+        <Stats />
+        <Booking />
       </main>
       <Footer />
     </>

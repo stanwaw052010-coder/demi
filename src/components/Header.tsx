@@ -1,221 +1,209 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Phone, Menu, X, ChevronDown, Search } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "@/lib/gsap";
+import { useApp } from "@/components/providers/AppProvider";
+import { useFinePointer } from "@/lib/hooks";
+import { Magnetic } from "@/components/ui/Magnetic";
+import { Pic } from "@/components/ui/Pic";
+import { NAV_LINKS } from "@/data/content";
 
-const navLinks = [
-  { label: "Головна", href: "#hero" },
-  { label: "Каталог", href: "#catalog" },
-  { label: "Чому ми", href: "#why-us" },
-  { label: "Доставка", href: "#delivery" },
-  { label: "Контакти", href: "#contact" },
-];
+export function Header() {
+  const { ready, scrollTo, onScroll, stopScroll, startScroll } = useApp();
+  const fine = useFinePointer();
+  const barRef = useRef<HTMLElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [preview, setPreview] = useState(0);
+  const hidden = useRef(false);
 
-const phones = [
-  "+38 (067) 254-62-66",
-  "+38 (099) 112-95-26",
-  "+38 (096) 277-05-40",
-];
+  // slide in once the curtain lifts
+  useEffect(() => {
+    if (!ready || !barRef.current) return;
+    gsap.fromTo(
+      barRef.current,
+      // y:0 clears the SSR translateY(-120%) that GSAP parses as a px base
+      { yPercent: -120, y: 0 },
+      { yPercent: 0, y: 0, duration: 1.2, ease: "power4.out", delay: 0.65 },
+    );
+  }, [ready]);
 
-export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [phonesOpen, setPhonesOpen] = useState(false);
+  // hide on scroll down, return on scroll up
+  useEffect(() => {
+    return onScroll(({ direction, scroll }) => {
+      if (open) return;
+      const shouldHide = direction === 1 && scroll > 140;
+      if (shouldHide !== hidden.current) {
+        hidden.current = shouldHide;
+        gsap.to(barRef.current, {
+          yPercent: shouldHide ? -120 : 0,
+          duration: 0.7,
+          ease: "power3.out",
+        });
+      }
+    });
+  }, [onScroll, open]);
+
+  // menu open / close choreography
+  useEffect(() => {
+    const overlay = overlayRef.current;
+    if (!overlay) return;
+    const links = overlay.querySelectorAll<HTMLElement>("[data-menu-link]");
+    const meta = overlay.querySelectorAll<HTMLElement>("[data-menu-meta]");
+
+    if (open) {
+      stopScroll();
+      gsap.timeline()
+        .set(overlay, { pointerEvents: "auto" })
+        .to(overlay, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.9, ease: "power4.inOut" })
+        .fromTo(
+          links,
+          { yPercent: 120, rotate: 3 },
+          { yPercent: 0, rotate: 0, duration: 0.9, ease: "power4.out", stagger: 0.07 },
+          "-=0.35",
+        )
+        .fromTo(
+          meta,
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.06 },
+          "-=0.55",
+        );
+    } else {
+      startScroll();
+      gsap.timeline()
+        .to(overlay, { clipPath: "inset(0% 0% 100% 0%)", duration: 0.7, ease: "power4.inOut" })
+        .set(overlay, { pointerEvents: "none" });
+    }
+  }, [open, stopScroll, startScroll]);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  useEffect(() => {
-    if (mobileOpen) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
-    return () => { document.body.style.overflow = ""; };
-  }, [mobileOpen]);
-
-  const scrollTo = (href: string) => {
-    setMobileOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+  const go = (href: string) => {
+    setOpen(false);
+    // let the curtain start closing before travelling
+    setTimeout(() => scrollTo(href), 350);
   };
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-[#0a0a0a]/95 backdrop-blur-md shadow-lg shadow-black/20"
-            : "bg-transparent"
-        }`}
+        ref={barRef}
+        className="fixed inset-x-0 top-0 z-[60] flex items-center justify-between px-6 py-5 mix-blend-difference md:px-10"
+        style={{ transform: "translateY(-120%)" }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
-            {/* Logo */}
-            <a
-              href="#hero"
-              onClick={(e) => { e.preventDefault(); scrollTo("#hero"); }}
-              className="flex items-center gap-2 group"
-            >
-              <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-orange-500 group-hover:bg-orange-400 transition-colors">
-                <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-white" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-                </svg>
-              </div>
-              <div>
-                <span className="text-white font-bold text-lg leading-none tracking-wide">
-                  СПРИНТЕР
-                </span>
-                <span className="block text-[10px] text-orange-400 font-medium tracking-widest uppercase leading-none">
-                  Автозапчастини
-                </span>
-              </div>
-            </a>
+        <button
+          onClick={() => scrollTo("#top")}
+          data-cursor
+          data-cursor-text="Top"
+          className="font-serif-display text-xl tracking-wide text-ivory md:text-2xl"
+          aria-label="LUMÉA — back to top"
+        >
+          LUMÉA<span className="text-champagne">*</span>
+        </button>
 
-            {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
-                  className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </nav>
-
-            {/* Desktop CTA */}
-            <div className="hidden lg:flex items-center gap-3">
-              {/* Phone dropdown */}
-              <div className="relative">
-                <button
-                  onClick={() => setPhonesOpen(!phonesOpen)}
-                  className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-200 hover:text-white border border-white/10 hover:border-white/20 rounded-lg transition-all duration-200 bg-white/5 hover:bg-white/10"
-                >
-                  <Phone className="w-4 h-4 text-orange-400" />
-                  <span>+38 (067) 254-62-66</span>
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${phonesOpen ? "rotate-180" : ""}`} />
-                </button>
-
-                {phonesOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-56 bg-[#1a1a1a] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-10">
-                    {phones.map((phone) => (
-                      <a
-                        key={phone}
-                        href={`tel:${phone.replace(/\D/g, "")}`}
-                        className="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
-                        onClick={() => setPhonesOpen(false)}
-                      >
-                        <Phone className="w-4 h-4 text-orange-400 shrink-0" />
-                        {phone}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <a
-                href="#contact"
-                onClick={(e) => { e.preventDefault(); scrollTo("#contact"); }}
-                className="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/25"
-              >
-                Замовити дзвінок
-              </a>
-            </div>
-
-            {/* Mobile hamburger */}
+        <div className="flex items-center gap-8">
+          <span className="label-mono hidden !text-ivory/60 md:block">
+            Kyiv — Atelier Nº1
+          </span>
+          <Magnetic strength={0.4}>
             <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
-              aria-label="Меню"
+              onClick={() => setOpen((v) => !v)}
+              data-cursor
+              data-cursor-text={open ? "Close" : "Menu"}
+              className="group flex items-center gap-3 py-2 text-ivory"
+              aria-expanded={open}
+              aria-label="Toggle menu"
             >
-              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <span className="font-mono text-[11px] tracking-[0.3em] uppercase">
+                {open ? "Close" : "Menu"}
+              </span>
+              <span className="relative block h-[10px] w-7">
+                <span
+                  className={`absolute left-0 block h-px w-full bg-current transition-all duration-500 ${
+                    open ? "top-1/2 rotate-45" : "top-0 group-hover:w-2/3"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 block h-px w-full bg-current transition-all duration-500 ${
+                    open ? "top-1/2 -rotate-45" : "top-full"
+                  }`}
+                />
+              </span>
             </button>
-          </div>
+          </Magnetic>
         </div>
       </header>
 
-      {/* Mobile Menu */}
+      {/* full-screen menu */}
       <div
-        className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${
-          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        ref={overlayRef}
+        className="pointer-events-none fixed inset-0 z-[55] bg-ink text-ivory"
+        style={{ clipPath: "inset(0% 0% 100% 0%)" }}
+        aria-hidden={!open}
       >
-        {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-          onClick={() => setMobileOpen(false)}
+          className="absolute inset-0 opacity-70"
+          style={{
+            background:
+              "radial-gradient(90% 70% at 80% 110%, rgba(216,191,154,0.14), transparent 60%)",
+          }}
         />
+        <div className="relative flex h-full flex-col justify-between px-6 pt-28 pb-10 md:px-10">
+          <nav className="flex max-w-5xl flex-col gap-1">
+            {NAV_LINKS.map((link, i) => (
+              <div key={link.href} className="overflow-hidden py-1">
+                <button
+                  data-menu-link
+                  data-cursor
+                  data-cursor-text="Go"
+                  onClick={() => go(link.href)}
+                  onMouseEnter={() => setPreview(i)}
+                  className="group flex items-baseline gap-5 text-left"
+                >
+                  <span className="font-mono text-[11px] text-champagne/70">
+                    0{i + 1}
+                  </span>
+                  <span className="font-serif-display text-[clamp(2.4rem,7.5vw,5.6rem)] leading-[1.02] transition-all duration-500 group-hover:translate-x-4 group-hover:italic group-hover:text-champagne">
+                    {link.label}
+                  </span>
+                </button>
+              </div>
+            ))}
+          </nav>
 
-        {/* Panel */}
-        <div
-          className={`absolute top-0 right-0 bottom-0 w-80 max-w-full bg-[#0f0f0f] border-l border-white/10 shadow-2xl transition-transform duration-300 ${
-            mobileOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-        >
-          <div className="flex flex-col h-full overflow-y-auto no-scrollbar">
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-white/10">
-              <span className="text-white font-bold text-lg">СПРИНТЕР</span>
-              <button
-                onClick={() => setMobileOpen(false)}
-                className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Search */}
-            <div className="p-4 border-b border-white/10">
-              <a
-                href="#hero"
-                onClick={(e) => { e.preventDefault(); scrollTo("#hero"); }}
-                className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-colors"
-              >
-                <Search className="w-4 h-4 text-gray-400" />
-                <span className="text-gray-400 text-sm">Пошук за артикулом...</span>
-              </a>
-            </div>
-
-            {/* Nav */}
-            <nav className="flex flex-col p-4 gap-1 flex-1">
-              {navLinks.map((link) => (
-                <a
+          {/* hover preview — desktop only */}
+          {fine && (
+            <div className="pointer-events-none absolute top-1/2 right-[8vw] hidden aspect-[3/4] w-[24vw] max-w-sm -translate-y-1/2 lg:block">
+              {NAV_LINKS.map((link, i) => (
+                <Pic
                   key={link.href}
-                  href={link.href}
-                  onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
-                  className="px-4 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-colors"
-                >
-                  {link.label}
+                  src={link.preview}
+                  alt=""
+                  sizes="24vw"
+                  className={`absolute inset-0 transition-all duration-700 ${
+                    preview === i ? "scale-100 opacity-100" : "scale-[1.06] opacity-0"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
+
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <p data-menu-meta className="label-mono">
+              12 Yaroslaviv Val St, Kyiv
+              <br />
+              Tue – Sun, 10:00 – 21:00
+            </p>
+            <div data-menu-meta className="flex gap-6">
+              {["Instagram", "Telegram", "Pinterest"].map((s) => (
+                <a key={s} href="#" className="link-sweep font-mono text-[11px] tracking-[0.2em] uppercase" data-cursor data-cursor-text="Open">
+                  {s}
                 </a>
               ))}
-            </nav>
-
-            {/* Phones */}
-            <div className="p-4 border-t border-white/10 space-y-2">
-              <p className="text-xs text-gray-500 uppercase tracking-wider font-medium px-4 mb-3">
-                Телефони
-              </p>
-              {phones.map((phone) => (
-                <a
-                  key={phone}
-                  href={`tel:${phone.replace(/\D/g, "")}`}
-                  className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-gray-200 hover:text-white transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-orange-400 shrink-0" />
-                  <span className="text-sm font-medium">{phone}</span>
-                </a>
-              ))}
-
-              <a
-                href="#contact"
-                onClick={(e) => { e.preventDefault(); scrollTo("#contact"); }}
-                className="flex items-center justify-center gap-2 w-full mt-4 px-5 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-colors"
-              >
-                Замовити дзвінок
-              </a>
             </div>
           </div>
         </div>

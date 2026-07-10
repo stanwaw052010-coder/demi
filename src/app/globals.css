@@ -1,109 +1,326 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #111827;
+/* ————————————————————————————————————————
+   LUMÉA design tokens
+———————————————————————————————————————— */
+@theme {
+  --color-ink: #0b0a08;
+  --color-ink-soft: #16130e;
+  --color-ivory: #f3eee5;
+  --color-ivory-soft: #eae3d5;
+  --color-champagne: #d8bf9a;
+  --color-gold: #b3924e;
+  --color-stone: #8f8577;
+
+  --font-serif: var(--font-instrument), "Instrument Serif", Georgia, serif;
+  --font-sans: var(--font-inter-tight), "Inter Tight", system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --color-brand: #f97316;
-  --color-brand-dark: #ea580c;
-  --color-dark: #0a0a0a;
-  --color-dark-2: #111111;
+/* ————————————————————————————————————————
+   Section themes — the whole page crossfades
+   between dark & ivory as you scroll.
+———————————————————————————————————————— */
+:root {
+  --bg: #0b0a08;
+  --fg: #f3eee5;
+  --fg-dim: color-mix(in oklab, var(--fg) 55%, transparent);
+  --hairline: color-mix(in oklab, var(--fg) 16%, transparent);
+  --accent: #d8bf9a;
+}
+body[data-theme="light"] {
+  --bg: #f3eee5;
+  --fg: #131009;
+  --accent: #a07f43;
 }
 
 html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--fg) 30%, transparent) transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  transition:
+    background-color 900ms cubic-bezier(0.33, 1, 0.68, 1),
+    color 900ms cubic-bezier(0.33, 1, 0.68, 1);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background-color: #f97316;
-  color: #ffffff;
+  background: var(--accent);
+  color: #0b0a08;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f1f1f1; }
-::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #f97316; }
+/* Hide the native cursor only when the custom one is active */
+html[data-custom-cursor="on"],
+html[data-custom-cursor="on"] * {
+  cursor: none !important;
+}
 
-/* No-scrollbar utility */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* Line clamp */
-.line-clamp-2 {
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-.line-clamp-3 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
 }
 
-/* Glass effect */
+/* ————————————————————————————————————————
+   Typography
+———————————————————————————————————————— */
+.font-serif-display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.h-display {
+  font-family: var(--font-serif);
+  line-height: 0.92;
+  letter-spacing: -0.015em;
+}
+
+/* char / word reveal plumbing */
+.split-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* breathing room so accents and descenders survive the mask */
+  padding: 0.14em 0 0.1em;
+  margin: -0.14em 0 -0.1em;
+}
+.split-unit {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ————————————————————————————————————————
+   Surfaces & ornaments
+———————————————————————————————————————— */
+.hairline-t {
+  border-top: 1px solid var(--hairline);
+}
+
 .glass {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: color-mix(in oklab, var(--fg) 4%, transparent);
+  backdrop-filter: blur(22px) saturate(1.3);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
+  border: 1px solid color-mix(in oklab, var(--fg) 10%, transparent);
 }
 
-/* Orange gradient text */
-.text-gradient {
-  background: linear-gradient(135deg, #f97316, #fb923c);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* rotating conic border for the booking panel */
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.glow-border {
+  position: relative;
+}
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--border-angle),
+    transparent 0%,
+    color-mix(in oklab, var(--accent) 80%, transparent) 12%,
+    transparent 26%,
+    transparent 55%,
+    color-mix(in oklab, var(--accent) 40%, transparent) 68%,
+    transparent 82%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: border-spin 7s linear infinite;
+  pointer-events: none;
+}
+@keyframes border-spin {
+  to {
+    --border-angle: 360deg;
+  }
 }
 
-/* Scroll animations (legacy, for non-Framer components) */
-.animate-on-scroll {
+/* film grain */
+.grain {
+  position: fixed;
+  inset: -100px;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+  animation: grain-shift 0.9s steps(6) infinite;
+}
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-32px, 16px); }
+  40% { transform: translate(18px, -28px); }
+  60% { transform: translate(-24px, -12px); }
+  80% { transform: translate(30px, 22px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* drifting light leaks */
+.light-leak {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* marquee */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* image shimmer while loading / graceful fallback */
+.pic-frame {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 20% 10%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 60%),
+    linear-gradient(160deg, color-mix(in oklab, var(--fg) 9%, var(--bg)), color-mix(in oklab, var(--fg) 3%, var(--bg)));
+}
+.pic-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    color-mix(in oklab, var(--fg) 6%, transparent) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: pic-shimmer 2.4s ease infinite;
+}
+.pic-frame[data-loaded="true"]::after {
+  animation: none;
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
 }
-.animate-on-scroll.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Keyframes */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+@keyframes pic-shimmer {
+  to {
+    transform: translateX(100%);
+  }
 }
 
-.animate-float { animation: float 3s ease-in-out infinite; }
-
-/* Skeleton loading */
-.skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+/* underline sweep for inline links */
+.link-sweep {
+  position: relative;
+}
+.link-sweep::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.link-sweep:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
-/* Focus ring */
-*:focus-visible {
-  outline: 2px solid #f97316;
-  outline-offset: 2px;
+/* booking inputs */
+.field {
+  position: relative;
+}
+.field input[type="date"] {
+  color-scheme: dark;
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--hairline);
+  padding: 1.4rem 0 0.7rem;
+  font-size: 0.95rem;
+  color: var(--fg);
+  outline: none;
+  transition: border-color 0.4s ease;
+  border-radius: 0;
+}
+.field label {
+  position: absolute;
+  left: 0;
+  top: 1.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.33, 1, 0.68, 1), color 0.3s ease;
+  transform-origin: left top;
+}
+.field:focus-within label,
+.field[data-filled="true"] label {
+  transform: translateY(-1.15rem) scale(0.82);
+  color: var(--accent);
+}
+.field .field-glow {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent), color-mix(in oklab, var(--accent) 20%, transparent));
+  box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 65%, transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.field:focus-within .field-glow {
+  transform: scaleX(1);
+}
+
+/* reduced motion — calm everything down */
+@media (prefers-reduced-motion: reduce) {
+  .grain,
+  .marquee-track,
+  .glow-border::before,
+  .pic-frame::after {
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
