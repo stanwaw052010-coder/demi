@@ -41,7 +41,7 @@ export default function Gallery() {
       <div className="mx-auto max-w-[1360px] px-5 md:px-10">
         <div className="mb-14 flex flex-wrap items-center justify-between gap-6">
           <p className="eyebrow" data-reveal="up">
-            Наш бюті простір
+            Наш б’юті простір
           </p>
           <div className="flex gap-3" data-reveal="up" data-reveal-delay="0.15">
             <button

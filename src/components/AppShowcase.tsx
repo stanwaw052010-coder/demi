@@ -29,9 +29,9 @@ function PhoneScreen() {
         <Image
           src="/logo/rayskaya-dark.svg"
           alt="Rayskaya"
-          width={140}
-          height={41}
-          className="h-[30px] w-auto"
+          width={190}
+          height={56}
+          className="h-[42px] w-auto"
         />
         <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-sm">
           <Bell className="h-4 w-4 text-ink" strokeWidth={1.8} />
