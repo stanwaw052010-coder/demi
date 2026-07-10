@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useSectionTheme } from "@/lib/hooks";
 import { Pic } from "@/components/ui/Pic";
+import { Reveal } from "@/components/ui/Reveal";
 import { SplitReveal } from "@/components/ui/Split";
 import { IMAGES } from "@/data/content";
 
@@ -108,9 +109,10 @@ export function BeforeAfter() {
         the atelier — pull the seam of light across her day.
       </p>
 
+      <Reveal className="mx-auto w-full max-w-5xl">
       <div
         ref={stageRef}
-        className="relative mx-auto aspect-[4/5] w-full max-w-5xl touch-pan-y overflow-hidden select-none md:aspect-[16/9]"
+        className="relative aspect-[4/5] w-full touch-pan-y overflow-hidden select-none md:aspect-[16/9]"
         style={{ "--x": "0.5" } as React.CSSProperties}
         data-cursor
         data-cursor-text="Drag"
@@ -159,6 +161,7 @@ export function BeforeAfter() {
           après
         </span>
       </div>
+      </Reveal>
     </section>
   );
 }

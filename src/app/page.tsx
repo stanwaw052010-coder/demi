@@ -1,4 +1,5 @@
 import { Cursor } from "@/components/fx/Cursor";
+import { ScrollProgress } from "@/components/fx/ScrollProgress";
 import { Header } from "@/components/Header";
 import { Preloader } from "@/components/Preloader";
 import { BeforeAfter } from "@/components/sections/BeforeAfter";
@@ -16,6 +17,7 @@ export default function Home() {
     <>
       <Preloader />
       <Cursor />
+      <ScrollProgress />
       <Header />
       <div className="grain" aria-hidden />
 

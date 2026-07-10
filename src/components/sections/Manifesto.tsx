@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useSectionTheme } from "@/lib/hooks";
 import { Pic } from "@/components/ui/Pic";
+import { Reveal } from "@/components/ui/Reveal";
 import { ScrubWords, SplitReveal } from "@/components/ui/Split";
 import { IMAGES } from "@/data/content";
 
@@ -76,7 +77,9 @@ export function Manifesto() {
           data-float="26"
           className="absolute -top-10 right-[2%] hidden w-40 rotate-[6deg] lg:block"
         >
-          <Pic src={IMAGES.manifesto[1]} alt="" sizes="10rem" className="aspect-[3/4]" />
+          <Reveal start="top 90%">
+            <Pic src={IMAGES.manifesto[1]} alt="" sizes="10rem" className="aspect-[3/4]" />
+          </Reveal>
         </div>
         <ScrubWords className="font-serif-display max-w-4xl text-[clamp(2.1rem,4.6vw,4.3rem)] leading-[1.12]">
           We do not do makeovers. We compose light — on skin, in hair, around a face. Beauty here is not applied; it is revealed, slowly, the way a photograph surfaces in a darkroom.
