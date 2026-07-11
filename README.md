@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GIN Barbershop — Преміальний барбершоп у Хмельницькому
 
-## Getting Started
+Award-worthy, dark-luxury website for **GIN Barbershop** (Khmelnytskyi, Ukraine).
+Built with a focus on premium typography, cinematic motion and flawless UX.
 
-First, run the development server:
+## Tech stack
+
+- **Next.js 16** (App Router) + **React 19** + **TypeScript**
+- **Tailwind CSS v4**
+- **Framer Motion** — reveals, parallax, carousels, page motion
+- **Lenis** — smooth scrolling
+- **Lucide** icons
+
+## Features
+
+- Luxury loading screen with animated progress counter
+- Custom cursor (dot + magnetic ring), scroll progress bar
+- Sticky blurred navbar with hide/show on scroll + full-screen mobile menu
+- Full-screen hero with parallax, word-by-word text reveal and animated spotlight
+- Animated statistics counters, perks marquee
+- Interactive service cards with mouse-follow glow
+- Barber cards with grayscale→color hover
+- Masonry gallery with keyboard-navigable lightbox
+- Google-style reviews carousel (auto-advance)
+- Before/After drag slider
+- Online booking via embedded **Altegio** widget
+- Premium FAQ accordion
+- Contacts with Google Maps embed, Call / Route / Book actions
+- Floating booking button + sticky mobile CTA
+- Full SEO: metadata, Open Graph, Twitter cards, `schema.org` `HairSalon`,
+  `sitemap.xml`, `robots.txt`, web manifest
+- Accessible, responsive, `prefers-reduced-motion` aware
+
+## Pages
+
+`/` · `/services` · `/gallery` · `/barbers` · `/contacts` · `/privacy` · `404`
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build   # production build
+npm run lint    # eslint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Content & configuration
 
-## Learn More
+All business data (phone, hours, booking URL, maps, socials) lives in
+`src/lib/utils.ts`; services, barbers, gallery, reviews and FAQ content live in
+`src/lib/content.ts`. Update those to change site content.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> Note: photos use Unsplash placeholders. Replace the URLs in
+> `src/lib/content.ts` and the section components with real GIN photography
+> before launch. Update `site.url` in `src/lib/utils.ts` to the production
+> domain so canonical/OG/sitemap URLs are correct.

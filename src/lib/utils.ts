@@ -1,73 +1,27 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { Variants } from "framer-motion";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatPrice(price: number): string {
-  return new Intl.NumberFormat("uk-UA", {
-    style: "currency",
-    currency: "UAH",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
-}
-
-export function formatPhone(phone: string): string {
-  const digits = phone.replace(/\D/g, "");
-  if (digits.length === 12 && digits.startsWith("38")) {
-    const n = digits.slice(2);
-    return `+38 (${n.slice(0, 3)}) ${n.slice(3, 6)}-${n.slice(6, 8)}-${n.slice(8)}`;
-  }
-  return phone;
-}
-
-export function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9а-яіїєґ]+/gi, "-")
-    .replace(/^-|-$/g, "");
-}
-
-export function clampText(text: string, maxLength: number): string {
-  return text.length > maxLength ? text.slice(0, maxLength) + "…" : text;
-}
-
-export function getDiscountPercent(price: number, priceOld: number): number {
-  return Math.round(((priceOld - price) / priceOld) * 100);
-}
-
-export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
-};
-
-export const fadeIn: Variants = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { duration: 0.4 } },
-};
-
-export const staggerContainer: Variants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-export const slideInLeft: Variants = {
-  hidden: { opacity: 0, x: -32 },
-  show: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
+export const site = {
+  name: "GIN Barbershop",
+  city: "Хмельницький",
+  country: "Україна",
+  phone: "+380687124247",
+  phoneHref: "tel:+380687124247",
+  phonePretty: "+38 (068) 712 42 47",
+  bookingUrl: "https://n1425488.alteg.io/",
+  instagram: "https://www.instagram.com/ginbarbershop_khm/",
+  instagramHandle: "@ginbarbershop_khm",
+  hours: "Щодня 10:00 – 20:00",
+  address: "Хмельницький, Україна",
+  mapsUrl:
+    "https://www.google.com/maps/place/GIN+%7C%7C+Barbershop/@49.4373105,26.9803975,713m/data=!3m2!1e3!4b1!4m6!3m5!1s0x4732070057ca07f5:0xe04cac5c2ea3c6c6!8m2!3d49.437307!4d26.9829724!16s%2Fg%2F11z848zgfv",
+  mapsEmbed:
+    "https://www.google.com/maps?q=GIN+Barbershop+Khmelnytskyi&output=embed",
+  url: "https://ginbarbershop.com.ua",
+  lat: 49.437307,
+  lng: 26.9829724,
 };
