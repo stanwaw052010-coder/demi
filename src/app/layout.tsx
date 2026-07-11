@@ -1,44 +1,37 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { CartProvider } from "@/lib/cart";
-import { WishlistProvider } from "@/lib/wishlist";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin", "cyrillic"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
-  title: "Спринтер — Запчастини для Mercedes Sprinter, Vito, VW Crafter | Харків",
+  title: "ELEVATE — Private Tennis Club & Academy",
   description:
-    "Інтернет-магазин запчастин для Mercedes Sprinter, Vito, Volkswagen Crafter та LT. Понад 8 000 позицій в наявності. Доставка по Україні 1–2 дні. Харків: Просп. Героїв Харкова, 210.",
-  keywords:
-    "запчастини Mercedes Sprinter, запчастини Vito, запчастини VW Crafter, запчастини для мерседес спрінтер, автозапчастини Харків, запчастини для комерційного транспорту",
+    "Above the game. A private tennis club where precision meets poetry — twelve courts, world-class coaching, and a century of quiet excellence.",
+  keywords: [
+    "tennis club",
+    "private tennis academy",
+    "luxury sport",
+    "ELEVATE",
+  ],
+  icons: { icon: "/icon.svg" },
   openGraph: {
-    title: "Спринтер — Запчастини для комерційного транспорту",
+    title: "ELEVATE — Private Tennis Club & Academy",
     description:
-      "Понад 8 000 позицій запчастин для Mercedes та VW. Швидка доставка по Україні.",
+      "Above the game. Twelve courts. One standard: perfection in motion.",
     type: "website",
-    locale: "uk_UA",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#060806",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="uk" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
-        <CartProvider>
-          <WishlistProvider>
-            {children}
-          </WishlistProvider>
-        </CartProvider>
-      </body>
+    <html lang="en">
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
