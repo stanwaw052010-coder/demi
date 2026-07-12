@@ -14,28 +14,22 @@
 - **Хостинг:** завантаж `index.html` на будь-який статичний хостинг —
   GitHub Pages, Netlify, Vercel, Cloudflare Pages тощо. Це один файл.
 
-## Як додати свої фото (плейсхолдери)
-Усюди принцип однаковий: усередину блока-плейсхолдера став тег
-`<img class="shot" src="..." alt="...">` — і зображення накриє плейсхолдер.
+## Як додати свої фото (без коду!)
+**Просто поклади файли в папку `images/`** з правильними назвами — усе
+підключиться саме, редагувати HTML не треба.
 
-1. **Два особистих фото в hero (теніс).** Блок `.hero-photos`:
-   - фонове фото → у `<div class="photo photo-back">`
-   - головне фото → у `<div class="photo photo-front">`
-   ```html
-   <div class="photo photo-front">
-     <img class="shot" src="tennis-front.jpg" alt="Демид">
-     ...
-   </div>
-   ```
-2. **Два скріншоти робіт (Rayskaya + Спабель).** У кожній картці портфоліо
-   всередині `<div class="screen">`:
-   ```html
-   <div class="screen">
-     <img class="shot" src="rayskaya.jpg" alt="Rayskaya Beauty Space">
-     ...
-   </div>
-   ```
-   (шукай коментарі «Скріншот:» у розмітці).
+| Що це | Назва файлу → клади в `portfolio/images/` |
+|---|---|
+| Головне фото (теніс) | `tennis-main.jpg` |
+| Фонове фото (теніс) | `tennis-bg.jpg` |
+| Скріншот Rayskaya Beauty | `rayskaya.jpg` |
+| Скріншот Спабель | `spabel.jpg` |
+
+На GitHub: відкрий папку `portfolio/images` → **Add file → Upload files** →
+перетягни фото (перейменовані як у таблиці) → **Commit**. Формат може бути
+`.jpg`, `.png` або `.webp` — сайт сам знайде файл за назвою. Поки файлу
+немає — показується акуратний плейсхолдер із камерою. Деталі — у
+`images/README.md`.
 
 ## Прайс-лист
 Секція `<section id="pricing">` — 7 послуг у € (з наданого прайсу):

@@ -454,7 +454,7 @@ footer{border-top:1px solid var(--line);padding-block:3rem;}
     <div class="hero-photos" aria-hidden="true">
       <!-- ФОНОВЕ фото (задній план) -->
       <div class="photo photo-back">
-        <!-- <img class="shot" src="tennis-back.jpg" alt=""> -->
+        <img class="shot" data-img="tennis-bg" alt="">
         <div class="ph-lines"></div>
         <div class="ph-add">
           <span class="cam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></svg></span>
@@ -464,7 +464,7 @@ footer{border-top:1px solid var(--line);padding-block:3rem;}
       </div>
       <!-- ГОЛОВНЕ фото (передній план) -->
       <div class="photo photo-front">
-        <!-- <img class="shot" src="tennis-front.jpg" alt="Демид"> -->
+        <img class="shot" data-img="tennis-main" alt="Демид — веброзробник">
         <div class="ph-lines"></div>
         <div class="ph-add">
           <span class="cam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></svg></span>
@@ -537,7 +537,7 @@ footer{border-top:1px solid var(--line);padding-block:3rem;}
           <div class="browser">
             <div class="bar"><i></i><i></i><i></i><span class="url">rayskaya.net</span></div>
             <div class="screen">
-              <!-- Скріншот: встав <img class="shot" src="rayskaya.jpg" alt="Rayskaya Beauty Space"> -->
+              <img class="shot" data-img="rayskaya" alt="Сайт Rayskaya Beauty Space">
               <div class="ph-shot">
                 <span class="cam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></svg></span>
                 <span class="lbl">Скріншот сайту</span>
@@ -565,7 +565,7 @@ footer{border-top:1px solid var(--line);padding-block:3rem;}
           <div class="browser">
             <div class="bar"><i></i><i></i><i></i><span class="url">spabellezp.app</span></div>
             <div class="screen">
-              <!-- Скріншот: встав <img class="shot" src="spabel.jpg" alt="SPA-салон Спабель"> -->
+              <img class="shot" data-img="spabel" alt="Сайт SPA-салону Спабель">
               <div class="ph-shot">
                 <span class="cam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></svg></span>
                 <span class="lbl">Скріншот сайту</span>
@@ -839,6 +839,19 @@ footer{border-top:1px solid var(--line);padding-block:3rem;}
   ['.features','.portfolio-grid','.pricing-grid','.contact-methods'].forEach(function(sel){
     var g = document.querySelector(sel);
     if (g) Array.prototype.forEach.call(g.children, function(c, i){ if (c.classList) c.style.transitionDelay = (i*90)+'ms'; });
+  });
+
+  /* photos: load images/<name>.(jpg|jpeg|png|webp); if none exists, keep the placeholder */
+  document.querySelectorAll('img.shot[data-img]').forEach(function(img){
+    var base = 'images/' + img.getAttribute('data-img');
+    var exts = ['jpg','jpeg','png','webp','JPG','PNG'];
+    var i = 0;
+    img.addEventListener('error', function(){
+      i++;
+      if (i < exts.length){ img.src = base + '.' + exts[i]; }
+      else { img.remove(); } /* немає файлу — показуємо гарний плейсхолдер */
+    });
+    img.src = base + '.' + exts[0];
   });
 
   /* plan -> prefill order form */
