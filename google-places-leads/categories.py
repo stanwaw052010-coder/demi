@@ -1,69 +1,120 @@
 """Сопоставление человеческих запросов с тегами OpenStreetMap.
 
-Ключевые слова (рус/англ) -> список фильтров OSM (ключ, значение).
-Если запрос не найден в этой таблице, скрипт ищет по совпадению названия
+Поддерживаются запросы на украинском, русском и английском. Ключевые слова
+(любой из языков) -> список фильтров OSM (ключ, значение).
+
+Сам поиск от языка не зависит — теги OSM (amenity=cafe и т.п.) одинаковы во всех
+странах, поэтому находятся все заведения категории независимо от языка их
+названий. От языка зависит только распознавание категории здесь.
+
+Если запрос не найден в таблице, скрипт ищет по совпадению названия
 (name~query) — менее точно, но работает для любого запроса.
 """
 
 from __future__ import annotations
 
-# Порядок важен: сначала более специфичные категории.
+# Порядок важен: первое совпадение выигрывает, поэтому более специфичные
+# категории (например «барбершоп») стоят раньше более общих («бар»).
+# Ключевые слова заданы «основами» (стемами) без окончаний и апострофов,
+# чтобы ловить разные формы: кав'ярня/кавярня, перукарня/перукар и т.п.
 CATEGORY_MAP: list[tuple[tuple[str, ...], list[tuple[str, str]]]] = [
-    (("кофейн", "кофе", "coffee", "cafe", "кафе"), [("amenity", "cafe")]),
-    (("ресторан", "restaurant"), [("amenity", "restaurant")]),
-    (("бар", "паб", "bar", "pub"), [("amenity", "bar"), ("amenity", "pub")]),
-    (("фастфуд", "fast food", "fast_food", "бургер"), [("amenity", "fast_food")]),
+    # Кофейни / кав'ярні
+    (("кав", "кофейн", "кофе", "coffee", "cafe", "кафе"), [("amenity", "cafe")]),
+    # Рестораны, столовые / ресторани, їдальні
+    (("ресторан", "restaurant", "їдальн", "столов"), [("amenity", "restaurant")]),
+    # Парикмахерские, барбершопы / перукарні, барбершопи
+    # (раньше «бара», т.к. «барбершоп» содержит «бар»)
+    (("перукар", "парикмахер", "барбершоп", "барбер", "barber", "hairdresser"),
+     [("shop", "hairdresser")]),
+    # Салоны красоты, маникюр / салони краси, манікюр
+    (("салон краси", "салон красот", "краси", "красот", "beauty",
+      "манікюр", "маникюр", "нігт", "ногт", "nails", "косметолог"),
+     [("shop", "beauty"), ("shop", "nails"), ("shop", "hairdresser")]),
+    # Бары, пабы / бари, паби
+    (("бар", "паб", "bar", "pub", "пивна"),
+     [("amenity", "bar"), ("amenity", "pub")]),
+    # Фастфуд, пиццерии, шаурма
+    (("фастфуд", "fast food", "fast_food", "бургер", "шаурм", "шаверм",
+      "піцер", "пиццер", "pizza"),
+     [("amenity", "fast_food")]),
+    # Пекарни / пекарні
     (("пекарн", "булочн", "bakery"), [("shop", "bakery")]),
-    (("кондитер", "confectionery", "sweets"), [("shop", "confectionery")]),
-    (
-        ("стоматолог", "стоматолог", "зубн", "dentist", "dental"),
-        [("amenity", "dentist"), ("healthcare", "dentist")],
-    ),
-    (
-        ("клиник", "поликлиник", "врач", "clinic", "doctor"),
-        [("amenity", "clinic"), ("amenity", "doctors"), ("healthcare", "clinic")],
-    ),
+    # Кондитерские / кондитерські
+    (("кондитер", "цукерн", "солодощ", "confectionery", "sweets"),
+     [("shop", "confectionery")]),
+    # Стоматологии / стоматології
+    (("стоматолог", "зубн", "dentist", "dental"),
+     [("amenity", "dentist"), ("healthcare", "dentist")]),
+    # Клиники, врачи / клініки, лікарі
+    (("клінік", "клиник", "поліклінік", "поликлиник", "лікар", "врач",
+      "clinic", "doctor", "медцентр"),
+     [("amenity", "clinic"), ("amenity", "doctors"), ("healthcare", "clinic")]),
+    # Аптеки
     (("аптек", "pharmacy", "drugstore"), [("amenity", "pharmacy")]),
-    (("ветеринар", "veterinary", "vet"), [("amenity", "veterinary")]),
-    (
-        ("автомастер", "автосервис", "авторемонт", "car repair", "car_repair", "сто"),
-        [("shop", "car_repair")],
-    ),
-    (("автомойк", "car wash", "car_wash", "мойка"), [("amenity", "car_wash")]),
-    (("шиномонтаж", "шины", "tyres", "tires"), [("shop", "tyres")]),
-    (
-        ("парикмахер", "барбершоп", "barber", "hairdresser"),
-        [("shop", "hairdresser")],
-    ),
-    (
-        ("салон красоты", "красот", "beauty", "маникюр", "nails"),
-        [("shop", "beauty"), ("shop", "nails")],
-    ),
-    (("спа", "spa", "массаж", "massage"), [("shop", "massage"), ("leisure", "spa")]),
-    (
-        ("фитнес", "спортзал", "тренаж", "gym", "fitness"),
-        [("leisure", "fitness_centre")],
-    ),
+    # Ветеринары / ветеринари
+    (("ветеринар", "ветлікар", "ветклінік", "veterinary"),
+     [("amenity", "veterinary")]),
+    # Автосервисы / автосервіси, автомайстерні
+    (("автомайстер", "автомастер", "автосервіс", "автосервис", "авторемонт",
+      "car repair", "car_repair"),
+     [("shop", "car_repair")]),
+    # Автомойки / автомийки
+    (("автомийк", "автомойк", "мийка", "мойка", "car wash", "car_wash"),
+     [("amenity", "car_wash")]),
+    # Шиномонтаж / шини
+    (("шиномонтаж", "шини", "шины", "tyres", "tires"), [("shop", "tyres")]),
+    # Спа, массаж / спа, масаж
+    (("спа", "spa", "масаж", "массаж", "massage"),
+     [("shop", "massage"), ("leisure", "spa")]),
+    # Фитнес, спортзалы / фітнес, спортзали
+    (("фітнес", "фитнес", "спортзал", "тренаж", "качалк", "gym", "fitness"),
+     [("leisure", "fitness_centre")]),
+    # Йога
     (("йога", "yoga"), [("leisure", "fitness_centre"), ("sport", "yoga")]),
-    (
-        ("отель", "гостиниц", "хостел", "hotel", "hostel"),
-        [("tourism", "hotel"), ("tourism", "hostel"), ("tourism", "guest_house")],
-    ),
-    (("цветы", "цветочн", "florist", "flowers"), [("shop", "florist")]),
-    (("продукт", "магазин у дома", "grocery", "convenience"), [("shop", "convenience")]),
+    # Отели, хостелы / готелі, хостели
+    (("готель", "отель", "гостиниц", "хостел", "hotel", "hostel"),
+     [("tourism", "hotel"), ("tourism", "hostel"), ("tourism", "guest_house")]),
+    # Цветы / квіти
+    (("квіт", "цвіт", "цветы", "цветочн", "florist", "flowers"),
+     [("shop", "florist")]),
+    # Продуктовые / продуктові
+    (("продукт", "grocery", "convenience", "магазин біля", "магазин у дома"),
+     [("shop", "convenience")]),
     (("супермаркет", "supermarket"), [("shop", "supermarket")]),
-    (("одежд", "clothes", "clothing"), [("shop", "clothes")]),
-    (("обув", "shoes"), [("shop", "shoes")]),
-    (("ювелир", "jewelry", "jeweller"), [("shop", "jewelry")]),
-    (("оптик", "очки", "optician"), [("shop", "optician")]),
+    # Одежда / одяг
+    (("одяг", "одежд", "clothes", "clothing"), [("shop", "clothes")]),
+    # Обувь / взуття
+    (("взуття", "обув", "shoes"), [("shop", "shoes")]),
+    # Ювелирные / ювелірні
+    (("ювелір", "ювелир", "прикрас", "jewelry", "jeweller"), [("shop", "jewelry")]),
+    # Оптика / оптика, окуляри
+    (("оптик", "окуляр", "очки", "optician"), [("shop", "optician")]),
+    # Книги / книги, книгарні
     (("книг", "bookstore", "books"), [("shop", "books")]),
-    (("мебель", "furniture"), [("shop", "furniture")]),
-    (("зоомагазин", "pet", "pet shop"), [("shop", "pet")]),
-    (("прачечн", "химчистк", "laundry", "dry cleaning"), [("shop", "laundry")]),
-    (("типограф", "печать", "copyshop", "printing"), [("shop", "copyshop")]),
+    # Мебель / меблі
+    (("меблі", "мебель", "furniture"), [("shop", "furniture")]),
+    # Зоомагазины / зоомагазини
+    (("зоомагазин", "зоо", "pet shop"), [("shop", "pet")]),
+    # Прачечные, химчистки / пральні, хімчистки
+    (("пральн", "хімчистк", "прачечн", "химчистк", "laundry", "dry cleaning"),
+     [("shop", "laundry")]),
+    # Типографии, печать / друкарні, друк
+    (("друкарн", "типограф", "печать", "copyshop", "printing"),
+     [("shop", "copyshop")]),
+    # Автошколы / автошколи
     (("автошкол", "driving school"), [("amenity", "driving_school")]),
-    (("детск", "kindergarten", "nursery", "садик"), [("amenity", "kindergarten")]),
+    # Детские сады / дитячі садки
+    (("дитяч сад", "дитсад", "садок", "детск", "kindergarten", "nursery", "садик"),
+     [("amenity", "kindergarten")]),
 ]
+
+
+def _normalize(query: str) -> str:
+    """Нижний регистр + удаление апострофов (кав'ярня/кав`ярня/кав'ярня → кавярня)."""
+    q = query.lower()
+    for apo in ("'", "`", "’", "ʼ"):
+        q = q.replace(apo, "")
+    return q
 
 
 def resolve_filters(query: str) -> tuple[list[tuple[str, str]], bool]:
@@ -72,8 +123,9 @@ def resolve_filters(query: str) -> tuple[list[tuple[str, str]], bool]:
     Если категория не распознана, возвращает пустой список и False —
     вызывающая сторона тогда использует поиск по названию (name~query).
     """
-    q = query.strip().lower()
+    q = _normalize(query).strip()
     for keywords, filters in CATEGORY_MAP:
-        if any(kw in q for kw in keywords):
-            return filters, True
+        for kw in keywords:
+            if _normalize(kw) in q:
+                return filters, True
     return [], False
