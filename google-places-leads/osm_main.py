@@ -42,12 +42,27 @@ SOCIAL_DOMAINS = (
     "yandex.ru", "zen.yandex.ru", "2gis.ru", "avito.ru", "flamp.ru",
 )
 
+# Отдельные теги соцсетей в OSM (значение — ник или ссылка).
+SOCIAL_CONTACT_KEYS = {
+    "contact:instagram": "instagram",
+    "contact:facebook": "facebook",
+    "contact:vk": "vk",
+    "contact:telegram": "telegram",
+    "contact:whatsapp": "whatsapp",
+    "contact:youtube": "youtube",
+    "contact:tiktok": "tiktok",
+    "contact:twitter": "twitter",
+    "contact:ok": "ok",
+}
+
+# Столбцы CSV. Порядок «для звонка»: сначала телефон и название, затем видно,
+# что сайта нет (has_website="нет") и какие есть соцсети (зацепка для разговора).
 CSV_COLUMNS = [
     "name",
-    "address",
     "phone",
-    "rating",
-    "reviews_count",
+    "address",
+    "has_website",
+    "social",
     "category",
     "map_url",
     "osm_id",
@@ -73,12 +88,31 @@ def is_social_only(url: str) -> bool:
     return any(host == d or host.endswith("." + d) for d in SOCIAL_DOMAINS)
 
 
-def get_website(tags: dict[str, str]) -> str:
+def get_real_website(tags: dict[str, str]) -> str:
+    """Адрес НАСТОЯЩЕГО сайта (не соцсеть/агрегатор). Иначе ''.
+
+    Если у бизнеса в теге website указан только Instagram/ВК/2ГИС и т.п. — это
+    НЕ считается сайтом, и бизнес остаётся в списке лидов.
+    """
     for key in WEBSITE_TAGS:
         val = tags.get(key)
-        if val and val.strip():
+        if val and val.strip() and not is_social_only(val.strip()):
             return val.strip()
     return ""
+
+
+def get_socials(tags: dict[str, str]) -> list[str]:
+    """Соцсети/агрегаторы бизнеса — зацепка для звонка («у вас только Instagram»)."""
+    socials: list[str] = []
+    for key in WEBSITE_TAGS:  # website=..., если это на самом деле соцсеть
+        val = tags.get(key)
+        if val and val.strip() and is_social_only(val.strip()):
+            socials.append(val.strip())
+    for key, label in SOCIAL_CONTACT_KEYS.items():
+        val = tags.get(key)
+        if val and val.strip():
+            socials.append(f"{label}: {val.strip()}")
+    return socials
 
 
 def get_phone(tags: dict[str, str]) -> str:
@@ -111,10 +145,10 @@ def element_to_row(el: dict[str, Any]) -> dict[str, Any]:
     osm_id = el.get("osm_id", "")
     return {
         "name": tags.get("name", ""),
-        "address": build_address(tags),
         "phone": get_phone(tags),
-        "rating": tags.get("stars", ""),  # у OSM обычно нет рейтинга (иногда stars у отелей)
-        "reviews_count": "",  # в OSM нет количества отзывов
+        "address": build_address(tags),
+        "has_website": "нет",  # в этот список попадают только бизнесы без сайта
+        "social": ", ".join(get_socials(tags)),
         "category": get_category(tags),
         "map_url": f"https://www.openstreetmap.org/{osm_type}/{osm_id}"
         if osm_type and osm_id
@@ -228,19 +262,18 @@ def main(argv: list[str] | None = None) -> int:
         if args.require_name and not tags.get("name"):
             continue
 
-        website = get_website(tags)
-        if website:
+        # Настоящий сайт (не соцсеть) → это НЕ лид, пропускаем.
+        if get_real_website(tags):
             with_site += 1
             continue
 
-        if args.exclude_social:
-            socials = [tags[k] for k in tags
-                       if k.startswith("contact:") and is_social_only(tags[k])]
-            if socials:
-                social_skipped += 1
-                continue
-
         row = element_to_row(el)
+
+        # --exclude-social: пропустить тех, у кого хотя бы есть соцсеть.
+        if args.exclude_social and row["social"]:
+            social_skipped += 1
+            continue
+
         if args.require_phone and not row["phone"]:
             no_phone_skipped += 1
             continue
@@ -281,18 +314,24 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def print_preview(leads: list[dict[str, Any]], limit: int = 20) -> None:
-    """Показывает найденные телефоны прямо в консоли (без открытия CSV)."""
+    """Показывает лиды прямо в консоли: телефон + «нет сайта» + соцсети."""
     if not leads:
         return
     shown = leads[:limit]
-    print(f"\n=== Лиды (первые {len(shown)} из {len(leads)}) ===")
-    for i, r in enumerate(shown, 1):
-        name = (r["name"] or "(без названия)")[:35]
-        phone = r["phone"] or "— нет телефона —"
-        addr = (r["address"] or "")[:40]
-        print(f"{i:2}. {phone:<20} {name:<35} {addr}")
+    print(f"\n=== ЛИДЫ БЕЗ САЙТА (первые {len(shown)} из {len(leads)}) ===")
+    print("Всем этим заведениям можно звонить и предлагать сделать сайт.\n")
+    print(f"{'ТЕЛЕФОН':<18} {'САЙТ':<5} {'НАЗВАНИЕ':<30} СОЦСЕТИ / АДРЕС")
+    print("-" * 90)
+    for r in shown:
+        phone = r["phone"] or "— нет —"
+        name = (r["name"] or "(без названия)")[:29]
+        if r["social"]:
+            extra = f"есть только: {r['social']}"[:45]
+        else:
+            extra = (r["address"] or "")[:45]
+        print(f"{phone:<18} {'НЕТ':<5} {name:<30} {extra}")
     if len(leads) > limit:
-        print(f"... ещё {len(leads) - limit} в файле CSV.")
+        print(f"... ещё {len(leads) - limit} — в файле CSV.")
 
 
 if __name__ == "__main__":

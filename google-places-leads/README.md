@@ -87,9 +87,18 @@ python osm_main.py --query "автосервис" --location "Тула" --requir
   не чаще ~1 запроса в секунду (скрипт это соблюдает), Overpass бывает
   перегружен (скрипт делает ретраи; можно указать другой сервер через
   `--overpass-url`).
-- **CSV те же столбцы**, что и в Google-версии: `name, address, phone, rating,
-  reviews_count, category, map_url, osm_id`. В OSM обычно **нет рейтинга и числа
-  отзывов** — эти колонки чаще всего пустые; `map_url` ведёт на openstreetmap.org.
+- **Столбцы CSV заточены под обзвон:** `name, phone, address, has_website,
+  social, category, map_url, osm_id`.
+  - `has_website` — всегда `нет` (в список попадают только бизнесы без сайта);
+  - `social` — соцсети/агрегаторы бизнеса (Instagram, ВК, Telegram…), если есть.
+    Это зацепка для звонка: «у вас только Instagram, а сайта нет».
+  - `map_url` ведёт на openstreetmap.org.
+- **Соцсети — это тоже лид.** Если у заведения в качестве «сайта» указан только
+  Instagram/ВК/2ГИС и т.п., оно считается **без сайта** и попадает в список
+  (настоящего сайта у него нет). Чтобы, наоборот, исключить тех, у кого есть хоть
+  какая-то соцсеть, используйте `--exclude-social`.
+- После запуска телефоны и пометка «САЙТ: НЕТ» выводятся **прямо в консоли** —
+  номер видно сразу, не открывая файл.
 - **Радиус работает всегда** (в отличие от текстового поиска Google).
 - Пожалуйста, соблюдайте [Nominatim Usage Policy](https://operations.osmfoundation.org/policies/nominatim/)
   и [Overpass API](https://dev.overpass-api.de/overpass-doc/en/preface/commons.html):
