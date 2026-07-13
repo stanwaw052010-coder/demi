@@ -1,0 +1,12 @@
+# локальные секреты и результаты
+.env
+*.csv
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# .env.example должен попадать в репозиторий (родительский .gitignore прячет .env*)
+!.env.example
