@@ -156,6 +156,8 @@ def build_arg_parser() -> argparse.ArgumentParser:
                              "(они уже как-то представлены онлайн).")
     parser.add_argument("--require-name", action="store_true",
                         help="Оставлять только объекты с заполненным названием.")
+    parser.add_argument("--require-phone", action="store_true",
+                        help="Оставлять только те, у кого указан телефон (контактные лиды).")
     parser.add_argument("--overpass-url", default=os.getenv("OVERPASS_URL"),
                         help="Свой endpoint Overpass (или переменная окружения OVERPASS_URL). "
                              "Полезно, если основной сервер перегружен/недоступен.")
@@ -220,6 +222,7 @@ def main(argv: list[str] | None = None) -> int:
     leads: list[dict[str, Any]] = []
     with_site = 0
     social_skipped = 0
+    no_phone_skipped = 0
     for el in tqdm(elements, desc="Фильтрация", unit="объект"):
         tags = el["tags"]
         if args.require_name and not tags.get("name"):
@@ -237,10 +240,15 @@ def main(argv: list[str] | None = None) -> int:
                 social_skipped += 1
                 continue
 
-        leads.append(element_to_row(el))
+        row = element_to_row(el)
+        if args.require_phone and not row["phone"]:
+            no_phone_skipped += 1
+            continue
 
-    # Сортируем: сначала с названием и телефоном (более «продажные» лиды).
-    leads.sort(key=lambda r: (bool(r["name"]), bool(r["phone"])), reverse=True)
+        leads.append(row)
+
+    # Сортируем: сначала те, у кого есть телефон и название (самые «продажные» лиды).
+    leads.sort(key=lambda r: (bool(r["phone"]), bool(r["name"])), reverse=True)
 
     if args.max_results and args.max_results > 0:
         leads = leads[: args.max_results]
@@ -251,14 +259,40 @@ def main(argv: list[str] | None = None) -> int:
         writer.writeheader()
         writer.writerows(leads)
 
+    with_phone = sum(1 for r in leads if r["phone"])
+
     print("\nГотово!")
     print(f"  Всего объектов:        {len(elements)}")
     print(f"  С сайтом (пропущены):  {with_site}")
     if args.exclude_social:
         print(f"  Только соцсети (проп.): {social_skipped}")
+    if args.require_phone:
+        print(f"  Без телефона (проп.):  {no_phone_skipped}")
     print(f"  Лидов без сайта:       {len(leads)}")
+    print(f"  из них с телефоном:    {with_phone}")
     print(f"  Файл с результатами:   {args.output}")
+
+    print_preview(leads)
+
+    if not args.require_phone and with_phone < len(leads):
+        print("\nСовет: чтобы оставить только тех, у кого есть телефон, "
+              "добавьте флаг --require-phone.")
     return 0
+
+
+def print_preview(leads: list[dict[str, Any]], limit: int = 20) -> None:
+    """Показывает найденные телефоны прямо в консоли (без открытия CSV)."""
+    if not leads:
+        return
+    shown = leads[:limit]
+    print(f"\n=== Лиды (первые {len(shown)} из {len(leads)}) ===")
+    for i, r in enumerate(shown, 1):
+        name = (r["name"] or "(без названия)")[:35]
+        phone = r["phone"] or "— нет телефона —"
+        addr = (r["address"] or "")[:40]
+        print(f"{i:2}. {phone:<20} {name:<35} {addr}")
+    if len(leads) > limit:
+        print(f"... ещё {len(leads) - limit} в файле CSV.")
 
 
 if __name__ == "__main__":
