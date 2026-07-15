@@ -1,66 +1,54 @@
-import { type ButtonHTMLAttributes, forwardRef } from "react";
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "ghost" | "outline" | "danger";
-  size?: "sm" | "md" | "lg" | "xl";
-  loading?: boolean;
-  fullWidth?: boolean;
-}
-
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      variant = "primary",
-      size = "md",
-      loading,
-      fullWidth,
-      className,
-      children,
-      disabled,
-      ...props
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium tracking-wide transition-colors duration-300 disabled:pointer-events-none disabled:opacity-50 cursor-pointer",
+  {
+    variants: {
+      variant: {
+        primary: "bg-navy-900 text-white hover:bg-navy-800",
+        gold: "bg-gold-500 text-navy-950 hover:bg-gold-400",
+        outline:
+          "border border-navy-900/20 text-navy-900 bg-transparent hover:border-navy-900 hover:bg-navy-900 hover:text-white",
+        outlineLight:
+          "border border-white/40 text-white bg-transparent hover:bg-white hover:text-navy-900",
+        ghost: "text-navy-900 hover:bg-navy-900/5",
+        link: "text-navy-900 underline-offset-4 hover:underline p-0 h-auto rounded-none",
+      },
+      size: {
+        default: "h-12 px-7",
+        sm: "h-10 px-5 text-xs",
+        lg: "h-14 px-9 text-base",
+        icon: "h-11 w-11",
+      },
     },
-    ref
-  ) => {
-    return (
-      <button
-        ref={ref}
-        disabled={disabled || loading}
-        className={cn(
-          "inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed select-none",
-          {
-            // Variants
-            "bg-orange-500 text-white hover:bg-orange-600 active:bg-orange-700 shadow-sm hover:shadow-md hover:shadow-orange-500/20":
-              variant === "primary",
-            "bg-white text-gray-900 border border-gray-200 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-600":
-              variant === "secondary",
-            "text-gray-600 hover:text-orange-600 hover:bg-orange-50":
-              variant === "ghost",
-            "border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white":
-              variant === "outline",
-            "bg-red-500 text-white hover:bg-red-600": variant === "danger",
-            // Sizes
-            "text-xs px-3 py-1.5 rounded-lg": size === "sm",
-            "text-sm px-4 py-2.5": size === "md",
-            "text-base px-6 py-3": size === "lg",
-            "text-base px-8 py-4 rounded-2xl": size === "xl",
-            // Width
-            "w-full": fullWidth,
-          },
-          className
-        )}
-        {...props}
-      >
-        {loading && (
-          <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-          </svg>
-        )}
-        {children}
-      </button>
-    );
+    defaultVariants: {
+      variant: "primary",
+      size: "default",
+    },
   }
 );
 
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
+);
 Button.displayName = "Button";
+
+export { Button, buttonVariants };
