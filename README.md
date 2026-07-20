@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KROPYVNYTSKA — студія масажу та корекції фігури
 
-## Getting Started
+Односторінковий сайт (лендінг) для студії Анжели Кропивницької у Бучі:
+ендосфера, LPG, антицелюлітний та вакуумний масаж, курси навчання.
 
-First, run the development server:
+Стек: **Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion**.
+
+## Розробка
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # продакшн-збірка
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Структура
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+  app/
+    layout.tsx        # шрифти (Playfair Display + Manrope), SEO-метадані
+    page.tsx          # композиція секцій + schema.org розмітка
+    globals.css       # дизайн-система (палітра, утиліти, анімації)
+  components/
+    Header.tsx        # шапка з мобільним меню
+    Hero.tsx          # перший екран + параллакс + лічильники
+    About.tsx         # про майстра
+    Services.tsx      # послуги (картки)
+    Results.tsx       # результати + статистика
+    Gallery.tsx       # галерея в стилі Instagram
+    Courses.tsx       # курси LPG / Ендосфера
+    Testimonials.tsx  # відгуки
+    Contact.tsx       # контакти, форма запису, месенджери, карта
+    Footer.tsx
+    FloatingMessengers.tsx  # плаваюча кнопка WhatsApp/Telegram/Viber/дзвінок
+    Decor.tsx         # декоративна графіка + градієнтні панелі-замінники фото
+    MessengerButtons.tsx, Counter.tsx, Reveal.tsx
+  lib/
+    site.ts           # ★ всі контакти та посилання — редагувати тут
+    utils.ts
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Як оновити контакти
 
-## Learn More
+Усі дані студії зібрані в одному місці — **`src/lib/site.ts`**:
+телефон, адреса, Instagram та посилання на месенджери (WhatsApp / Telegram /
+Viber). Телефон достатньо змінити в константі `PHONE_DIGITS` — решта посилань
+збереться автоматично.
 
-To learn more about Next.js, take a look at the following resources:
+> **Telegram:** за замовчуванням посилання формується за номером телефону.
+> Якщо у майстра є публічний `@username`, замініть `telegram` у `site.ts` на
+> `https://t.me/<username>` — так відкриватиметься надійніше.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Як додати справжні фото
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Зараз замість фотографій використано елегантні градієнтні панелі
+(`<PhotoArt />` у `Decor.tsx`) — вони не «ламаються» й виглядають стильно.
+Щоб поставити реальні світлини:
 
-## Deploy on Vercel
+1. Покладіть зображення у `public/` (напр. `public/photos/hero.jpg`).
+2. У потрібній секції замініть `<PhotoArt ... />` на `next/image`:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```tsx
+   import Image from "next/image";
+   <Image src="/photos/hero.jpg" alt="Масаж" fill className="object-cover" />
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   (обгортайте у контейнер з `relative` та потрібним `aspect-*`).
+
+Місця для фото: `Hero`, `About`, кожна картка в `Services`, діптих «до/після»
+в `Results`, плитки в `Gallery`.

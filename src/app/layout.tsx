@@ -1,44 +1,51 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Playfair_Display, Manrope } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/lib/cart";
-import { WishlistProvider } from "@/lib/wishlist";
+import { site } from "@/lib/site";
 
-const inter = Inter({
-  variable: "--font-inter",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin", "cyrillic"],
   display: "swap",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
+
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin", "cyrillic"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Спринтер — Запчастини для Mercedes Sprinter, Vito, VW Crafter | Харків",
+  metadataBase: new URL("https://kropyvnytska-massage.com"),
+  title: `${site.name} — Ендосфера, LPG та антицелюлітний масаж у Бучі`,
   description:
-    "Інтернет-магазин запчастин для Mercedes Sprinter, Vito, Volkswagen Crafter та LT. Понад 8 000 позицій в наявності. Доставка по Україні 1–2 дні. Харків: Просп. Героїв Харкова, 210.",
+    "Студія Анжели Кропивницької у Бучі: ендосфера-масаж, LPG, антицелюлітний та вакуумний масаж. Корекція фігури, позбавлення від целюліту й набряків. Навчальні курси масажу.",
   keywords:
-    "запчастини Mercedes Sprinter, запчастини Vito, запчастини VW Crafter, запчастини для мерседес спрінтер, автозапчастини Харків, запчастини для комерційного транспорту",
+    "ендосфера масаж, LPG масаж, антицелюлітний масаж, вакуумний масаж, корекція фігури, масаж Буча, курси масажу, целюліт, лімфодренаж",
+  authors: [{ name: site.name }],
   openGraph: {
-    title: "Спринтер — Запчастини для комерційного транспорту",
+    title: `${site.name} — масаж та корекція фігури у Бучі`,
     description:
-      "Понад 8 000 позицій запчастин для Mercedes та VW. Швидка доставка по Україні.",
+      "Ендосфера, LPG, антицелюлітний та вакуумний масаж. Позбавляю від целюліту та набряків, зменшую в об'ємі. Курси масажу.",
     type: "website",
     locale: "uk_UA",
+    siteName: site.name,
   },
+  icons: { icon: "/favicon.ico" },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="uk" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
-        <CartProvider>
-          <WishlistProvider>
-            {children}
-          </WishlistProvider>
-        </CartProvider>
-      </body>
+    <html
+      lang="uk"
+      className={`${playfair.variable} ${manrope.variable} h-full antialiased`}
+    >
+      <body className="min-h-full bg-cream text-ink">{children}</body>
     </html>
   );
 }
