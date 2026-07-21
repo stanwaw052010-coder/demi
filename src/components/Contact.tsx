@@ -120,7 +120,7 @@ export function Contact() {
               className="group relative block h-64 overflow-hidden rounded-3xl ring-1 ring-cream/10"
             >
               {/* stylised map backdrop */}
-              <div className="absolute inset-0 bg-[#2b2620]" />
+              <div className="absolute inset-0 bg-[#2c2c31]" />
               <svg className="absolute inset-0 h-full w-full opacity-40" aria-hidden>
                 <defs>
                   <pattern id="mapgrid" width="46" height="46" patternUnits="userSpaceOnUse">

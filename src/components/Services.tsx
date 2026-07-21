@@ -95,7 +95,7 @@ export function Services() {
                 href="#contact"
                 whileHover={{ y: -8 }}
                 transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                className="group flex h-full flex-col overflow-hidden rounded-3xl bg-cream shadow-[0_2px_20px_-12px_rgba(34,26,21,0.25)] ring-1 ring-gold/10 transition-shadow duration-300 hover:shadow-[0_30px_60px_-30px_rgba(140,74,90,0.4)]"
+                className="group flex h-full flex-col overflow-hidden rounded-3xl bg-cream shadow-[0_2px_20px_-12px_rgba(28,28,32,0.28)] ring-1 ring-gold/10 transition-shadow duration-300 hover:shadow-[0_30px_60px_-30px_rgba(140,74,90,0.4)]"
               >
                 <div className="relative">
                   <PhotoArt variant={s.variant} motif={s.motif} className="aspect-[16/10] w-full" />

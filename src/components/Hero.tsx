@@ -25,8 +25,8 @@ export function Hero() {
       className="relative overflow-hidden bg-cream pt-32 pb-16 sm:pt-40 lg:pt-44"
     >
       {/* ambient gradient orbs */}
-      <div className="pointer-events-none absolute -left-32 top-24 h-96 w-96 rounded-full bg-rose-soft/40 blur-3xl" />
-      <div className="pointer-events-none absolute -right-24 top-64 h-[28rem] w-[28rem] rounded-full bg-gold-soft/30 blur-3xl" />
+      <div className="pointer-events-none absolute -left-32 top-24 h-96 w-96 rounded-full bg-rose-soft/30 blur-3xl" />
+      <div className="pointer-events-none absolute -right-24 top-64 h-[28rem] w-[28rem] rounded-full bg-sand/40 blur-3xl" />
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
         {/* Left — copy */}

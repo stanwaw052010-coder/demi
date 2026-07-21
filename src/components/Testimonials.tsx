@@ -71,7 +71,7 @@ export function Testimonials() {
             {reviews.map((r) => (
               <article
                 key={r.name}
-                className="flex w-[85vw] max-w-sm flex-none snap-start flex-col rounded-3xl bg-cream-2 p-8 shadow-[0_2px_24px_-16px_rgba(34,26,21,0.4)] ring-1 ring-gold/10 sm:w-[26rem]"
+                className="flex w-[85vw] max-w-sm flex-none snap-start flex-col rounded-3xl bg-cream-2 p-8 shadow-[0_2px_24px_-16px_rgba(28,28,32,0.42)] ring-1 ring-gold/10 sm:w-[26rem]"
               >
                 <Quote className="h-9 w-9 text-rose/40" />
                 <p className="mt-5 flex-1 text-lg leading-relaxed text-ink">

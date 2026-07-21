@@ -1,18 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  /* Editorial beauty palette */
-  --cream: #f7f1e8;
-  --cream-2: #efe6d8;
-  --sand: #e3d3bf;
-  --ink: #221a15;
-  --ink-2: #2e241d;
-  --ink-soft: #5c4d42;
-  --rose: #b76e79;
+  /* Greige-gray palette with rose-gold accents carried over from the brand.
+     Token names (cream / ink / sand …) are kept for stability — the values
+     below drive the whole site, so the theme lives here. */
+  --cream: #e5e4e2;      /* light neutral gray base */
+  --cream-2: #d7d6d3;    /* deeper gray surface */
+  --sand: #bfbeb9;       /* muted gray (borders / lines) */
+  --ink: #2a2a2e;        /* graphite / charcoal for dark sections */
+  --ink-2: #343439;
+  --ink-soft: #5d5c5a;   /* muted gray body text */
+  --rose: #b76e79;       /* accent from the page */
   --rose-deep: #8c4a5a;
-  --rose-soft: #e7c6ca;
-  --gold: #b08d57;
-  --gold-soft: #cbb083;
+  --rose-soft: #e2c5c9;
+  --gold: #a98a58;       /* accent from the page */
+  --gold-soft: #c4ac82;
 
   --background: var(--cream);
   --foreground: var(--ink);
@@ -94,16 +96,16 @@ body {
 
 /* Glass panels (used on dark sections) */
 .glass-dark {
-  background: rgba(34, 26, 21, 0.55);
+  background: rgba(42, 42, 46, 0.55);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(203, 176, 131, 0.18);
+  border: 1px solid rgba(196, 172, 130, 0.18);
 }
 .glass-light {
-  background: rgba(247, 241, 232, 0.7);
+  background: rgba(234, 233, 230, 0.7);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(176, 141, 87, 0.16);
+  border: 1px solid rgba(169, 138, 88, 0.16);
 }
 
 /* Line clamps */
@@ -157,18 +159,18 @@ body {
 .input {
   width: 100%;
   border-radius: 0.9rem;
-  border: 1px solid rgba(247, 241, 232, 0.15);
-  background: rgba(247, 241, 232, 0.06);
+  border: 1px solid rgba(234, 233, 230, 0.15);
+  background: rgba(234, 233, 230, 0.06);
   padding: 0.8rem 1rem;
   color: var(--cream);
   font-size: 0.95rem;
   transition: border-color 0.2s, background 0.2s;
 }
-.input::placeholder { color: rgba(247, 241, 232, 0.4); }
+.input::placeholder { color: rgba(234, 233, 230, 0.4); }
 .input:focus {
   outline: none;
   border-color: var(--gold-soft);
-  background: rgba(247, 241, 232, 0.1);
+  background: rgba(234, 233, 230, 0.1);
 }
 .input option { color: var(--ink); }
 

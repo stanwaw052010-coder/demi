@@ -89,7 +89,7 @@ export function Courses() {
             <RevealGroup className="space-y-5" stagger={0.12}>
               {courses.map((c) => (
                 <RevealItem key={c.title} direction="left">
-                  <div className="group flex items-center gap-5 rounded-3xl bg-cream p-6 shadow-[0_2px_20px_-12px_rgba(34,26,21,0.25)] ring-1 ring-gold/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_60px_-30px_rgba(140,74,90,0.35)]">
+                  <div className="group flex items-center gap-5 rounded-3xl bg-cream p-6 shadow-[0_2px_20px_-12px_rgba(28,28,32,0.28)] ring-1 ring-gold/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_60px_-30px_rgba(140,74,90,0.35)]">
                     <div className="flex h-16 w-16 flex-none items-center justify-center rounded-2xl bg-gradient-to-br from-rose to-rose-deep text-cream shadow-lg">
                       <c.Icon className="h-7 w-7" />
                     </div>

@@ -87,12 +87,12 @@ export function LotusMark(props: SVGProps<SVGSVGElement>) {
 /* ------------------------------------------------------------------ */
 
 const palettes: Record<string, string> = {
-  rose: "radial-gradient(120% 120% at 20% 15%, #e7c6ca 0%, #e3d3bf 45%, #d9b7a6 100%)",
-  gold: "radial-gradient(120% 120% at 80% 10%, #cbb083 0%, #e3d3bf 50%, #efe6d8 100%)",
-  sand: "radial-gradient(120% 120% at 30% 80%, #e3d3bf 0%, #efe6d8 55%, #f7f1e8 100%)",
+  rose: "radial-gradient(120% 120% at 20% 15%, #d6b3ba 0%, #c3c1bc 48%, #b2b1ac 100%)",
+  gold: "radial-gradient(120% 120% at 80% 10%, #c4ac82 0%, #c6c5c0 52%, #d9d8d5 100%)",
+  sand: "radial-gradient(120% 120% at 30% 80%, #c5c4bf 0%, #d9d8d5 55%, #e5e4e2 100%)",
   mauve:
-    "radial-gradient(120% 120% at 75% 20%, #c9a2ab 0%, #b76e79 55%, #8c4a5a 100%)",
-  ink: "radial-gradient(120% 120% at 25% 20%, #3a2e26 0%, #2e241d 45%, #221a15 100%)",
+    "radial-gradient(120% 120% at 75% 20%, #bd97a0 0%, #9c6773 52%, #625258 100%)",
+  ink: "radial-gradient(120% 120% at 25% 20%, #3b3b40 0%, #2f2f33 45%, #26262a 100%)",
 };
 
 export function PhotoArt({
@@ -117,7 +117,7 @@ export function PhotoArt({
       {/* soft light orb */}
       <div
         className="absolute -right-10 -top-10 h-40 w-40 rounded-full blur-2xl"
-        style={{ background: dark ? "rgba(203,176,131,0.35)" : "rgba(247,241,232,0.6)" }}
+        style={{ background: dark ? "rgba(196,172,130,0.35)" : "rgba(234,233,230,0.6)" }}
       />
       {motif === "sprig" && (
         <BotanicalSprig className={cn("absolute -bottom-6 left-6 h-2/3 w-auto", motifColor)} />
