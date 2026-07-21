@@ -242,29 +242,22 @@
   .trainer-feats li{list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--muted)}
   .trainer-feats svg{color:var(--lime);flex-shrink:0;margin-top:3px}
 
-  /* ---------- Players 2x2 ---------- */
-  .players-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;position:relative;z-index:2}
-  .player{
-    aspect-ratio:1/1;border-radius:20px;overflow:hidden;position:relative;
-    background:
-      repeating-linear-gradient(135deg,rgba(255,255,255,.02) 0 20px,transparent 20px 40px),
-      linear-gradient(160deg,#15201a,#0a0e0b);
-    border:1px solid var(--card-border);display:grid;place-items:center;
+  /* ---------- Professional players (video showcase) ---------- */
+  .player-videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;position:relative;z-index:2}
+  .pv-card{
+    border-radius:22px;overflow:hidden;background:var(--card);border:1px solid var(--card-border);
     transition:transform .45s var(--ease),border-color .45s var(--ease),box-shadow .45s var(--ease);
   }
-  .player:hover{transform:translateY(-6px);border-color:rgba(62,224,106,.45);box-shadow:0 24px 50px rgba(0,0,0,.4)}
-  .player .avatar{
-    width:44%;aspect-ratio:1/1;border-radius:50%;display:grid;place-items:center;
-    background:rgba(62,224,106,.1);border:2px dashed rgba(62,224,106,.35);color:var(--lime);
-    font-family:'Montserrat';font-weight:800;font-size:clamp(1.6rem,5vw,2.4rem);
-    transition:transform .45s var(--ease),background .45s var(--ease);
-  }
-  .player:hover .avatar{transform:scale(1.06);background:rgba(62,224,106,.18)}
-  .player .p-name{position:absolute;left:0;right:0;bottom:0;padding:16px;text-align:center;
-    background:linear-gradient(0deg,rgba(8,11,9,.9),transparent);
-    font-family:'Montserrat';font-weight:700;font-size:1.05rem;letter-spacing:1px}
-  .player .p-badge{position:absolute;top:14px;right:14px;font-size:.68rem;font-weight:700;letter-spacing:1px;
-    color:var(--lime);background:rgba(62,224,106,.12);border:1px solid rgba(62,224,106,.3);padding:4px 10px;border-radius:999px;text-transform:uppercase}
+  .pv-card:hover{transform:translateY(-6px);border-color:rgba(62,224,106,.45);box-shadow:0 26px 55px rgba(0,0,0,.45)}
+  .pv-media{position:relative;aspect-ratio:9/16;background:#0a0e0b;overflow:hidden}
+  .pv-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:#0a0e0b}
+  .pv-tag{position:absolute;top:14px;left:14px;z-index:3;font-size:.68rem;font-weight:700;letter-spacing:1px;
+    color:#04120a;background:var(--lime);padding:5px 12px;border-radius:999px;text-transform:uppercase;box-shadow:0 4px 14px var(--lime-glow)}
+  .pv-cap{padding:16px 18px;display:flex;align-items:center;gap:12px}
+  .pv-cap .pv-ico{width:38px;height:38px;flex-shrink:0;display:grid;place-items:center;border-radius:11px;background:rgba(62,224,106,.12);color:var(--lime)}
+  .pv-meta{display:flex;flex-direction:column;line-height:1.3}
+  .pv-meta strong{font-family:'Montserrat';font-weight:800;font-size:1.12rem;color:var(--white)}
+  .pv-meta span{color:var(--muted);font-size:.84rem}
 
   /* ---------- Contacts ---------- */
   .contacts{background:linear-gradient(180deg,var(--panel),var(--black))}
@@ -336,7 +329,7 @@
     .burger{display:flex;z-index:101}
     .sec{padding:70px 0}
     .stats-grid{grid-template-columns:1fr}
-    .players-grid{gap:14px}
+    .player-videos{gap:14px}
     .hero{padding:110px 0 60px}
     .contact-card{padding:22px}
     .social-box{padding:24px}
@@ -484,35 +477,48 @@
   </div>
 </section>
 
-<!-- ===================== PLAYERS ===================== -->
+<!-- ===================== PROFESSIONAL PLAYERS ===================== -->
 <section class="sec" id="players">
+  <div class="court-bg"></div>
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">Активні гравці</span>
-      <h2>Обличчя нашого корту</h2>
-      <p>Спортсмени, які роблять CROSS живим щодня.</p>
+      <span class="eyebrow">Професійні гравці</span>
+      <h2>Професійні гравці в CROSS Tennis Club</h2>
+      <p>Демид, Назар, Вова та Саша — подивись, як вони грають і тренуються на наших кортах.</p>
     </div>
-    <div class="players-grid">
-      <div class="player reveal d1">
-        <span class="p-badge">Гравець</span>
-        <div class="avatar">В</div>
-        <div class="p-name">Вова</div>
-      </div>
-      <div class="player reveal d2">
-        <span class="p-badge">Гравець</span>
-        <div class="avatar">Д</div>
-        <div class="p-name">Демид</div>
-      </div>
-      <div class="player reveal d3">
-        <span class="p-badge">Гравець</span>
-        <div class="avatar">С</div>
-        <div class="p-name">Саша</div>
-      </div>
-      <div class="player reveal d4">
-        <span class="p-badge">Гравець</span>
-        <div class="avatar">Н</div>
-        <div class="p-name">Назар</div>
-      </div>
+    <div class="player-videos">
+      <figure class="pv-card reveal d1">
+        <div class="pv-media">
+          <span class="pv-tag">Гра</span>
+          <video src="cross-media/demid.mp4#t=0.1" preload="metadata" controls playsinline></video>
+        </div>
+        <figcaption class="pv-cap">
+          <span class="pv-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
+          <div class="pv-meta"><strong>Демид</strong><span>Матч на корті CROSS</span></div>
+        </figcaption>
+      </figure>
+
+      <figure class="pv-card reveal d2">
+        <div class="pv-media">
+          <span class="pv-tag">Гра</span>
+          <video src="cross-media/nazar-vova.mp4#t=0.1" preload="metadata" controls playsinline></video>
+        </div>
+        <figcaption class="pv-cap">
+          <span class="pv-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
+          <div class="pv-meta"><strong>Назар та Вова</strong><span>Матч на корті CROSS</span></div>
+        </figcaption>
+      </figure>
+
+      <figure class="pv-card reveal d3">
+        <div class="pv-media">
+          <span class="pv-tag">Тренування</span>
+          <video src="cross-media/sasha.mp4#t=0.1" preload="metadata" controls playsinline></video>
+        </div>
+        <figcaption class="pv-cap">
+          <span class="pv-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+          <div class="pv-meta"><strong>Саша</strong><span>Тренування на корті CROSS</span></div>
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
