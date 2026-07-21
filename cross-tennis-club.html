@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CROSS | Тенісний клуб — Чернівці</title>
+<meta name="description" content="CROSS Tennis Club у Чернівцях. Тренування для дітей та дорослих, бронювання корту. Твій простір для особистого зростання та задоволення.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#080b09;
+    --panel:#0c110d;
+    --forest:#0d2417;
+    --forest-2:#123a24;
+    --lime:#3ee06a;
+    --lime-soft:#57ec80;
+    --lime-glow:rgba(62,224,106,.45);
+    --white:#f4f8f4;
+    --muted:rgba(244,248,244,.62);
+    --muted-2:rgba(244,248,244,.4);
+    --line:rgba(62,224,106,.14);
+    --card:rgba(255,255,255,.03);
+    --card-border:rgba(255,255,255,.08);
+    --ease:cubic-bezier(.16,1,.3,1);
+    --maxw:1180px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter','Montserrat',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    background:var(--black);
+    color:var(--white);
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.logo,.stat-num{font-family:'Montserrat','Inter',sans-serif}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  section{position:relative}
+  ::selection{background:var(--lime);color:#04120a}
+
+  .container{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+  /* ---------- Court-line background pattern ---------- */
+  .court-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+  .court-bg::before{
+    content:"";position:absolute;inset:-2px;
+    background-image:
+      linear-gradient(var(--line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 85% 75% at 50% 40%,#000 30%,transparent 80%);
+    -webkit-mask-image:radial-gradient(ellipse 85% 75% at 50% 40%,#000 30%,transparent 80%);
+    opacity:.5;
+  }
+
+  /* ---------- Navigation ---------- */
+  header.nav{
+    position:fixed;top:0;left:0;width:100%;z-index:100;
+    padding:18px 0;
+    transition:background .4s var(--ease),padding .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease);
+    border-bottom:1px solid transparent;
+  }
+  header.nav.scrolled{
+    background:rgba(8,11,9,.72);
+    backdrop-filter:blur(16px) saturate(140%);
+    -webkit-backdrop-filter:blur(16px) saturate(140%);
+    padding:12px 0;
+    border-bottom:1px solid var(--card-border);
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .logo{display:flex;flex-direction:column;line-height:.9;letter-spacing:.5px}
+  .logo .logo-top{font-weight:900;font-size:1.55rem;color:var(--lime);letter-spacing:3px}
+  .logo .logo-sub{font-weight:400;font-size:.58rem;letter-spacing:6px;color:var(--white);margin-top:3px;padding-left:2px}
+  .logo:hover .logo-top{text-shadow:0 0 22px var(--lime-glow)}
+
+  nav.menu{display:flex;align-items:center;gap:8px}
+  nav.menu a{
+    position:relative;padding:9px 16px;font-size:.92rem;font-weight:500;color:var(--muted);
+    border-radius:999px;transition:color .3s var(--ease),background .3s var(--ease);
+  }
+  nav.menu a::after{
+    content:"";position:absolute;left:16px;right:16px;bottom:5px;height:2px;
+    background:var(--lime);transform:scaleX(0);transform-origin:left;
+    transition:transform .35s var(--ease);border-radius:2px;
+  }
+  nav.menu a:hover{color:var(--white)}
+  nav.menu a:hover::after{transform:scaleX(1)}
+  .nav-cta{
+    padding:10px 20px !important;color:#04120a !important;font-weight:700 !important;
+    background:var(--lime);box-shadow:0 6px 20px var(--lime-glow);
+  }
+  .nav-cta::after{display:none}
+  .nav-cta:hover{background:var(--lime-soft);transform:translateY(-1px)}
+
+  .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+  .burger span{width:26px;height:2px;background:var(--white);border-radius:2px;transition:.3s var(--ease)}
+  .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* ---------- Hero ---------- */
+  .hero{min-height:100svh;display:flex;align-items:center;padding:120px 0 70px;
+    background:
+      radial-gradient(1100px 700px at 78% 8%,rgba(18,58,36,.55),transparent 60%),
+      radial-gradient(800px 600px at 10% 90%,rgba(13,36,23,.6),transparent 60%),
+      var(--black);
+    overflow:hidden;
+  }
+  .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;width:100%}
+  .badge{
+    display:inline-flex;align-items:center;gap:9px;padding:7px 15px;border-radius:999px;
+    background:rgba(62,224,106,.1);border:1px solid rgba(62,224,106,.28);
+    font-size:.78rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--lime-soft);
+    margin-bottom:26px;
+  }
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+
+  .hero h1{
+    font-weight:900;font-size:clamp(2.7rem,7.5vw,5.4rem);line-height:.98;letter-spacing:-1px;text-transform:uppercase;
+  }
+  .hero h1 .accent{color:var(--lime);text-shadow:0 0 40px var(--lime-glow)}
+  .hero .sub{
+    font-size:clamp(1.02rem,2.2vw,1.32rem);color:var(--muted);max-width:520px;margin:24px 0 38px;font-weight:400;
+  }
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:14px;
+    font-weight:700;font-size:1rem;cursor:pointer;border:1px solid transparent;
+    transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease),color .3s var(--ease);
+  }
+  .btn-primary{background:var(--lime);color:#04120a;box-shadow:0 10px 30px var(--lime-glow)}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 40px var(--lime-glow);background:var(--lime-soft)}
+  .btn-primary svg{transition:transform .3s var(--ease)}
+  .btn-primary:hover svg{transform:translateX(4px)}
+  .btn-ghost{background:transparent;color:var(--white);border-color:var(--card-border)}
+  .btn-ghost:hover{border-color:var(--lime);color:var(--lime);transform:translateY(-3px)}
+
+  /* Tennis ball animation stage */
+  .ball-stage{position:relative;height:clamp(340px,42vw,480px);width:100%}
+  .ball-court{
+    position:absolute;inset:0;border-radius:24px;overflow:hidden;
+    background:
+      linear-gradient(160deg,rgba(18,58,36,.5),rgba(8,11,9,.2)),
+      var(--forest);
+    border:1px solid var(--card-border);
+    box-shadow:inset 0 0 80px rgba(0,0,0,.5),0 30px 60px rgba(0,0,0,.4);
+  }
+  /* stylized court markings */
+  .ball-court::before{
+    content:"";position:absolute;inset:26px;border:2px solid rgba(255,255,255,.16);border-radius:6px;
+  }
+  .ball-court::after{
+    content:"";position:absolute;left:50%;top:26px;bottom:26px;width:2px;background:rgba(255,255,255,.16);transform:translateX(-50%);
+  }
+  .net{position:absolute;left:26px;right:26px;top:50%;height:0;border-top:2px dashed rgba(62,224,106,.5);transform:translateY(-50%);z-index:1}
+
+  .ball{
+    position:absolute;width:54px;height:54px;left:0;top:0;z-index:3;
+    filter:drop-shadow(0 6px 12px rgba(0,0,0,.55)) drop-shadow(0 0 18px var(--lime-glow));
+    will-change:transform;
+  }
+  .ball svg{width:100%;height:100%;animation:spin 2.4s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .ball-shadow{
+    position:absolute;width:44px;height:12px;border-radius:50%;
+    background:radial-gradient(ellipse,rgba(0,0,0,.5),transparent 70%);
+    z-index:2;filter:blur(2px);will-change:transform;
+  }
+
+  /* ---------- Section heading ---------- */
+  .sec{padding:96px 0}
+  .sec-head{max-width:640px;margin-bottom:52px}
+  .eyebrow{display:inline-block;color:var(--lime);font-weight:700;font-size:.8rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px}
+  .sec-head h2{font-weight:800;font-size:clamp(1.9rem,4.5vw,3rem);line-height:1.08;letter-spacing:-.5px}
+  .sec-head p{color:var(--muted);margin-top:16px;font-size:1.05rem}
+
+  /* ---------- Stats ---------- */
+  .stats{background:linear-gradient(180deg,var(--black),var(--panel))}
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .stat{
+    position:relative;z-index:2;text-align:center;padding:40px 24px;border-radius:20px;
+    background:var(--card);border:1px solid var(--card-border);overflow:hidden;
+    transition:transform .4s var(--ease),border-color .4s var(--ease),background .4s var(--ease);
+  }
+  .stat::before{
+    content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(62,224,106,.12),transparent 60%);
+    opacity:0;transition:opacity .4s var(--ease);
+  }
+  .stat:hover{transform:translateY(-6px);border-color:rgba(62,224,106,.4);background:rgba(62,224,106,.04)}
+  .stat:hover::before{opacity:1}
+  .stat .ico{width:52px;height:52px;margin:0 auto 16px;display:grid;place-items:center;border-radius:14px;
+    background:rgba(62,224,106,.12);color:var(--lime)}
+  .stat-num{font-weight:900;font-size:clamp(2.4rem,6vw,3.4rem);color:var(--white);line-height:1}
+  .stat-label{color:var(--muted);margin-top:8px;font-size:.98rem;font-weight:500}
+
+  /* ---------- Club photo ---------- */
+  .photo-frame{
+    position:relative;z-index:2;height:clamp(300px,48vw,540px);border-radius:24px;overflow:hidden;
+    display:grid;place-items:center;text-align:center;
+    background:
+      repeating-linear-gradient(135deg,rgba(255,255,255,.02) 0 22px,transparent 22px 44px),
+      linear-gradient(160deg,#141a15,#0b0f0c);
+    border:1px solid var(--card-border);
+    transition:border-color .4s var(--ease);
+  }
+  .photo-frame:hover{border-color:rgba(62,224,106,.35)}
+  .photo-tag{color:var(--muted-2);font-weight:700;letter-spacing:4px;font-size:clamp(1rem,2.5vw,1.5rem);text-transform:uppercase;font-family:'Montserrat'}
+  .photo-frame .corner{position:absolute;width:34px;height:34px;border:2px solid rgba(62,224,106,.5)}
+  .photo-frame .c1{top:20px;left:20px;border-right:0;border-bottom:0}
+  .photo-frame .c2{top:20px;right:20px;border-left:0;border-bottom:0}
+  .photo-frame .c3{bottom:20px;left:20px;border-right:0;border-top:0}
+  .photo-frame .c4{bottom:20px;right:20px;border-left:0;border-top:0}
+
+  /* ---------- Trainers ---------- */
+  .trainer{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:center;position:relative;z-index:2}
+  .trainer-photo{
+    aspect-ratio:4/5;border-radius:22px;overflow:hidden;display:grid;place-items:center;text-align:center;padding:24px;
+    background:
+      repeating-linear-gradient(135deg,rgba(255,255,255,.02) 0 22px,transparent 22px 44px),
+      linear-gradient(160deg,#16211a,#0b0f0c);
+    border:1px solid var(--card-border);position:relative;
+    transition:transform .45s var(--ease),border-color .45s var(--ease);
+  }
+  .trainer-photo:hover{transform:translateY(-6px);border-color:rgba(62,224,106,.4)}
+  .trainer-photo .ph{color:var(--muted-2);font-weight:700;letter-spacing:2px;font-size:.95rem;font-family:'Montserrat'}
+  .trainer-name-tag{position:absolute;left:18px;bottom:18px;right:18px;padding:14px 18px;border-radius:14px;
+    background:rgba(8,11,9,.7);backdrop-filter:blur(8px);border:1px solid var(--card-border);text-align:left}
+  .trainer-name-tag strong{display:block;font-family:'Montserrat';font-weight:800;font-size:1.15rem}
+  .trainer-name-tag span{color:var(--lime);font-size:.85rem;font-weight:600}
+  .trainer-info h3{font-family:'Montserrat';font-weight:800;font-size:clamp(1.6rem,3.5vw,2.3rem);line-height:1.1}
+  .trainer-info .role{color:var(--lime);font-weight:600;margin:8px 0 18px}
+  .trainer-info p{color:var(--muted);margin-bottom:22px}
+  .trainer-feats{display:flex;flex-direction:column;gap:12px}
+  .trainer-feats li{list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--muted)}
+  .trainer-feats svg{color:var(--lime);flex-shrink:0;margin-top:3px}
+
+  /* ---------- Players 2x2 ---------- */
+  .players-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;position:relative;z-index:2}
+  .player{
+    aspect-ratio:1/1;border-radius:20px;overflow:hidden;position:relative;
+    background:
+      repeating-linear-gradient(135deg,rgba(255,255,255,.02) 0 20px,transparent 20px 40px),
+      linear-gradient(160deg,#15201a,#0a0e0b);
+    border:1px solid var(--card-border);display:grid;place-items:center;
+    transition:transform .45s var(--ease),border-color .45s var(--ease),box-shadow .45s var(--ease);
+  }
+  .player:hover{transform:translateY(-6px);border-color:rgba(62,224,106,.45);box-shadow:0 24px 50px rgba(0,0,0,.4)}
+  .player .avatar{
+    width:44%;aspect-ratio:1/1;border-radius:50%;display:grid;place-items:center;
+    background:rgba(62,224,106,.1);border:2px dashed rgba(62,224,106,.35);color:var(--lime);
+    font-family:'Montserrat';font-weight:800;font-size:clamp(1.6rem,5vw,2.4rem);
+    transition:transform .45s var(--ease),background .45s var(--ease);
+  }
+  .player:hover .avatar{transform:scale(1.06);background:rgba(62,224,106,.18)}
+  .player .p-name{position:absolute;left:0;right:0;bottom:0;padding:16px;text-align:center;
+    background:linear-gradient(0deg,rgba(8,11,9,.9),transparent);
+    font-family:'Montserrat';font-weight:700;font-size:1.05rem;letter-spacing:1px}
+  .player .p-badge{position:absolute;top:14px;right:14px;font-size:.68rem;font-weight:700;letter-spacing:1px;
+    color:var(--lime);background:rgba(62,224,106,.12);border:1px solid rgba(62,224,106,.3);padding:4px 10px;border-radius:999px;text-transform:uppercase}
+
+  /* ---------- Contacts ---------- */
+  .contacts{background:linear-gradient(180deg,var(--panel),var(--black))}
+  .contacts-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;position:relative;z-index:2}
+  .contact-card{
+    padding:30px;border-radius:20px;background:var(--card);border:1px solid var(--card-border);
+    display:flex;gap:18px;align-items:flex-start;
+    transition:transform .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease);
+  }
+  .contact-card+.contact-card{margin-top:18px}
+  .contact-card:hover{transform:translateX(6px);border-color:rgba(62,224,106,.4);background:rgba(62,224,106,.04)}
+  .contact-card .ico{width:50px;height:50px;flex-shrink:0;display:grid;place-items:center;border-radius:14px;
+    background:rgba(62,224,106,.12);color:var(--lime)}
+  .contact-card .c-label{color:var(--muted);font-size:.82rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px}
+  .contact-card .c-val{font-family:'Montserrat';font-weight:700;font-size:1.18rem;transition:color .3s var(--ease)}
+  .contact-card:hover .c-val{color:var(--lime)}
+
+  .social-box{padding:34px;border-radius:20px;background:linear-gradient(160deg,var(--forest),var(--panel));
+    border:1px solid var(--card-border);display:flex;flex-direction:column;justify-content:center}
+  .social-box h3{font-family:'Montserrat';font-weight:800;font-size:1.5rem;margin-bottom:8px}
+  .social-box p{color:var(--muted);margin-bottom:24px}
+  .social-links{display:flex;flex-direction:column;gap:14px}
+  .social-links a{
+    display:flex;align-items:center;gap:16px;padding:16px 20px;border-radius:14px;
+    background:rgba(255,255,255,.03);border:1px solid var(--card-border);font-weight:600;
+    transition:transform .3s var(--ease),background .3s var(--ease),border-color .3s var(--ease);
+  }
+  .social-links a:hover{transform:translateY(-3px);background:rgba(62,224,106,.08);border-color:rgba(62,224,106,.45)}
+  .social-links .s-ico{width:44px;height:44px;flex-shrink:0;display:grid;place-items:center;border-radius:12px;background:rgba(62,224,106,.14);color:var(--lime)}
+  .social-links .s-meta{display:flex;flex-direction:column}
+  .social-links .s-meta strong{font-family:'Montserrat';font-size:1.02rem}
+  .social-links .s-meta span{color:var(--muted);font-size:.85rem}
+  .social-links .arrow{margin-left:auto;color:var(--muted-2);transition:transform .3s var(--ease),color .3s var(--ease)}
+  .social-links a:hover .arrow{color:var(--lime);transform:translateX(4px)}
+
+  /* ---------- Footer ---------- */
+  footer{padding:46px 0;border-top:1px solid var(--card-border);text-align:center;position:relative;z-index:2}
+  footer .logo{display:inline-flex;align-items:center;margin-bottom:14px}
+  footer .copy{color:var(--muted-2);font-size:.9rem}
+  footer .slogan{color:var(--lime);font-size:.9rem;margin-top:8px;font-weight:500}
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .reveal.visible{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.08s}
+  .reveal.d2{transition-delay:.16s}
+  .reveal.d3{transition-delay:.24s}
+  .reveal.d4{transition-delay:.32s}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:36px}
+    .ball-stage{height:300px;order:-1}
+    .trainer{grid-template-columns:1fr;gap:28px}
+    .contacts-grid{grid-template-columns:1fr}
+    .stats-grid{gap:14px}
+  }
+  @media (max-width:680px){
+    nav.menu{
+      position:fixed;inset:0 0 0 auto;width:min(78vw,320px);height:100vh;
+      flex-direction:column;justify-content:center;gap:8px;padding:40px;
+      background:rgba(8,11,9,.96);backdrop-filter:blur(18px);
+      transform:translateX(100%);transition:transform .4s var(--ease);z-index:99;
+    }
+    nav.menu.open{transform:translateX(0)}
+    nav.menu a{font-size:1.15rem;padding:14px 20px}
+    nav.menu a::after{display:none}
+    .nav-cta{margin-top:12px}
+    .burger{display:flex;z-index:101}
+    .sec{padding:70px 0}
+    .stats-grid{grid-template-columns:1fr}
+    .players-grid{gap:14px}
+    .hero{padding:110px 0 60px}
+    .contact-card{padding:22px}
+    .social-box{padding:24px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .reveal{transition:none;opacity:1;transform:none}
+    .ball svg{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="logo" aria-label="CROSS Tennis Club">
+      <span class="logo-top">CROSS</span>
+      <span class="logo-sub">TENNIS&nbsp;CLUB</span>
+    </a>
+    <nav class="menu" id="menu">
+      <a href="#about">Про нас</a>
+      <a href="#trainers">Тренери</a>
+      <a href="#players">Гравці</a>
+      <a href="#contacts">Контакти</a>
+      <a href="#contacts" class="nav-cta">Забронювати корт</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="court-bg"></div>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="badge reveal"><span class="dot"></span>Чернівці · вул. Хотинська, 39к</span>
+      <h1 class="reveal d1">CROSS<br><span class="accent">TENNIS</span> CLUB</h1>
+      <p class="sub reveal d2">💚 Твій простір для особистого зростання та задоволення. Тренування для дітей і дорослих та бронювання корту.</p>
+      <div class="hero-cta reveal d3">
+        <a href="#contacts" class="btn btn-primary">
+          Забронювати корт
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#trainers" class="btn btn-ghost">Почати тренування</a>
+      </div>
+    </div>
+
+    <div class="ball-stage reveal d2">
+      <div class="ball-court" id="court">
+        <div class="net"></div>
+        <div class="ball-shadow" id="shadow"></div>
+        <div class="ball" id="ball">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="bg" cx="38%" cy="34%" r="72%">
+                <stop offset="0%" stop-color="#eaff9a"/>
+                <stop offset="45%" stop-color="#a8e838"/>
+                <stop offset="100%" stop-color="#5aa513"/>
+              </radialGradient>
+            </defs>
+            <circle cx="50" cy="50" r="47" fill="url(#bg)"/>
+            <path d="M20,6 C40,32 40,68 20,94" fill="none" stroke="#fdfff2" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M80,6 C60,32 60,68 80,94" fill="none" stroke="#fdfff2" stroke-width="4.5" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="47" fill="none" stroke="rgba(0,0,0,.12)" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STATS ===================== -->
+<section class="sec stats" id="about">
+  <div class="court-bg"></div>
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Про клуб</span>
+      <h2>Спільнота, що росте разом із тобою</h2>
+      <p>CROSS Tennis Club — це сучасний тенісний простір у Чернівцях. Ми об'єднуємо гравців усіх рівнів у дружню спільноту, де кожен розвивається у власному темпі.</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat reveal d1">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M3 9h18M9 3v18"/></svg></div>
+        <div class="stat-num" data-target="71">0</div>
+        <div class="stat-label">Публікацій</div>
+      </div>
+      <div class="stat reveal d2">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="stat-num" data-target="647">0</div>
+        <div class="stat-label">Підписників</div>
+      </div>
+      <div class="stat reveal d3">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11l-3 3-2-2"/></svg></div>
+        <div class="stat-num" data-target="164">0</div>
+        <div class="stat-label">Підписок</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLUB PHOTO ===================== -->
+<section class="sec" id="gallery">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Наш простір</span>
+      <h2>Корти, де народжується гра</h2>
+    </div>
+    <div class="photo-frame reveal d1">
+      <span class="corner c1"></span><span class="corner c2"></span>
+      <span class="corner c3"></span><span class="corner c4"></span>
+      <span class="photo-tag">[ ФОТО КЛУБУ ]</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TRAINERS ===================== -->
+<section class="sec" id="trainers">
+  <div class="court-bg"></div>
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Тренери</span>
+      <h2>Досвідчений наставник поруч</h2>
+    </div>
+    <div class="trainer">
+      <div class="trainer-photo reveal">
+        <span class="ph">[ ФОТО ТРЕНЕРА<br>ОЛЕКСІЙ ]</span>
+        <div class="trainer-name-tag">
+          <strong>Олексій</strong>
+          <span>Головний тренер</span>
+        </div>
+      </div>
+      <div class="trainer-info reveal d1">
+        <h3>Олексій</h3>
+        <div class="role">Головний тренер CROSS</div>
+        <p>Індивідуальний підхід до кожного гравця — від першого дотику до ракетки до впевненої гри на корті. Тренування для дітей та дорослих будь-якого рівня підготовки.</p>
+        <ul class="trainer-feats">
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Тренування для дітей та дорослих</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Індивідуальні та групові заняття</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Постановка техніки з нуля</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PLAYERS ===================== -->
+<section class="sec" id="players">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Активні гравці</span>
+      <h2>Обличчя нашого корту</h2>
+      <p>Спортсмени, які роблять CROSS живим щодня.</p>
+    </div>
+    <div class="players-grid">
+      <div class="player reveal d1">
+        <span class="p-badge">Гравець</span>
+        <div class="avatar">В</div>
+        <div class="p-name">Вова</div>
+      </div>
+      <div class="player reveal d2">
+        <span class="p-badge">Гравець</span>
+        <div class="avatar">Д</div>
+        <div class="p-name">Демид</div>
+      </div>
+      <div class="player reveal d3">
+        <span class="p-badge">Гравець</span>
+        <div class="avatar">С</div>
+        <div class="p-name">Саша</div>
+      </div>
+      <div class="player reveal d4">
+        <span class="p-badge">Гравець</span>
+        <div class="avatar">Н</div>
+        <div class="p-name">Назар</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACTS ===================== -->
+<section class="sec contacts" id="contacts">
+  <div class="court-bg"></div>
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Контакти</span>
+      <h2>Приходь пограти в CROSS</h2>
+      <p>Забронюй корт або запишись на тренування — просто напиши чи зателефонуй нам.</p>
+    </div>
+    <div class="contacts-grid">
+      <div class="contacts-col reveal d1">
+        <a class="contact-card" href="tel:+380999743329">
+          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div>
+            <div class="c-label">Телефон</div>
+            <div class="c-val">+38 (099) 974 33 29</div>
+          </div>
+        </a>
+        <a class="contact-card" href="https://www.google.com/maps/search/?api=1&query=%D0%B2%D1%83%D0%BB.%20%D0%A5%D0%BE%D1%82%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B0%2C%2039%D0%BA%2C%20Chernivtsi" target="_blank" rel="noopener">
+          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div>
+            <div class="c-label">Адреса</div>
+            <div class="c-val">вул. Хотинська, 39к</div>
+            <div class="c-label" style="margin-top:4px;letter-spacing:.5px;text-transform:none">Чернівці, 58000</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="social-box reveal d2">
+        <h3>Ми в соцмережах</h3>
+        <p>Стеж за життям клубу, турнірами та новинами.</p>
+        <div class="social-links">
+          <a href="https://t.me/cross_tennis_club" target="_blank" rel="noopener">
+            <span class="s-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M21.94 4.3 18.6 20.06c-.25 1.11-.92 1.39-1.86.86l-5.14-3.79-2.48 2.39c-.27.27-.5.5-1.03.5l.37-5.23L18.98 6.5c.42-.37-.09-.58-.65-.21L5.61 14.16.36 12.5c-1.14-.36-1.16-1.14.24-1.68l20.5-7.9c.95-.35 1.78.21 1.47 1.38z"/></svg></span>
+            <div class="s-meta"><strong>Telegram</strong><span>@cross_tennis_club</span></div>
+            <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </a>
+          <a href="https://www.tiktok.com/@cross.tennisclub?_t=ZM-8ubZoaUnOaL&_r=1" target="_blank" rel="noopener">
+            <span class="s-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82a4.28 4.28 0 0 1-1.05-2.82h-3.1v12.63a2.53 2.53 0 0 1-2.53 2.53 2.53 2.53 0 1 1 .77-4.94v-3.2a5.72 5.72 0 0 0-.77-.05A5.73 5.73 0 1 0 15.62 15.7V9.3a7.36 7.36 0 0 0 4.3 1.38V7.57a4.28 4.28 0 0 1-3.32-1.75z"/></svg></span>
+            <div class="s-meta"><strong>TikTok</strong><span>@cross.tennisclub</span></div>
+            <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="container">
+    <a href="#top" class="logo">
+      <span class="logo-top">CROSS</span>
+      <span class="logo-sub">TENNIS&nbsp;CLUB</span>
+    </a>
+    <div class="copy">CROSS TENNIS CLUB © 2025 · Чернівці</div>
+    <div class="slogan">💚 Твій простір для особистого зростання та задоволення</div>
+  </div>
+</footer>
+
+<script>
+/* ---------- Nav: scroll state + mobile menu ---------- */
+const nav = document.getElementById('nav');
+const burger = document.getElementById('burger');
+const menu = document.getElementById('menu');
+
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 30);
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+burger.addEventListener('click', () => {
+  const open = menu.classList.toggle('open');
+  burger.classList.toggle('open', open);
+});
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  menu.classList.remove('open'); burger.classList.remove('open');
+}));
+
+/* ---------- Scroll reveal ---------- */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+}, {threshold:0.14, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---------- Stats count-up ---------- */
+const countUp = (el) => {
+  const target = +el.dataset.target;
+  const dur = 1400; const start = performance.now();
+  const tick = (now) => {
+    const p = Math.min((now - start) / dur, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(target * eased);
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+};
+const statIO = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting){ countUp(e.target); statIO.unobserve(e.target); } });
+}, {threshold:0.6});
+document.querySelectorAll('.stat-num').forEach(el => statIO.observe(el));
+
+/* ---------- Tennis ball physics ---------- */
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const court = document.getElementById('court');
+  const ball = document.getElementById('ball');
+  const shadow = document.getElementById('shadow');
+  if (!court || !ball) return;
+
+  const R = 27;                 // ball radius (px)
+  let x, y, vx, vy;
+  let W = 0, H = 0;
+
+  const measure = () => { W = court.clientWidth; H = court.clientHeight; };
+  const reset = () => {
+    measure();
+    x = W * 0.3; y = H * 0.35;
+    vx = 3.1; vy = 2.2;
+  };
+  measure(); reset();
+
+  const floorY = () => H - R - 6;   // pseudo floor for shadow scaling
+
+  function frame(){
+    x += vx; y += vy;
+
+    // bounce off invisible walls
+    if (x <= R){ x = R; vx = Math.abs(vx); }
+    if (x >= W - R){ x = W - R; vx = -Math.abs(vx); }
+    if (y <= R){ y = R; vy = Math.abs(vy); }
+    if (y >= H - R){ y = H - R; vy = -Math.abs(vy); }
+
+    ball.style.transform = `translate(${x - R}px, ${y - R}px)`;
+
+    // shadow follows on the "floor", shrinking with ball height
+    const closeness = (y - R) / (floorY() - R);     // 0 top .. 1 bottom
+    const s = 0.55 + closeness * 0.55;
+    const op = 0.2 + closeness * 0.4;
+    shadow.style.transform = `translate(${x - 22}px, ${floorY() + 8}px) scale(${s})`;
+    shadow.style.opacity = op;
+
+    requestAnimationFrame(frame);
+  }
+
+  if (!reduce){ requestAnimationFrame(frame); }
+  else { ball.style.transform = `translate(${W*0.5 - R}px, ${H*0.4 - R}px)`; shadow.style.opacity = 0; }
+
+  let rt;
+  window.addEventListener('resize', () => {
+    clearTimeout(rt);
+    rt = setTimeout(() => {
+      const px = W ? x / W : 0.3, py = H ? y / H : 0.35;
+      measure();
+      x = Math.min(Math.max(px * W, R), W - R);
+      y = Math.min(Math.max(py * H, R), H - R);
+    }, 150);
+  });
+})();
+</script>
+</body>
+</html>
