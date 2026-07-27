@@ -39,7 +39,7 @@ export default async function CatalogItemPage({ params }: Props) {
       <main className="min-h-screen bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <Link
-            href="/"
+            href="/sprinter"
             className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-orange-500 transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" /> На головну

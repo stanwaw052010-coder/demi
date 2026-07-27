@@ -15,7 +15,7 @@ interface BreadcrumbProps {
 export function Breadcrumb({ items, className }: BreadcrumbProps) {
   return (
     <nav aria-label="Breadcrumb" className={cn("flex items-center gap-1.5 text-sm", className)}>
-      <Link href="/" className="text-gray-400 hover:text-orange-500 transition-colors shrink-0">
+      <Link href="/sprinter" className="text-gray-400 hover:text-orange-500 transition-colors shrink-0">
         <Home className="w-3.5 h-3.5" />
       </Link>
       {items.map((item, i) => (
