@@ -1,128 +1,139 @@
-import Link from "next/link";
-import { Phone, MapPin, Clock, Mail } from "lucide-react";
-import { vehicles } from "@/lib/vehicles";
-import { categories } from "@/lib/categories";
-import { NewsletterForm } from "./NewsletterForm";
+import { CalendarCheck, MapPin, Navigation, Phone } from "lucide-react";
+import { Instagram } from "@/components/ui/icons";
+import { BrandMark, Wordmark } from "@/components/ui/BrandMark";
+import { mapsDirectionsUrl, nav, site } from "@/lib/site";
 
-const links = {
-  catalog: vehicles.map((v) => ({ label: v.name, href: `/catalog/${v.slug}` })),
-  info: [
-    { label: "Про компанію", href: "/about" },
-    { label: "Доставка і оплата", href: "/delivery" },
-    { label: "Гарантія", href: "/warranty" },
-    { label: "Повернення", href: "/returns" },
-    { label: "Блог", href: "/blog" },
-  ],
-  categories: [
-    ...categories.slice(0, 4).map((c) => ({
-      label: c.name,
-      href: `/catalog/mercedes-sprinter/${c.slug}`,
-    })),
-    { label: "Моторні оливи", href: "/oils" },
-    { label: "Акумулятори", href: "/batteries" },
-  ],
-};
+const serviceLinks = [
+  { label: "Подологія", href: "#services" },
+  { label: "Апаратний педикюр", href: "#services" },
+  { label: "Врослий ніготь", href: "#services" },
+  { label: "Манікюр і покриття", href: "#services" },
+  { label: "Прайс", href: "#price" },
+];
 
-export default function Footer() {
+export function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="bg-[#0a0a0a] text-gray-400 border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+    // pb на мобільних — щоб липка панель дій не перекривала останній рядок
+    <footer className="relative isolate grain overflow-hidden bg-ink pb-20 text-white sm:pb-0">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 left-1/2 size-[40rem] -translate-x-1/2 rounded-full bg-brand-700/25 blur-[130px]"
+      />
 
-          {/* Brand col */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2.5 mb-5">
-              <div className="w-9 h-9 rounded-xl bg-orange-500 flex items-center justify-center">
-                <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-white" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-                </svg>
-              </div>
-              <div className="leading-none">
-                <div className="text-white font-bold text-lg tracking-wide">СПРИНТЕР</div>
-                <div className="text-[10px] text-orange-400 font-medium tracking-widest uppercase">Автозапчастини</div>
-              </div>
-            </Link>
-            <p className="text-sm text-gray-500 leading-relaxed mb-6 max-w-xs">
-              Спеціалізований інтернет-магазин запчастин для Mercedes Sprinter, Vito, VW Crafter та LT. Понад 8 000 позицій в наявності.
-            </p>
-            <div className="space-y-3">
-              <div className="flex items-start gap-2.5 text-sm">
-                <Phone className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
-                <div className="space-y-1">
-                  <a href="tel:+380672546266" className="block hover:text-orange-400 transition-colors">+38 (067) 254-62-66</a>
-                  <a href="tel:+380991129526" className="block hover:text-orange-400 transition-colors">+38 (099) 112-95-26</a>
-                  <a href="tel:+380962770540" className="block hover:text-orange-400 transition-colors">+38 (096) 277-05-40</a>
-                </div>
-              </div>
-              <div className="flex items-start gap-2.5 text-sm">
-                <MapPin className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
-                <span>м. Харків, Просп. Героїв Харкова, 210</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-sm">
-                <Clock className="w-4 h-4 text-orange-500 shrink-0" />
-                Пн–Сб: 9:00–18:00
-              </div>
-              <a href="mailto:info@sprinter.org.ua" className="flex items-center gap-2.5 text-sm hover:text-orange-400 transition-colors">
-                <Mail className="w-4 h-4 text-orange-500 shrink-0" />
-                info@sprinter.org.ua
-              </a>
+      <div className="container-x relative z-10">
+        <div className="grid gap-12 py-16 md:py-20 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-10">
+          {/* бренд */}
+          <div>
+            <div className="flex items-center gap-3">
+              <BrandMark className="size-12" tone="white" />
+              <Wordmark tone="light" />
             </div>
+            <p className="mt-6 max-w-xs text-[0.92rem] leading-relaxed text-white/55 text-pretty">
+              Кабінет подології та нігтьового сервісу у Вишгороді. Здорові стопи, естетика нігтів і
+              стерильність, яку видно.
+            </p>
+            <a
+              href={site.booking.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-7 inline-flex items-center gap-2.5 rounded-full px-5 py-3 text-[0.85rem] font-bold text-white transition-colors duration-300 glass hover:bg-white/15"
+            >
+              <CalendarCheck className="size-4 text-aqua-300" strokeWidth={2.4} />
+              {site.booking.label}
+            </a>
           </div>
 
-          {/* Catalog by vehicle */}
+          {/* навігація */}
+          <nav aria-label="Навігація у підвалі">
+            <h2 className="text-[0.7rem] font-bold tracking-[0.18em] text-white/40 uppercase">Навігація</h2>
+            <ul className="mt-6 flex flex-col gap-3.5">
+              {nav.map((item) => (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    className="text-[0.92rem] font-semibold text-white/70 transition-colors duration-300 hover:text-aqua-300"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* послуги */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-5 uppercase tracking-wider">Авто</h4>
-            <ul className="space-y-2.5">
-              {links.catalog.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-sm hover:text-orange-400 transition-colors">
-                    {l.label}
-                  </Link>
+            <h2 className="text-[0.7rem] font-bold tracking-[0.18em] text-white/40 uppercase">Послуги</h2>
+            <ul className="mt-6 flex flex-col gap-3.5">
+              {serviceLinks.map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    className="text-[0.92rem] font-semibold text-white/70 transition-colors duration-300 hover:text-aqua-300"
+                  >
+                    {item.label}
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Categories */}
+          {/* контакти */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-5 uppercase tracking-wider">Категорії</h4>
-            <ul className="space-y-2.5">
-              {links.categories.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-sm hover:text-orange-400 transition-colors">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
+            <h2 className="text-[0.7rem] font-bold tracking-[0.18em] text-white/40 uppercase">Контакти</h2>
+            <ul className="mt-6 flex flex-col gap-5">
+              <li>
+                <a href={site.phone.href} className="group flex items-start gap-3">
+                  <Phone className="mt-0.5 size-[1.05rem] shrink-0 text-aqua-300" strokeWidth={2.3} />
+                  <span className="text-[0.98rem] font-extrabold tracking-[-0.02em] text-white transition-colors group-hover:text-aqua-300">
+                    {site.phone.display}
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={site.instagram.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-start gap-3"
+                >
+                  <Instagram className="mt-0.5 size-[1.05rem] shrink-0 text-aqua-300" strokeWidth={2.2} />
+                  <span className="text-[0.92rem] font-semibold text-white/70 transition-colors group-hover:text-aqua-300">
+                    {site.instagram.handle}
+                  </span>
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <MapPin className="mt-0.5 size-[1.05rem] shrink-0 text-aqua-300" strokeWidth={2.3} />
+                <span className="text-[0.92rem] leading-snug font-semibold text-white/70">
+                  {site.address.street}
+                  <br />
+                  {site.address.city}, {site.address.region}
+                </span>
+              </li>
+              <li>
+                <a
+                  href={mapsDirectionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-[0.85rem] font-bold text-white/70 underline-offset-4 transition-colors hover:text-aqua-300 hover:underline"
+                >
+                  <Navigation className="size-4" strokeWidth={2.4} />
+                  Прокласти маршрут
+                </a>
+              </li>
             </ul>
-          </div>
-
-          {/* Info */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-5 uppercase tracking-wider">Інформація</h4>
-            <ul className="space-y-2.5 mb-6">
-              {links.info.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-sm hover:text-orange-400 transition-colors">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <NewsletterForm />
           </div>
         </div>
-      </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-gray-600">© {new Date().getFullYear()} Спринтер — Автозапчастини. Всі права захищені.</p>
-          <div className="flex items-center gap-5">
-            <Link href="/returns" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Повернення</Link>
-            <Link href="/delivery" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Доставка</Link>
-            <Link href="/warranty" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Гарантія</Link>
-          </div>
+        <div className="flex flex-col gap-4 border-t border-white/10 py-8 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[0.82rem] font-medium text-white/40">
+            © {year} {site.name}. Усі права захищено.
+          </p>
+          <p className="text-[0.82rem] font-medium text-white/40">
+            {site.address.city}, {site.address.region} · Години роботи: {site.hours}
+          </p>
         </div>
       </div>
     </footer>

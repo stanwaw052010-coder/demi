@@ -1,31 +1,29 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import Hero from "@/components/home/Hero";
-import VehicleSelector from "@/components/home/VehicleSelector";
-import CategoryGrid from "@/components/home/CategoryGrid";
-import FeaturedProducts from "@/components/home/FeaturedProducts";
-import WhyUs from "@/components/home/WhyUs";
-import HowItWorks from "@/components/home/HowItWorks";
-import Testimonials from "@/components/home/Testimonials";
-import FAQ from "@/components/home/FAQ";
-import ContactBanner from "@/components/home/ContactBanner";
+import { About } from "@/components/sections/About";
+import { Advantages } from "@/components/sections/Advantages";
+import { Contacts } from "@/components/sections/Contacts";
+import { CtaBanner } from "@/components/sections/CtaBanner";
+import { Faq } from "@/components/sections/Faq";
+import { Gallery } from "@/components/sections/Gallery";
+import { Hero } from "@/components/sections/Hero";
+import { Marquee } from "@/components/sections/Marquee";
+import { Pricing } from "@/components/sections/Pricing";
+import { Services } from "@/components/sections/Services";
+import { Testimonials } from "@/components/sections/Testimonials";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
-      <Header />
-      <main className="flex flex-col">
-        <Hero />
-        <VehicleSelector />
-        <CategoryGrid />
-        <FeaturedProducts />
-        <WhyUs />
-        <HowItWorks />
-        <Testimonials />
-        <FAQ />
-        <ContactBanner />
-      </main>
-      <Footer />
+      <Hero />
+      <Marquee />
+      <About />
+      <Services />
+      <Advantages />
+      <Pricing />
+      <Gallery />
+      <Testimonials />
+      <Faq />
+      <CtaBanner />
+      <Contacts />
     </>
   );
 }
