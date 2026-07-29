@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { site } from "@/lib/site";
 import { MANROPE_500_BASE64, MANROPE_800_BASE64 } from "./og-fonts";
+import { LOGO_PATHS } from "@/components/ui/logo-paths";
 
 export const alt = "ProfiTime — подологія, манікюр і педикюр у Вишгороді";
 export const size = { width: 1200, height: 630 };
@@ -40,21 +41,10 @@ export default async function OpengraphImage() {
 
         {/* верх */}
         <div style={{ display: "flex", alignItems: "center" }}>
-          <svg width="76" height="76" viewBox="0 0 48 48" fill="none">
-            <path
-              d="M24 41.2C9.6 30.4 4.4 21.6 9.4 15.1c4.2-5.4 11.4-4.5 14.6.9 3.2-5.4 10.4-6.3 14.6-.9 5 6.5-.2 15.3-14.6 26.1Z"
-              stroke="#ffffff"
-              strokeWidth="2.6"
-              strokeLinejoin="round"
-            />
-            <g transform="translate(18.48 16.8) scale(0.46)" fill="#ffffff">
-              <path d="M12 10c4.4 0 7.3 2.6 7.3 6 0 2.9-2 4.4-3.1 6.2-.9 1.5-.9 2.4-.9 3.6 0 2.6-1.4 4.4-3.7 4.4s-3.9-1.8-3.9-4.4c0-1.3.1-2.1-.8-3.6C5.8 20.4 4.7 18.9 4.7 16c0-3.4 2.9-6 7.3-6Z" />
-              <ellipse cx="4.6" cy="6.6" rx="2" ry="2.3" />
-              <ellipse cx="8.9" cy="3.7" rx="1.85" ry="2.15" />
-              <ellipse cx="13" cy="3.3" rx="1.7" ry="2" />
-              <ellipse cx="16.6" cy="4.7" rx="1.5" ry="1.8" />
-              <ellipse cx="19.6" cy="7.2" rx="1.3" ry="1.55" />
-            </g>
+          <svg width="80" height="80" viewBox="0 0 64 64">
+            {LOGO_PATHS.map((d) => (
+              <path key={d.slice(0, 24)} d={d} fill="#ffffff" />
+            ))}
           </svg>
 
           <div style={{ display: "flex", flexDirection: "column", marginLeft: 22 }}>
