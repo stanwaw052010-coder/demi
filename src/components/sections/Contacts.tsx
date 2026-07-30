@@ -13,6 +13,7 @@ const details = [
     label: "Адреса",
     value: `${site.address.streetWithUnit}, ${site.address.city}`,
     hint: site.address.landmark,
+    extra: `Плюс-код Google: ${site.geo.plusCode}`,
   },
   {
     icon: Clock,
@@ -54,7 +55,7 @@ export function Contacts() {
           <Reveal direction="right">
             <div className="flex h-full flex-col rounded-6xl border border-graphite-200/70 bg-white p-8 shadow-soft md:p-10">
               <ul className="flex flex-col gap-6">
-                {details.map(({ icon: Icon, label, value, hint, href }) => {
+                {details.map(({ icon: Icon, label, value, hint, href, extra }) => {
                   const content = (
                     <>
                       <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-brand-50 text-brand-700 ring-1 ring-brand-100 transition-all duration-400 group-hover/item:bg-linear-to-br group-hover/item:from-brand-600 group-hover/item:to-brand-900 group-hover/item:text-white">
@@ -68,6 +69,11 @@ export function Contacts() {
                           {value}
                         </span>
                         <span className="mt-1 text-[0.83rem] font-medium text-graphite-500">{hint}</span>
+                        {extra && (
+                          <span className="mt-1.5 text-[0.76rem] font-semibold tracking-[0.02em] text-graphite-400">
+                            {extra}
+                          </span>
+                        )}
                       </span>
                     </>
                   );

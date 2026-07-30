@@ -40,16 +40,23 @@ export const site = {
     full: "пл. Шевченка, 3, приміщення 143, Вишгород, Київська область, Україна",
   },
 
+  /**
+   * Координати з мітки Google Business студії.
+   * Отримані з плюс-коду HFMM+9J (комірка ~14×9 м — точність до будівлі).
+   */
   geo: {
-    lat: 50.58276,
-    lng: 30.48422,
+    lat: 50.583437,
+    lng: 30.484062,
+    plusCode: "HFMM+9J",
   },
 
   hours: "Уточнюйте телефоном",
 } as const;
 
-export const mapsEmbedUrl = `https://www.google.com/maps?q=${site.geo.lat},${site.geo.lng}&hl=uk&z=17&output=embed`;
-export const mapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${site.geo.lat},${site.geo.lng}&travelmode=driving`;
+/** Вбудована карта з підписаною міткою «ProfiTime». */
+export const mapsEmbedUrl = `https://www.google.com/maps?q=${site.geo.lat},${site.geo.lng}(${encodeURIComponent(site.name)})&hl=uk&z=18&output=embed`;
+/** Навігація до студії з поточної локації користувача. */
+export const mapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${site.geo.lat},${site.geo.lng}`;
 export const mapsPlaceUrl = `https://www.google.com/maps/search/?api=1&query=${site.geo.lat},${site.geo.lng}`;
 
 export const nav = [
