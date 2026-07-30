@@ -1,5 +1,6 @@
 import { ArrowRight, BadgePercent, Check, Info } from "lucide-react";
 import { MotionItem } from "@/components/ui/MotionItem";
+import { PriceList } from "@/components/PriceList";
 import { Reveal, StaggerGroup } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SoftGlow } from "@/components/ui/Aurora";
@@ -181,11 +182,25 @@ export function Pricing() {
             <div className="flex h-full items-start gap-4 rounded-5xl border border-graphite-200/70 bg-graphite-50 p-8">
               <Info className="mt-0.5 size-5 shrink-0 text-brand-500" strokeWidth={2.3} />
               <p className="text-[0.88rem] leading-relaxed text-graphite-600 text-pretty">
-                Повний актуальний прайс на всі позиції надсилаємо у Instagram або називаємо телефоном —
-                вартість залежить від складності роботи та стану стоп.
+                Там, де вказано діапазон, точну суму називаємо після огляду — вона залежить від складності
+                роботи та стану стоп. Жодних доплат «по факту» в кінці візиту.
               </p>
             </div>
           </Reveal>
+        </div>
+
+        {/* повний прайс-лист */}
+        <Reveal direction="up" className="mt-20 md:mt-28">
+          <h3 className="text-center text-[clamp(1.6rem,1.2rem+1.4vw,2.3rem)] leading-tight font-extrabold tracking-[-0.035em] text-ink text-balance">
+            Повний <span className="font-serif font-medium text-brand-600 italic">прайс-лист</span>
+          </h3>
+          <p className="mx-auto mt-4 max-w-xl text-center text-[0.98rem] leading-relaxed text-graphite-600 text-pretty">
+            Усі процедури студії з цінами — так само, як в офіційному прайсі ProfiTime.
+          </p>
+        </Reveal>
+
+        <div className="mt-12">
+          <PriceList />
         </div>
       </div>
     </section>
