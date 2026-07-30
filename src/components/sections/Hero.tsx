@@ -7,6 +7,7 @@ import { Aurora } from "@/components/ui/Aurora";
 import { BrandGlyph } from "@/components/ui/BrandMark";
 import { Button } from "@/components/ui/Button";
 import { EASE } from "@/components/ui/Reveal";
+import { site } from "@/lib/site";
 
 const trust = [
   { icon: ShieldCheck, label: "Стерильний інструмент" },
@@ -62,7 +63,7 @@ export function Hero() {
               transition={{ duration: 0.85, delay: 0.18, ease: EASE }}
               className="mt-7 max-w-xl text-[1.05rem] leading-relaxed text-white/65 text-pretty md:text-[1.18rem]"
             >
-              Кабінет подології та нігтьового сервісу у Вишгороді. Розбираємось у причині, а не лише в
+              Простір подології та нігтьового сервісу в одному місці. Розбираємось у причині, а не лише в
               наслідках: працюємо стерильним інструментом і повертаємо стопам комфорт — без болю й поспіху.
             </motion.p>
 
@@ -72,7 +73,7 @@ export function Hero() {
               transition={{ duration: 0.85, delay: 0.28, ease: EASE }}
               className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
             >
-              <Button href="#consultation" size="lg">
+              <Button href={site.booking.url} size="lg">
                 Замовити консультацію
                 <ArrowRight
                   className="size-[1.15rem] transition-transform duration-300 group-hover/btn:translate-x-1"
@@ -152,7 +153,7 @@ export function Hero() {
                   ProfiTime · Вишгород
                 </p>
                 <p className="mt-2 text-[1.05rem] leading-snug font-bold text-white text-balance">
-                  Подологія та нігтьовий сервіс в одному кабінеті
+                  Подологія та нігтьовий сервіс в одному місці
                 </p>
               </div>
             </motion.div>

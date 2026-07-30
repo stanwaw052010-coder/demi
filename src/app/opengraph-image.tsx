@@ -90,7 +90,7 @@ export default async function OpengraphImage() {
               lineHeight: 1.4,
             }}
           >
-            Кабінет подології та нігтьового сервісу у Вишгороді
+            Простір подології та нігтьового сервісу у Вишгороді
           </div>
         </div>
 

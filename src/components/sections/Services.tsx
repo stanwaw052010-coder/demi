@@ -1,4 +1,4 @@
-import { ArrowUpRight, Droplets, Footprints, Leaf, ShieldCheck, Sparkles, Stethoscope } from "lucide-react";
+import { ArrowUpRight, Eye, Footprints, Leaf, Sparkles, Stethoscope, Zap } from "lucide-react";
 import type { ComponentType } from "react";
 import { MotionItem } from "@/components/ui/MotionItem";
 import { Reveal, StaggerGroup } from "@/components/ui/Reveal";
@@ -11,8 +11,8 @@ const icons: Record<Service["icon"], ComponentType<{ className?: string; strokeW
   podology: Stethoscope,
   nail: Sparkles,
   foot: Footprints,
-  shield: ShieldCheck,
-  heel: Droplets,
+  brows: Eye,
+  laser: Zap,
   care: Leaf,
 };
 
@@ -23,9 +23,9 @@ export function Services() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
             eyebrow="Послуги"
-            title="Два напрямки —"
+            title="Всі процедури —"
             accent="один стандарт якості"
-            text="Медичний догляд за стопами та естетика нігтів. Однакова стерильність, однакова увага до деталей — незалежно від того, з чим ви прийшли."
+            text="Догляд за стопами, естетика нігтів і брів, лазерна епіляція. Однакова стерильність, однакова увага до деталей — незалежно від того, з чим ви прийшли."
             className="lg:max-w-2xl"
           />
           <Reveal direction="left" delay={0.2}>
@@ -81,7 +81,9 @@ export function Services() {
                   </ul>
 
                   <a
-                    href="#consultation"
+                    href={site.booking.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="relative z-10 mt-7 inline-flex items-center gap-2 text-[0.9rem] font-bold text-brand-700 transition-colors hover:text-brand-900"
                   >
                     Записатись

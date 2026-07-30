@@ -1,7 +1,8 @@
 # ProfiTime — подологія, манікюр і педикюр у Вишгороді
 
-Односторінковий преміальний сайт студії **ProfiTime** ([@profitime_ka](https://www.instagram.com/profitime_ka)),
-пл. Шевченка, 3, м. Вишгород.
+Односторінковий преміальний сайт простору **ProfiTime** ([@profitime_ka](https://www.instagram.com/profitime_ka)):
+подологія, манікюр і педикюр, естетика брів, лазерна епіляція.
+пл. Шевченка, 3, приміщення 143, м. Вишгород (поруч із Книгарнею «Є»).
 
 Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion · lucide-react.
 
@@ -28,15 +29,13 @@ src/
 │   ├── opengraph-image.tsx   # OG-картинка 1200×630, генерується на білді
 │   ├── og-fonts.ts           # підмножина Manrope у base64 для OG
 │   ├── icon.svg              # фавікон
-│   ├── robots.ts, sitemap.ts
-│   └── api/lead/route.ts     # прийом заявок із форми
+│   └── robots.ts, sitemap.ts
 ├── components/
 │   ├── layout/               # Header, Footer, MobileActionBar
 │   ├── sections/             # Hero, About, Services, Advantages, Pricing,
 │   │                         # Gallery, Testimonials, Faq, CtaBanner, Contacts
-│   ├── ui/                   # Button, Accordion, Reveal, SectionHeading,
-│   │                         # BrandMark, ArtTile, Aurora, MotionItem, icons
-│   └── ContactForm.tsx
+│   └── ui/                   # Button, Accordion, Reveal, SectionHeading,
+│                             # BrandMark, ArtTile, Aurora, MotionItem, icons
 └── lib/
     ├── site.ts               # ⭐ увесь контент: контакти, послуги, прайс, FAQ, відгуки
     ├── motion.ts             # спільні криві та варіанти анімацій
@@ -51,7 +50,7 @@ src/
 
 | Що | Де змінити |
 |---|---|
-| Реальні фото робіт і кабінету | покласти у `public/gallery/`, додати `src` у масив `gallery` (`src/lib/site.ts`) |
+| Реальні фото робіт і простору | покласти у `public/gallery/`, додати `src` у масив `gallery` (`src/lib/site.ts`) |
 | Справжні відгуки клієнтів | масив `testimonials` — зараз там приклади-заглушки |
 | Повний прайс | масив `priceTiers` — зараз лише підтверджені позиції |
 | Години роботи | поле `hours` (зараз «Уточнюйте телефоном») |
@@ -62,8 +61,8 @@ src/
 Плитка галереї автоматично стає фотографією, щойно в елементі з'явиться `src`:
 
 ```ts
-{ title: "Кабінет подології", caption: "…", art: "arc", span: "wide",
-  src: "/gallery/cabinet.jpg" }
+{ title: "Простір подології", caption: "…", art: "arc", span: "wide",
+  src: "/gallery/space.jpg" }
 ```
 
 Доки фото немає — показується векторна композиція у фірмовій гамі
@@ -83,25 +82,19 @@ src/
 
 ---
 
-## Форма заявки
+## Запис клієнтів
 
-`POST /api/lead` приймає заявку, валідує ім'я й телефон, відсіює ботів (honeypot).
-Доставка вмикається змінними середовища (див. `.env.example`):
+Єдиний канал запису — система студії на
+[bookon.ua/profitime_ka](https://bookon.ua/profitime_ka). Туди ведуть усі ключові
+кнопки: «Замовити консультацію» в hero та в блоці контактів, «Онлайн запис» у шапці
+й мобільній панелі, «Записатись» у картках послуг, «Записатись онлайн» у прайсі.
 
-```bash
-# Варіант 1 — Telegram
-TELEGRAM_BOT_TOKEN=...
-TELEGRAM_CHAT_ID=...
+Форми зворотного зв'язку на сайті свідомо немає: заявку з форми треба хтось
+відстежувати, тоді як bookon показує реальні вільні вікна й одразу підтверджує візит.
+Альтернативні шляхи — кнопки «Подзвонити» та «Написати» (Instagram).
 
-# Варіант 2 — будь-який вебхук (CRM, Zapier, Make)
-LEAD_WEBHOOK_URL=...
-```
-
-Якщо жодна змінна не задана, форма працює, але заявка нікуди не йде — інтерфейс
-чесно повідомляє про це й пропонує подзвонити або написати в Instagram.
-
-Основний канал запису — кнопка **«Онлайн запис»**, що веде на
-[bookon.ua/profitime_ka](https://bookon.ua/profitime_ka).
+Адреса змінюється в `site.address` (`src/lib/site.ts`); координати для карти й
+маршруту — у `site.geo`.
 
 ---
 

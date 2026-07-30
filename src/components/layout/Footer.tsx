@@ -6,8 +6,9 @@ import { mapsDirectionsUrl, nav, site } from "@/lib/site";
 const serviceLinks = [
   { label: "Подологія", href: "#services" },
   { label: "Апаратний педикюр", href: "#services" },
-  { label: "Врослий ніготь", href: "#services" },
   { label: "Манікюр і покриття", href: "#services" },
+  { label: "Естетика брів", href: "#services" },
+  { label: "Лазерна епіляція", href: "#services" },
   { label: "Прайс", href: "#price" },
 ];
 
@@ -31,8 +32,8 @@ export function Footer() {
               <Wordmark tone="light" />
             </div>
             <p className="mt-6 max-w-xs text-[0.92rem] leading-relaxed text-white/55 text-pretty">
-              Кабінет подології та нігтьового сервісу у Вишгороді. Здорові стопи, естетика нігтів і
-              стерильність, яку видно.
+              Простір подології та нігтьового сервісу у Вишгороді. Здорові стопи, естетика нігтів і брів,
+              лазерна епіляція та стерильність, яку видно.
             </p>
             <a
               href={site.booking.url}
@@ -107,9 +108,11 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="mt-0.5 size-[1.05rem] shrink-0 text-aqua-300" strokeWidth={2.3} />
                 <span className="text-[0.92rem] leading-snug font-semibold text-white/70">
-                  {site.address.street}
+                  {site.address.streetWithUnit}
                   <br />
                   {site.address.city}, {site.address.region}
+                  <br />
+                  <span className="text-white/45">{site.address.landmark}</span>
                 </span>
               </li>
               <li>

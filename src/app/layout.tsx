@@ -38,6 +38,8 @@ export const metadata: Metadata = {
     "апаратний педикюр",
     "врослий ніготь",
     "тріщини на п'ятах",
+    "лазерна епіляція Вишгород",
+    "брови Вишгород",
     "ProfiTime",
   ],
   applicationName: site.name,
@@ -89,7 +91,7 @@ const jsonLd = {
   image: `${site.url}/opengraph-image`,
   address: {
     "@type": "PostalAddress",
-    streetAddress: site.address.street,
+    streetAddress: `${site.address.street}, ${site.address.unit}`,
     addressLocality: site.address.city,
     addressRegion: site.address.region,
     postalCode: site.address.postalCode,
@@ -119,7 +121,8 @@ const jsonLd = {
     { "@type": "Offer", itemOffered: { "@type": "Service", name: "Подологія" } },
     { "@type": "Offer", itemOffered: { "@type": "Service", name: "Апаратний педикюр" } },
     { "@type": "Offer", itemOffered: { "@type": "Service", name: "Манікюр і покриття" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Корекція врослого нігтя" } },
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Естетика брів" } },
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Лазерна епіляція" } },
   ],
 };
 

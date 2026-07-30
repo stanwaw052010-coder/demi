@@ -133,7 +133,7 @@ export function Pricing() {
 
                 <div className="relative z-10 mt-9">
                   <Button
-                    href={tier.highlight ? site.booking.url : "#consultation"}
+                    href={tier.highlight ? site.booking.url : "#contacts"}
                     variant={tier.highlight ? "light" : "outline"}
                     size="md"
                     className="w-full"
