@@ -1,18 +1,35 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #111827;
+@theme {
+  --color-ink: #111111;
+  --color-graphite: #2f343b;
+  --color-mist: #f5f5f5;
+  --color-line: rgba(17, 17, 17, 0.08);
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-xl2: 20px;
+  --radius-xl3: 24px;
+  --radius-xl4: 32px;
+
+  --shadow-soft: 0 1px 2px rgba(17, 17, 17, 0.04),
+    0 12px 32px -16px rgba(17, 17, 17, 0.14);
+  --shadow-lift: 0 2px 4px rgba(17, 17, 17, 0.04),
+    0 32px 64px -32px rgba(17, 17, 17, 0.28);
+  --shadow-float: 0 24px 80px -40px rgba(17, 17, 17, 0.45);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --color-brand: #f97316;
-  --color-brand-dark: #ea580c;
-  --color-dark: #0a0a0a;
-  --color-dark-2: #111111;
+:root {
+  --background: #ffffff;
+  --foreground: #111111;
+}
+
+* {
+  border-color: var(--color-line);
 }
 
 html {
@@ -24,86 +41,206 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+section {
+  scroll-margin-top: 96px;
+}
+
+/*
+ * Everything below the hero is skipped until it approaches the viewport, so
+ * first paint only styles and lays out what the visitor can actually see.
+ */
+main > section:not(:first-child),
+footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }
 
 ::selection {
-  background-color: #f97316;
+  background-color: #111111;
   color: #ffffff;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f1f1f1; }
-::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #f97316; }
-
-/* No-scrollbar utility */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* Line clamp */
-.line-clamp-2 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
-.line-clamp-3 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb {
+  background: #dcdcdc;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2f343b;
 }
 
-/* Glass effect */
-.glass {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+@utility container-x {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 1360px;
+  padding-inline: 20px;
+
+  @media (min-width: 768px) {
+    padding-inline: 40px;
+  }
+  @media (min-width: 1280px) {
+    padding-inline: 64px;
+  }
 }
 
-/* Orange gradient text */
-.text-gradient {
-  background: linear-gradient(135deg, #f97316, #fb923c);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Aligns an edge-to-edge carousel with the container's text column */
+@utility carousel-inset {
+  /* Held in a custom property so the calc survives minification inside max() */
+  --carousel-inset: calc(50% - 660px);
+  padding-inline: max(20px, var(--carousel-inset));
+  scroll-padding-inline: max(20px, var(--carousel-inset));
+
+  @media (min-width: 768px) {
+    --carousel-inset: calc(50% - 640px);
+    padding-inline: max(40px, var(--carousel-inset));
+    scroll-padding-inline: max(40px, var(--carousel-inset));
+  }
+  @media (min-width: 1280px) {
+    --carousel-inset: calc(50% - 616px);
+    padding-inline: max(64px, var(--carousel-inset));
+    scroll-padding-inline: max(64px, var(--carousel-inset));
+  }
 }
 
-/* Scroll animations (legacy, for non-Framer components) */
-.animate-on-scroll {
+/* Very light glass — used sparingly, per the design language */
+@utility glass {
+  background-color: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+@utility glass-dark {
+  background-color: rgba(17, 17, 17, 0.56);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+@utility display-tight {
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+@utility eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.6);
+}
+
+@utility hairline {
+  border: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Above-the-fold entrances run on CSS, so the hero paints before hydration */
+@keyframes enter-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes enter-word {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes enter-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility enter {
+  animation: enter-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@utility enter-word {
+  animation: enter-word 1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@utility enter-scale {
+  animation: enter-scale 1.2s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* Scroll reveal — the observer only flips [data-shown] */
+.reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translate3d(0, var(--reveal-y, 28px), 0);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s);
 }
-.animate-on-scroll.visible {
+
+.reveal[data-shown="true"] {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
-/* Keyframes */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.animate-float { animation: float 3s ease-in-out infinite; }
-
-/* Skeleton loading */
-.skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
-/* Focus ring */
-*:focus-visible {
-  outline: 2px solid #f97316;
-  outline-offset: 2px;
+.animate-marquee {
+  animation: marquee 42s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-marquee {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

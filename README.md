@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dental Clinic Nataly — сайт стоматології у Тернополі
 
-## Getting Started
+Односторінковий сайт клініки Наталії Жилан: Next.js 16 (App Router) · React 19 ·
+TypeScript · TailwindCSS 4 · Framer Motion · Lucide.
 
-First, run the development server:
+## Запуск
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # продакшн-збірка
+npm start       # запуск продакшн-сервера
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Структура
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+  app/
+    layout.tsx        шрифти, метадані, JSON-LD (schema.org/Dentist)
+    page.tsx          композиція секцій
+    globals.css       дизайн-токени, утиліти (container-x, glass, eyebrow…)
+    icon.png          favicon
+  components/
+    site/             header, footer, logo, мобільна CTA-панель
+    sections/         hero, stats, services, why-us, before-after,
+                      doctor, testimonials, faq, contacts, map-panel
+    ui/               button, accordion, counter, reveal, section-heading, icons
+  lib/
+    site.ts           контакти, адреса, графік, навігація
+    content.ts        послуги, переваги, кейси до/після, відгуки, FAQ
+    utils.ts          cn()
+public/images/        фотографії (плейсхолдери — замінити)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Увесь текст і контакти зібрані у `src/lib/site.ts` та `src/lib/content.ts` —
+щоб змінити телефон, послугу чи відгук, редагувати треба лише ці два файли.
 
-## Learn More
+## Фотографії
 
-To learn more about Next.js, take a look at the following resources:
+У `public/images/` лежать нейтральні плейсхолдери. Шляхи вже підключені —
+достатньо замінити файли з тими самими іменами, і сайт одразу виглядає
+завершеним. Рекомендовані розміри (JPG, якість ~80–85%):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Файл                   | Розмір      | Де використовується                   |
+| ---------------------- | ----------- | ------------------------------------- |
+| `hero.jpg`             | 1200 × 1500 | головний екран, фото лікаря (портрет) |
+| `doctor.jpg`           | 1200 × 1500 | секція «Про лікаря»                   |
+| `clinic.jpg`           | 1920 × 1080 | фон секції «Чому обирають нас»        |
+| `service-1.jpg`        | 1400 × 1200 | картка «Професійна гігієна»           |
+| `service-2.jpg`        | 1200 × 1400 | картка «Лікування карієсу»            |
+| `service-3.jpg`        | 1200 × 1400 | картка «Відбілювання»                 |
+| `before-after-1/2.jpg` | 1600 × 1000 | кейс 01 — до / після                  |
+| `before-after-3/4.jpg` | 1600 × 1000 | кейс 02 — до / після                  |
+| `before-after-5/6.jpg` | 1600 × 1000 | кейс 03 — до / після                  |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+У парах «до / після» кадри мають бути зняті з однакового ракурсу — повзунок
+порівняння накладає їх один на одного.
 
-## Deploy on Vercel
+Фото з Instagram (`@dental_natali_`) автоматично не завантажуються: сервіс
+блокує машинний доступ до профілю. Потрібні кадри достатньо зберегти вручну під
+іменами з таблиці вище.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Дизайн-система
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Палітра: `#FFFFFF`, `#F5F5F5` (mist), `#2F343B` (graphite), `#111111` (ink).
+  Акцентних кольорів немає — ієрархія будується на контрасті й просторі.
+- Типографіка: одна гарнітура — Manrope (variable, latin + cyrillic).
+- Радіуси 20–24px, дуже м'які тіні, скляний ефект лише в плаваючих елементах.
+- Анімації: fade-up при скролі, парралакс у hero, лічильники, hover-стани.
+  Усе поважає `prefers-reduced-motion`.
+- Framer Motion відповідає за accordion у FAQ та зміну кейсів «до / після»;
+  обидва компоненти підвантажуються динамічно. Все, що видно одразу (hero,
+  хедер, scroll reveal), анімується на CSS — сторінка малюється ще до
+  гідратації.
+
+## Продуктивність і доступність
+
+Lighthouse (production build): **desktop 100 / 100 / 100 / 100**,
+**mobile 97 / 100 / 100 / 100** (performance · accessibility · best practices · SEO).
+
+- Шрифти self-hosted через `next/font`; сторонніх скриптів немає.
+- Секції нижче першого екрана використовують `content-visibility: auto`.
+- CSS інлайниться в HTML — жодного render-blocking запиту.
+- Інтерактивна карта монтується лише за кліком — жодного стороннього iframe
+  на першому завантаженні.
+- Контрастність тексту відповідає WCAG AA; декоративні нумерації приховані
+  від скрінрідерів.
+- Розмітка JSON-LD `Dentist` для локального пошуку.

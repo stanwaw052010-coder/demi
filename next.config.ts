@@ -2,11 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "plus.unsplash.com" },
-      { protocol: "https", hostname: "picsum.photos" },
-    ],
+    formats: ["image/avif", "image/webp"],
+  },
+  poweredByHeader: false,
+  experimental: {
+    // Inlines the stylesheet into the HTML — removes a render-blocking
+    // round-trip on mobile, where it dominates first paint.
+    inlineCss: true,
   },
 };
 
