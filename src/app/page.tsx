@@ -11,8 +11,11 @@ import { WhyUs } from "@/components/sections/why-us";
 import { Doctor } from "@/components/sections/doctor";
 import { Testimonials } from "@/components/sections/testimonials";
 import { Faq } from "@/components/sections/faq";
+import { Process } from "@/components/sections/process";
+import { Gallery } from "@/components/sections/gallery";
 import { Contacts } from "@/components/sections/contacts";
 import { RevealObserver } from "@/components/ui/reveal-observer";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 
 const BeforeAfter = dynamic(() =>
   import("@/components/sections/before-after").then((m) => m.BeforeAfter),
@@ -21,6 +24,7 @@ const BeforeAfter = dynamic(() =>
 export default function Home() {
   return (
     <>
+      <ScrollProgress />
       <Header />
       <main>
         <Hero />
@@ -28,7 +32,9 @@ export default function Home() {
         <Services />
         <WhyUs />
         <BeforeAfter />
+        <Process />
         <Doctor />
+        <Gallery />
         <Testimonials />
         <Faq />
         <Contacts />

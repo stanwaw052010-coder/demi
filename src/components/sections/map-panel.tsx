@@ -18,7 +18,7 @@ export function MapPanel() {
   const [live, setLive] = React.useState(false);
 
   return (
-    <div className="group relative h-full min-h-[380px] overflow-hidden rounded-[24px] border border-ink/[0.07] bg-mist lg:min-h-[560px]">
+    <div className="group relative h-full min-h-[380px] overflow-hidden rounded-[24px] border border-sand/50 bg-cream lg:min-h-[560px]">
       {live ? (
         <iframe
           title={`Карта — ${site.name}, ${site.addressLatin}`}
@@ -36,7 +36,7 @@ export function MapPanel() {
             className="absolute inset-0 size-full"
             aria-hidden
           >
-            <rect width="800" height="600" fill="#f5f5f5" />
+            <rect width="800" height="600" fill="#f8f5f0" />
             <g stroke="#111111" strokeOpacity="0.06" strokeWidth="1">
               {Array.from({ length: 13 }).map((_, i) => (
                 <line key={`v${i}`} x1={i * 64} y1="0" x2={i * 64} y2="600" />
@@ -73,8 +73,8 @@ export function MapPanel() {
               width="180"
               height="130"
               rx="12"
-              fill="#111111"
-              fillOpacity="0.035"
+              fill="#c9ae90"
+              fillOpacity="0.28"
             />
             <rect
               x="90"
@@ -88,9 +88,9 @@ export function MapPanel() {
 
             {/* Marker */}
             <g transform="translate(400 292)">
-              <circle r="46" fill="#111111" fillOpacity="0.05" />
-              <circle r="26" fill="#111111" fillOpacity="0.08" />
-              <circle r="9" fill="#111111" />
+              <circle r="46" fill="#c9ae90" fillOpacity="0.22" />
+              <circle r="26" fill="#c9ae90" fillOpacity="0.35" />
+              <circle r="9" fill="#7d6248" />
               <circle r="3.4" fill="#ffffff" />
             </g>
           </svg>

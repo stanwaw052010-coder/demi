@@ -43,8 +43,8 @@ export function WhyUs() {
           tone="dark"
           title={
             <>
-              Причини, через які до нас
-              <span className="text-white/45"> повертаються родинами</span>
+              Причини, через які до нас{" "}
+              <span className="accent text-sand">повертаються родинами</span>
             </>
           }
           description="Ми не поспішаємо. Кожен етап пояснюємо, показуємо на екрані та узгоджуємо з вами до початку роботи."
@@ -58,7 +58,7 @@ export function WhyUs() {
                 <div className="group relative h-full bg-ink p-8 transition-colors duration-700 hover:bg-graphite/60 md:p-10">
                   <div className="flex items-center justify-between">
                     <Icon
-                      className="size-7 text-white/80 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 group-hover:text-white"
+                      className="size-7 text-sand transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 group-hover:text-white"
                       strokeWidth={1}
                       aria-hidden
                     />
@@ -76,7 +76,7 @@ export function WhyUs() {
 
                   <span
                     aria-hidden
-                    className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-white/40 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+                    className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-gradient-to-r from-sand via-sand/40 to-transparent transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
                   />
                 </div>
               </Reveal>

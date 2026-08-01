@@ -43,8 +43,8 @@ export function Accordion({
                   className={cn(
                     "mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:size-11",
                     isOpen
-                      ? "rotate-[135deg] border-ink bg-ink text-white"
-                      : "border-ink/10 text-graphite group-hover:border-ink/30 group-hover:bg-mist",
+                      ? "rotate-[135deg] border-ink bg-ink text-white ring-1 ring-sand/60 ring-offset-2 ring-offset-mist"
+                      : "border-sand/60 text-clay group-hover:border-clay group-hover:bg-cream",
                   )}
                 >
                   <Plus className="size-4" strokeWidth={1.5} />

@@ -15,8 +15,8 @@ export function Footer() {
           <Reveal>
             <span className="eyebrow text-white/55">Запис на прийом</span>
             <h2 className="display-tight mt-6 max-w-[16ch] font-display text-[36px] font-light text-white sm:text-[52px] lg:text-[64px]">
-              Здорова усмішка починається
-              <span className="text-white/45"> з розмови</span>
+              Здорова усмішка починається{" "}
+              <span className="accent text-sand">з розмови</span>
             </h2>
           </Reveal>
 

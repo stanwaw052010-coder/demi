@@ -6,6 +6,7 @@ import { ArrowDownRight, MapPin, Star } from "lucide-react";
 import { site } from "@/lib/site";
 import { useScrollHandler } from "@/lib/use-scroll-value";
 import { ButtonLink } from "@/components/ui/button";
+import { RotatingBadge } from "@/components/ui/rotating-badge";
 import { RevealText } from "@/components/ui/reveal";
 
 const marquee = [
@@ -43,12 +44,16 @@ export function Hero() {
     <section
       ref={ref}
       id="top"
-      className="relative overflow-hidden bg-white pt-28 md:pt-32 lg:pt-36"
+      className="grain relative overflow-hidden bg-white pt-28 md:pt-32 lg:pt-36"
     >
-      {/* Soft light behind the composition */}
+      {/* Two soft lights: a cool one behind the type, a warm one behind the photo */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 h-[720px] w-[1100px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(47,52,59,0.07),transparent)]"
+        className="pointer-events-none absolute -top-52 left-1/2 h-[760px] w-[1150px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(47,52,59,0.06),transparent)]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-40 top-10 h-[620px] w-[620px] rounded-full bg-[radial-gradient(closest-side,rgba(201,174,144,0.32),transparent)]"
       />
 
       <div className="container-x relative">
@@ -59,8 +64,8 @@ export function Hero() {
               className="enter inline-flex items-center gap-2.5 rounded-full border border-ink/[0.08] bg-white py-2 pl-3 pr-4 text-[12px] font-medium text-graphite/80 shadow-[0_1px_2px_rgba(17,17,17,0.03)]"
             >
               <span className="relative flex size-1.5">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-ink/40" />
-                <span className="relative inline-flex size-1.5 rounded-full bg-ink" />
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-clay/50" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-clay" />
               </span>
               <MapPin className="size-3.5 text-ink/60" strokeWidth={1.75} />
               {site.addressLatin}
@@ -71,7 +76,7 @@ export function Hero() {
               <br className="hidden sm:block" />{" "}
               <RevealText text="та красиві усмішки" delay={0.1} />
               <br className="hidden sm:block" />{" "}
-              <span className="text-graphite/55">
+              <span className="accent text-clay">
                 <RevealText text="вже понад 20 років" delay={0.2} />
               </span>
             </h1>
@@ -103,7 +108,7 @@ export function Hero() {
               <div className="flex items-center gap-2">
                 <div className="flex gap-0.5" aria-hidden>
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="size-3.5 fill-ink text-ink" />
+                    <Star key={i} className="size-3.5 fill-clay text-clay" />
                   ))}
                 </div>
                 <span className="text-[13px] text-graphite/70">
@@ -135,10 +140,16 @@ export function Hero() {
                 className="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent"
               />
 
+              {/* Hairline frame inside the photograph */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-3 rounded-[18px] border border-white/20 md:inset-4"
+              />
+
               {/* Floating credential card */}
               <div
                 style={{ animationDelay: "0.5s" }}
-                className="enter absolute bottom-5 left-5 right-5 flex items-center justify-between gap-4 rounded-[20px] glass p-4 shadow-[0_20px_60px_-30px_rgba(17,17,17,0.6)] sm:left-6 sm:right-auto sm:bottom-6 sm:pr-8"
+                className="enter absolute bottom-5 left-5 right-5 flex items-center justify-between gap-4 rounded-[20px] glass p-4 shadow-[0_20px_60px_-30px_rgba(17,17,17,0.6)] sm:bottom-6 sm:left-auto sm:right-6 sm:pl-8"
               >
                 <div>
                   <p className="font-display text-[15px] font-semibold tracking-[-0.01em] text-ink">
@@ -148,6 +159,10 @@ export function Hero() {
                     Лікар-стоматолог · 20+ років практики
                   </p>
                 </div>
+                <span
+                  aria-hidden
+                  className="hidden h-8 w-px bg-gradient-to-b from-transparent via-clay/60 to-transparent sm:block"
+                />
               </div>
             </div>
 
@@ -157,12 +172,18 @@ export function Hero() {
               className="enter absolute -left-3 top-8 hidden rounded-[20px] border border-ink/[0.06] bg-white px-5 py-4 shadow-[0_24px_60px_-32px_rgba(17,17,17,0.45)] xl:block"
             >
               <p className="font-display text-[26px] font-light leading-none tracking-[-0.03em] text-ink">
-                25×
+                25<span className="accent text-clay">×</span>
               </p>
               <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-ink/60">
                 Мікроскоп
               </p>
             </div>
+
+            {/* Rotating call to action, anchored to the frame's corner */}
+            <RotatingBadge
+              className="enter absolute -bottom-8 left-4 hidden sm:grid lg:-left-10"
+              style={{ animationDelay: "0.7s" }}
+            />
           </div>
         </div>
       </div>

@@ -100,6 +100,37 @@ export const stats = [
   { value: 100, suffix: "%", label: "індивідуальний підхід", note: "план під вас" },
 ] as const;
 
+export const process = [
+  {
+    step: "Консультація",
+    time: "30–40 хвилин",
+    text: "Оглядаємо, за потреби робимо знімок і показуємо все на екрані. Ви бачите те саме, що й лікар.",
+  },
+  {
+    step: "План лікування",
+    time: "того ж дня",
+    text: "Два-три варіанти рішення з термінами та прозорим кошторисом. Обираєте ви, а не ми.",
+  },
+  {
+    step: "Лікування",
+    time: "у вашому темпі",
+    text: "Під мікроскопом, з анестезією та паузами, коли вони потрібні. Без поспіху й несподіванок.",
+  },
+  {
+    step: "Супровід",
+    time: "після візиту",
+    text: "Контрольний огляд, рекомендації по догляду та зв'язок із лікарем, якщо виникнуть питання.",
+  },
+] as const;
+
+export const gallery: { src: string; label: string; span?: boolean }[] = [
+  { src: "/images/service-1.jpg", label: "Кабінет", span: true },
+  { src: "/images/before-after-2.jpg", label: "Реставрація" },
+  { src: "/images/clinic.jpg", label: "Обладнання" },
+  { src: "/images/service-3.jpg", label: "Відбілювання" },
+  { src: "/images/before-after-4.jpg", label: "Результат" },
+];
+
 export const cases = [
   {
     id: "case-1",

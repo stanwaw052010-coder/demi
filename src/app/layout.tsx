@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope } from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -7,6 +7,15 @@ const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
   display: "swap",
   variable: "--font-manrope",
+});
+
+/* Accent voice — a handful of words per screen, italic only */
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400"],
+  style: ["italic"],
+  display: "swap",
+  variable: "--font-cormorant",
 });
 
 export const metadata: Metadata = {
@@ -86,7 +95,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="uk" className={manrope.variable}>
+    <html lang="uk" className={`${manrope.variable} ${cormorant.variable}`}>
       <body className="bg-white text-ink antialiased">
         <noscript>
           <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>

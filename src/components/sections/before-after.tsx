@@ -32,8 +32,8 @@ export function BeforeAfter() {
           eyebrow="До / Після"
           title={
             <>
-              Результати, які видно
-              <span className="text-ink/50"> без пояснень</span>
+              Результати, які видно{" "}
+              <span className="accent text-clay">без пояснень</span>
             </>
           }
           description="Реальні клінічні випадки. Потягніть роздільник, щоб побачити зміну."
@@ -122,7 +122,7 @@ export function BeforeAfter() {
                   if (e.key === "ArrowLeft") setPos((p) => clamp(p - 4));
                   if (e.key === "ArrowRight") setPos((p) => clamp(p + 4));
                 }}
-                className="pointer-events-auto absolute left-1/2 top-1/2 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-ink shadow-[0_10px_30px_-8px_rgba(17,17,17,0.5)] transition-transform duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white md:size-14"
+                className="pointer-events-auto absolute left-1/2 top-1/2 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-clay ring-1 ring-sand/70 shadow-[0_10px_30px_-8px_rgba(17,17,17,0.5)] transition-transform duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white md:size-14"
               >
                 <MoveHorizontal className="size-5" strokeWidth={1.5} />
               </button>

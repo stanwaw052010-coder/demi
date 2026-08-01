@@ -14,11 +14,13 @@ export function Counter({
   suffix = "",
   duration = 1800,
   className,
+  suffixClassName,
 }: {
   value: number;
   suffix?: string;
   duration?: number;
   className?: string;
+  suffixClassName?: string;
 }) {
   const ref = React.useRef<HTMLSpanElement>(null);
 
@@ -29,7 +31,7 @@ export function Counter({
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
 
-    node.textContent = `0${suffix}`;
+    node.textContent = "0";
 
     let frame = 0;
     let start = 0;
@@ -37,7 +39,7 @@ export function Counter({
     const tick = (now: number) => {
       if (!start) start = now;
       const progress = Math.min((now - start) / duration, 1);
-      node.textContent = `${Math.round(easeOutExpo(progress) * value)}${suffix}`;
+      node.textContent = `${Math.round(easeOutExpo(progress) * value)}`;
       if (progress < 1) frame = requestAnimationFrame(tick);
     };
 
@@ -56,12 +58,12 @@ export function Counter({
       observer.disconnect();
       cancelAnimationFrame(frame);
     };
-  }, [value, suffix, duration]);
+  }, [value, duration]);
 
   return (
-    <span ref={ref} className={className}>
-      {value}
-      {suffix}
+    <span className={className}>
+      <span ref={ref}>{value}</span>
+      {suffix && <span className={suffixClassName}>{suffix}</span>}
     </span>
   );
 }

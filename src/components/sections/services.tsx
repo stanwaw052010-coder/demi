@@ -18,7 +18,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         "h-full",
         hasImage
           ? "min-h-[420px] bg-ink text-white shadow-[0_30px_80px_-50px_rgba(17,17,17,0.6)] md:min-h-[460px]"
-          : "min-h-[300px] bg-mist text-ink hairline hover:bg-white hover:shadow-[0_30px_70px_-45px_rgba(17,17,17,0.45)]",
+          : "min-h-[300px] bg-mist text-ink hairline hover:border-sand/60 hover:bg-cream hover:shadow-[0_30px_70px_-45px_rgba(17,17,17,0.45)]",
       )}
     >
       {hasImage && (
@@ -41,7 +41,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         aria-hidden
         className={cn(
           "absolute left-7 top-7 font-mono text-[11px] tabular-nums md:left-8 md:top-8",
-          hasImage ? "text-white/55" : "text-ink/25",
+          hasImage ? "text-white/55" : "text-clay",
         )}
       >
         {String(index + 1).padStart(2, "0")}
@@ -70,7 +70,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         <p
           className={cn(
             "mt-2 text-[13px] font-medium uppercase tracking-[0.12em]",
-            hasImage ? "text-white/55" : "text-ink/60",
+            hasImage ? "text-sand" : "text-clay",
           )}
         >
           {service.summary}
@@ -102,8 +102,8 @@ export function Services() {
           eyebrow="Послуги"
           title={
             <>
-              Все, що потрібно вашій усмішці —
-              <span className="text-ink/50"> в одному кабінеті</span>
+              Все, що потрібно вашій усмішці —{" "}
+              <span className="accent text-clay">в одному кабінеті</span>
             </>
           }
           description="Від профілактики до складної естетичної роботи. Кожен план лікування починається з діагностики та відкритої розмови."
@@ -126,7 +126,7 @@ export function Services() {
           ))}
 
           <Reveal delay={0.12} className="h-full sm:col-span-2">
-            <div className="flex h-full flex-col justify-between gap-8 rounded-[24px] border border-ink/[0.08] bg-white p-7 md:p-9">
+            <div className="grain flex h-full flex-col justify-between gap-8 rounded-[24px] border border-sand/50 bg-cream p-7 md:p-9">
               <div className="grid gap-6 sm:grid-cols-2 sm:gap-10">
                 {extraServices.map((item) => (
                   <div key={item.title}>

@@ -6,9 +6,15 @@
   --color-mist: #f5f5f5;
   --color-line: rgba(17, 17, 17, 0.08);
 
+  /* Warm layer: keeps the palette quiet but stops it reading as grey */
+  --color-cream: #f8f5f0;
+  --color-sand: #c9ae90;
+  --color-clay: #7d6248;
+
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
   --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-accent: var(--font-cormorant), "Iowan Old Style", Georgia, serif;
 
   --radius-xl2: 20px;
   --radius-xl3: 24px;
@@ -142,6 +148,50 @@ footer {
   border: 1px solid rgba(17, 17, 17, 0.08);
 }
 
+/* Accent voice: a high-contrast serif italic, used only on a few words */
+@utility accent {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Paper grain — invisible on its own, but stops flat areas looking digital */
+@utility grain {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  }
+}
+
+/* Dotted rule used between blocks instead of a plain border */
+@utility rule-dotted {
+  background-image: radial-gradient(
+    circle,
+    rgba(17, 17, 17, 0.22) 1px,
+    transparent 1px
+  );
+  background-size: 7px 1px;
+  background-repeat: repeat-x;
+  height: 1px;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 22s linear infinite;
+}
+
 @utility no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -232,7 +282,8 @@ footer {
     transform: none;
     transition: none;
   }
-  .animate-marquee {
+  .animate-marquee,
+  .animate-spin-slow {
     animation: none;
   }
   *,

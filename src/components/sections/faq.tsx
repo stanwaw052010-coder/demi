@@ -20,7 +20,7 @@ export function Faq() {
             <Reveal>
               <div className="flex items-center gap-3">
                 <span aria-hidden className="font-mono text-[11px] tabular-nums text-ink/30">
-                  06
+                  07
                 </span>
                 <span className="h-px w-8 bg-ink/15" />
                 <span className="eyebrow">Питання</span>
@@ -29,8 +29,8 @@ export function Faq() {
 
             <Reveal delay={0.06}>
               <h2 className="display-tight mt-6 font-display text-[32px] font-light text-ink sm:text-[44px] lg:text-[52px]">
-                Часті
-                <span className="text-ink/50"> запитання</span>
+                Часті{" "}
+                <span className="accent text-clay">запитання</span>
               </h2>
             </Reveal>
 

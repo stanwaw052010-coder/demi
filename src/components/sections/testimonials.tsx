@@ -33,12 +33,12 @@ export function Testimonials() {
     <section id="reviews" className="bg-white py-24 md:py-36">
       <div className="container-x">
         <SectionHeading
-          index="05"
+          index="06"
           eyebrow="Відгуки"
           title={
             <>
-              Що кажуть про нас
-              <span className="text-ink/50"> пацієнти</span>
+              Що кажуть про нас{" "}
+              <span className="accent text-clay">пацієнти</span>
             </>
           }
           description="Понад тисяча візитів щороку — і майже кожен другий пацієнт приходить за рекомендацією друзів чи родини."
@@ -74,14 +74,20 @@ export function Testimonials() {
           {reviews.map((review) => (
             <figure
               key={review.name}
-              className="group flex w-[85vw] shrink-0 snap-start flex-col justify-between rounded-[24px] border border-ink/[0.07] bg-mist p-8 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:bg-white hover:shadow-[0_40px_90px_-60px_rgba(17,17,17,0.5)] sm:w-[62vw] md:p-10 lg:w-[38vw] xl:w-[30vw]"
+              className="group relative flex w-[85vw] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-[24px] border border-ink/[0.07] bg-mist p-8 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:bg-white hover:shadow-[0_40px_90px_-60px_rgba(17,17,17,0.5)] sm:w-[62vw] md:p-10 lg:w-[38vw] xl:w-[30vw]"
             >
               <div>
+                <span
+                  aria-hidden
+                  className="accent pointer-events-none absolute right-7 top-4 text-[70px] leading-none text-sand/50 transition-colors duration-700 group-hover:text-sand md:text-[90px]"
+                >
+                  &rdquo;
+                </span>
                 <div className="flex gap-1" role="img" aria-label="Оцінка 5 з 5">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star
                       key={i}
-                      className="size-3.5 fill-ink text-ink"
+                      className="size-3.5 fill-clay text-clay"
                       aria-hidden
                     />
                   ))}
@@ -92,7 +98,7 @@ export function Testimonials() {
               </div>
 
               <figcaption className="mt-10 flex items-center gap-4 border-t border-ink/[0.08] pt-6">
-                <span className="flex size-11 items-center justify-center rounded-full bg-ink font-display text-[15px] font-medium text-white">
+                <span className="flex size-11 items-center justify-center rounded-full bg-ink font-display text-[15px] font-medium text-white ring-1 ring-sand/70 ring-offset-2 ring-offset-transparent">
                   {review.name.charAt(0)}
                 </span>
                 <span>

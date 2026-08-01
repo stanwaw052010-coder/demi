@@ -35,12 +35,12 @@ export function Contacts() {
     <section id="contacts" className="bg-white py-24 md:py-36">
       <div className="container-x">
         <SectionHeading
-          index="07"
+          index="08"
           eyebrow="Контакти"
           title={
             <>
-              Завітайте до нас
-              <span className="text-ink/50"> у центрі Тернополя</span>
+              Завітайте до нас{" "}
+              <span className="accent text-clay">у центрі Тернополя</span>
             </>
           }
           description="Зателефонуйте або напишіть в Instagram — підберемо зручний час, зазвичай уже на найближчі дні."
@@ -64,7 +64,7 @@ export function Contacts() {
                     rel={item.external ? "noopener noreferrer" : undefined}
                     className="group flex items-center gap-5 py-5 first:pt-0"
                   >
-                    <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-ink/10 bg-white text-ink transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:border-ink group-hover:bg-ink group-hover:text-white">
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-sand/60 bg-white text-clay transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:border-ink group-hover:bg-ink group-hover:text-white">
                       <Icon className="size-4" strokeWidth={1.5} />
                     </span>
                     <span className="min-w-0">

@@ -23,9 +23,10 @@ src/
     icon.png          favicon
   components/
     site/             header, footer, logo, мобільна CTA-панель
-    sections/         hero, stats, services, why-us, before-after,
-                      doctor, testimonials, faq, contacts, map-panel
-    ui/               button, accordion, counter, reveal, section-heading, icons
+    sections/         hero, stats, services, why-us, before-after, process,
+                      doctor, gallery, testimonials, faq, contacts, map-panel
+    ui/               button, accordion, counter, reveal, rotating-badge,
+                      scroll-progress, section-heading, icons
   lib/
     site.ts           контакти, адреса, графік, навігація
     content.ts        послуги, переваги, кейси до/після, відгуки, FAQ
@@ -63,9 +64,13 @@ public/images/        фотографії (плейсхолдери — зам�
 
 ## Дизайн-система
 
-- Палітра: `#FFFFFF`, `#F5F5F5` (mist), `#2F343B` (graphite), `#111111` (ink).
-  Акцентних кольорів немає — ієрархія будується на контрасті й просторі.
-- Типографіка: одна гарнітура — Manrope (variable, latin + cyrillic).
+- Палітра: `#FFFFFF`, `#F5F5F5` (mist), `#2F343B` (graphite), `#111111` (ink)
+  плюс тепла лінія — `#F8F5F0` (cream), `#C9AE90` (sand), `#7D6248` (clay).
+  Акцент дуже стриманий: кілька слів у заголовках, тонкі лінії, іконки.
+- Типографіка: Manrope (variable) для всього тексту + Cormorant Garamond
+  italic для акцентних слів і порядкових номерів.
+- Дрібні деталі: зернистість (`grain`), крутний бейдж у hero, прогрес-бар
+  читання, пунктирні лінії, кутові засічки навколо фото лікаря.
 - Радіуси 20–24px, дуже м'які тіні, скляний ефект лише в плаваючих елементах.
 - Анімації: fade-up при скролі, парралакс у hero, лічильники, hover-стани.
   Усе поважає `prefers-reduced-motion`.
@@ -77,7 +82,7 @@ public/images/        фотографії (плейсхолдери — зам�
 ## Продуктивність і доступність
 
 Lighthouse (production build): **desktop 100 / 100 / 100 / 100**,
-**mobile 97 / 100 / 100 / 100** (performance · accessibility · best practices · SEO).
+**mobile 96 / 100 / 100 / 100** (performance · accessibility · best practices · SEO).
 
 - Шрифти self-hosted через `next/font`; сторонніх скриптів немає.
 - Секції нижче першого екрана використовують `content-visibility: auto`.

@@ -13,12 +13,22 @@ const credentials = [
 
 export function Doctor() {
   return (
-    <section id="doctor" className="bg-mist py-24 md:py-36">
+    <section id="doctor" className="grain relative bg-mist py-24 md:py-36">
       <div className="container-x">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-20">
           {/* Portrait */}
           <Reveal y={40}>
             <div className="relative">
+              {/* Corner brackets — a quiet frame around the portrait */}
+              <span
+                aria-hidden
+                className="absolute -left-3 -top-3 hidden size-16 rounded-tl-[20px] border-l border-t border-sand md:block"
+              />
+              <span
+                aria-hidden
+                className="absolute -bottom-3 -right-3 hidden size-16 rounded-br-[20px] border-b border-r border-sand md:block"
+              />
+
               <div className="relative aspect-4/5 overflow-hidden rounded-[24px] bg-white shadow-[0_40px_110px_-60px_rgba(17,17,17,0.5)]">
                 <Image
                   src="/images/doctor.jpg"
@@ -45,7 +55,7 @@ export function Doctor() {
             <Reveal>
               <div className="flex items-center gap-3">
                 <span aria-hidden className="font-mono text-[11px] tabular-nums text-ink/30">
-                  04
+                  05
                 </span>
                 <span className="h-px w-8 bg-ink/15" />
                 <span className="eyebrow">Про лікаря</span>
@@ -54,8 +64,8 @@ export function Doctor() {
 
             <Reveal delay={0.06}>
               <h2 className="display-tight mt-6 font-display text-[32px] font-light text-ink sm:text-[44px] lg:text-[52px]">
-                Двадцять років
-                <span className="text-ink/50"> однієї справи</span>
+                Двадцять років{" "}
+                <span className="accent text-clay">однієї справи</span>
               </h2>
             </Reveal>
 
@@ -79,7 +89,7 @@ export function Doctor() {
             <Reveal delay={0.18}>
               <figure className="mt-10 rounded-[24px] border border-ink/[0.07] bg-white p-7 md:p-9">
                 <Quote
-                  className="size-6 text-ink/20"
+                  className="size-6 text-sand"
                   strokeWidth={1.25}
                   aria-hidden
                 />
@@ -87,8 +97,14 @@ export function Doctor() {
                   «Я лікую не зуб, а людину. Тому спершу слухаю, а вже потім беру
                   інструмент».
                 </blockquote>
-                <figcaption className="mt-6 text-[13px] uppercase tracking-[0.16em] text-ink/60">
-                  {site.doctor}
+                <figcaption className="mt-6 flex items-center gap-4">
+                  <span className="accent text-[26px] leading-none text-clay">
+                    {site.doctor}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="h-px flex-1 bg-gradient-to-r from-sand to-transparent"
+                  />
                 </figcaption>
               </figure>
             </Reveal>
