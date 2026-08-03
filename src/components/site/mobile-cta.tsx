@@ -6,39 +6,42 @@ import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { useScrollHandler } from "@/lib/use-scroll-value";
 
+/** Phone and booking pinned to the bottom of every phone screen. */
 export function MobileCta() {
-  const [visible, setVisible] = React.useState(false);
+  const [hidden, setHidden] = React.useState(false);
 
+  /* Only steps aside over the closing form, where the same actions live. */
   useScrollHandler((y) => {
-    const max = document.body.scrollHeight - window.innerHeight;
-    setVisible(y > 700 && y < max - 720);
+    const booking = document.getElementById("booking");
+    if (!booking) return;
+    setHidden(y + window.innerHeight > booking.offsetTop + 120);
   });
 
   return (
     <div
-      aria-hidden={!visible}
+      aria-hidden={hidden}
       className={cn(
-        "fixed inset-x-4 bottom-4 z-40 flex items-center gap-2 rounded-full glass p-1.5 shadow-[0_20px_50px_-24px_rgba(17,17,17,0.55)]",
+        "fixed inset-x-3 bottom-3 z-40 flex items-center gap-2 rounded-full border border-white/15 bg-ink p-1.5 shadow-[0_18px_40px_-18px_rgba(17,17,17,0.85)]",
         "transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] sm:hidden",
-        visible
-          ? "translate-y-0 opacity-100"
-          : "pointer-events-none translate-y-24 opacity-0",
+        hidden
+          ? "pointer-events-none translate-y-24 opacity-0"
+          : "translate-y-0 opacity-100",
       )}
     >
       <a
         href={site.phoneHref}
-        aria-label={`Зателефонувати ${site.phone}`}
-        tabIndex={visible ? 0 : -1}
-        className="flex size-11 shrink-0 items-center justify-center rounded-full border border-ink/10 bg-white text-ink"
+        tabIndex={hidden ? -1 : 0}
+        className="flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-white text-[15px] font-bold tabular-nums text-ink"
       >
-        <Phone className="size-4" strokeWidth={1.75} />
+        <Phone className="size-4" strokeWidth={2.5} />
+        Подзвонити
       </a>
       <a
-        href="#contacts"
-        tabIndex={visible ? 0 : -1}
-        className="flex h-11 flex-1 items-center justify-center rounded-full bg-ink text-[14px] font-medium text-white"
+        href="#booking"
+        tabIndex={hidden ? -1 : 0}
+        className="flex h-12 flex-1 items-center justify-center rounded-full text-[15px] font-semibold text-white"
       >
-        Записатися на прийом
+        Записатися
       </a>
     </div>
   );

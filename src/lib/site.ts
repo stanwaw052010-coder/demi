@@ -7,6 +7,7 @@ export const site = {
   addressLatin: "Konovaltsia 3, Ternopil",
   phone: "+380 97 900 12 15",
   phoneHref: "tel:+380979001215",
+  viber: "viber://chat?number=%2B380979001215",
   instagram:
     "https://www.instagram.com/dental_natali_?igsh=dng3ZzBzejFsNjY=",
   instagramHandle: "@dental_natali_",

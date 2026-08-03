@@ -32,7 +32,7 @@ export function Header() {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50">
-        <TopBar compact={scrolled} />
+        <TopBar />
 
         <div
           className={cn(
@@ -67,7 +67,7 @@ export function Header() {
               <div className="flex items-center gap-2">
                 <a
                   href={site.phoneHref}
-                  className="hidden items-center gap-2.5 rounded-full border border-ink/15 px-5 py-2.5 text-[16px] font-bold tabular-nums text-ink transition-colors duration-300 hover:border-ink hover:bg-ink hover:text-white md:inline-flex"
+                  className="hidden items-center gap-2.5 rounded-full bg-ink px-5 py-3 text-[17px] font-bold tabular-nums text-white shadow-[0_10px_24px_-14px_rgba(17,17,17,0.9)] transition-colors duration-300 hover:bg-graphite md:inline-flex"
                 >
                   <Phone className="size-4" strokeWidth={2.25} />
                   {site.phone}
@@ -80,7 +80,8 @@ export function Header() {
                   <Phone className="size-[18px]" strokeWidth={2.25} />
                 </a>
                 <ButtonLink
-                  href="#contacts"
+                  href="#booking"
+                  variant="secondary"
                   size="md"
                   className="hidden font-semibold sm:inline-flex"
                 >

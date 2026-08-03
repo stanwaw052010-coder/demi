@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { ArrowDownRight, Star } from "lucide-react";
+import { ArrowDownRight, MapPin, Phone, Star } from "lucide-react";
 import { site } from "@/lib/site";
 import { useScrollHandler } from "@/lib/use-scroll-value";
 import { ButtonLink } from "@/components/ui/button";
@@ -44,7 +44,7 @@ export function Hero() {
     <section
       ref={ref}
       id="top"
-      className="grain relative overflow-hidden bg-white pt-32 md:pt-40 lg:pt-44"
+      className="grain relative overflow-hidden bg-white pt-44 md:pt-40 lg:pt-44"
     >
       {/* Two soft lights: a cool one behind the type, a warm one behind the photo */}
       <div
@@ -91,7 +91,7 @@ export function Hero() {
               style={{ animationDelay: "0.32s" }}
               className="enter mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
             >
-              <ButtonLink href="#contacts" size="lg">
+              <ButtonLink href="#booking" size="lg">
                 Записатися
                 <ArrowDownRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:translate-x-0.5 group-hover/btn:translate-y-0.5" />
               </ButtonLink>
@@ -100,9 +100,51 @@ export function Hero() {
               </ButtonLink>
             </div>
 
+            {/* Phone and address, spelled out on the first screen */}
             <div
-              style={{ animationDelay: "0.44s" }}
-              className="enter mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-ink/[0.07] pt-8"
+              style={{ animationDelay: "0.38s" }}
+              className="enter mt-9 flex flex-wrap items-center gap-x-10 gap-y-5"
+            >
+              <a
+                href={site.phoneHref}
+                className="group flex items-center gap-3.5"
+              >
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-ink text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105">
+                  <Phone className="size-5" strokeWidth={2.25} />
+                </span>
+                <span>
+                  <span className="block text-[12px] font-semibold uppercase tracking-[0.18em] text-graphite">
+                    Телефонуйте
+                  </span>
+                  <span className="mt-0.5 block font-display text-[21px] font-bold tabular-nums leading-none tracking-[-0.01em] text-ink underline-offset-4 group-hover:underline md:text-[24px]">
+                    {site.phone}
+                  </span>
+                </span>
+              </a>
+
+              <a
+                href={site.mapsLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-3.5"
+              >
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-full border border-ink/20 text-ink transition-colors duration-500 group-hover:border-ink group-hover:bg-ink group-hover:text-white">
+                  <MapPin className="size-5" strokeWidth={2.25} />
+                </span>
+                <span>
+                  <span className="block text-[12px] font-semibold uppercase tracking-[0.18em] text-graphite">
+                    Ми тут
+                  </span>
+                  <span className="mt-0.5 block font-display text-[17px] font-semibold leading-none tracking-[-0.01em] text-ink underline-offset-4 group-hover:underline md:text-[19px]">
+                    {site.address}
+                  </span>
+                </span>
+              </a>
+            </div>
+
+            <div
+              style={{ animationDelay: "0.5s" }}
+              className="enter mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-ink/10 pt-7"
             >
               <div className="flex items-center gap-2">
                 <div className="flex gap-0.5" aria-hidden>

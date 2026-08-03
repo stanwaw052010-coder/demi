@@ -21,6 +21,11 @@ const BeforeAfter = dynamic(() =>
   import("@/components/sections/before-after").then((m) => m.BeforeAfter),
 );
 
+/* Below the fold — its form logic loads after the page is interactive */
+const Booking = dynamic(() =>
+  import("@/components/sections/booking").then((m) => m.Booking),
+);
+
 export default function Home() {
   return (
     <>
@@ -37,6 +42,7 @@ export default function Home() {
         <Gallery />
         <Testimonials />
         <Faq />
+        <Booking />
         <Contacts />
       </main>
       <Footer />

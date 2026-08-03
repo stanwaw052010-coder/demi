@@ -22,9 +22,10 @@ src/
     globals.css       дизайн-токени, утиліти (container-x, glass, eyebrow…)
     icon.png          favicon
   components/
-    site/             header, footer, logo, мобільна CTA-панель
+    site/             header, topbar, footer, logo, мобільна CTA-панель
     sections/         hero, stats, services, why-us, before-after, process,
-                      doctor, gallery, testimonials, faq, contacts, map-panel
+                      doctor, gallery, testimonials, faq, booking, contacts,
+                      map-panel
     ui/               button, accordion, counter, reveal, rotating-badge,
                       scroll-progress, section-heading, icons
   lib/
@@ -62,6 +63,24 @@ public/images/          фотографії (hero.jpg і doctor.jpg — спр�
 Фото з Instagram (`@dental_natali_`) автоматично не завантажуються: сервіс
 блокує машинний доступ до профілю. Потрібні кадри достатньо зберегти вручну під
 іменами з таблиці вище.
+
+## Форма запису
+
+Секція «Записатися» (`sections/booking.tsx`) працює без бекенду: дані
+копіюються у буфер і відкривається Viber. Щоб отримувати заявки на пошту або
+в Telegram, достатньо додати змінну оточення:
+
+```bash
+NEXT_PUBLIC_FORM_ENDPOINT=https://formspree.io/f/xxxxxxx
+```
+
+Форма надішле POST з полями `name`, `phone`, `service`, `note`.
+
+## Контакти на сторінці
+
+Телефон і адреса продубльовані у п'яти місцях: чорна смуга над шапкою,
+кнопка-телефон у шапці, блок у першому екрані, секція запису, футер.
+На телефоні внизу закріплена панель «Подзвонити / Записатися».
 
 ## Дизайн-система
 
