@@ -43,10 +43,10 @@ export function Header() {
             <div
               className={cn(
                 "flex items-center justify-between transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
-                scrolled ? "h-16" : "h-20 md:h-24",
+                scrolled ? "h-[76px]" : "h-24 md:h-28",
               )}
             >
-              <Logo />
+              <Logo size="md" />
 
               <nav className="hidden items-center gap-1 lg:flex">
                 {nav.map((item) => (
@@ -99,7 +99,7 @@ export function Header() {
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
       >
-        <div className="container-x flex h-20 items-center justify-between">
+        <div className="container-x flex h-24 items-center justify-between">
           <Logo />
           <button
             type="button"

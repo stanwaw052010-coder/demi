@@ -9,7 +9,7 @@ export function Process() {
       {/* Warm light pooling behind the column of steps */}
       <div
         aria-hidden
-        className="pointer-events-none absolute right-0 top-1/4 h-[520px] w-[520px] translate-x-1/3 rounded-full bg-[radial-gradient(closest-side,rgba(201,174,144,0.35),transparent)]"
+        className="pointer-events-none absolute right-0 top-1/4 h-[520px] w-[520px] translate-x-1/3 rounded-full bg-[radial-gradient(closest-side,rgba(47,52,59,0.09),transparent)]"
       />
 
       <div className="container-x relative">

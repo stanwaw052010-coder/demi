@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ArrowUpRight, MapPin, Phone } from "lucide-react";
 import { InstagramIcon } from "@/components/ui/icons";
 import { nav, site } from "@/lib/site";
@@ -140,29 +141,16 @@ export function Footer() {
         </div>
       </div>
 
-      {/* ── Oversized wordmark ──────────────────────── */}
-      <div className="container-x pointer-events-none select-none pb-6 pt-4">
-        {/* Drawn as SVG so it always spans the column exactly, at any width */}
-        <svg
-          viewBox="0 0 1000 116"
-          className="w-full"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <text
-            x="0"
-            y="94"
-            textLength="1000"
-            lengthAdjust="spacingAndGlyphs"
-            fontSize="116"
-            fontWeight="300"
-            fill="#ffffff"
-            fillOpacity="0.05"
-            style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-          >
-            Dental Nataly
-          </text>
-        </svg>
+      {/* ── The printed lock-up, full size ──────────── */}
+      <div className="container-x flex justify-center border-t border-white/10 py-14">
+        <Image
+          src="/logo-light.png"
+          alt="Dental Clinic Nataly Zhylan"
+          width={480}
+          height={592}
+          sizes="200px"
+          className="h-40 w-auto opacity-90 md:h-48"
+        />
       </div>
 
       <div className="container-x relative flex flex-col gap-4 border-t border-white/10 py-7 text-[12px] text-white/55 sm:flex-row sm:items-center sm:justify-between">

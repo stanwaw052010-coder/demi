@@ -53,7 +53,7 @@ export function Hero() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-40 top-10 h-[620px] w-[620px] rounded-full bg-[radial-gradient(closest-side,rgba(201,174,144,0.32),transparent)]"
+        className="pointer-events-none absolute -right-40 top-10 h-[620px] w-[620px] rounded-full bg-[radial-gradient(closest-side,rgba(47,52,59,0.10),transparent)]"
       />
 
       <div className="container-x relative">
@@ -181,7 +181,7 @@ export function Hero() {
 
             {/* Rotating call to action, anchored to the frame's corner */}
             <RotatingBadge
-              className="enter absolute -bottom-8 left-4 hidden sm:grid lg:-left-10"
+              className="enter absolute -bottom-9 left-2 hidden sm:grid lg:-left-14"
               style={{ animationDelay: "0.7s" }}
             />
           </div>

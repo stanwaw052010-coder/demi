@@ -1,48 +1,87 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
+/**
+ * The clinic's real mark plus a live-text wordmark that mirrors the printed
+ * lock-up. Deliberately large — it is the first thing a visitor should see.
+ */
 export function Logo({
   className,
   tone = "dark",
+  size = "md",
 }: {
   className?: string;
   tone?: "dark" | "light";
+  size?: "sm" | "md" | "lg";
 }) {
+  const mark = {
+    sm: "h-9 w-[31px]",
+    md: "h-[52px] w-[45px]",
+    lg: "h-14 w-[49px]",
+  }[size];
+
+  const name = {
+    sm: "text-[17px]",
+    md: "text-[24px]",
+    lg: "text-[26px]",
+  }[size];
+
+  const script = {
+    sm: "text-[15px]",
+    md: "text-[21px]",
+    lg: "text-[23px]",
+  }[size];
+
   return (
     <a
       href="#top"
-      className={cn("group flex items-center gap-3", className)}
+      className={cn("group flex items-center gap-3 md:gap-3.5", className)}
     >
-      <span
+      <Image
+        src={tone === "dark" ? "/logo-mark-dark.png" : "/logo-mark-light.png"}
+        alt=""
+        width={180}
+        height={208}
+        priority
+        aria-hidden
         className={cn(
-          "flex size-9 items-center justify-center rounded-[11px] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-rotate-6",
-          tone === "dark" ? "bg-ink text-white" : "bg-white text-ink",
+          "shrink-0 object-contain transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5",
+          mark,
         )}
-      >
-        <svg viewBox="0 0 24 24" className="size-[18px]" aria-hidden="true">
-          {/* Minimal tooth mark */}
-          <path
-            d="M12 4.2c-1.6-1.1-3.4-1.6-4.9-1-1.9.8-2.8 2.9-2.5 5.4.2 1.6.7 2.7 1.1 4.2.4 1.4.5 2.5.7 3.9.2 1.5.6 2.6 1.5 2.7.9.1 1.3-.8 1.7-2.4.4-1.6.6-2.9 1.6-2.9h1.6c1 0 1.2 1.3 1.6 2.9.4 1.6.8 2.5 1.7 2.4.9-.1 1.3-1.2 1.5-2.7.2-1.4.3-2.5.7-3.9.4-1.5.9-2.6 1.1-4.2.3-2.5-.6-4.6-2.5-5.4-1.5-.6-3.3-.1-4.9 1Z"
-            fill="currentColor"
-          />
-        </svg>
-      </span>
+      />
+
       <span className="flex flex-col leading-none">
         <span
           className={cn(
-            "font-display text-[15px] font-semibold tracking-[-0.02em]",
-            tone === "dark" ? "text-ink" : "text-white",
+            "flex items-center gap-1.5 text-[8.5px] font-semibold uppercase tracking-[0.3em]",
+            tone === "dark" ? "text-clay" : "text-sand",
           )}
         >
-          Dental Clinic Nataly
+          Dental Clinic
         </span>
-        <span
-          className={cn(
-            "mt-1 text-[9.5px] font-medium uppercase tracking-[0.24em]",
-            tone === "dark" ? "text-ink/60" : "text-white/55",
-          )}
-        >
-          Тернопіль
+        <span className="mt-1.5 flex items-baseline gap-1.5">
+          <span
+            className={cn(
+              "font-display font-semibold uppercase tracking-[0.02em]",
+              name,
+              tone === "dark" ? "text-ink" : "text-white",
+            )}
+          >
+            Nataly
+          </span>
+          <span
+            className={cn(
+              "accent leading-none",
+              script,
+              tone === "dark" ? "text-clay" : "text-sand",
+            )}
+          >
+            Zhylan
+          </span>
         </span>
+      </span>
+      <span className="sr-only">
+        Dental Clinic Nataly Zhylan — на початок сторінки
       </span>
     </a>
   );
