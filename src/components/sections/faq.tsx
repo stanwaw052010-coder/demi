@@ -19,7 +19,7 @@ export function Faq() {
           <div className="lg:sticky lg:top-32 lg:self-start">
             <Reveal>
               <div className="flex items-center gap-3">
-                <span aria-hidden className="font-mono text-[11px] tabular-nums text-ink/30">
+                <span aria-hidden className="font-mono text-[11px] tabular-nums text-ink/50">
                   07
                 </span>
                 <span className="h-px w-8 bg-ink/15" />
@@ -37,11 +37,11 @@ export function Faq() {
             <Reveal delay={0.12}>
               <div className="mt-10 rounded-[24px] border border-ink/[0.07] bg-white p-7">
                 <MessageCircle
-                  className="size-6 text-ink/25"
+                  className="size-6 text-ink/50"
                   strokeWidth={1.25}
                   aria-hidden
                 />
-                <p className="mt-5 text-[16px] leading-relaxed text-graphite/75">
+                <p className="mt-5 text-[16px] leading-relaxed text-graphite">
                   Не знайшли відповідь? Зателефонуйте — ми відповімо на будь-яке
                   запитання ще до візиту.
                 </p>

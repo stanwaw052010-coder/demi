@@ -52,7 +52,7 @@ export function Process() {
                 </p>
               </div>
 
-              <p className="max-w-[46ch] text-[15px] leading-relaxed text-graphite/75 md:text-[16px]">
+              <p className="max-w-[46ch] text-[15px] leading-relaxed text-graphite md:text-[16px]">
                 {item.text}
               </p>
             </li>

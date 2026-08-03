@@ -24,7 +24,7 @@ export function Stats() {
                 <p className="mt-5 text-[15px] font-medium tracking-[-0.01em] text-ink md:text-[16px]">
                   {stat.label}
                 </p>
-                <p className="mt-1.5 text-[13px] text-graphite/70">{stat.note}</p>
+                <p className="mt-1.5 text-[14px] text-graphite">{stat.note}</p>
               </div>
             </Reveal>
           ))}
@@ -41,7 +41,7 @@ export function Stats() {
               <p className="mt-5 text-[15px] font-medium tracking-[-0.01em] text-ink md:text-[16px]">
                 Сучасне обладнання
               </p>
-              <p className="mt-1.5 text-[13px] text-graphite/70">
+              <p className="mt-1.5 text-[14px] text-graphite">
                 цифрова діагностика та стерильність
               </p>
             </div>

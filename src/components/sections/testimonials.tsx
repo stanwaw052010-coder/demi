@@ -105,7 +105,7 @@ export function Testimonials() {
                   <span className="block text-[15px] font-medium tracking-[-0.01em] text-ink">
                     {review.name}
                   </span>
-                  <span className="mt-0.5 block text-[13px] text-graphite/70">
+                  <span className="mt-0.5 block text-[14px] text-graphite">
                     {review.role}
                   </span>
                 </span>
@@ -132,7 +132,7 @@ export function Testimonials() {
             href={site.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[13px] font-medium text-graphite/75 underline-offset-4 transition-colors duration-300 hover:text-ink hover:underline"
+            className="text-[14px] font-medium text-graphite underline-offset-4 transition-colors duration-300 hover:text-ink hover:underline"
           >
             Більше історій в Instagram
           </a>

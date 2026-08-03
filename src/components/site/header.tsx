@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useScrollHandler } from "@/lib/use-scroll-value";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "@/components/site/logo";
+import { TopBar } from "@/components/site/topbar";
 
 export function Header() {
   const [scrolled, setScrolled] = React.useState(false);
@@ -31,19 +32,21 @@ export function Header() {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50">
+        <TopBar compact={scrolled} />
+
         <div
           className={cn(
-            "transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+            "bg-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
             scrolled
-              ? "glass border-b border-ink/[0.06]"
-              : "border-b border-transparent bg-transparent",
+              ? "border-b border-ink/10 shadow-[0_8px_30px_-24px_rgba(17,17,17,0.5)]"
+              : "border-b border-ink/[0.08]",
           )}
         >
           <div className="container-x">
             <div
               className={cn(
                 "flex items-center justify-between transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
-                scrolled ? "h-[76px]" : "h-24 md:h-28",
+                scrolled ? "h-[76px]" : "h-20 md:h-24",
               )}
             >
               <Logo size="md" />
@@ -53,7 +56,7 @@ export function Header() {
                   <a
                     key={item.href}
                     href={item.href}
-                    className="group relative rounded-full px-4 py-2 text-[14px] font-medium tracking-[-0.01em] text-graphite/75 transition-colors duration-300 hover:text-ink"
+                    className="group relative rounded-full px-4 py-2 text-[15px] font-semibold tracking-[-0.01em] text-graphite transition-colors duration-300 hover:text-ink"
                   >
                     {item.label}
                     <span className="absolute inset-x-4 bottom-1 h-px origin-left scale-x-0 bg-ink/60 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
@@ -64,15 +67,22 @@ export function Header() {
               <div className="flex items-center gap-2">
                 <a
                   href={site.phoneHref}
-                  className="hidden items-center gap-2 rounded-full px-4 py-2 text-[14px] font-medium tabular-nums text-ink transition-colors duration-300 hover:bg-ink/5 md:inline-flex"
+                  className="hidden items-center gap-2.5 rounded-full border border-ink/15 px-5 py-2.5 text-[16px] font-bold tabular-nums text-ink transition-colors duration-300 hover:border-ink hover:bg-ink hover:text-white md:inline-flex"
                 >
-                  <Phone className="size-3.5" strokeWidth={1.75} />
+                  <Phone className="size-4" strokeWidth={2.25} />
                   {site.phone}
+                </a>
+                <a
+                  href={site.phoneHref}
+                  aria-label={`Зателефонувати ${site.phone}`}
+                  className="flex size-11 items-center justify-center rounded-full bg-ink text-white transition-colors duration-300 hover:bg-graphite md:hidden"
+                >
+                  <Phone className="size-[18px]" strokeWidth={2.25} />
                 </a>
                 <ButtonLink
                   href="#contacts"
-                  size="sm"
-                  className="hidden sm:inline-flex"
+                  size="md"
+                  className="hidden font-semibold sm:inline-flex"
                 >
                   Записатися
                 </ButtonLink>
@@ -127,7 +137,7 @@ export function Header() {
               )}
             >
               {item.label}
-              <span aria-hidden className="font-mono text-[11px] text-ink/25">
+              <span aria-hidden className="font-mono text-[11px] text-ink/50">
                 0{i + 1}
               </span>
             </a>

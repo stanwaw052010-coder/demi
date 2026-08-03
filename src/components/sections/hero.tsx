@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { ArrowDownRight, MapPin, Star } from "lucide-react";
+import { ArrowDownRight, Star } from "lucide-react";
 import { site } from "@/lib/site";
 import { useScrollHandler } from "@/lib/use-scroll-value";
 import { ButtonLink } from "@/components/ui/button";
@@ -44,7 +44,7 @@ export function Hero() {
     <section
       ref={ref}
       id="top"
-      className="grain relative overflow-hidden bg-white pt-28 md:pt-32 lg:pt-36"
+      className="grain relative overflow-hidden bg-white pt-32 md:pt-40 lg:pt-44"
     >
       {/* Two soft lights: a cool one behind the type, a warm one behind the photo */}
       <div
@@ -61,14 +61,13 @@ export function Hero() {
           {/* ── Left: copy ─────────────────────────────── */}
           <div ref={copyRef} className="will-change-transform">
             <div
-              className="enter inline-flex items-center gap-2.5 rounded-full border border-ink/[0.08] bg-white py-2 pl-3 pr-4 text-[12px] font-medium text-graphite/80 shadow-[0_1px_2px_rgba(17,17,17,0.03)]"
+              className="enter inline-flex items-center gap-2.5 rounded-full border border-ink/15 bg-white py-2.5 pl-3.5 pr-5 text-[14px] font-semibold text-ink shadow-[0_1px_2px_rgba(17,17,17,0.04)]"
             >
               <span className="relative flex size-1.5">
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-clay/50" />
                 <span className="relative inline-flex size-1.5 rounded-full bg-clay" />
               </span>
-              <MapPin className="size-3.5 text-ink/60" strokeWidth={1.75} />
-              {site.addressLatin}
+              Сімейна стоматологія у Тернополі
             </div>
 
             <h1 className="display-tight mt-8 font-display text-[40px] font-light text-ink sm:text-[54px] lg:text-[62px] xl:text-[72px]">
@@ -82,7 +81,7 @@ export function Hero() {
             </h1>
 
             <p
-              className="mt-8 max-w-[34rem] text-[16px] leading-relaxed text-graphite/70 md:text-[18px]"
+              className="mt-8 max-w-[34rem] text-[16px] leading-relaxed text-graphite md:text-[18px]"
             >
               Сучасна стоматологія у Тернополі. Лікування під мікроскопом,
               художня реставрація, імплантація та професійне відбілювання.
@@ -111,12 +110,12 @@ export function Hero() {
                     <Star key={i} className="size-3.5 fill-clay text-clay" />
                   ))}
                 </div>
-                <span className="text-[13px] text-graphite/70">
+                <span className="text-[14px] text-graphite">
                   5.0 — оцінка пацієнтів
                 </span>
               </div>
               <div className="hidden h-4 w-px bg-ink/10 sm:block" aria-hidden />
-              <span className="text-[13px] text-graphite/70">
+              <span className="text-[14px] text-graphite">
                 1000+ усмішок · сімейна стоматологія
               </span>
             </div>
@@ -155,7 +154,7 @@ export function Hero() {
                   <p className="font-display text-[15px] font-semibold tracking-[-0.01em] text-ink">
                     {site.doctor}
                   </p>
-                  <p className="mt-1 text-[12px] text-graphite/75">
+                  <p className="mt-1 text-[12px] text-graphite">
                     Лікар-стоматолог · 20+ років практики
                   </p>
                 </div>
@@ -174,7 +173,7 @@ export function Hero() {
               <p className="font-display text-[26px] font-light leading-none tracking-[-0.03em] text-ink">
                 25<span className="accent text-clay">×</span>
               </p>
-              <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-ink/60">
+              <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-ink/85">
                 Мікроскоп
               </p>
             </div>
@@ -198,7 +197,7 @@ export function Hero() {
           {[...marquee, ...marquee].map((item, i) => (
             <span
               key={i}
-              className="flex items-center gap-10 text-[12px] font-medium uppercase tracking-[0.18em] text-ink/60"
+              className="flex items-center gap-10 text-[12px] font-medium uppercase tracking-[0.18em] text-ink/85"
             >
               {item}
               <span className="size-1 rounded-full bg-ink/20" aria-hidden />

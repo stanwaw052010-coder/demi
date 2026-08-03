@@ -68,7 +68,7 @@ export function Accordion({
                   }}
                   className="overflow-hidden"
                 >
-                  <p className="max-w-[62ch] pb-9 pr-12 text-[15px] leading-relaxed text-graphite/75 md:text-[17px]">
+                  <p className="max-w-[62ch] pb-9 pr-12 text-[15px] leading-relaxed text-graphite md:text-[17px]">
                     {item.a}
                   </p>
                 </motion.div>

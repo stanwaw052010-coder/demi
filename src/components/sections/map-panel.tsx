@@ -98,7 +98,7 @@ export function MapPanel() {
           <button
             type="button"
             onClick={() => setLive(true)}
-            className="absolute right-5 top-5 inline-flex items-center gap-2 rounded-full glass px-4 py-2.5 text-[13px] font-medium text-ink shadow-[0_10px_30px_-18px_rgba(17,17,17,0.6)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/60"
+            className="absolute right-5 top-5 inline-flex items-center gap-2 rounded-full glass px-4 py-2.5 text-[14px] font-medium text-ink shadow-[0_10px_30px_-18px_rgba(17,17,17,0.6)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/60"
           >
             <MapIcon className="size-4" strokeWidth={1.5} />
             Інтерактивна карта
@@ -113,7 +113,7 @@ export function MapPanel() {
         className="absolute bottom-5 left-5 right-5 flex items-center justify-between gap-4 rounded-[20px] glass p-4 shadow-[0_20px_50px_-30px_rgba(17,17,17,0.5)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 sm:right-auto sm:pr-8"
       >
         <span>
-          <span className="block text-[11px] uppercase tracking-[0.18em] text-ink/60">
+          <span className="block text-[11px] uppercase tracking-[0.18em] text-ink/85">
             Прокласти маршрут
           </span>
           <span className="mt-1 block font-display text-[15px] font-medium tracking-[-0.01em] text-ink">

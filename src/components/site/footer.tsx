@@ -14,7 +14,7 @@ export function Footer() {
       <div className="container-x relative border-b border-white/10 py-24 md:py-32">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end">
           <Reveal>
-            <span className="eyebrow text-white/55">Запис на прийом</span>
+            <span className="eyebrow text-white/85">Запис на прийом</span>
             <h2 className="display-tight mt-6 max-w-[16ch] font-display text-[36px] font-light text-white sm:text-[52px] lg:text-[64px]">
               Здорова усмішка починається{" "}
               <span className="accent text-sand">з розмови</span>
@@ -22,7 +22,7 @@ export function Footer() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <p className="max-w-md text-[16px] leading-relaxed text-white/50 md:text-[17px]">
+            <p className="max-w-md text-[16px] leading-relaxed text-white/85 md:text-[17px]">
               Розкажіть, що вас турбує — ми підберемо час консультації та
               складемо план лікування з прозорим кошторисом.
             </p>
@@ -50,20 +50,20 @@ export function Footer() {
       <div className="container-x relative grid gap-12 py-16 md:grid-cols-2 md:py-20 lg:grid-cols-4">
         <div>
           <Logo tone="light" />
-          <p className="mt-6 max-w-xs text-[14px] leading-relaxed text-white/55">
+          <p className="mt-6 max-w-xs text-[14px] leading-relaxed text-white/85">
             Сімейна стоматологія Наталії Жилан. Лікування під мікроскопом,
             естетика та турбота про кожного пацієнта — від першого візиту.
           </p>
         </div>
 
         <nav aria-label="Навігація у футері">
-          <h3 className="eyebrow text-white/55">Навігація</h3>
+          <h3 className="eyebrow text-white/85">Навігація</h3>
           <ul className="mt-6 space-y-3.5">
             {nav.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="text-[14px] text-white/60 transition-colors duration-300 hover:text-white"
+                  className="text-[14px] text-white/85 transition-colors duration-300 hover:text-white"
                 >
                   {item.label}
                 </a>
@@ -73,13 +73,13 @@ export function Footer() {
         </nav>
 
         <div>
-          <h3 className="eyebrow text-white/55">Послуги</h3>
+          <h3 className="eyebrow text-white/85">Послуги</h3>
           <ul className="mt-6 space-y-3.5">
             {services.map((service) => (
               <li key={service.id}>
                 <a
                   href="#services"
-                  className="text-[14px] text-white/60 transition-colors duration-300 hover:text-white"
+                  className="text-[14px] text-white/85 transition-colors duration-300 hover:text-white"
                 >
                   {service.title}
                 </a>
@@ -89,18 +89,18 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="eyebrow text-white/55">Контакти</h3>
+          <h3 className="eyebrow text-white/85">Контакти</h3>
           <ul className="mt-6 space-y-4">
             <li>
               <a
                 href={site.mapsLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-start gap-3 text-[14px] text-white/60 transition-colors duration-300 hover:text-white"
+                className="group flex items-start gap-3 text-[16px] font-medium text-white transition-colors duration-300 hover:underline"
               >
                 <MapPin
-                  className="mt-0.5 size-4 shrink-0 text-white/30"
-                  strokeWidth={1.5}
+                  className="mt-0.5 size-5 shrink-0"
+                  strokeWidth={2}
                 />
                 {site.address}
               </a>
@@ -108,9 +108,9 @@ export function Footer() {
             <li>
               <a
                 href={site.phoneHref}
-                className="group flex items-center gap-3 text-[14px] tabular-nums text-white/60 transition-colors duration-300 hover:text-white"
+                className="group flex items-center gap-3 text-[19px] font-bold tabular-nums text-white transition-colors duration-300 hover:underline"
               >
-                <Phone className="size-4 shrink-0 text-white/30" strokeWidth={1.5} />
+                <Phone className="size-5 shrink-0" strokeWidth={2.25} />
                 {site.phone}
               </a>
             </li>
@@ -119,10 +119,10 @@ export function Footer() {
                 href={site.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-3 text-[14px] text-white/60 transition-colors duration-300 hover:text-white"
+                className="group flex items-center gap-3 text-[14px] text-white/85 transition-colors duration-300 hover:text-white"
               >
                 <InstagramIcon
-                  className="size-4 shrink-0 text-white/30"
+                  className="size-4 shrink-0 text-white/55"
                   strokeWidth={1.5}
                 />
                 {site.instagramHandle}
@@ -132,9 +132,9 @@ export function Footer() {
 
           <div className="mt-7 space-y-2 border-t border-white/10 pt-6">
             {site.hours.map((h) => (
-              <p key={h.days} className="text-[13px] text-white/55">
+              <p key={h.days} className="text-[14px] text-white/85">
                 {h.days} —{" "}
-                <span className="tabular-nums text-white/60">{h.time}</span>
+                <span className="tabular-nums text-white/85">{h.time}</span>
               </p>
             ))}
           </div>
@@ -153,7 +153,7 @@ export function Footer() {
         />
       </div>
 
-      <div className="container-x relative flex flex-col gap-4 border-t border-white/10 py-7 text-[12px] text-white/55 sm:flex-row sm:items-center sm:justify-between">
+      <div className="container-x relative flex flex-col gap-4 border-t border-white/10 py-7 text-[12px] text-white/85 sm:flex-row sm:items-center sm:justify-between">
         <p>
           © {new Date().getFullYear()} {site.name}. Усі права захищені.
         </p>

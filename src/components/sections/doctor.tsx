@@ -43,7 +43,7 @@ export function Doctor() {
                 <p className="font-display text-[17px] font-semibold tracking-[-0.02em] text-ink">
                   {site.doctor}
                 </p>
-                <p className="mt-1 text-[12px] uppercase tracking-[0.16em] text-ink/60">
+                <p className="mt-1 text-[12px] uppercase tracking-[0.16em] text-ink/85">
                   Засновниця клініки
                 </p>
               </div>
@@ -54,7 +54,7 @@ export function Doctor() {
           <div className="pt-6 lg:pt-4">
             <Reveal>
               <div className="flex items-center gap-3">
-                <span aria-hidden className="font-mono text-[11px] tabular-nums text-ink/30">
+                <span aria-hidden className="font-mono text-[11px] tabular-nums text-ink/50">
                   05
                 </span>
                 <span className="h-px w-8 bg-ink/15" />
@@ -70,7 +70,7 @@ export function Doctor() {
             </Reveal>
 
             <Reveal delay={0.12}>
-              <div className="mt-8 space-y-5 text-[16px] leading-relaxed text-graphite/75 md:text-[17px]">
+              <div className="mt-8 space-y-5 text-[16px] leading-relaxed text-graphite md:text-[17px]">
                 <p>
                   Наталія Жилан прийшла у стоматологію понад двадцять років тому —
                   і відтоді щодня доводить, що лікування може бути спокійним.
@@ -113,10 +113,10 @@ export function Doctor() {
               {credentials.map((c, i) => (
                 <Reveal key={c.year} delay={0.06 + i * 0.05}>
                   <div className="flex items-baseline gap-6 py-4">
-                    <span className="w-14 shrink-0 font-mono text-[12px] tabular-nums text-ink/60">
+                    <span className="w-14 shrink-0 font-mono text-[12px] tabular-nums text-ink/85">
                       {c.year}
                     </span>
-                    <span className="text-[15px] text-graphite/75">{c.text}</span>
+                    <span className="text-[15px] text-graphite">{c.text}</span>
                   </div>
                 </Reveal>
               ))}

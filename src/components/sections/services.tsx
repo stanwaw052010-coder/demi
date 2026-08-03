@@ -41,7 +41,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         aria-hidden
         className={cn(
           "absolute left-7 top-7 font-mono text-[11px] tabular-nums md:left-8 md:top-8",
-          hasImage ? "text-white/55" : "text-clay",
+          hasImage ? "text-white/85" : "text-clay",
         )}
       >
         {String(index + 1).padStart(2, "0")}
@@ -69,7 +69,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         </h3>
         <p
           className={cn(
-            "mt-2 text-[13px] font-medium uppercase tracking-[0.12em]",
+            "mt-2 text-[14px] font-medium uppercase tracking-[0.12em]",
             hasImage ? "text-sand" : "text-clay",
           )}
         >
@@ -81,7 +81,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
             <p
               className={cn(
                 "max-w-[38ch] pt-4 text-[14px] leading-relaxed transition-opacity duration-500 md:opacity-0 md:group-hover:opacity-100",
-                hasImage ? "text-white/70" : "text-graphite/75",
+                hasImage ? "text-white/85" : "text-graphite",
               )}
             >
               {service.detail}
@@ -134,7 +134,7 @@ export function Services() {
                     <h3 className="mt-3 font-display text-[20px] font-light tracking-[-0.02em] text-ink md:text-[22px]">
                       {item.title}
                     </h3>
-                    <p className="mt-1.5 text-[13px] text-graphite/70">
+                    <p className="mt-1.5 text-[14px] text-graphite">
                       {item.note}
                     </p>
                   </div>

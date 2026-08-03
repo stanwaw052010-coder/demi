@@ -62,7 +62,7 @@ export function WhyUs() {
                       strokeWidth={1}
                       aria-hidden
                     />
-                    <span aria-hidden className="font-mono text-[11px] tabular-nums text-white/20">
+                    <span aria-hidden className="font-mono text-[11px] tabular-nums text-white/55">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>
@@ -70,7 +70,7 @@ export function WhyUs() {
                   <h3 className="mt-16 font-display text-[21px] font-light tracking-[-0.02em] text-white md:mt-20 md:text-[24px]">
                     {item.title}
                   </h3>
-                  <p className="mt-3 max-w-[34ch] text-[14px] leading-relaxed text-white/55 transition-colors duration-700 group-hover:text-white/65">
+                  <p className="mt-3 max-w-[34ch] text-[14px] leading-relaxed text-white/85 transition-colors duration-700 group-hover:text-white/85">
                     {item.text}
                   </p>
 

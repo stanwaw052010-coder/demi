@@ -10,8 +10,8 @@
      "cream" is a lighter band than mist, "sand" is decorative, "clay" is the
      text-safe accent used for the serif words. */
   --color-cream: #f7f7f7;
-  --color-sand: #c2c6ca;
-  --color-clay: #4b5158;
+  --color-sand: #9aa3aa;
+  --color-clay: #2f343b;
 
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
@@ -54,7 +54,7 @@ body {
 }
 
 section {
-  scroll-margin-top: 120px;
+  scroll-margin-top: 96px;
 }
 
 /*
@@ -139,11 +139,11 @@ footer {
 }
 
 @utility eyebrow {
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.6);
+  color: rgba(17, 17, 17, 0.78);
 }
 
 @utility hairline {

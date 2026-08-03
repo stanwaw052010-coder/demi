@@ -6,30 +6,6 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
 import { MapPanel } from "@/components/sections/map-panel";
 
-const items = [
-  {
-    icon: MapPin,
-    label: "Адреса",
-    value: site.address,
-    href: site.mapsLink,
-    external: true,
-  },
-  {
-    icon: Phone,
-    label: "Телефон",
-    value: site.phone,
-    href: site.phoneHref,
-    external: false,
-  },
-  {
-    icon: InstagramIcon,
-    label: "Instagram",
-    value: site.instagramHandle,
-    href: site.instagram,
-    external: true,
-  },
-];
-
 export function Contacts() {
   return (
     <section id="contacts" className="bg-white py-24 md:py-36">
@@ -54,68 +30,90 @@ export function Contacts() {
 
           {/* Details */}
           <Reveal delay={0.08} y={32} className="h-full">
-            <div className="flex h-full flex-col rounded-[24px] border border-ink/[0.07] bg-mist p-7 md:p-9">
-              <div className="divide-y divide-ink/[0.08]">
-                {items.map(({ icon: Icon, ...item }) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    target={item.external ? "_blank" : undefined}
-                    rel={item.external ? "noopener noreferrer" : undefined}
-                    className="group flex items-center gap-5 py-5 first:pt-0"
-                  >
-                    <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-sand/60 bg-white text-clay transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:border-ink group-hover:bg-ink group-hover:text-white">
-                      <Icon className="size-4" strokeWidth={1.5} />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-[11px] uppercase tracking-[0.18em] text-ink/60">
-                        {item.label}
-                      </span>
-                      <span className="mt-1 block truncate text-[16px] font-medium tracking-[-0.01em] text-ink">
-                        {item.value}
-                      </span>
-                    </span>
-                    <ArrowUpRight
-                      className="ml-auto size-4 shrink-0 text-ink/25 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ink"
-                      strokeWidth={1.5}
-                    />
-                  </a>
-                ))}
-              </div>
-
-              <div className="mt-8 rounded-[20px] border border-ink/[0.07] bg-white p-6">
-                <div className="flex items-center gap-2.5">
-                  <Clock className="size-4 text-ink/50" strokeWidth={1.5} />
-                  <span className="text-[11px] uppercase tracking-[0.18em] text-ink/60">
-                    Графік роботи
-                  </span>
-                </div>
-                <dl className="mt-5 space-y-3">
-                  {site.hours.map((h) => (
-                    <div
-                      key={h.days}
-                      className="flex items-baseline justify-between gap-4"
-                    >
-                      <dt className="text-[14px] text-graphite/70">{h.days}</dt>
-                      <dd className="text-[14px] font-medium tabular-nums text-ink">
-                        {h.time}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-
-              <ButtonLink
+            <div className="flex h-full flex-col gap-4">
+              {/* Phone — the primary action, impossible to miss */}
+              <a
                 href={site.phoneHref}
-                size="lg"
-                className="mt-8 w-full"
+                className="group flex items-center justify-between gap-5 rounded-[24px] bg-ink p-7 text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 md:p-8"
               >
+                <span>
+                  <span className="block text-[12px] font-semibold uppercase tracking-[0.2em] text-white/70">
+                    Телефон
+                  </span>
+                  <span className="mt-2 block font-display text-[26px] font-bold tabular-nums tracking-[-0.02em] md:text-[32px]">
+                    {site.phone}
+                  </span>
+                </span>
+                <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-white text-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105">
+                  <Phone className="size-5" strokeWidth={2.25} />
+                </span>
+              </a>
+
+              {/* Address */}
+              <a
+                href={site.mapsLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group rounded-[24px] border border-ink/15 bg-white p-7 transition-colors duration-500 hover:border-ink/40 md:p-8"
+              >
+                <span className="flex items-center gap-2.5 text-[12px] font-semibold uppercase tracking-[0.2em] text-graphite">
+                  <MapPin className="size-4" strokeWidth={2.25} />
+                  Адреса
+                </span>
+                <span className="mt-3 block font-display text-[22px] font-semibold leading-snug tracking-[-0.02em] text-ink md:text-[26px]">
+                  {site.address}
+                </span>
+                <span className="mt-3 inline-flex items-center gap-2 text-[15px] font-semibold text-ink underline-offset-4 group-hover:underline">
+                  Прокласти маршрут
+                  <ArrowUpRight className="size-4" strokeWidth={2.25} />
+                </span>
+              </a>
+
+              {/* Hours + Instagram */}
+              <div className="grid flex-1 gap-4 sm:grid-cols-2">
+                <div className="rounded-[24px] border border-ink/15 bg-white p-7">
+                  <span className="flex items-center gap-2.5 text-[12px] font-semibold uppercase tracking-[0.2em] text-graphite">
+                    <Clock className="size-4" strokeWidth={2.25} />
+                    Графік
+                  </span>
+                  <dl className="mt-4 space-y-2.5">
+                    {site.hours.map((h) => (
+                      <div key={h.days} className="flex flex-col">
+                        <dt className="text-[13px] text-graphite">{h.days}</dt>
+                        <dd className="text-[16px] font-semibold tabular-nums text-ink">
+                          {h.time}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+
+                <a
+                  href={site.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col justify-between rounded-[24px] border border-ink/15 bg-white p-7 transition-colors duration-500 hover:border-ink/40"
+                >
+                  <span className="flex items-center gap-2.5 text-[12px] font-semibold uppercase tracking-[0.2em] text-graphite">
+                    <InstagramIcon className="size-4" strokeWidth={2.25} />
+                    Instagram
+                  </span>
+                  <span>
+                    <span className="mt-6 block font-display text-[18px] font-semibold tracking-[-0.01em] text-ink md:text-[20px]">
+                      {site.instagramHandle}
+                    </span>
+                    <span className="mt-2 inline-flex items-center gap-2 text-[14px] font-medium text-graphite group-hover:text-ink">
+                      Фото робіт щодня
+                      <ArrowUpRight className="size-4" strokeWidth={2.25} />
+                    </span>
+                  </span>
+                </a>
+              </div>
+
+              <ButtonLink href={site.phoneHref} size="lg" className="w-full font-semibold">
                 Записатися на прийом
                 <ArrowUpRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
               </ButtonLink>
-              <p className="mt-4 text-center text-[12px] text-graphite/70">
-                Відповідаємо у робочі години протягом кількох хвилин
-              </p>
             </div>
           </Reveal>
         </div>

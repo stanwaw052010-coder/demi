@@ -22,7 +22,7 @@ export function Gallery() {
               href={site.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-3 text-[14px] font-medium text-graphite/75 transition-colors duration-300 hover:text-ink"
+              className="group inline-flex items-center gap-3 text-[14px] font-medium text-graphite transition-colors duration-300 hover:text-ink"
             >
               <InstagramIcon className="size-4" />
               {site.instagramHandle}

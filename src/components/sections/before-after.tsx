@@ -133,7 +133,7 @@ export function BeforeAfter() {
               <p className="font-display text-[19px] font-light tracking-[-0.02em] text-white md:text-[24px]">
                 {item.title}
               </p>
-              <p className="mt-1.5 text-[12px] uppercase tracking-[0.14em] text-white/55">
+              <p className="mt-1.5 text-[12px] uppercase tracking-[0.14em] text-white/85">
                 {item.detail}
               </p>
             </div>
@@ -159,7 +159,7 @@ export function BeforeAfter() {
               <span
                 className={cn(
                   "font-mono text-[11px] tabular-nums transition-colors duration-500",
-                  active === i ? "text-ink" : "text-ink/60",
+                  active === i ? "text-ink" : "text-ink/85",
                 )}
               >
                 {String(i + 1).padStart(2, "0")}
@@ -167,7 +167,7 @@ export function BeforeAfter() {
               <span
                 className={cn(
                   "text-[14px] font-medium tracking-[-0.01em] transition-colors duration-500",
-                  active === i ? "text-ink" : "text-graphite/70",
+                  active === i ? "text-ink" : "text-graphite",
                 )}
               >
                 {c.title}

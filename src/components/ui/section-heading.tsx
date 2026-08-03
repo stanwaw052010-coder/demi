@@ -42,7 +42,7 @@ export function SectionHeading({
                 aria-hidden
                 className={cn(
                   "font-mono text-[11px] tabular-nums",
-                  tone === "dark" ? "text-white/45" : "text-ink/30",
+                  tone === "dark" ? "text-white/85" : "text-ink/50",
                 )}
               >
                 {index}
@@ -57,7 +57,7 @@ export function SectionHeading({
             <span
               className={cn(
                 "eyebrow",
-                tone === "dark" && "text-white/50",
+                tone === "dark" && "text-white/85",
               )}
             >
               {eyebrow}
@@ -81,7 +81,7 @@ export function SectionHeading({
             <p
               className={cn(
                 "mt-6 max-w-xl text-[16px] leading-relaxed md:text-[18px]",
-                tone === "dark" ? "text-white/55" : "text-graphite/70",
+                tone === "dark" ? "text-white/85" : "text-graphite",
                 align === "center" && "mx-auto",
               )}
             >
