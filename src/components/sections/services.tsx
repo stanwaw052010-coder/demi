@@ -5,9 +5,11 @@ import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
+import { AutoVideo } from "@/components/ui/auto-video";
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {
-  const hasImage = Boolean(service.image);
+  const hasMedia = Boolean(service.image || service.video);
+  const hasImage = hasMedia;
 
   return (
     <a
@@ -21,18 +23,28 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
           : "min-h-[300px] bg-mist text-ink hairline hover:border-sand/60 hover:bg-cream hover:shadow-[0_30px_70px_-45px_rgba(17,17,17,0.45)]",
       )}
     >
-      {hasImage && (
+      {hasMedia && (
         <>
-          <Image
-            src={service.image!}
-            alt={service.title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 40vw"
-            className="object-cover opacity-70 grayscale-[35%] transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06] group-hover:opacity-80 group-hover:grayscale-0"
-          />
+          {service.video ? (
+            <AutoVideo
+              src={service.video}
+              poster={service.poster!}
+              label={service.title}
+              withPlayButton={false}
+              className="absolute inset-0 size-full bg-transparent opacity-70 grayscale-[35%] transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-85 group-hover:grayscale-0"
+            />
+          ) : (
+            <Image
+              src={service.image!}
+              alt={service.title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 40vw"
+              className="object-cover opacity-70 grayscale-[35%] transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06] group-hover:opacity-80 group-hover:grayscale-0"
+            />
+          )}
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/10 transition-opacity duration-700 group-hover:opacity-90"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/10 transition-opacity duration-700 group-hover:opacity-90"
           />
         </>
       )}

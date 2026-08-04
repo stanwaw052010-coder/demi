@@ -2,93 +2,30 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { ArrowUpRight, Play } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { gallery } from "@/lib/content";
 import { site } from "@/lib/site";
 import { InstagramIcon } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { LogoWatermark } from "@/components/ui/logo-watermark";
+import { AutoVideo } from "@/components/ui/auto-video";
 
-/**
- * The clinic walkthrough. The file is only fetched once the section is close
- * to the viewport, so a 2.5 MB video never delays the first screen.
- */
+/** The clinic walkthrough — fetched only as the section nears the viewport. */
 function ClinicVideo() {
-  const ref = React.useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = React.useState(false);
-
-  React.useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-
-    /* Respect data saver and reduced motion — the poster stays instead. */
-    const connection = (
-      navigator as Navigator & { connection?: { saveData?: boolean } }
-    ).connection;
-    if (
-      connection?.saveData ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        observer.disconnect();
-        node
-          .play()
-          .then(() => setPlaying(true))
-          .catch(() => setPlaying(false));
-      },
-      { rootMargin: "150px" },
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <div className="group relative aspect-9/16 overflow-hidden rounded-[24px] bg-mist shadow-[0_40px_110px_-60px_rgba(17,17,17,0.55)]">
-      <video
-        ref={ref}
-        muted
-        loop
-        playsInline
-        preload="none"
-        poster="/images/clinic-video-poster.jpg"
-        className="size-full object-cover"
-        aria-label="Відео інтер'єру клініки"
-      >
-        {/* WebM first for Chrome and Firefox, H.264 for Safari and iOS */}
-        <source src="/video/clinic.webm" type="video/webm" />
-        <source src="/video/clinic.mp4" type="video/mp4" />
-      </video>
-
-      {!playing && (
-        <button
-          type="button"
-          onClick={() => {
-            const node = ref.current;
-            if (!node) return;
-            node.play().then(() => setPlaying(true));
-          }}
-          className="absolute inset-0 flex items-center justify-center bg-ink/20 transition-colors duration-500 hover:bg-ink/30"
-          aria-label="Відтворити відео клініки"
-        >
-          <span className="flex size-16 items-center justify-center rounded-full bg-white text-ink shadow-[0_16px_40px_-16px_rgba(17,17,17,0.8)]">
-            <Play className="ml-0.5 size-6 fill-ink" strokeWidth={1.5} />
-          </span>
-        </button>
-      )}
-
+    <AutoVideo
+      src="/video/clinic"
+      poster="/images/clinic-video-poster.jpg"
+      label="Відео інтер'єру клініки"
+      className="aspect-9/16 rounded-[24px] shadow-[0_40px_110px_-60px_rgba(17,17,17,0.55)]"
+    >
       <LogoWatermark className="right-5 top-5" />
 
       <span className="pointer-events-none absolute bottom-5 left-5 rounded-full glass-dark px-4 py-2 text-[13px] font-semibold uppercase tracking-[0.16em] text-white">
         Наш простір
       </span>
-    </div>
+    </AutoVideo>
   );
 }
 

@@ -4,6 +4,10 @@ export type Service = {
   summary: string;
   detail: string;
   image?: string;
+  /** Base path without extension — a looping clip instead of a still. */
+  video?: string;
+  /** Poster for `video`; also the still shown to reduced-motion users. */
+  poster?: string;
   span?: boolean;
 };
 
@@ -39,6 +43,8 @@ export const services: Service[] = [
     summary: "Від одного зуба до цілої щелепи",
     detail:
       "Відновлення втраченого зуба з природною формою, функцією та естетикою — від діагностики до коронки. За повної відсутності зубів робимо незнімний протез на чотирьох імплантах.",
+    video: "/video/implant",
+    poster: "/images/implant-video-poster.jpg",
   },
   {
     id: "restoration",
@@ -46,6 +52,7 @@ export const services: Service[] = [
     summary: "Форма, прозорість, відтінок",
     detail:
       "Пошарове відтворення анатомії зуба — так, щоб реставрацію не було видно навіть зблизька.",
+    image: "/images/before-after-2.jpg",
   },
   {
     id: "kids",
@@ -53,6 +60,7 @@ export const services: Service[] = [
     summary: "Спокійно й довірливо",
     detail:
       "Перший візит без страху: адаптація, профілактика та лікування у власному темпі дитини.",
+    image: "/images/kids-2.jpg",
   },
 ];
 
