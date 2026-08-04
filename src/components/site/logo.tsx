@@ -15,21 +15,21 @@ export function Logo({
   size?: "sm" | "md" | "lg";
 }) {
   const mark = {
-    sm: "h-9 w-[31px]",
-    md: "h-[52px] w-[45px]",
-    lg: "h-14 w-[49px]",
+    sm: "h-11 w-[38px]",
+    md: "h-16 w-[55px]",
+    lg: "h-20 w-[69px]",
   }[size];
 
   const name = {
-    sm: "text-[17px]",
-    md: "text-[24px]",
-    lg: "text-[26px]",
+    sm: "text-[19px]",
+    md: "text-[29px]",
+    lg: "text-[34px]",
   }[size];
 
   const script = {
-    sm: "text-[15px]",
-    md: "text-[21px]",
-    lg: "text-[23px]",
+    sm: "text-[17px]",
+    md: "text-[25px]",
+    lg: "text-[30px]",
   }[size];
 
   return (
@@ -53,7 +53,7 @@ export function Logo({
       <span className="flex flex-col leading-none">
         <span
           className={cn(
-            "flex items-center gap-1.5 text-[8.5px] font-semibold uppercase tracking-[0.3em]",
+            "flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.3em]",
             tone === "dark" ? "text-clay" : "text-sand",
           )}
         >

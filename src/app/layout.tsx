@@ -42,7 +42,21 @@ export const metadata: Metadata = {
     description:
       "Створюємо здорові та красиві усмішки вже понад 20 років. Лікування під мікроскопом, реставрація, імплантація, відбілювання.",
     siteName: site.name,
-    images: ["/images/hero.jpg"],
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Dental Clinic Nataly Zhylan — вул. Коновальця 3, Тернопіль, +380 97 900 12 15",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dental Clinic Nataly — сучасна стоматологія у Тернополі",
+    description:
+      "Створюємо здорові та красиві усмішки вже понад 20 років. Лікування під мікроскопом, реставрація, імплантація, відбілювання.",
+    images: ["/og.jpg"],
   },
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },

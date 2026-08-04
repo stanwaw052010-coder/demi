@@ -8,6 +8,7 @@ import { site } from "@/lib/site";
 import { InstagramIcon } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { LogoWatermark } from "@/components/ui/logo-watermark";
 
 /**
  * The clinic walkthrough. The file is only fetched once the section is close
@@ -81,6 +82,8 @@ function ClinicVideo() {
           </span>
         </button>
       )}
+
+      <LogoWatermark className="right-5 top-5" />
 
       <span className="pointer-events-none absolute bottom-5 left-5 rounded-full glass-dark px-4 py-2 text-[13px] font-semibold uppercase tracking-[0.16em] text-white">
         Наш простір

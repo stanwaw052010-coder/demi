@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ArrowDownRight } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
@@ -51,9 +51,14 @@ export function RotatingBadge({
           </textPath>
         </text>
       </svg>
-      <span className="relative flex size-11 items-center justify-center rounded-full border border-white/20 transition-colors duration-500 group-hover:border-white/50 group-hover:bg-white group-hover:text-ink">
-        <ArrowDownRight className="size-4" strokeWidth={1.5} />
-      </span>
+      <Image
+        src="/logo-mark-light.png"
+        alt=""
+        width={180}
+        height={208}
+        aria-hidden
+        className="relative h-12 w-auto transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 md:h-14"
+      />
     </a>
   );
 }

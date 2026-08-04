@@ -5,6 +5,7 @@ import { ArrowUpRight, Check, MapPin, Phone } from "lucide-react";
 import { services } from "@/lib/content";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { InstagramIcon, ViberIcon } from "@/components/ui/icons";
 
@@ -74,6 +75,14 @@ export function Booking() {
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
           {/* Contacts, stated as plainly as possible */}
           <div>
+            <Image
+              src="/logo-light.png"
+              alt="Dental Clinic Nataly Zhylan"
+              width={480}
+              height={592}
+              sizes="150px"
+              className="mb-8 h-28 w-auto md:h-32"
+            />
             <span className="eyebrow text-white/70">Запис на прийом</span>
             <h2 className="display-tight mt-5 font-display text-[32px] font-light sm:text-[42px] lg:text-[50px]">
               Зателефонуйте або{" "}

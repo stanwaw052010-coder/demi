@@ -7,6 +7,7 @@ import { MoveHorizontal } from "lucide-react";
 import { cases } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/ui/reveal";
+import { LogoWatermark } from "@/components/ui/logo-watermark";
 import { SectionHeading } from "@/components/ui/section-heading";
 
 const clamp = (n: number) => Math.min(100, Math.max(0, n));
@@ -95,6 +96,8 @@ export function BeforeAfter() {
               />
             </motion.div>
 
+            <LogoWatermark className="bottom-5 right-5 md:bottom-7 md:right-7" />
+
             {/* Labels */}
             <span className="pointer-events-none absolute left-5 top-5 rounded-full glass-dark px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-white/90 md:left-7 md:top-7">
               До
@@ -130,7 +133,8 @@ export function BeforeAfter() {
             </div>
 
             {/* Case caption */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent p-5 pt-16 md:p-8 md:pt-24">
+            {/* pb leaves the bottom-right corner free for the watermark */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent p-5 pb-16 pt-16 md:p-8 md:pt-24">
               <p className="font-display text-[19px] font-light tracking-[-0.02em] text-white md:text-[24px]">
                 {item.title}
               </p>

@@ -46,7 +46,7 @@ export function Header() {
             <div
               className={cn(
                 "flex items-center justify-between transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
-                scrolled ? "h-[76px]" : "h-20 md:h-24",
+                scrolled ? "h-[84px]" : "h-24 md:h-28",
               )}
             >
               <Logo size="md" />

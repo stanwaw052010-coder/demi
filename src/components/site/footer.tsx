@@ -148,8 +148,8 @@ export function Footer() {
           alt="Dental Clinic Nataly Zhylan"
           width={480}
           height={592}
-          sizes="200px"
-          className="h-40 w-auto opacity-90 md:h-48"
+          sizes="260px"
+          className="h-52 w-auto opacity-95 md:h-64"
         />
       </div>
 
