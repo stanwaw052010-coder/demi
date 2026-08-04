@@ -28,9 +28,9 @@ export const services: Service[] = [
   {
     id: "whitening",
     title: "Відбілювання",
-    summary: "До 8 тонів світліше",
+    summary: "Система Beyond · до 8 тонів",
     detail:
-      "Безпечні протоколи кабінетного відбілювання з попередньою ремінералізацією емалі.",
+      "Кабінетне відбілювання системою Beyond із попередньою ремінералізацією емалі. Результат, як правило, «тримається» до 1–2 років.",
     image: "/images/service-3.jpg",
   },
   {
@@ -123,12 +123,32 @@ export const process = [
   },
 ] as const;
 
-export const gallery: { src: string; label: string; span?: boolean }[] = [
+export const gallery: { src: string; label: string }[] = [
   { src: "/images/equipment.jpg", label: "Мікроскоп" },
   { src: "/images/before-after-2.jpg", label: "Реставрація" },
-  { src: "/images/service-3.jpg", label: "Відбілювання" },
+  { src: "/images/kids-3.jpg", label: "Дитячий прийом" },
   { src: "/images/doctor.jpg", label: "Наталія Жилан" },
 ];
+
+/** Children's appointment — the carousel under «Дитяча стоматологія». */
+export const kids = [
+  {
+    src: "/images/kids-1.jpg",
+    caption: "Знайомство з кабінетом — без поспіху й тиску",
+  },
+  {
+    src: "/images/kids-2.jpg",
+    caption: "Огляд у чотири руки: показуємо кожен крок",
+  },
+  {
+    src: "/images/kids-3.jpg",
+    caption: "Лікування у власному темпі дитини",
+  },
+  {
+    src: "/images/kids-4.jpg",
+    caption: "Після прийому — тільки хороші спогади",
+  },
+] as const;
 
 export const cases = [
   {
@@ -137,13 +157,15 @@ export const cases = [
     detail: "Одне відвідування · композитна реставрація",
     before: "/images/before-after-1.jpg",
     after: "/images/before-after-2.jpg",
+    ratio: "16 / 10",
   },
   {
     id: "case-2",
-    title: "Професійне відбілювання",
-    detail: "Кабінетний протокол · захист ясен",
+    title: "Відбілювання системою Beyond",
+    detail: "Один сеанс · результат тримається 1–2 роки",
     before: "/images/before-after-3.jpg",
     after: "/images/before-after-4.jpg",
+    ratio: "12 / 5",
   },
 ] as const;
 
@@ -195,6 +217,10 @@ export const faq = [
   {
     q: "З якого віку можна приводити дитину?",
     a: "Перший візит-знайомство доречний уже після появи перших зубів, приблизно з року. Він проходить без лікування: дитина звикає до кабінету, крісла та лікаря — саме це формує спокійне ставлення до стоматології на роки вперед.",
+  },
+  {
+    q: "Скільки тримається результат відбілювання?",
+    a: "Результат відбілювання зубів системою Beyond, як правило, «тримається» до 1–2 років. Термін залежить від догляду: професійна гігієна двічі на рік, менше кави, чаю та червоного вина помітно продовжують ефект.",
   },
   {
     q: "Чи безпечне відбілювання для емалі?",

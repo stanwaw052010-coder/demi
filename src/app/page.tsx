@@ -20,6 +20,10 @@ const BeforeAfter = dynamic(() =>
   import("@/components/sections/before-after").then((m) => m.BeforeAfter),
 );
 
+const Kids = dynamic(() =>
+  import("@/components/sections/kids").then((m) => m.Kids),
+);
+
 const Space = dynamic(() =>
   import("@/components/sections/space").then((m) => m.Space),
 );
@@ -42,6 +46,7 @@ export default function Home() {
         <BeforeAfter />
         <Process />
         <Doctor />
+        <Kids />
         <Space />
         <Testimonials />
         <Faq />

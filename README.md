@@ -24,8 +24,8 @@ src/
   components/
     site/             header, topbar, footer, logo, мобільна CTA-панель
     sections/         hero, stats, services, why-us, before-after, process,
-                      doctor, space, testimonials, faq, booking, contacts,
-                      map-panel
+                      doctor, kids, space, testimonials, faq, booking,
+                      contacts, map-panel
     ui/               button, accordion, counter, reveal, rotating-badge,
                       scroll-progress, section-heading, icons
   lib/
@@ -41,10 +41,6 @@ public/images/          фотографії (hero.jpg і doctor.jpg — спр�
 
 ## Фотографії
 
-У `public/images/` лежать нейтральні плейсхолдери. Шляхи вже підключені —
-достатньо замінити файли з тими самими іменами, і сайт одразу виглядає
-завершеним. Рекомендовані розміри (JPG, якість ~80–85%):
-
 Усі фото на сайті — справжні, з матеріалів клініки:
 
 | Файл                     | Розмір      | Де використовується                   |
@@ -55,12 +51,15 @@ public/images/          фотографії (hero.jpg і doctor.jpg — спр�
 | `equipment.jpg`          | 1200 × 1200 | плитка «Мікроскоп» у секції «Клініка» |
 | `service-1/2/3.jpg`      | ~1300 px    | картки послуг                         |
 | `before-after-1/2.jpg`   | 1400 × 875  | кейс 01 — художня реставрація         |
-| `before-after-3/4.jpg`   | 1400 × 875  | кейс 02 — відбілювання                |
+| `before-after-3/4.jpg`   | 1400 × 583  | кейс 02 — відбілювання Beyond         |
+| `kids-1…4.jpg`           | 900 × 1125  | карусель «Дитяча стоматологія»        |
 | `clinic-video-poster.jpg`| 720 × 1280  | постер відео інтер'єру                |
 
 У парах «до / після» кадри мають бути зняті з однакового ракурсу — повзунок
-порівняння накладає їх один на одного. Щоб додати новий кейс, покладіть пару
-файлів у `public/images/` і додайте запис у `cases` (`src/lib/content.ts`).
+порівняння накладає їх один на одного. Кожен кейс має власне поле `ratio`
+(пропорції рамки), тож широкі кадри усмішки й макрозйомка можуть жити поруч.
+Щоб додати кейс, покладіть пару файлів у `public/images/` і додайте запис у
+`cases` (`src/lib/content.ts`).
 
 ## Відео
 

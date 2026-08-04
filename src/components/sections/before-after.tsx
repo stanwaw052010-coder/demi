@@ -50,8 +50,9 @@ export function BeforeAfter() {
             onPointerMove={(e) => dragging && update(e.clientX)}
             onPointerUp={() => setDragging(false)}
             onPointerCancel={() => setDragging(false)}
+            style={{ aspectRatio: item.ratio }}
             className={cn(
-              "relative mx-auto aspect-4/5 w-full max-w-[940px] touch-none select-none overflow-hidden rounded-[24px] bg-mist shadow-[0_50px_120px_-70px_rgba(17,17,17,0.6)] sm:aspect-16/10",
+              "relative mx-auto min-h-[260px] w-full max-w-[940px] touch-none select-none overflow-hidden rounded-[24px] bg-mist shadow-[0_50px_120px_-70px_rgba(17,17,17,0.6)]",
               dragging ? "cursor-grabbing" : "cursor-grab",
             )}
           >

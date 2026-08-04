@@ -11,7 +11,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
   return (
     <a
-      href="#contacts"
+      href={service.id === "kids" ? "#kids" : "#booking"}
       className={cn(
         "group relative flex flex-col justify-end overflow-hidden rounded-[24px] p-7 transition-[transform,box-shadow,background-color] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:p-8",
         "hover:-translate-y-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/70 focus-visible:ring-offset-2",

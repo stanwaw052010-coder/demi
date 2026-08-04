@@ -94,7 +94,7 @@ export function Space() {
     <section id="space" className="bg-white py-24 md:py-32">
       <div className="container-x">
         <SectionHeading
-          index="06"
+          index="07"
           eyebrow="Клініка"
           title={
             <>

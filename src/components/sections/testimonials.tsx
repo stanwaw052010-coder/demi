@@ -33,7 +33,7 @@ export function Testimonials() {
     <section id="reviews" className="bg-white py-24 md:py-36">
       <div className="container-x">
         <SectionHeading
-          index="07"
+          index="08"
           eyebrow="Відгуки"
           title={
             <>

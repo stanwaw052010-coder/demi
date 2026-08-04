@@ -20,7 +20,7 @@ export function Faq() {
             <Reveal>
               <div className="flex items-center gap-3">
                 <span aria-hidden className="font-mono text-[11px] tabular-nums text-ink/50">
-                  08
+                  09
                 </span>
                 <span className="h-px w-8 bg-ink/15" />
                 <span className="eyebrow">Питання</span>
