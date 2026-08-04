@@ -124,17 +124,16 @@ export const process = [
 ] as const;
 
 export const gallery: { src: string; label: string; span?: boolean }[] = [
-  { src: "/images/service-1.jpg", label: "Кабінет", span: true },
+  { src: "/images/equipment.jpg", label: "Мікроскоп" },
   { src: "/images/before-after-2.jpg", label: "Реставрація" },
-  { src: "/images/clinic.jpg", label: "Обладнання" },
   { src: "/images/service-3.jpg", label: "Відбілювання" },
-  { src: "/images/before-after-4.jpg", label: "Результат" },
+  { src: "/images/doctor.jpg", label: "Наталія Жилан" },
 ];
 
 export const cases = [
   {
     id: "case-1",
-    title: "Художня реставрація фронтальної групи",
+    title: "Художня реставрація пришийкової зони",
     detail: "Одне відвідування · композитна реставрація",
     before: "/images/before-after-1.jpg",
     after: "/images/before-after-2.jpg",
@@ -142,16 +141,9 @@ export const cases = [
   {
     id: "case-2",
     title: "Професійне відбілювання",
-    detail: "Кабінетний протокол · 2 сеанси",
+    detail: "Кабінетний протокол · захист ясен",
     before: "/images/before-after-3.jpg",
     after: "/images/before-after-4.jpg",
-  },
-  {
-    id: "case-3",
-    title: "Комплексна гігієна та полірування",
-    detail: "Ультразвук · Air Flow · фторування",
-    before: "/images/before-after-5.jpg",
-    after: "/images/before-after-6.jpg",
   },
 ] as const;
 

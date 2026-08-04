@@ -51,7 +51,7 @@ export function BeforeAfter() {
             onPointerUp={() => setDragging(false)}
             onPointerCancel={() => setDragging(false)}
             className={cn(
-              "relative aspect-4/5 w-full touch-none select-none overflow-hidden rounded-[24px] bg-mist shadow-[0_50px_120px_-70px_rgba(17,17,17,0.6)] sm:aspect-16/10",
+              "relative mx-auto aspect-4/5 w-full max-w-[940px] touch-none select-none overflow-hidden rounded-[24px] bg-mist shadow-[0_50px_120px_-70px_rgba(17,17,17,0.6)] sm:aspect-16/10",
               dragging ? "cursor-grabbing" : "cursor-grab",
             )}
           >
@@ -67,7 +67,7 @@ export function BeforeAfter() {
                 src={item.after}
                 alt={`${item.title} — після лікування`}
                 fill
-                sizes="(max-width: 1280px) 100vw, 1280px"
+                sizes="(max-width: 1024px) 100vw, 940px"
                 className="object-cover"
               />
             </motion.div>
@@ -89,7 +89,7 @@ export function BeforeAfter() {
                 src={item.before}
                 alt={`${item.title} — до лікування`}
                 fill
-                sizes="(max-width: 1280px) 100vw, 1280px"
+                sizes="(max-width: 1024px) 100vw, 940px"
                 className="object-cover"
               />
             </motion.div>
@@ -141,7 +141,7 @@ export function BeforeAfter() {
         </Reveal>
 
         {/* Case switcher */}
-        <div className="mt-8 grid gap-px overflow-hidden rounded-[20px] border border-ink/[0.08] bg-ink/[0.08] sm:grid-cols-3">
+        <div className="mx-auto mt-8 grid max-w-[940px] gap-px overflow-hidden rounded-[20px] border border-ink/[0.08] bg-ink/[0.08] sm:grid-cols-2">
           {cases.map((c, i) => (
             <button
               key={c.id}

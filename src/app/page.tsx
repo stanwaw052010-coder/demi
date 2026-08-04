@@ -12,13 +12,16 @@ import { Doctor } from "@/components/sections/doctor";
 import { Testimonials } from "@/components/sections/testimonials";
 import { Faq } from "@/components/sections/faq";
 import { Process } from "@/components/sections/process";
-import { Gallery } from "@/components/sections/gallery";
 import { Contacts } from "@/components/sections/contacts";
 import { RevealObserver } from "@/components/ui/reveal-observer";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 
 const BeforeAfter = dynamic(() =>
   import("@/components/sections/before-after").then((m) => m.BeforeAfter),
+);
+
+const Space = dynamic(() =>
+  import("@/components/sections/space").then((m) => m.Space),
 );
 
 /* Below the fold — its form logic loads after the page is interactive */
@@ -39,7 +42,7 @@ export default function Home() {
         <BeforeAfter />
         <Process />
         <Doctor />
-        <Gallery />
+        <Space />
         <Testimonials />
         <Faq />
         <Booking />
