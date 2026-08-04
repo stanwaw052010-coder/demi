@@ -123,7 +123,7 @@ export const process = [
   },
 ] as const;
 
-export const gallery: { src: string; label: string }[] = [
+export const gallery: { src: string; label: string; span?: boolean }[] = [
   { src: "/images/equipment.jpg", label: "Мікроскоп" },
   { src: "/images/before-after-2.jpg", label: "Реставрація" },
   { src: "/images/kids-3.jpg", label: "Дитячий прийом" },

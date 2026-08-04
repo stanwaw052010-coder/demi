@@ -113,6 +113,17 @@ NEXT_PUBLIC_FORM_ENDPOINT=https://formspree.io/f/xxxxxxx
   хедер, scroll reveal), анімується на CSS — сторінка малюється ще до
   гідратації.
 
+## Деплой (Netlify)
+
+`netlify.toml` у корені задає команду збірки, теку публікації, Node 22 та
+офіційний плагін `@netlify/plugin-nextjs`.
+
+Якщо збірка падає з помилкою у файлі, якого в репозиторії вже немає, — Netlify
+зібрав старий чи змішаний чекаут. Треба:
+
+1. Site configuration → Build & deploy → Branch to deploy: гілка з кодом.
+2. Deploys → Trigger deploy → **Clear cache and deploy site**.
+
 ## Продуктивність і доступність
 
 Lighthouse (production build): **desktop 100 / 100 / 100 / 100**,
