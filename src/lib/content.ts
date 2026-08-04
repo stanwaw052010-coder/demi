@@ -35,10 +35,10 @@ export const services: Service[] = [
   },
   {
     id: "implants",
-    title: "Імплантація",
-    summary: "Планування та встановлення",
+    title: "Імплантація та протезування",
+    summary: "Від одного зуба до цілої щелепи",
     detail:
-      "Відновлення втраченого зуба з природною формою, функцією та естетикою — від діагностики до коронки.",
+      "Відновлення втраченого зуба з природною формою, функцією та естетикою — від діагностики до коронки. За повної відсутності зубів робимо незнімний протез на чотирьох імплантах.",
   },
   {
     id: "restoration",
@@ -123,12 +123,72 @@ export const process = [
   },
 ] as const;
 
-export const gallery: { src: string; label: string; span?: boolean }[] = [
+export const gallery: {
+  src: string;
+  label: string;
+  span?: boolean;
+  /** object-position, when the default centre crop loses the subject. */
+  position?: string;
+}[] = [
   { src: "/images/equipment.jpg", label: "Мікроскоп" },
-  { src: "/images/before-after-2.jpg", label: "Реставрація" },
+  { src: "/images/whitening-process.jpg", label: "Відбілювання Beyond" },
   { src: "/images/kids-3.jpg", label: "Дитячий прийом" },
-  { src: "/images/doctor.jpg", label: "Наталія Жилан" },
+  {
+    src: "/images/doctor-logo-wall.jpg",
+    label: "Наталія Жилан",
+    // keep the etched logo above her in frame
+    position: "50% 12%",
+  },
+  { src: "/images/whitening-session.jpg", label: "Сеанс Beyond" },
+  { src: "/images/doctor-office.jpg", label: "Наш кабінет", position: "50% 30%" },
 ];
+
+/**
+ * Full-arch prosthetics on implants — the case in section 07.
+ * Each photo keeps its own proportions; the grid is a CSS masonry.
+ */
+export type CasePhoto = {
+  src: string;
+  caption: string;
+  /** Each frame keeps its own proportions — the shots differ a lot. */
+  ratio: string;
+  watermark?: boolean;
+};
+
+export const implantCase: {
+  points: readonly string[];
+  photos: readonly CasePhoto[];
+} = {
+  points: [
+    "Чотири імпланти тримають протез на цілу щелепу",
+    "Протез не знімається пацієнтом — фіксується гвинтами",
+    "Жувальне навантаження повертається повністю",
+    "Догляд — як за власними зубами, плюс огляд двічі на рік",
+  ],
+  photos: [
+    {
+      src: "/images/implants-1.jpg",
+      caption: "Абатменти на імплантах — основа майбутнього протеза",
+      ratio: "1100 / 1283",
+    },
+    {
+      src: "/images/implants-2.jpg",
+      caption: "Внутрішня поверхня протеза з металевими фіксаторами",
+      ratio: "1020 / 700",
+    },
+    {
+      src: "/images/implants-3.jpg",
+      caption: "Готовий протез — канали для гвинтової фіксації",
+      ratio: "760 / 540",
+    },
+    {
+      src: "/images/implants-4.jpg",
+      caption: "Результат у роті: своя усмішка й повноцінне жування",
+      ratio: "1200 / 627",
+      watermark: true,
+    },
+  ],
+};
 
 /** Children's appointment — the carousel under «Дитяча стоматологія». */
 export const kids = [
@@ -217,6 +277,10 @@ export const faq = [
   {
     q: "З якого віку можна приводити дитину?",
     a: "Перший візит-знайомство доречний уже після появи перших зубів, приблизно з року. Він проходить без лікування: дитина звикає до кабінету, крісла та лікаря — саме це формує спокійне ставлення до стоматології на роки вперед.",
+  },
+  {
+    q: "Що робити, якщо зубів немає зовсім?",
+    a: "Сучасне рішення — незнімний протез на чотирьох імплантах. Він фіксується гвинтами, тримається міцно й не знімається пацієнтом, тому повертає повноцінне жування, а не лише естетику. Спершу встановлюємо імпланти, після приживлення — абатменти й сам протез, виготовлений під ваш прикус.",
   },
   {
     q: "Скільки тримається результат відбілювання?",

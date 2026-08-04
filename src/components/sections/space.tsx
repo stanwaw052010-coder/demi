@@ -97,7 +97,7 @@ export function Space() {
     <section id="space" className="bg-white py-24 md:py-32">
       <div className="container-x">
         <SectionHeading
-          index="07"
+          index="08"
           eyebrow="Клініка"
           title={
             <>
@@ -142,6 +142,9 @@ export function Space() {
                     alt={item.label}
                     fill
                     sizes="(max-width: 1024px) 50vw, 28vw"
+                    style={
+                      item.position ? { objectPosition: item.position } : undefined
+                    }
                     className="object-cover transition-transform duration-[1.1s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
                   />
                   <div

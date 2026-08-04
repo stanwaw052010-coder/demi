@@ -24,8 +24,8 @@ src/
   components/
     site/             header, topbar, footer, logo, мобільна CTA-панель
     sections/         hero, stats, services, why-us, before-after, process,
-                      doctor, kids, space, testimonials, faq, booking,
-                      contacts, map-panel
+                      doctor, kids, implants, space, testimonials, faq,
+                      booking, contacts, map-panel
     ui/               button, accordion, counter, reveal, rotating-badge,
                       scroll-progress, section-heading, icons
   lib/
@@ -54,7 +54,18 @@ public/images/          фотографії (hero.jpg і doctor.jpg — спр�
 | `before-after-1/2.jpg`   | 1400 × 875  | кейс 01 — художня реставрація         |
 | `before-after-3/4.jpg`   | 1400 × 583  | кейс 02 — відбілювання Beyond         |
 | `kids-1…4.jpg`           | 900 × 1125  | карусель «Дитяча стоматологія»        |
-| `clinic-video-poster.jpg`| 720 × 1280  | постер відео інтер'єру                |
+| `implants-1…4.jpg`       | різні       | кейс «Протезування на імплантах»      |
+| `whitening-process.jpg`  | 807 × 949   | плитка «Відбілювання Beyond»          |
+| `whitening-session.jpg`  | 987 × 1360  | плитка «Сеанс Beyond»                 |
+| `doctor-logo-wall.jpg`   | 604 × 898   | плитка «Наталія Жилан» (логотип у кадрі) |
+| `doctor-office.jpg`      | 606 × 890   | плитка «Наш кабінет»                  |
+| `clinic-video-poster.jpg`| 360 × 640   | постер відео інтер'єру                |
+
+Кейс протезування на імплантах (`implantCase` у `content.ts`) — це чотири
+кадри з різними пропорціями, тому кожен має власне поле `ratio`, а дві
+колонки заповнюються вручну, щоб їхні висоти збігалися. Плитки галереї
+приймають необов'язкове `position` (`object-position`), коли центральний
+кроп зрізає головне — саме так у кадрі лишається гравійований логотип.
 
 У парах «до / після» кадри мають бути зняті з однакового ракурсу — повзунок
 порівняння накладає їх один на одного. Кожен кейс має власне поле `ratio`
@@ -100,6 +111,8 @@ NEXT_PUBLIC_FORM_ENDPOINT=https://formspree.io/f/xxxxxxx
 | шапка                | знак 64 px + напис 29 px      |
 | крутний бейдж у hero | знак у центрі кола            |
 | кейси «до / після»   | вотермарка у нижньому куті    |
+| кейс на імплантах    | вотермарка на фото результату |
+| галерея клініки      | гравійований логотип у кадрі  |
 | відео інтер'єру      | вотермарка у верхньому куті   |
 | секція «Записатися»  | повний лок-ап 128 px          |
 | футер (колонка)      | знак + напис                  |
@@ -147,8 +160,8 @@ NEXT_PUBLIC_FORM_ENDPOINT=https://formspree.io/f/xxxxxxx
 
 ## Продуктивність і доступність
 
-Lighthouse (production build): **desktop 99–100 / 100 / 100 / 100**,
-**mobile 94 / 100 / 100 / 100** (performance · accessibility · best practices · SEO).
+Lighthouse (production build): **desktop 100 / 100 / 100 / 100**,
+**mobile 92 / 100 / 100 / 100** (performance · accessibility · best practices · SEO).
 Перший запуск після заміни фото завжди нижчий — Next генерує оптимізовані
 версії на льоту; повторний прогін показує реальні цифри.
 

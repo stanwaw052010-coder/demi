@@ -24,6 +24,10 @@ const Kids = dynamic(() =>
   import("@/components/sections/kids").then((m) => m.Kids),
 );
 
+const Implants = dynamic(() =>
+  import("@/components/sections/implants").then((m) => m.Implants),
+);
+
 const Space = dynamic(() =>
   import("@/components/sections/space").then((m) => m.Space),
 );
@@ -47,6 +51,7 @@ export default function Home() {
         <Process />
         <Doctor />
         <Kids />
+        <Implants />
         <Space />
         <Testimonials />
         <Faq />

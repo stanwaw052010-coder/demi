@@ -11,7 +11,7 @@ export function Contacts() {
     <section id="contacts" className="bg-white py-24 md:py-36">
       <div className="container-x">
         <SectionHeading
-          index="10"
+          index="11"
           eyebrow="Контакти"
           title={
             <>
