@@ -40,6 +40,50 @@ export function BeforeAfter() {
           description="Реальні клінічні випадки. Потягніть роздільник, щоб побачити зміну."
         />
 
+        {item.layout === "split" ? (
+          <Reveal className="mt-14 md:mt-20" y={40}>
+            <div className="mx-auto grid max-w-[940px] gap-4 sm:grid-cols-2 md:gap-5">
+              {[
+                { src: item.before, label: "До", tone: "dark" as const },
+                { src: item.after, label: "Після", tone: "light" as const },
+              ].map((frame) => (
+                <figure
+                  key={frame.src}
+                  className="relative overflow-hidden rounded-[24px] bg-mist shadow-[0_40px_100px_-70px_rgba(17,17,17,0.6)]"
+                >
+                  <div
+                    className="relative w-full"
+                    style={{ aspectRatio: item.ratio }}
+                  >
+                    <Image
+                      src={frame.src}
+                      alt={`${item.title} — ${frame.label.toLowerCase()} лікування`}
+                      fill
+                      sizes="(max-width: 640px) 92vw, 460px"
+                      className="object-cover"
+                    />
+                    <span
+                      className={cn(
+                        "pointer-events-none absolute left-5 top-5 rounded-full px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em]",
+                        frame.tone === "dark"
+                          ? "glass-dark text-white/90"
+                          : "glass text-ink",
+                      )}
+                    >
+                      {frame.label}
+                    </span>
+                    {frame.tone === "light" && (
+                      <LogoWatermark className="bottom-4 right-4" />
+                    )}
+                  </div>
+                </figure>
+              ))}
+            </div>
+            <p className="mx-auto mt-5 max-w-[940px] text-[14px] text-graphite">
+              {item.title} · {item.detail}
+            </p>
+          </Reveal>
+        ) : (
         <Reveal className="mt-14 md:mt-20" y={40}>
           <div
             ref={frameRef}
@@ -144,9 +188,35 @@ export function BeforeAfter() {
             </div>
           </div>
         </Reveal>
+        )}
+
+        {/* How the finished work looks outside the surgery */}
+        {item.result && (
+          <Reveal className="mx-auto mt-5 max-w-[940px]" y={30} delay={0.08}>
+            <figure className="flex flex-col gap-5 overflow-hidden rounded-[24px] bg-mist p-5 sm:flex-row sm:items-center md:p-6">
+              <div
+                className="relative w-full shrink-0 overflow-hidden rounded-[16px] sm:w-[46%]"
+                style={{ aspectRatio: item.result.ratio }}
+              >
+                <Image
+                  src={item.result.src}
+                  alt={item.result.caption}
+                  fill
+                  sizes="(max-width: 640px) 92vw, 420px"
+                  className="object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <figcaption className="text-[15px] leading-relaxed text-graphite md:text-[16px]">
+                <span className="eyebrow block text-clay">Результат</span>
+                <span className="mt-3 block">{item.result.caption}</span>
+              </figcaption>
+            </figure>
+          </Reveal>
+        )}
 
         {/* Case switcher */}
-        <div className="mx-auto mt-8 grid max-w-[940px] gap-px overflow-hidden rounded-[20px] border border-ink/[0.08] bg-ink/[0.08] sm:grid-cols-2">
+        <div className="mx-auto mt-8 grid max-w-[940px] gap-px overflow-hidden rounded-[20px] border border-ink/[0.08] bg-ink/[0.08] sm:grid-cols-2 lg:grid-cols-4">
           {cases.map((c, i) => (
             <button
               key={c.id}
@@ -175,7 +245,7 @@ export function BeforeAfter() {
                   active === i ? "text-ink" : "text-graphite",
                 )}
               >
-                {c.title}
+                {c.short ?? c.title}
               </span>
             </button>
           ))}

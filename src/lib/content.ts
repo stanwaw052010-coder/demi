@@ -354,24 +354,70 @@ export const kids = [
   },
 ] as const;
 
-export const cases = [
+export type Case = {
+  id: string;
+  title: string;
+  /** Short label for the switcher; falls back to `title`. */
+  short?: string;
+  detail: string;
+  before: string;
+  after: string;
+  ratio: string;
+  /**
+   * "slider" overlays the two frames — it needs both shot from the same
+   * angle. "split" stands them side by side, for pairs that were not.
+   */
+  layout?: "slider" | "split";
+  /** An optional everyday photo of the finished work. */
+  result?: { src: string; caption: string; ratio: string };
+};
+
+export const cases: Case[] = [
   {
     id: "case-1",
     title: "Художня реставрація пришийкової зони",
+    short: "Художня реставрація",
     detail: "Одне відвідування · композитна реставрація",
     before: "/images/before-after-1.jpg",
     after: "/images/before-after-2.jpg",
     ratio: "16 / 10",
   },
   {
+    id: "case-4",
+    title: "Професійна гігієна",
+    short: "Професійна гігієна",
+    detail: "Один сеанс · зняття каменю та полірування",
+    before: "/images/case-hygiene-before.jpg",
+    after: "/images/case-hygiene-after.jpg",
+    ratio: "3 / 2",
+  },
+  {
+    id: "case-3",
+    title: "Повне протезування щелеп",
+    short: "Протезування",
+    detail: "Від повної відсутності зубів — до усмішки й жування",
+    before: "/images/case-prosth-before.jpg",
+    after: "/images/case-prosth-after.jpg",
+    ratio: "16 / 10",
+    result: {
+      src: "/images/case-prosth-life.jpg",
+      caption: "Так робота виглядає в житті — за межами кабінету",
+      ratio: "16 / 10",
+    },
+  },
+  {
     id: "case-2",
     title: "Відбілювання системою Beyond",
+    short: "Відбілювання Beyond",
     detail: "Один сеанс · результат тримається 1–2 роки",
-    before: "/images/before-after-3.jpg",
-    after: "/images/before-after-4.jpg",
-    ratio: "12 / 5",
+    before: "/images/case-white-before.jpg",
+    after: "/images/case-white-after.jpg",
+    ratio: "4 / 3",
+    // The two frames were shot from different angles, so they stand side by
+    // side instead of being overlaid.
+    layout: "split",
   },
-] as const;
+];
 
 export const reviews = [
   {
