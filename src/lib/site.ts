@@ -21,11 +21,17 @@ export const site = {
   ],
 } as const;
 
+/**
+ * `secondary` items only appear in the desktop bar from 2xl up — seven links
+ * plus the phone pill and the booking button do not fit below 1536px. All of
+ * them are in the mobile menu and the footer regardless.
+ */
 export const nav = [
   { label: "Послуги", href: "#services" },
-  { label: "Переваги", href: "#why" },
+  { label: "Ціни", href: "#prices" },
+  { label: "Переваги", href: "#why", secondary: true },
   { label: "Результати", href: "#results" },
-  { label: "Про лікаря", href: "#doctor" },
+  { label: "Про лікаря", href: "#doctor", secondary: true },
   { label: "Відгуки", href: "#reviews" },
   { label: "Контакти", href: "#contacts" },
 ] as const;

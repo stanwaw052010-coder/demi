@@ -23,14 +23,14 @@ src/
     icon.png          favicon
   components/
     site/             header, topbar, footer, logo, мобільна CTA-панель
-    sections/         hero, stats, services, why-us, before-after, process,
-                      doctor, kids, implants, space, testimonials, faq,
-                      booking, contacts, map-panel
+    sections/         hero, stats, services, prices, why-us, before-after,
+                      process, doctor, kids, implants, space, testimonials,
+                      faq, booking, contacts, map-panel
     ui/               button, accordion, counter, reveal, rotating-badge,
                       scroll-progress, section-heading, icons
   lib/
     site.ts           контакти, адреса, графік, навігація
-    content.ts        послуги, переваги, кейси до/після, відгуки, FAQ
+    content.ts        послуги, прайс, переваги, кейси до/після, відгуки, FAQ
     utils.ts          cn()
 public/                 logo-dark/light.png, logo-mark-*.png — фірмовий знак
 public/og.jpg           картка для месенджерів і соцмереж (1200 × 630)
@@ -115,6 +115,26 @@ NEXT_PUBLIC_FORM_ENDPOINT=https://formspree.io/f/xxxxxxx
 ```
 
 Форма надішле POST з полями `name`, `phone`, `service`, `note`.
+
+## Прайс
+
+> **Ціни у `priceGroups` (`src/lib/content.ts`) — заповнювачі.**
+> Клініка ще не надіслала свій прайс, тож числа орієнтовані на ринок і
+> **не є цінами Dental Clinic Nataly**. Замініть кожне `price` перед
+> публікацією.
+
+Секція 02 «Ціни» будується з `priceGroups` — п'ять груп, згрупованих за
+послугами клініки. У кожній позиції:
+
+| Поле       | Що робить                                        |
+| ---------- | ------------------------------------------------ |
+| `price`    | сума у гривнях; `null` → «за консультацією»       |
+| `from`     | `true` → перед сумою стане «від»                  |
+| `note`     | дрібний підпис під назвою                         |
+| `featured` | рядок стає чорною плашкою (зараз — Beyond)        |
+
+Якщо ціна ще не підтверджена, безпечно лишити `price: null` — рядок покаже
+«за консультацією», і жодного вигаданого числа на сайт не потрапить.
 
 ## Логотип
 

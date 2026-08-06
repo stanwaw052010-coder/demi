@@ -6,6 +6,7 @@ import { MobileCta } from "@/components/site/mobile-cta";
 import { Hero } from "@/components/sections/hero";
 import { Stats } from "@/components/sections/stats";
 import { Services } from "@/components/sections/services";
+import { Prices } from "@/components/sections/prices";
 import { WhyUs } from "@/components/sections/why-us";
 
 import { Doctor } from "@/components/sections/doctor";
@@ -46,6 +47,7 @@ export default function Home() {
         <Hero />
         <Stats />
         <Services />
+        <Prices />
         <WhyUs />
         <BeforeAfter />
         <Process />

@@ -14,7 +14,7 @@ export function Process() {
 
       <div className="container-x relative">
         <SectionHeading
-          index="04"
+          index="05"
           eyebrow="Як проходить візит"
           title={
             <>

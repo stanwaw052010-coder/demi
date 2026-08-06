@@ -25,7 +25,7 @@ export function Implants() {
                   aria-hidden
                   className="font-mono text-[11px] tabular-nums text-ink/50"
                 >
-                  07
+                  08
                 </span>
                 <span className="h-px w-8 bg-ink/15" />
                 <span className="eyebrow">Протезування на імплантах</span>

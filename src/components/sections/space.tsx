@@ -34,7 +34,7 @@ export function Space() {
     <section id="space" className="bg-white py-24 md:py-32">
       <div className="container-x">
         <SectionHeading
-          index="08"
+          index="09"
           eyebrow="Клініка"
           title={
             <>

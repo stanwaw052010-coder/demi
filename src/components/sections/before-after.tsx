@@ -29,7 +29,7 @@ export function BeforeAfter() {
     <section id="results" className="bg-white py-24 md:py-36">
       <div className="container-x">
         <SectionHeading
-          index="03"
+          index="04"
           eyebrow="До / Після"
           title={
             <>

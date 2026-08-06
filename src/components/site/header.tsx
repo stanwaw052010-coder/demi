@@ -56,10 +56,15 @@ export function Header() {
                   <a
                     key={item.href}
                     href={item.href}
-                    className="group relative rounded-full px-4 py-2 text-[15px] font-semibold tracking-[-0.01em] text-graphite transition-colors duration-300 hover:text-ink"
+                    className={cn(
+                      "group relative whitespace-nowrap rounded-full px-3.5 py-2 text-[15px] font-semibold tracking-[-0.01em] text-graphite transition-colors duration-300 hover:text-ink",
+                      "secondary" in item && item.secondary
+                        ? "hidden 2xl:block"
+                        : "block",
+                    )}
                   >
                     {item.label}
-                    <span className="absolute inset-x-4 bottom-1 h-px origin-left scale-x-0 bg-ink/60 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
+                    <span className="absolute inset-x-3.5 bottom-1 h-px origin-left scale-x-0 bg-ink/60 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
                   </a>
                 ))}
               </nav>
@@ -67,7 +72,7 @@ export function Header() {
               <div className="flex items-center gap-2">
                 <a
                   href={site.phoneHref}
-                  className="hidden items-center gap-2.5 rounded-full bg-ink px-5 py-3 text-[17px] font-bold tabular-nums text-white shadow-[0_10px_24px_-14px_rgba(17,17,17,0.9)] transition-colors duration-300 hover:bg-graphite md:inline-flex"
+                  className="hidden items-center gap-2.5 whitespace-nowrap rounded-full bg-ink px-5 py-3 text-[17px] font-bold tabular-nums text-white shadow-[0_10px_24px_-14px_rgba(17,17,17,0.9)] transition-colors duration-300 hover:bg-graphite md:inline-flex"
                 >
                   <Phone className="size-4" strokeWidth={2.25} />
                   {site.phone}
