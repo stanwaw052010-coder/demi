@@ -37,7 +37,7 @@ export function BeforeAfter() {
               <span className="accent text-clay">без пояснень</span>
             </>
           }
-          description="Реальні клінічні випадки. Потягніть роздільник, щоб побачити зміну."
+          description="Чотири реальні клінічні випадки. Потягніть роздільник, щоб побачити зміну, і перемкніть кейс плиткою внизу."
         />
 
         {item.layout === "split" ? (
@@ -215,8 +215,13 @@ export function BeforeAfter() {
           </Reveal>
         )}
 
-        {/* Case switcher */}
-        <div className="mx-auto mt-8 grid max-w-[940px] gap-px overflow-hidden rounded-[20px] border border-ink/[0.08] bg-ink/[0.08] sm:grid-cols-2 lg:grid-cols-4">
+        {/* Case switcher. Thumbnails, not a row of words — otherwise the
+            strip reads as a caption and the other cases go unnoticed. */}
+        <p className="mx-auto mt-10 max-w-[940px] text-[14px] font-semibold uppercase tracking-[0.16em] text-clay">
+          Усі {cases.length} кейси — натисніть, щоб подивитись
+        </p>
+
+        <div className="mx-auto mt-4 grid max-w-[940px] grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
           {cases.map((c, i) => (
             <button
               key={c.id}
@@ -227,25 +232,51 @@ export function BeforeAfter() {
               }}
               aria-pressed={active === i}
               className={cn(
-                "group flex items-center gap-4 bg-white p-5 text-left transition-colors duration-500 hover:bg-mist md:p-6",
-                active === i && "bg-mist",
+                "group overflow-hidden rounded-[18px] border bg-white text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1",
+                active === i
+                  ? "border-ink shadow-[0_18px_40px_-28px_rgba(17,17,17,0.6)]"
+                  : "border-ink/10 hover:border-ink/30",
               )}
             >
-              <span
-                className={cn(
-                  "font-mono text-[11px] tabular-nums transition-colors duration-500",
-                  active === i ? "text-ink" : "text-ink/85",
-                )}
-              >
-                {String(i + 1).padStart(2, "0")}
+              <span className="relative block aspect-4/3 overflow-hidden bg-mist">
+                <Image
+                  src={c.after}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1024px) 45vw, 220px"
+                  className={cn(
+                    "object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105",
+                    active === i ? "grayscale-0" : "grayscale-[45%]",
+                  )}
+                  loading="lazy"
+                />
+                <span
+                  aria-hidden
+                  className={cn(
+                    "absolute inset-0 transition-opacity duration-500",
+                    active === i ? "opacity-0" : "bg-white/25",
+                  )}
+                />
               </span>
-              <span
-                className={cn(
-                  "text-[14px] font-medium tracking-[-0.01em] transition-colors duration-500",
-                  active === i ? "text-ink" : "text-graphite",
-                )}
-              >
-                {c.short ?? c.title}
+
+              <span className="flex items-baseline gap-2.5 p-3.5 md:p-4">
+                <span
+                  aria-hidden
+                  className={cn(
+                    "font-mono text-[11px] tabular-nums",
+                    active === i ? "text-ink" : "text-ink/50",
+                  )}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span
+                  className={cn(
+                    "text-[13px] font-medium leading-snug tracking-[-0.01em] transition-colors duration-500 md:text-[14px]",
+                    active === i ? "text-ink" : "text-graphite",
+                  )}
+                >
+                  {c.short ?? c.title}
+                </span>
               </span>
             </button>
           ))}

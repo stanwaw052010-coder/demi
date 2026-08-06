@@ -374,24 +374,6 @@ export type Case = {
 
 export const cases: Case[] = [
   {
-    id: "case-1",
-    title: "Художня реставрація пришийкової зони",
-    short: "Художня реставрація",
-    detail: "Одне відвідування · композитна реставрація",
-    before: "/images/before-after-1.jpg",
-    after: "/images/before-after-2.jpg",
-    ratio: "16 / 10",
-  },
-  {
-    id: "case-4",
-    title: "Професійна гігієна",
-    short: "Професійна гігієна",
-    detail: "Один сеанс · зняття каменю та полірування",
-    before: "/images/case-hygiene-before.jpg",
-    after: "/images/case-hygiene-after.jpg",
-    ratio: "3 / 2",
-  },
-  {
     id: "case-3",
     title: "Повне протезування щелеп",
     short: "Протезування",
@@ -406,6 +388,15 @@ export const cases: Case[] = [
     },
   },
   {
+    id: "case-4",
+    title: "Професійна гігієна",
+    short: "Професійна гігієна",
+    detail: "Один сеанс · зняття каменю та полірування",
+    before: "/images/case-hygiene-before.jpg",
+    after: "/images/case-hygiene-after.jpg",
+    ratio: "3 / 2",
+  },
+  {
     id: "case-2",
     title: "Відбілювання системою Beyond",
     short: "Відбілювання Beyond",
@@ -416,6 +407,15 @@ export const cases: Case[] = [
     // The two frames were shot from different angles, so they stand side by
     // side instead of being overlaid.
     layout: "split",
+  },
+  {
+    id: "case-1",
+    title: "Художня реставрація пришийкової зони",
+    short: "Художня реставрація",
+    detail: "Одне відвідування · композитна реставрація",
+    before: "/images/before-after-1.jpg",
+    after: "/images/before-after-2.jpg",
+    ratio: "16 / 10",
   },
 ];
 
