@@ -2,12 +2,13 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { ArrowDownRight, MapPin, Phone, Star } from "lucide-react";
+import { ArrowDownRight, MapPin, Star } from "lucide-react";
 import { site } from "@/lib/site";
 import { useScrollHandler } from "@/lib/use-scroll-value";
 import { ButtonLink } from "@/components/ui/button";
+import { ViberIcon } from "@/components/ui/icons";
 import { RotatingBadge } from "@/components/ui/rotating-badge";
-import { RevealText } from "@/components/ui/reveal";
+
 
 const marquee = [
   "Лікування під мікроскопом",
@@ -58,11 +59,12 @@ export function Hero() {
 
       <div className="container-x relative">
         <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:gap-16 xl:gap-24">
-          {/* ── Left: copy ─────────────────────────────── */}
-          <div ref={copyRef} className="will-change-transform">
-            <div
-              className="enter inline-flex items-center gap-2.5 rounded-full border border-ink/15 bg-white py-2.5 pl-3.5 pr-5 text-[14px] font-semibold text-ink shadow-[0_1px_2px_rgba(17,17,17,0.04)]"
-            >
+          {/* ── Left: contacts first, then the copy ────── */}
+          <div
+            ref={copyRef}
+            className="text-center will-change-transform lg:text-left"
+          >
+            <div className="enter inline-flex items-center gap-2.5 rounded-full border border-ink/15 bg-white py-2.5 pl-3.5 pr-5 text-[14px] font-semibold text-ink shadow-[0_1px_2px_rgba(17,17,17,0.04)]">
               <span className="relative flex size-1.5">
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-clay/50" />
                 <span className="relative inline-flex size-1.5 rounded-full bg-clay" />
@@ -70,81 +72,75 @@ export function Hero() {
               Сімейна стоматологія у Тернополі
             </div>
 
-            <h1 className="display-tight mt-8 font-display text-[40px] font-light text-ink sm:text-[54px] lg:text-[62px] xl:text-[72px]">
-              <RevealText text="Створюємо здорові" />
-              <br className="hidden sm:block" />{" "}
-              <RevealText text="та красиві усмішки" delay={0.1} />
-              <br className="hidden sm:block" />{" "}
-              <span className="accent text-clay">
-                <RevealText text="вже понад 20 років" delay={0.2} />
-              </span>
+            {/* The card the eye should land on: where we are, the number,
+                and the one action — before any headline. */}
+            <div
+              style={{ animationDelay: "0.14s" }}
+              className="enter mt-8 rounded-[24px] border border-ink/10 bg-white p-6 shadow-[0_30px_80px_-56px_rgba(17,17,17,0.5)] sm:p-8"
+            >
+              <a
+                href={site.mapsLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2.5 text-ink"
+              >
+                <MapPin className="size-[18px] shrink-0" strokeWidth={2.25} />
+                <span className="text-[17px] font-semibold tracking-[-0.01em] underline-offset-4 group-hover:underline md:text-[19px]">
+                  {site.address}
+                </span>
+              </a>
+
+              <a
+                href={site.phoneHref}
+                className="mt-3 block font-display text-[30px] font-bold tabular-nums leading-none tracking-[-0.03em] text-ink underline-offset-[6px] hover:underline sm:text-[36px] md:text-[42px]"
+              >
+                {site.phone}
+              </a>
+
+              <p className="mt-3.5 text-[15px] font-medium text-graphite">
+                Пн–Пт 09:00 — 19:00
+                <span className="text-ink/25"> · </span>
+                Сб за записом
+              </p>
+
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
+                <ButtonLink href="#booking" size="lg" className="font-semibold">
+                  Записатися
+                  <ArrowDownRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:translate-x-0.5 group-hover/btn:translate-y-0.5" />
+                </ButtonLink>
+                <ButtonLink
+                  href={site.viber}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="secondary"
+                  size="lg"
+                  className="font-semibold"
+                >
+                  <ViberIcon className="size-[18px]" />
+                  Написати у Viber
+                </ButtonLink>
+              </div>
+            </div>
+
+            {/* The headline is the supporting act now, so it fades in as one
+                block — a word-by-word reveal above the LCP text cost more
+                than it was worth. */}
+            <h1
+              style={{ animationDelay: "0.22s" }}
+              className="enter display-tight mt-10 font-display text-[28px] font-light text-ink sm:text-[34px] lg:text-[40px] xl:text-[46px]"
+            >
+              Створюємо здорові та красиві усмішки{" "}
+              <span className="accent text-clay">вже понад 20 років</span>
             </h1>
 
-            <p
-              className="mt-8 max-w-[34rem] text-[16px] leading-relaxed text-graphite md:text-[18px]"
-            >
+            <p className="mx-auto mt-5 max-w-[34rem] text-[16px] leading-relaxed text-graphite md:text-[17px] lg:mx-0">
               Сучасна стоматологія у Тернополі. Лікування під мікроскопом,
               художня реставрація, імплантація та професійне відбілювання.
             </p>
 
             <div
-              style={{ animationDelay: "0.32s" }}
-              className="enter mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
-            >
-              <ButtonLink href="#booking" size="lg">
-                Записатися
-                <ArrowDownRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:translate-x-0.5 group-hover/btn:translate-y-0.5" />
-              </ButtonLink>
-              <ButtonLink href="#services" variant="secondary" size="lg">
-                Наші послуги
-              </ButtonLink>
-            </div>
-
-            {/* Phone and address, spelled out on the first screen */}
-            <div
-              style={{ animationDelay: "0.38s" }}
-              className="enter mt-9 flex flex-wrap items-center gap-x-10 gap-y-5"
-            >
-              <a
-                href={site.phoneHref}
-                className="group flex items-center gap-3.5"
-              >
-                <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-ink text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105">
-                  <Phone className="size-5" strokeWidth={2.25} />
-                </span>
-                <span>
-                  <span className="block text-[12px] font-semibold uppercase tracking-[0.18em] text-graphite">
-                    Телефонуйте
-                  </span>
-                  <span className="mt-0.5 block font-display text-[21px] font-bold tabular-nums leading-none tracking-[-0.01em] text-ink underline-offset-4 group-hover:underline md:text-[24px]">
-                    {site.phone}
-                  </span>
-                </span>
-              </a>
-
-              <a
-                href={site.mapsLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-3.5"
-              >
-                <span className="flex size-12 shrink-0 items-center justify-center rounded-full border border-ink/20 text-ink transition-colors duration-500 group-hover:border-ink group-hover:bg-ink group-hover:text-white">
-                  <MapPin className="size-5" strokeWidth={2.25} />
-                </span>
-                <span>
-                  <span className="block text-[12px] font-semibold uppercase tracking-[0.18em] text-graphite">
-                    Ми тут
-                  </span>
-                  <span className="mt-0.5 block font-display text-[17px] font-semibold leading-none tracking-[-0.01em] text-ink underline-offset-4 group-hover:underline md:text-[19px]">
-                    {site.address}
-                  </span>
-                </span>
-              </a>
-            </div>
-
-            <div
               style={{ animationDelay: "0.5s" }}
-              className="enter mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-ink/10 pt-7"
+              className="enter mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 border-t border-ink/10 pt-6 lg:justify-start"
             >
               <div className="flex items-center gap-2">
                 <div className="flex gap-0.5" aria-hidden>
@@ -171,8 +167,11 @@ export function Hero() {
                   src="/images/hero.jpg"
                   alt={`${site.doctor} — лікар-стоматолог, ${site.name}`}
                   fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  /* The LCP element is the copy, and on a phone this portrait
+                     sits below the fold — preloading it only steals bandwidth
+                     from the text and the fonts. */
+                  fetchPriority="low"
+                  sizes="(max-width: 1024px) 92vw, 50vw"
                   className="object-cover"
                 />
               </div>

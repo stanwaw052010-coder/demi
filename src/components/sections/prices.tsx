@@ -1,10 +1,27 @@
-import { ArrowUpRight, Phone } from "lucide-react";
-import { priceGroups, type PriceItem } from "@/lib/content";
+import {
+  Activity,
+  ArrowUpRight,
+  Award,
+  Feather,
+  Gem,
+  Microscope,
+  Phone,
+  type LucideIcon,
+} from "lucide-react";
+import { priceGroups, priceHighlights, type PriceItem } from "@/lib/content";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
+
+const icons: Record<string, LucideIcon> = {
+  activity: Activity,
+  microscope: Microscope,
+  gem: Gem,
+  award: Award,
+  feather: Feather,
+};
 
 /** 1200 → «1 200» with a thin space, so columns of figures stay aligned. */
 function hryvnia(value: number) {
@@ -96,7 +113,7 @@ export function Prices() {
     <section id="prices" className="grain relative bg-mist py-24 md:py-36">
       <div className="container-x">
         <SectionHeading
-          index="02"
+          index="03"
           eyebrow="Ціни"
           title={
             <>
@@ -112,26 +129,120 @@ export function Prices() {
           }
         />
 
-        <div className="mt-14 grid gap-4 md:mt-20 lg:grid-cols-2 lg:gap-5">
-          {priceGroups.map((group, i) => (
-            <Reveal key={group.id} delay={(i % 2) * 0.08} className="h-full">
-              <div className="hairline flex h-full flex-col rounded-[24px] bg-white p-6 md:p-8">
-                <div className="flex items-center gap-3">
-                  <span aria-hidden className="font-mono text-[11px] tabular-nums text-ink/50">
-                    {String(i + 1).padStart(2, "0")}
+        {/* The three figures patients ask about first, set large */}
+        <div className="mt-14 grid gap-4 md:mt-20 md:grid-cols-3 lg:gap-5">
+          {priceHighlights.map((item, i) => (
+            <Reveal key={item.title} delay={i * 0.08} className="h-full">
+              <div
+                className={cn(
+                  "group relative flex h-full flex-col justify-between overflow-hidden rounded-[24px] p-7 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 md:p-8",
+                  item.dark
+                    ? "bg-ink text-white shadow-[0_30px_80px_-50px_rgba(17,17,17,0.7)]"
+                    : "hairline bg-white",
+                )}
+              >
+                <div>
+                  <span
+                    className={cn(
+                      "eyebrow",
+                      item.dark ? "text-white/70" : "text-clay",
+                    )}
+                  >
+                    {item.label}
                   </span>
-                  <span className="h-px w-6 bg-ink/15" />
-                  <h3 className="eyebrow">{group.label}</h3>
+                  <h3
+                    className={cn(
+                      "mt-5 font-display text-[22px] font-light tracking-[-0.025em] md:text-[25px]",
+                      item.dark ? "text-white" : "text-ink",
+                    )}
+                  >
+                    {item.title}
+                  </h3>
+                  <p
+                    className={cn(
+                      "mt-3 max-w-[32ch] text-[14px] leading-relaxed",
+                      item.dark ? "text-white/75" : "text-graphite",
+                    )}
+                  >
+                    {item.note}
+                  </p>
                 </div>
 
-                <ul className="mt-3 divide-y divide-ink/[0.07]">
-                  {group.items.map((item) => (
-                    <PriceRow key={item.title} item={item} />
-                  ))}
-                </ul>
+                <p className="mt-10 flex items-baseline gap-1.5">
+                  {item.from && (
+                    <span
+                      className={cn(
+                        "text-[14px] font-medium",
+                        item.dark ? "text-white/70" : "text-clay",
+                      )}
+                    >
+                      від
+                    </span>
+                  )}
+                  <span
+                    className={cn(
+                      "font-display text-[40px] font-bold tabular-nums leading-none tracking-[-0.035em] md:text-[46px]",
+                      item.dark ? "text-white" : "text-ink",
+                    )}
+                  >
+                    {item.price === null ? "—" : hryvnia(item.price)}
+                  </span>
+                  <span
+                    className={cn(
+                      "text-[22px] font-semibold leading-none",
+                      item.dark ? "text-white/70" : "text-clay",
+                    )}
+                  >
+                    ₴
+                  </span>
+                </p>
+
+                <span
+                  aria-hidden
+                  className={cn(
+                    "absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100",
+                    item.dark
+                      ? "bg-gradient-to-r from-white/70 to-transparent"
+                      : "bg-gradient-to-r from-ink/50 to-transparent",
+                  )}
+                />
               </div>
             </Reveal>
           ))}
+        </div>
+
+        <div className="mt-4 grid gap-4 lg:grid-cols-2 lg:gap-5">
+          {priceGroups.map((group, i) => {
+            const Icon = icons[group.icon];
+            return (
+              <Reveal key={group.id} delay={(i % 2) * 0.08} className="h-full">
+                <div className="hairline flex h-full flex-col rounded-[24px] bg-white p-6 md:p-8">
+                  <div className="flex items-center gap-3.5 border-b border-ink/[0.07] pb-5">
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-mist text-ink">
+                      {Icon && (
+                        <Icon className="size-5" strokeWidth={1.25} aria-hidden />
+                      )}
+                    </span>
+                    <h3 className="font-display text-[18px] font-light tracking-[-0.02em] text-ink md:text-[20px]">
+                      {group.label}
+                    </h3>
+                    <span
+                      aria-hidden
+                      className="ml-auto font-mono text-[11px] tabular-nums text-ink/40"
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  <ul className="divide-y divide-ink/[0.07]">
+                    {group.items.map((item) => (
+                      <PriceRow key={item.title} item={item} />
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            );
+          })}
 
           {/* Closing note + call, filling the odd cell of the grid */}
           <Reveal delay={0.08} className="h-full">

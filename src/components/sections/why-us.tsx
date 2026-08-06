@@ -38,7 +38,7 @@ export function WhyUs() {
 
       <div className="container-x relative">
         <SectionHeading
-          index="03"
+          index="02"
           eyebrow="Чому обирають нас"
           tone="dark"
           title={

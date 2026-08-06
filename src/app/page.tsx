@@ -47,8 +47,8 @@ export default function Home() {
         <Hero />
         <Stats />
         <Services />
-        <Prices />
         <WhyUs />
+        <Prices />
         <BeforeAfter />
         <Process />
         <Doctor />
