@@ -25,15 +25,23 @@ export function Hero() {
 
       <div className="container-x relative z-10 pb-10 pt-44 text-center sm:pt-40 md:pt-44 lg:pt-48">
         <p className="enter eyebrow text-white/70">
-          Сімейна стоматологія у Тернополі
+          {site.doctor} · 20+ років практики
         </p>
 
-        {/* Not animated: this is the largest thing on the screen, so fading
-            it in would delay the paint the browser measures. */}
+        {/* The brand name is already in the header, the footer and the tab
+            title — spelling it out here too just read as a repetition. What
+            the headline has to say is what kind of clinic this is.
+
+            Not animated either: it is the largest thing on the screen, so
+            fading it in would delay the paint the browser measures. */}
         <h1 className="display-tight mt-5 font-display text-[46px] font-light leading-[0.92] sm:text-[76px] lg:text-[100px] xl:text-[112px]">
-          Dental Clinic
+          Сучасна
           <br />
-          <span className="accent text-white">Nataly Zhylan</span>
+          стоматологія{" "}
+          {/* nowrap so the «у» never gets stranded at the end of a line */}
+          <span className="accent whitespace-nowrap text-white">
+            у Тернополі
+          </span>
         </h1>
 
         <p
@@ -41,7 +49,7 @@ export function Hero() {
           className="enter mx-auto mt-6 max-w-[42ch] text-[15px] leading-relaxed text-white/75 md:max-w-[58ch] md:text-[16px]"
         >
           Лікування під мікроскопом, художня реставрація, імплантація та
-          відбілювання. Понад 20 років практики.
+          відбілювання — у кабінеті Наталії Жилан.
         </p>
 
         <div
@@ -94,7 +102,7 @@ export function Hero() {
             </span>
           </a>
 
-          <p className="text-[13px] text-white/55">Пн–Пт 09:00 — 19:00 · Сб за записом</p>
+          <p className="text-[13px] text-white/55">{site.hoursShort}</p>
         </div>
       </div>
 

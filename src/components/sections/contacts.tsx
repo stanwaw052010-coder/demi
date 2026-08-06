@@ -1,6 +1,7 @@
 import { ArrowUpRight, Clock, MapPin, Phone } from "lucide-react";
 import { InstagramIcon } from "@/components/ui/icons";
 import { site } from "@/lib/site";
+import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
@@ -76,15 +77,35 @@ export function Contacts() {
                     <Clock className="size-4" strokeWidth={2.25} />
                     Графік
                   </span>
-                  <dl className="mt-4 space-y-2.5">
-                    {site.hours.map((h) => (
-                      <div key={h.days} className="flex flex-col">
-                        <dt className="text-[13px] text-graphite">{h.days}</dt>
-                        <dd className="text-[16px] font-semibold tabular-nums text-ink">
-                          {h.time}
-                        </dd>
-                      </div>
-                    ))}
+                  {/* Day by day: a patient checking one weekday should not
+                      have to decode a range. */}
+                  <dl className="mt-4 divide-y divide-ink/[0.07]">
+                    {site.hours.map((h) => {
+                      const closed = h.time === "Вихідний";
+                      return (
+                        <div
+                          key={h.days}
+                          className="flex items-baseline justify-between gap-3 py-2"
+                        >
+                          <dt
+                            className={cn(
+                              "text-[14px]",
+                              closed ? "text-graphite/70" : "text-graphite",
+                            )}
+                          >
+                            {h.days}
+                          </dt>
+                          <dd
+                            className={cn(
+                              "whitespace-nowrap text-right text-[14px] font-semibold tabular-nums",
+                              closed ? "text-graphite/70" : "text-ink",
+                            )}
+                          >
+                            {h.time}
+                          </dd>
+                        </div>
+                      );
+                    })}
                   </dl>
                 </div>
 

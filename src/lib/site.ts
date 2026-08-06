@@ -14,11 +14,21 @@ export const site = {
   mapsLink:
     "https://www.google.com/maps/search/?api=1&query=Konovaltsia+3%2C+Ternopil",
   geo: { lat: 49.5546, lng: 25.5921 },
+  /**
+   * Spelled out day by day — a patient checking «чи працюють у четвер»
+   * should not have to decode a range.
+   */
   hours: [
-    { days: "Понеділок — П'ятниця", time: "09:00 — 19:00" },
-    { days: "Субота", time: "За записом" },
-    { days: "Неділя", time: "Не працюємо" },
+    { days: "Понеділок", time: "09:00 — 19:00" },
+    { days: "Вівторок", time: "09:00 — 19:00" },
+    { days: "Середа", time: "09:00 — 19:00" },
+    { days: "Четвер", time: "09:00 — 19:00" },
+    { days: "П'ятниця", time: "09:00 — 19:00" },
+    { days: "Субота", time: "За попереднім записом" },
+    { days: "Неділя", time: "Вихідний" },
   ],
+  /** The same schedule in one line, for tight places. */
+  hoursShort: "Пн–Пт 09:00 — 19:00 · Сб за записом",
 } as const;
 
 /**

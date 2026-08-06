@@ -130,14 +130,19 @@ export function Footer() {
             </li>
           </ul>
 
-          <div className="mt-7 space-y-2 border-t border-white/10 pt-6">
+          <dl className="mt-7 divide-y divide-white/10 border-t border-white/10 pt-2">
             {site.hours.map((h) => (
-              <p key={h.days} className="text-[14px] text-white/85">
-                {h.days} —{" "}
-                <span className="tabular-nums text-white/85">{h.time}</span>
-              </p>
+              <div
+                key={h.days}
+                className="flex items-baseline justify-between gap-3 py-1.5"
+              >
+                <dt className="text-[13px] text-white/70">{h.days}</dt>
+                <dd className="whitespace-nowrap text-right text-[13px] font-medium tabular-nums text-white/90">
+                  {h.time}
+                </dd>
+              </div>
             ))}
-          </div>
+          </dl>
         </div>
       </div>
 
