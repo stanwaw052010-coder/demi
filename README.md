@@ -230,11 +230,34 @@ NEXT_PUBLIC_FORM_ENDPOINT=https://formspree.io/f/xxxxxxx
 `netlify.toml` у корені задає команду збірки, теку публікації, Node 22 та
 офіційний плагін `@netlify/plugin-nextjs`.
 
-Якщо збірка падає з помилкою у файлі, якого в репозиторії вже немає, — Netlify
-зібрав старий чи змішаний чекаут. Треба:
+### Netlify збирає не цю гілку
 
-1. Site configuration → Build & deploy → Branch to deploy: гілка з кодом.
-2. Deploys → Trigger deploy → **Clear cache and deploy site**.
+Симптом: збірка падає на помилці типів, якої локально немає, а шлях у логу
+містить теку на кшталт `demi-claude-dental-clinic-nataly-site-5l1idu/src/…`.
+
+Такої теки в репозиторії немає. Ця назва — те, як GitHub іменує архів гілки
+(`{репозиторій}-{гілка}`), тож Netlify підключений не до гілки, а до копії,
+яку колись розпакували з ZIP в інший репозиторій. Копія не оновлюється й
+поступово розходиться: у логу від 07.08.2026 `layout.tsx` був з одного
+коміту, а `site.ts` — з попереднього, тому й «Property 'phone2' does not
+exist».
+
+Перевірити просто: помилку відтворює лише той репозиторій. Свіжий клон
+гілки збирається чисто:
+
+```bash
+git clone -b claude/dental-clinic-nataly-site-5l1idu \
+  https://github.com/stanwaw052010-coder/demi.git
+cd demi && npm ci && npm run build
+```
+
+Виправлення — підключити сайт напряму до гілки:
+
+1. Site configuration → Build & deploy → **Link to a different repository**
+   → `stanwaw052010-coder/demi`.
+2. Branch to deploy: `claude/dental-clinic-nataly-site-5l1idu`.
+3. Base directory лишити порожнім — проєкт у корені гілки.
+4. Deploys → Trigger deploy → **Clear cache and deploy site**.
 
 ## Продуктивність і доступність
 
