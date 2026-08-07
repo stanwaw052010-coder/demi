@@ -31,7 +31,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
               poster={service.poster!}
               label={service.title}
               withPlayButton={false}
-              className="absolute inset-0 size-full bg-transparent opacity-70 grayscale-[35%] transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-85 group-hover:grayscale-0"
+              className="absolute inset-0 size-full bg-transparent"
             />
           ) : (
             <Image
@@ -39,12 +39,12 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
               alt={service.title}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 40vw"
-              className="object-cover opacity-70 grayscale-[35%] transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06] group-hover:opacity-80 group-hover:grayscale-0"
+              className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
             />
           )}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/10 transition-opacity duration-700 group-hover:opacity-90"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/45 to-transparent transition-opacity duration-700 group-hover:opacity-90"
           />
         </>
       )}

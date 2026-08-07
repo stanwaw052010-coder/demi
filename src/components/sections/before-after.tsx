@@ -34,7 +34,7 @@ export function BeforeAfter() {
               <span className="accent text-clay">без пояснень</span>
             </>
           }
-          description="Чотири реальні клінічні випадки. Кейс перемикається плиткою внизу."
+          description={`${cases.length} реальних клінічних випадки. Кейс перемикається плиткою внизу.`}
         />
 
         <Reveal className="mt-14 md:mt-20" y={40}>

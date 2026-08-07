@@ -86,7 +86,7 @@ export function Space() {
                   />
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent"
+                    className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent"
                   />
                   <span className="absolute bottom-4 left-4 text-[12px] font-semibold uppercase tracking-[0.16em] text-white">
                     {item.label}

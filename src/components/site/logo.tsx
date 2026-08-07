@@ -56,7 +56,7 @@ export function Logo({
             "flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.3em]",
             /* A touch denser on the light bar — the clinic found the
                wordmark too faint against white. */
-            tone === "dark" ? "text-graphite" : "text-sand",
+            tone === "dark" ? "text-ink" : "text-sand",
           )}
         >
           Dental Clinic
@@ -75,7 +75,7 @@ export function Logo({
             className={cn(
               "accent leading-none",
               script,
-              tone === "dark" ? "text-graphite" : "text-sand",
+              tone === "dark" ? "text-ink" : "text-sand",
             )}
           >
             Zhylan

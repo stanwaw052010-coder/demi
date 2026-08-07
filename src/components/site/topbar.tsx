@@ -54,13 +54,23 @@ export function TopBar() {
               </a>
             </span>
 
-            <a
-              href={site.phoneHref}
-              className="flex items-center gap-2.5 text-[17px] font-bold tabular-nums text-white underline-offset-4 transition-colors duration-300 hover:underline md:text-[20px]"
-            >
+            <span className="flex items-center gap-2.5 text-white">
               <Phone className="size-5 shrink-0" strokeWidth={2.5} />
-              {site.phone}
-            </a>
+              <span className="flex flex-col leading-tight sm:flex-row sm:items-center sm:gap-4">
+                <a
+                  href={site.phoneHref}
+                  className="inline-flex min-h-[26px] items-center text-[15px] font-bold tabular-nums underline-offset-4 hover:underline sm:text-[17px] md:text-[19px]"
+                >
+                  {site.phone}
+                </a>
+                <a
+                  href={site.phone2Href}
+                  className="inline-flex min-h-[26px] items-center text-[15px] font-bold tabular-nums underline-offset-4 hover:underline sm:text-[17px] md:text-[19px]"
+                >
+                  {site.phone2}
+                </a>
+              </span>
+            </span>
           </div>
         </div>
       </div>

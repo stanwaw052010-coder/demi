@@ -113,6 +113,16 @@ export function Hero() {
             </span>
           </a>
 
+          <a
+            href={site.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-1 inline-flex items-center gap-2 rounded-full border border-white/25 px-4 py-2 text-[14px] font-semibold text-white transition-colors duration-300 hover:bg-white/10"
+          >
+            <InstagramIcon className="size-[17px]" strokeWidth={1.75} />
+            {site.instagramHandle}
+          </a>
+
           {/* The full week, spelled out — the clinic asked for every day to
               carry its own hours rather than a «Пн–Пт» range. */}
           <dl className="mt-3 w-full max-w-[300px] divide-y divide-white/10 border-y border-white/10">
@@ -144,15 +154,6 @@ export function Hero() {
             })}
           </dl>
 
-          <a
-            href={site.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-1 inline-flex items-center gap-2 rounded-full border border-white/25 px-4 py-2 text-[14px] font-semibold text-white transition-colors duration-300 hover:bg-white/10"
-          >
-            <InstagramIcon className="size-[17px]" strokeWidth={1.75} />
-            {site.instagramHandle}
-          </a>
         </div>
       </div>
 
@@ -161,22 +162,18 @@ export function Hero() {
           runs full width. A wide one is not: stretched edge to edge the frame
           becomes a 3:1 panorama and crops the portrait down to a forehead.
           From lg it keeps its proportions and stands centred instead. */}
-      <div className="relative mt-6 h-[340px] sm:h-[420px] lg:mx-auto lg:mt-10 lg:aspect-4/5 lg:h-auto lg:w-[460px] lg:overflow-hidden lg:rounded-t-[28px] xl:w-[520px]">
+      <div className="relative mt-6 h-[340px] sm:h-[420px] lg:mx-auto lg:mt-10 lg:aspect-4/5 lg:h-auto lg:w-[440px] lg:overflow-hidden lg:rounded-t-[28px] xl:w-[500px]">
         <Image
           src="/images/hero.jpg"
           alt={`${site.doctor} — лікар-стоматолог, ${site.name}`}
           fill
           /* The headline is the LCP element; this sits under it. */
           fetchPriority="low"
-          sizes="(max-width: 1024px) 100vw, 520px"
+          /* The source is 1000×1250, so at 520 CSS px a 2× screen is already
+             at the edge of it — default compression showed. */
+          quality={92}
+          sizes="(max-width: 1024px) 100vw, 500px"
           className="object-cover object-[50%_18%] lg:object-center"
-        />
-        {/* Only the very top is veiled, so the frame meets the dark ground
-            without a seam. The photograph itself stays unclouded — the copy
-            sits above it, not on it, so there is nothing to darken it for. */}
-        <div
-          aria-hidden
-          className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-ink to-transparent"
         />
         <div
           aria-hidden
