@@ -32,23 +32,31 @@ export function Contacts() {
           {/* Details */}
           <Reveal delay={0.08} y={32} className="h-full">
             <div className="flex h-full flex-col gap-4">
-              {/* Phone — the primary action, impossible to miss */}
-              <a
-                href={site.phoneHref}
-                className="group flex items-center justify-between gap-5 rounded-[24px] bg-ink p-7 text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 md:p-8"
-              >
-                <span>
-                  <span className="block text-[12px] font-semibold uppercase tracking-[0.2em] text-white/70">
-                    Телефон
-                  </span>
-                  <span className="mt-2 block font-display text-[26px] font-bold tabular-nums tracking-[-0.02em] md:text-[32px]">
-                    {site.phone}
-                  </span>
+              {/* Phones — the primary action, impossible to miss */}
+              <div className="rounded-[24px] bg-ink p-7 text-white md:p-8">
+                <span className="block text-[12px] font-semibold uppercase tracking-[0.2em] text-white/70">
+                  Телефони
                 </span>
-                <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-white text-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105">
-                  <Phone className="size-5" strokeWidth={2.25} />
-                </span>
-              </a>
+                <div className="mt-3 flex flex-col gap-3">
+                  {[
+                    { value: site.phone, href: site.phoneHref },
+                    { value: site.phone2, href: site.phone2Href },
+                  ].map((line) => (
+                    <a
+                      key={line.href}
+                      href={line.href}
+                      className="group flex items-center justify-between gap-5"
+                    >
+                      <span className="font-display text-[24px] font-bold tabular-nums tracking-[-0.02em] underline-offset-4 group-hover:underline md:text-[29px]">
+                        {line.value}
+                      </span>
+                      <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white text-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105">
+                        <Phone className="size-5" strokeWidth={2.25} />
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
 
               {/* Address */}
               <a

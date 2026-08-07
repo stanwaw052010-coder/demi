@@ -7,9 +7,11 @@ export const site = {
   addressLatin: "Konovaltsia 3, Ternopil",
   phone: "+380 97 900 12 15",
   phoneHref: "tel:+380979001215",
+  /** Second working line. */
+  phone2: "+380 68 68 33 999",
+  phone2Href: "tel:+380686833999",
   viber: "viber://chat?number=%2B380979001215",
-  instagram:
-    "https://www.instagram.com/dental_natali_?igsh=dng3ZzBzejFsNjY=",
+  instagram: "https://www.instagram.com/dental_natali_/",
   instagramHandle: "@dental_natali_",
   mapsLink:
     "https://www.google.com/maps/search/?api=1&query=Konovaltsia+3%2C+Ternopil",

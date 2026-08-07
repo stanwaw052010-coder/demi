@@ -107,6 +107,13 @@ export function Booking() {
             </a>
 
             <a
+              href={site.phone2Href}
+              className="mt-3 block pl-[72px] font-display text-[22px] font-bold tabular-nums tracking-[-0.02em] text-white/85 underline-offset-4 transition-colors duration-300 hover:text-white hover:underline md:pl-20 md:text-[26px]"
+            >
+              {site.phone2}
+            </a>
+
+            <a
               href={site.mapsLink}
               target="_blank"
               rel="noopener noreferrer"

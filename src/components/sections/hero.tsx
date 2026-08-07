@@ -2,7 +2,8 @@ import Image from "next/image";
 import { ArrowDownRight, MapPin, Phone } from "lucide-react";
 import { site } from "@/lib/site";
 import { ButtonLink } from "@/components/ui/button";
-import { ViberIcon } from "@/components/ui/icons";
+import { InstagramIcon, ViberIcon } from "@/components/ui/icons";
+import { cn } from "@/lib/utils";
 
 /**
  * Full-bleed dark opening: the clinic's name at poster size, one loud call to
@@ -80,15 +81,25 @@ export function Hero() {
         {/* Contacts stay deliberately small — the name is the loud element
             here, and the number is already large in the bar above. */}
         <div className="mt-9 flex flex-col items-center gap-2.5">
-          <a
-            href={site.phoneHref}
-            className="group inline-flex items-center gap-2.5 text-white"
-          >
-            <Phone className="size-4 shrink-0" strokeWidth={2.25} />
-            <span className="text-[19px] font-bold tabular-nums tracking-[-0.01em] underline-offset-4 group-hover:underline md:text-[21px]">
-              {site.phone}
-            </span>
-          </a>
+          <div className="flex flex-col items-center gap-1.5 sm:flex-row sm:gap-5">
+            {[
+              { value: site.phone, href: site.phoneHref, icon: true },
+              { value: site.phone2, href: site.phone2Href, icon: false },
+            ].map((line) => (
+              <a
+                key={line.href}
+                href={line.href}
+                className="group inline-flex items-center gap-2.5 text-white"
+              >
+                {line.icon && (
+                  <Phone className="size-4 shrink-0" strokeWidth={2.25} />
+                )}
+                <span className="text-[19px] font-bold tabular-nums tracking-[-0.01em] underline-offset-4 group-hover:underline md:text-[21px]">
+                  {line.value}
+                </span>
+              </a>
+            ))}
+          </div>
 
           <a
             href={site.mapsLink}
@@ -102,7 +113,46 @@ export function Hero() {
             </span>
           </a>
 
-          <p className="text-[13px] text-white/55">{site.hoursShort}</p>
+          {/* The full week, spelled out — the clinic asked for every day to
+              carry its own hours rather than a «Пн–Пт» range. */}
+          <dl className="mt-3 w-full max-w-[300px] divide-y divide-white/10 border-y border-white/10">
+            {site.hours.map((h) => {
+              const closed = h.time === "Вихідний";
+              return (
+                <div
+                  key={h.days}
+                  className="flex items-baseline justify-between gap-3 py-1.5"
+                >
+                  <dt
+                    className={cn(
+                      "text-[13px]",
+                      closed ? "text-white/40" : "text-white/70",
+                    )}
+                  >
+                    {h.days}
+                  </dt>
+                  <dd
+                    className={cn(
+                      "whitespace-nowrap text-right text-[13px] font-medium tabular-nums",
+                      closed ? "text-white/40" : "text-white/90",
+                    )}
+                  >
+                    {h.time}
+                  </dd>
+                </div>
+              );
+            })}
+          </dl>
+
+          <a
+            href={site.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-1 inline-flex items-center gap-2 rounded-full border border-white/25 px-4 py-2 text-[14px] font-semibold text-white transition-colors duration-300 hover:bg-white/10"
+          >
+            <InstagramIcon className="size-[17px]" strokeWidth={1.75} />
+            {site.instagramHandle}
+          </a>
         </div>
       </div>
 
@@ -121,9 +171,12 @@ export function Hero() {
           sizes="(max-width: 1024px) 100vw, 520px"
           className="object-cover object-[50%_18%] lg:object-center"
         />
+        {/* Only the very top is veiled, so the frame meets the dark ground
+            without a seam. The photograph itself stays unclouded — the copy
+            sits above it, not on it, so there is nothing to darken it for. */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-b from-ink via-ink/25 to-transparent lg:via-ink/10"
+          className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-ink to-transparent"
         />
         <div
           aria-hidden

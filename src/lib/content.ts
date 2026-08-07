@@ -65,52 +65,56 @@ export const services: Service[] = [
 ];
 
 /* ════════════════════════════════════════════════════════════════════
-   ПРАЙС — УВАГА: ЦІНИ НИЖЧЕ Є ЗАПОВНЮВАЧАМИ (PLACEHOLDER).
+   ПРАЙС — ціни надані клінікою (голосове повідомлення 07.08.2026).
 
-   Клініка ще не надіслала свій прайс, тож усі числа тут вигадані —
-   це орієнтири ринку, а не ціни Dental Clinic Nataly. ПЕРЕД ПУБЛІКАЦІЄЮ
-   замініть кожне значення `price` на справжнє.
-
-   `price: null`  → у рядку з'явиться «за консультацією» замість числа,
-                    тож будь-яку позицію без підтвердженої ціни безпечно
-                    лишити так.
-   `from: true`   → перед числом стане «від».
+   Одна позиція лишилась без ціни: відбілювання Beyond. У повідомленні
+   прозвучало «1150 євро», що для одного сеансу виглядає як помилка
+   розпізнавання, тож там стоїть `price: null` — рядок покаже «уточнюйте».
+   Щойно клініка підтвердить суму, поставте її сюди.
    ════════════════════════════════════════════════════════════════════ */
 export type PriceItem = {
   title: string;
   note?: string;
-  /** Гривні. null → «за консультацією». */
+  /** null → «уточнюйте». */
   price: number | null;
+  /** Upper bound: renders «1 700 — 2 200». */
+  to?: number;
+  /** Renders «від» before the figure. */
   from?: boolean;
+  /** Hryvnia unless stated otherwise. */
+  currency?: "UAH" | "EUR";
   featured?: boolean;
 };
 
-/** The three prices people ask about first — shown large above the table. */
+/** The three figures patients ask about first — shown large above the table. */
 export const priceHighlights: {
   label: string;
   title: string;
   note: string;
   price: number | null;
+  to?: number;
   from?: boolean;
+  currency?: "UAH" | "EUR";
   dark?: boolean;
 }[] = [
   {
     label: "Перший крок",
     title: "Консультація",
-    note: "Огляд, за потреби знімок і план лікування з кошторисом.",
-    price: 300,
+    note: "Огляд і відповіді на ваші запитання.",
+    price: 350,
   },
   {
     label: "Найчастіше",
-    title: "Професійна гігієна",
+    title: "Комплексна гігієна",
     note: "Ультразвук, Air Flow, полірування та фторування емалі.",
-    price: 1200,
+    price: 1700,
+    to: 2200,
   },
   {
-    label: "Хіт клініки",
-    title: "Відбілювання Beyond",
-    note: "Один сеанс, до 8 тонів. Результат тримається 1–2 роки.",
-    price: 4500,
+    label: "З планом лікування",
+    title: "Консультація та планування",
+    note: "Повний огляд, план лікування й кошторис до початку роботи.",
+    price: 700,
     dark: true,
   },
 ];
@@ -123,41 +127,86 @@ export const priceGroups: {
   items: PriceItem[];
 }[] = [
   {
-    id: "diagnostics",
+    id: "consult",
     icon: "activity",
-    label: "Діагностика та профілактика",
+    label: "Консультації та гігієна",
     items: [
+      { title: "Консультація", price: 350 },
       {
-        title: "Консультація та план лікування",
-        note: "огляд, за потреби — знімок",
-        price: 300,
+        title: "Консультація та планування лікування",
+        note: "з кошторисом",
+        price: 700,
       },
       {
-        title: "Професійна гігієна",
+        title: "Комплексна гігієна ротової порожнини",
         note: "ультразвук, Air Flow, полірування",
-        price: 1200,
+        price: 1700,
+        to: 2200,
       },
-      { title: "Фторування емалі", price: 400 },
     ],
   },
   {
-    id: "treatment",
+    id: "therapy",
     icon: "microscope",
-    label: "Лікування",
+    label: "Терапія",
     items: [
-      {
-        title: "Лікування карієсу під мікроскопом",
-        note: "залежно від складності",
-        price: 1800,
-        from: true,
-      },
-      { title: "Лікування кореневих каналів", price: 2500, from: true },
+      { title: "Пломбування", price: 1500, from: true },
       {
         title: "Художня реставрація",
         note: "форма, прозорість, відтінок",
-        price: 2800,
-        from: true,
+        price: 2500,
+        to: 3500,
       },
+      {
+        title: "Ендодонтія — пломбування каналів",
+        note: "залежно від кількості каналів",
+        price: 1950,
+        to: 6000,
+      },
+    ],
+  },
+  {
+    id: "prosthetics",
+    icon: "award",
+    label: "Ортопедія та протезування",
+    items: [
+      {
+        title: "Коронка керамічна",
+        price: 100,
+        from: true,
+        currency: "EUR",
+      },
+      {
+        title: "Коронка цирконієва",
+        price: 160,
+        to: 200,
+        currency: "EUR",
+      },
+      {
+        title: "Акриловий протез",
+        note: "повне знімне протезування",
+        price: 8500,
+      },
+      {
+        title: "Нейлоновий протез",
+        note: "повне знімне протезування",
+        price: 10500,
+      },
+    ],
+  },
+  {
+    id: "kids",
+    icon: "baby",
+    label: "Дитяча стоматологія",
+    items: [
+      {
+        title: "Психологічна адаптація дитини",
+        note: "до 30 хвилин",
+        price: 500,
+      },
+      { title: "Професійна гігієна для дитини", price: 1200 },
+      { title: "Герметизація фісур", price: 1200 },
+      { title: "Постійна пломба на молочний зуб", price: 1400 },
     ],
   },
   {
@@ -166,39 +215,34 @@ export const priceGroups: {
     label: "Естетика",
     items: [
       {
-        title: "Відбілювання Beyond",
+        title: "Відбілювання лампою Beyond",
         note: "один сеанс, до 8 тонів",
-        price: 4500,
+        price: null,
         featured: true,
       },
-      { title: "Вініри", note: "за один зуб", price: 6000, from: true },
     ],
   },
   {
-    id: "implants",
-    icon: "award",
-    label: "Імплантація та протезування",
+    id: "surgery",
+    icon: "scissors",
+    label: "Хірургія",
+    items: [{ title: "Видалення зуба", price: 1500, from: true }],
+  },
+  {
+    id: "ortho",
+    icon: "route",
+    label: "Ортодонтія",
     items: [
-      { title: "Імплант із коронкою", price: 25000, from: true },
+      { title: "Ортодонтична консультація", price: 650 },
       {
-        title: "Протез на чотирьох імплантах",
-        note: "одна щелепа",
-        price: 90000,
-        from: true,
+        title: "Лікування прикусу",
+        note: "план і вартість — після огляду",
+        price: null,
       },
-    ],
-  },
-  {
-    id: "kids",
-    icon: "feather",
-    label: "Дитяча стоматологія",
-    items: [
-      { title: "Візит-знайомство", note: "без лікування", price: 200 },
-      { title: "Лікування молочного зуба", price: 1200, from: true },
-      { title: "Герметизація фісур", price: 700 },
     ],
   },
 ];
+
 
 export const extraServices = [
   { title: "Естетична стоматологія", note: "Вініри, корекція форми та кольору" },
@@ -363,11 +407,6 @@ export type Case = {
   before: string;
   after: string;
   ratio: string;
-  /**
-   * "slider" overlays the two frames — it needs both shot from the same
-   * angle. "split" stands them side by side, for pairs that were not.
-   */
-  layout?: "slider" | "split";
   /** An optional everyday photo of the finished work. */
   result?: { src: string; caption: string; ratio: string };
 };
@@ -404,18 +443,15 @@ export const cases: Case[] = [
     before: "/images/case-white-before.jpg",
     after: "/images/case-white-after.jpg",
     ratio: "4 / 3",
-    // The two frames were shot from different angles, so they stand side by
-    // side instead of being overlaid.
-    layout: "split",
   },
   {
     id: "case-1",
-    title: "Художня реставрація пришийкової зони",
+    title: "Художня реставрація фронтальних зубів",
     short: "Художня реставрація",
-    detail: "Одне відвідування · композитна реставрація",
-    before: "/images/before-after-1.jpg",
-    after: "/images/before-after-2.jpg",
-    ratio: "16 / 10",
+    detail: "Відновлення форми, кольору та прозорості",
+    before: "/images/case-restore-before.jpg",
+    after: "/images/case-restore-after.jpg",
+    ratio: "1400 / 645",
   },
 ];
 

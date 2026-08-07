@@ -40,14 +40,17 @@ export function TopBar() {
               >
                 <ViberIcon className="size-[18px]" />
               </a>
+              {/* Spelled out from lg — as an icon alone the clinic could not
+                  find the Instagram link at all. */}
               <a
                 href={site.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram клініки"
-                className="flex size-9 items-center justify-center rounded-full border border-white/25 transition-colors duration-300 hover:border-white hover:bg-white hover:text-ink"
+                className="flex h-9 items-center justify-center gap-2 rounded-full border border-white/25 px-2.5 text-[14px] font-semibold text-white transition-colors duration-300 hover:border-white hover:bg-white hover:text-ink lg:px-4"
               >
                 <InstagramIcon className="size-[18px]" strokeWidth={1.75} />
+                <span className="hidden lg:inline">{site.instagramHandle}</span>
+                <span className="sr-only lg:hidden">Instagram клініки</span>
               </a>
             </span>
 

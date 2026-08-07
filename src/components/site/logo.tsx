@@ -54,7 +54,9 @@ export function Logo({
         <span
           className={cn(
             "flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.3em]",
-            tone === "dark" ? "text-clay" : "text-sand",
+            /* A touch denser on the light bar — the clinic found the
+               wordmark too faint against white. */
+            tone === "dark" ? "text-graphite" : "text-sand",
           )}
         >
           Dental Clinic
@@ -62,7 +64,7 @@ export function Logo({
         <span className="mt-1.5 flex items-baseline gap-1.5">
           <span
             className={cn(
-              "font-display font-semibold uppercase tracking-[0.02em]",
+              "font-display font-bold uppercase tracking-[0.02em]",
               name,
               tone === "dark" ? "text-ink" : "text-white",
             )}
@@ -73,7 +75,7 @@ export function Logo({
             className={cn(
               "accent leading-none",
               script,
-              tone === "dark" ? "text-clay" : "text-sand",
+              tone === "dark" ? "text-graphite" : "text-sand",
             )}
           >
             Zhylan

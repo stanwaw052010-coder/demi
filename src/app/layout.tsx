@@ -75,7 +75,7 @@ const jsonLd = {
   description:
     "Сучасна стоматологія у Тернополі: лікування під мікроскопом, художня реставрація, імплантація, відбілювання.",
   image: "/images/clinic.jpg",
-  telephone: site.phone,
+  telephone: [site.phone, site.phone2],
   address: {
     "@type": "PostalAddress",
     streetAddress: "вул. Коновальця, 3",

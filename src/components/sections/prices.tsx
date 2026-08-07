@@ -2,10 +2,12 @@ import {
   Activity,
   ArrowUpRight,
   Award,
-  Feather,
+  Baby,
   Gem,
   Microscope,
   Phone,
+  Route,
+  Scissors,
   type LucideIcon,
 } from "lucide-react";
 import { priceGroups, priceHighlights, type PriceItem } from "@/lib/content";
@@ -20,12 +22,56 @@ const icons: Record<string, LucideIcon> = {
   microscope: Microscope,
   gem: Gem,
   award: Award,
-  feather: Feather,
+  scissors: Scissors,
+  baby: Baby,
+  route: Route,
 };
 
-/** 1200 → «1 200» with a thin space, so columns of figures stay aligned. */
-function hryvnia(value: number) {
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+/** 1200 → «1 200» with a thin space, so columns of figures stay aligned. */
+function grouped(value: number) {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u202f");
+}
+
+/**
+ * One figure, a range («1 700 — 2 200») or «уточнюйте», in hryvnia or euro.
+ * `muted` is the dimmer tone used for the «від» prefix and the currency sign.
+ */
+function PriceValue({
+  item,
+  size = "row",
+  muted,
+}: {
+  item: Pick<PriceItem, "price" | "to" | "from" | "currency">;
+  size?: "row" | "large";
+  muted: string;
+}) {
+  if (item.price === null) {
+    return (
+      <span className={cn("text-[14px] font-medium", muted)}>уточнюйте</span>
+    );
+  }
+
+  const figure =
+    size === "large"
+      ? "font-display text-[34px] font-bold tabular-nums leading-none tracking-[-0.035em] md:text-[40px]"
+      : "text-[18px] font-bold tabular-nums tracking-[-0.02em] md:text-[20px]";
+  const sign =
+    size === "large" ? "text-[20px] font-semibold" : "text-[14px] font-semibold";
+
+  return (
+    <>
+      {item.from && (
+        <span className={cn("mr-1.5 text-[13px] font-medium", muted)}>від</span>
+      )}
+      <span className={figure}>
+        {grouped(item.price)}
+        {item.to !== undefined && ` \u2014 ${grouped(item.to)}`}
+      </span>
+      <span className={cn("ml-1", sign, muted)}>
+        {item.currency === "EUR" ? "€" : "₴"}
+      </span>
+    </>
+  );
 }
 
 function PriceRow({ item }: { item: PriceItem }) {
@@ -74,35 +120,10 @@ function PriceRow({ item }: { item: PriceItem }) {
           item.featured ? "text-white" : "text-ink",
         )}
       >
-        {item.price === null ? (
-          <span className="text-[14px] font-medium text-graphite">
-            за консультацією
-          </span>
-        ) : (
-          <>
-            {item.from && (
-              <span
-                className={cn(
-                  "mr-1.5 text-[13px] font-medium",
-                  item.featured ? "text-white/70" : "text-clay",
-                )}
-              >
-                від
-              </span>
-            )}
-            <span className="text-[18px] font-bold tabular-nums tracking-[-0.02em] md:text-[20px]">
-              {hryvnia(item.price)}
-            </span>
-            <span
-              className={cn(
-                "ml-1 text-[14px] font-semibold",
-                item.featured ? "text-white/70" : "text-clay",
-              )}
-            >
-              ₴
-            </span>
-          </>
-        )}
+        <PriceValue
+          item={item}
+          muted={item.featured ? "text-white/70" : "text-clay"}
+        />
       </span>
     </li>
   );
@@ -168,33 +189,17 @@ export function Prices() {
                   </p>
                 </div>
 
-                <p className="mt-10 flex items-baseline gap-1.5">
-                  {item.from && (
-                    <span
-                      className={cn(
-                        "text-[14px] font-medium",
-                        item.dark ? "text-white/70" : "text-clay",
-                      )}
-                    >
-                      від
-                    </span>
+                <p
+                  className={cn(
+                    "mt-10 flex flex-wrap items-baseline",
+                    item.dark ? "text-white" : "text-ink",
                   )}
-                  <span
-                    className={cn(
-                      "font-display text-[40px] font-bold tabular-nums leading-none tracking-[-0.035em] md:text-[46px]",
-                      item.dark ? "text-white" : "text-ink",
-                    )}
-                  >
-                    {item.price === null ? "—" : hryvnia(item.price)}
-                  </span>
-                  <span
-                    className={cn(
-                      "text-[22px] font-semibold leading-none",
-                      item.dark ? "text-white/70" : "text-clay",
-                    )}
-                  >
-                    ₴
-                  </span>
+                >
+                  <PriceValue
+                    item={item}
+                    size="large"
+                    muted={item.dark ? "text-white/70" : "text-clay"}
+                  />
                 </p>
 
                 <span

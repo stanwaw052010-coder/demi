@@ -116,6 +116,14 @@ export function Footer() {
             </li>
             <li>
               <a
+                href={site.phone2Href}
+                className="group flex items-center gap-3 pl-8 text-[19px] font-bold tabular-nums text-white transition-colors duration-300 hover:underline"
+              >
+                {site.phone2}
+              </a>
+            </li>
+            <li>
+              <a
                 href={site.instagram}
                 target="_blank"
                 rel="noopener noreferrer"

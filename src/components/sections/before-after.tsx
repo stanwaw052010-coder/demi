@@ -2,28 +2,25 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { MoveHorizontal } from "lucide-react";
 import { cases } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/ui/reveal";
 import { LogoWatermark } from "@/components/ui/logo-watermark";
 import { SectionHeading } from "@/components/ui/section-heading";
 
-const clamp = (n: number) => Math.min(100, Math.max(0, n));
-
+/**
+ * Cases are shown as two frames side by side, labelled «До» and «Після».
+ * A drag-to-compare slider looked better but relied on the visitor working
+ * out that the handle moves — and the clinic reported that not everyone did.
+ */
 export function BeforeAfter() {
   const [active, setActive] = React.useState(0);
-  const [pos, setPos] = React.useState(50);
-  const [dragging, setDragging] = React.useState(false);
-  const frameRef = React.useRef<HTMLDivElement>(null);
   const item = cases[active];
 
-  const update = React.useCallback((clientX: number) => {
-    const rect = frameRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    setPos(clamp(((clientX - rect.left) / rect.width) * 100));
-  }, []);
+  const frames = [
+    { src: item.before, label: "До", tone: "dark" as const },
+    { src: item.after, label: "Після", tone: "light" as const },
+  ];
 
   return (
     <section id="results" className="bg-white py-24 md:py-36">
@@ -37,162 +34,62 @@ export function BeforeAfter() {
               <span className="accent text-clay">без пояснень</span>
             </>
           }
-          description="Чотири реальні клінічні випадки. Потягніть роздільник, щоб побачити зміну, і перемкніть кейс плиткою внизу."
+          description="Чотири реальні клінічні випадки. Кейс перемикається плиткою внизу."
         />
 
-        {item.layout === "split" ? (
-          <Reveal className="mt-14 md:mt-20" y={40}>
-            <div className="mx-auto grid max-w-[940px] gap-4 sm:grid-cols-2 md:gap-5">
-              {[
-                { src: item.before, label: "До", tone: "dark" as const },
-                { src: item.after, label: "Після", tone: "light" as const },
-              ].map((frame) => (
-                <figure
-                  key={frame.src}
-                  className="relative overflow-hidden rounded-[24px] bg-mist shadow-[0_40px_100px_-70px_rgba(17,17,17,0.6)]"
-                >
-                  <div
-                    className="relative w-full"
-                    style={{ aspectRatio: item.ratio }}
-                  >
-                    <Image
-                      src={frame.src}
-                      alt={`${item.title} — ${frame.label.toLowerCase()} лікування`}
-                      fill
-                      sizes="(max-width: 640px) 92vw, 460px"
-                      className="object-cover"
-                    />
-                    <span
-                      className={cn(
-                        "pointer-events-none absolute left-5 top-5 rounded-full px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em]",
-                        frame.tone === "dark"
-                          ? "glass-dark text-white/90"
-                          : "glass text-ink",
-                      )}
-                    >
-                      {frame.label}
-                    </span>
-                    {frame.tone === "light" && (
-                      <LogoWatermark className="bottom-4 right-4" />
-                    )}
-                  </div>
-                </figure>
-              ))}
-            </div>
-            <p className="mx-auto mt-5 max-w-[940px] text-[14px] text-graphite">
-              {item.title} · {item.detail}
-            </p>
-          </Reveal>
-        ) : (
         <Reveal className="mt-14 md:mt-20" y={40}>
-          <div
-            ref={frameRef}
-            onPointerDown={(e) => {
-              e.currentTarget.setPointerCapture(e.pointerId);
-              setDragging(true);
-              update(e.clientX);
-            }}
-            onPointerMove={(e) => dragging && update(e.clientX)}
-            onPointerUp={() => setDragging(false)}
-            onPointerCancel={() => setDragging(false)}
-            style={{ aspectRatio: item.ratio }}
-            className={cn(
-              "relative mx-auto min-h-[260px] w-full max-w-[940px] touch-none select-none overflow-hidden rounded-[24px] bg-mist shadow-[0_50px_120px_-70px_rgba(17,17,17,0.6)]",
-              dragging ? "cursor-grabbing" : "cursor-grab",
-            )}
-          >
-            {/* After (base layer) */}
-            <motion.div
-              key={`after-${item.id}`}
-              initial={{ opacity: 0, scale: 1.03 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0"
-            >
-              <Image
-                src={item.after}
-                alt={`${item.title} — після лікування`}
-                fill
-                sizes="(max-width: 1024px) 100vw, 940px"
-                className="object-cover"
-              />
-            </motion.div>
-
-            {/* Before (clipped layer) */}
-            <motion.div
-              key={`before-${item.id}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className={cn(
-                "absolute inset-0",
-                !dragging &&
-                  "transition-[clip-path] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
-              )}
-              style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
-            >
-              <Image
-                src={item.before}
-                alt={`${item.title} — до лікування`}
-                fill
-                sizes="(max-width: 1024px) 100vw, 940px"
-                className="object-cover"
-              />
-            </motion.div>
-
-            <LogoWatermark className="bottom-5 right-5 md:bottom-7 md:right-7" />
-
-            {/* Labels */}
-            <span className="pointer-events-none absolute left-5 top-5 rounded-full glass-dark px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-white/90 md:left-7 md:top-7">
-              До
-            </span>
-            <span className="pointer-events-none absolute right-5 top-5 rounded-full glass px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-ink md:right-7 md:top-7">
-              Після
-            </span>
-
-            {/* Handle */}
-            <div
-              className={cn(
-                "pointer-events-none absolute inset-y-0 w-px bg-white/90 shadow-[0_0_24px_rgba(0,0,0,0.35)]",
-                !dragging &&
-                  "transition-[left] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
-              )}
-              style={{ left: `${pos}%` }}
-            >
-              <button
-                type="button"
-                role="slider"
-                aria-label="Роздільник до / після"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={Math.round(pos)}
-                onKeyDown={(e) => {
-                  if (e.key === "ArrowLeft") setPos((p) => clamp(p - 4));
-                  if (e.key === "ArrowRight") setPos((p) => clamp(p + 4));
-                }}
-                className="pointer-events-auto absolute left-1/2 top-1/2 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-clay ring-1 ring-sand/70 shadow-[0_10px_30px_-8px_rgba(17,17,17,0.5)] transition-transform duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white md:size-14"
+          <div className="mx-auto grid max-w-[980px] gap-4 sm:grid-cols-2 md:gap-5">
+            {frames.map((frame) => (
+              <figure
+                key={frame.src}
+                className="overflow-hidden rounded-[24px] bg-mist shadow-[0_40px_100px_-70px_rgba(17,17,17,0.6)]"
               >
-                <MoveHorizontal className="size-5" strokeWidth={1.5} />
-              </button>
-            </div>
+                <div
+                  className="relative w-full"
+                  style={{ aspectRatio: item.ratio }}
+                >
+                  <Image
+                    src={frame.src}
+                    alt={`${item.title} — ${frame.label.toLowerCase()} лікування`}
+                    fill
+                    sizes="(max-width: 640px) 92vw, 480px"
+                    className="object-cover"
+                  />
+                  {frame.tone === "light" && (
+                    <LogoWatermark className="bottom-4 right-4" />
+                  )}
+                </div>
 
-            {/* Case caption */}
-            {/* pb leaves the bottom-right corner free for the watermark */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent p-5 pb-16 pt-16 md:p-8 md:pt-24">
-              <p className="font-display text-[19px] font-light tracking-[-0.02em] text-white md:text-[24px]">
-                {item.title}
-              </p>
-              <p className="mt-1.5 text-[12px] uppercase tracking-[0.14em] text-white/85">
-                {item.detail}
-              </p>
-            </div>
+                <figcaption
+                  className={cn(
+                    "flex items-center gap-2.5 px-5 py-3.5 text-[13px] font-semibold uppercase tracking-[0.16em]",
+                    frame.tone === "dark"
+                      ? "bg-mist text-graphite"
+                      : "bg-ink text-white",
+                  )}
+                >
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "size-1.5 rounded-full",
+                      frame.tone === "dark" ? "bg-graphite/50" : "bg-white",
+                    )}
+                  />
+                  {frame.label}
+                </figcaption>
+              </figure>
+            ))}
           </div>
+
+          <p className="mx-auto mt-5 max-w-[980px] text-[15px] text-graphite">
+            <span className="font-medium text-ink">{item.title}</span> ·{" "}
+            {item.detail}
+          </p>
         </Reveal>
-        )}
 
         {/* How the finished work looks outside the surgery */}
         {item.result && (
-          <Reveal className="mx-auto mt-5 max-w-[940px]" y={30} delay={0.08}>
+          <Reveal className="mx-auto mt-5 max-w-[980px]" y={30} delay={0.08}>
             <figure className="flex flex-col gap-5 overflow-hidden rounded-[24px] bg-mist p-5 sm:flex-row sm:items-center md:p-6">
               <div
                 className="relative w-full shrink-0 overflow-hidden rounded-[16px] sm:w-[46%]"
@@ -217,19 +114,16 @@ export function BeforeAfter() {
 
         {/* Case switcher. Thumbnails, not a row of words — otherwise the
             strip reads as a caption and the other cases go unnoticed. */}
-        <p className="mx-auto mt-10 max-w-[940px] text-[14px] font-semibold uppercase tracking-[0.16em] text-clay">
+        <p className="mx-auto mt-10 max-w-[980px] text-[14px] font-semibold uppercase tracking-[0.16em] text-clay">
           Усі {cases.length} кейси — натисніть, щоб подивитись
         </p>
 
-        <div className="mx-auto mt-4 grid max-w-[940px] grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+        <div className="mx-auto mt-4 grid max-w-[980px] grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
           {cases.map((c, i) => (
             <button
               key={c.id}
               type="button"
-              onClick={() => {
-                setActive(i);
-                setPos(50);
-              }}
+              onClick={() => setActive(i)}
               aria-pressed={active === i}
               className={cn(
                 "group overflow-hidden rounded-[18px] border bg-white text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1",
