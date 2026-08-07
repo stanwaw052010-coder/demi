@@ -106,25 +106,29 @@ export function Hero() {
         </div>
       </div>
 
-      {/* ── The doctor, filling the bottom of the frame ─── */}
-      <div className="relative mt-6 h-[340px] sm:h-[420px] lg:h-[520px]">
+      {/* ── The doctor ───────────────────────────────────
+          A narrow screen is close to the photograph's own 4:5, so there it
+          runs full width. A wide one is not: stretched edge to edge the frame
+          becomes a 3:1 panorama and crops the portrait down to a forehead.
+          From lg it keeps its proportions and stands centred instead. */}
+      <div className="relative mt-6 h-[340px] sm:h-[420px] lg:mx-auto lg:mt-10 lg:aspect-4/5 lg:h-auto lg:w-[460px] lg:overflow-hidden lg:rounded-t-[28px] xl:w-[520px]">
         <Image
           src="/images/hero.jpg"
           alt={`${site.doctor} — лікар-стоматолог, ${site.name}`}
           fill
           /* The headline is the LCP element; this sits under it. */
           fetchPriority="low"
-          sizes="100vw"
-          className="object-cover object-[50%_18%]"
+          sizes="(max-width: 1024px) 100vw, 520px"
+          className="object-cover object-[50%_18%] lg:object-center"
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-b from-ink via-ink/25 to-transparent"
+          className="absolute inset-0 bg-gradient-to-b from-ink via-ink/25 to-transparent lg:via-ink/10"
         />
         <div
           aria-hidden
-          /* Melts into the cream band that follows */
-          className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-cream to-transparent"
+          /* Melts into the cream band that follows — only while full-bleed */
+          className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-cream to-transparent lg:hidden"
         />
       </div>
     </section>
