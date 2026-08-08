@@ -63,6 +63,14 @@ export const services: Service[] = [
     poster: "/images/implant-video-poster.jpg",
   },
   {
+    id: "ortho",
+    title: "Ортодонтичне лікування",
+    summary: "Виправлення прикусу",
+    detail:
+      "Консультація ортодонта, план виправлення прикусу та підбір конструкції під вашу ситуацію й вік.",
+    image: "/images/equipment.jpg",
+  },
+  {
     id: "kids",
     title: "Дитяча стоматологія",
     summary: "Спокійно й довірливо",
@@ -175,7 +183,7 @@ export const priceGroups: {
   {
     id: "prosthetics",
     icon: "award",
-    label: "Ортопедія та протезування",
+    label: "Протезування",
     items: [
       {
         title: "Коронка керамічна",

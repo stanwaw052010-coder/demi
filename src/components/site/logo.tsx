@@ -53,7 +53,7 @@ export function Logo({
       <span className="flex flex-col leading-none">
         <span
           className={cn(
-            "flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.3em]",
+            "flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.3em]",
             /* A touch denser on the light bar — the clinic found the
                wordmark too faint against white. */
             tone === "dark" ? "text-ink" : "text-sand",
@@ -73,7 +73,7 @@ export function Logo({
           </span>
           <span
             className={cn(
-              "accent leading-none",
+              "accent leading-none [-webkit-text-stroke:0.4px_currentColor]",
               script,
               tone === "dark" ? "text-ink" : "text-sand",
             )}
