@@ -35,15 +35,17 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## Atelier Ivoire — nail studio experience (`/studio`)
+## Atelier Ivoire — nail studio experience (site root)
 
-A self-contained, award-level marketing experience living at
-[`/studio`](http://localhost:3000/studio). It does not touch the existing
-store: all of its code, styles and assets are namespaced, and the only shared
-file it relies on is the root layout.
+The site itself: an award-level experience served at `/`. Its code, styles and
+assets are namespaced, and the only shared file it relies on is the root
+layout. The parts store it replaced still runs — its home page moved to
+`/shop`, every other store route is unchanged, and `/studio` permanently
+redirects to `/`.
 
 ```
-src/app/studio/          route: layout (fonts + metadata), page, studio.css
+src/app/(studio)/        route group serving `/`: layout (fonts + metadata),
+                         page, studio.css
 src/components/studio/   Nav, Hero, Ritual, Gallery, About, Stats,
                          Testimonials, BookingCTA, Footer, Cursor, Preloader
   └ primitives/          SplitText, RevealMedia, Magnetic
@@ -74,4 +76,6 @@ there is a single rAF loop on the page. Everything degrades under
 gallery becomes a native scroll rail, the custom cursor is not mounted, and
 scroll-linked tweens are skipped rather than snapped.
 
-To promote it to the site root, re-export it from `src/app/page.tsx`.
+The route group `(studio)` contributes no URL segment, which is what lets the
+experience own `/` while keeping its own layout, fonts and stylesheet separate
+from the store's.

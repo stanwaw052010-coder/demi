@@ -17,7 +17,7 @@ export default function SearchResults() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <Link href="/" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-orange-500 transition-colors mb-8">
+      <Link href="/shop" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-orange-500 transition-colors mb-8">
         <ArrowLeft className="w-4 h-4" /> На головну
       </Link>
 

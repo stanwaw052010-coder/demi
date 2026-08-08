@@ -8,6 +8,13 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "picsum.photos" },
     ],
   },
+  async redirects() {
+    return [
+      // The studio experience moved from /studio to the site root; the parts
+      // store home it replaced now lives at /shop.
+      { source: "/studio", destination: "/", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;
