@@ -47,10 +47,12 @@ export function Hero() {
 
         <p
           style={{ animationDelay: "0.1s" }}
-          className="enter mx-auto mt-6 max-w-[42ch] text-[15px] leading-relaxed text-white/75 md:max-w-[58ch] md:text-[16px]"
+          className="enter mx-auto mt-6 max-w-[46ch] text-[15px] leading-relaxed text-white/75 md:max-w-[70ch] md:text-[16px]"
         >
-          Лікування під мікроскопом, художня реставрація, імплантація та
-          відбілювання — у кабінеті Наталії Жилан.
+          Дитяча та доросла терапевтична стоматологія, усі сучасні методи
+          пломбування кореневих каналів, естетична художня реставрація зубів,
+          відбілювання лампою Beyond, усі види протезування (знімне та
+          незнімне), хірургічна стоматологія та імплантація.
         </p>
 
         <div
