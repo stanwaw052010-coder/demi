@@ -1,43 +1,54 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/lib/cart";
-import { WishlistProvider } from "@/lib/wishlist";
+import "./studio.css";
+import { STUDIO } from "@/lib/studio/content";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin", "cyrillic"],
+const display = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  style: ["normal", "italic"],
+  variable: "--studio-font-display",
+  display: "swap",
+});
+
+const body = Inter({
+  subsets: ["latin"],
+  variable: "--studio-font-body",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Спринтер — Запчастини для Mercedes Sprinter, Vito, VW Crafter | Харків",
+  title: `${STUDIO.name} — Nail Studio / Creative Beauty`,
   description:
-    "Інтернет-магазин запчастин для Mercedes Sprinter, Vito, Volkswagen Crafter та LT. Понад 8 000 позицій в наявності. Доставка по Україні 1–2 дні. Харків: Просп. Героїв Харкова, 210.",
-  keywords:
-    "запчастини Mercedes Sprinter, запчастини Vito, запчастини VW Crafter, запчастини для мерседес спрінтер, автозапчастини Харків, запчастини для комерційного транспорту",
+    "A nail studio in Berlin working in structure, restraint and finish. Manicure, pedicure, nail art, gel and signature care — by appointment.",
   openGraph: {
-    title: "Спринтер — Запчастини для комерційного транспорту",
+    title: `${STUDIO.name} — Beauty in every detail`,
     description:
-      "Понад 8 000 позицій запчастин для Mercedes та VW. Швидка доставка по Україні.",
+      "Manicure, pedicure, nail art and signature care. A studio built on restraint and finish.",
     type: "website",
-    locale: "uk_UA",
+    locale: "en_GB",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f4f1ec",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="uk" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
-        <CartProvider>
-          <WishlistProvider>
-            {children}
-          </WishlistProvider>
-        </CartProvider>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
+      <body>
+        <div className="studio">
+          {/* Without scripting the opening sequence must never block the page. */}
+          <noscript>
+            <style>{`.studio-preloader{display:none!important}`}</style>
+          </noscript>
+          {children}
+        </div>
       </body>
     </html>
   );
