@@ -24,7 +24,8 @@ export function Hero() {
         className="pointer-events-none absolute -top-40 left-1/2 h-[720px] w-[1100px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.10),transparent)]"
       />
 
-      <div className="container-x relative z-10 pb-10 pt-44 text-center sm:pt-40 md:pt-44 lg:pt-48">
+      <div /* The bar above is three lines tall on a phone now — clear it. */
+        className="container-x relative z-10 pb-10 pt-56 text-center sm:pt-44 md:pt-48 lg:pt-52">
         <p className="enter eyebrow text-white/70">
           {site.doctor} · 20+ років практики
         </p>
@@ -172,11 +173,11 @@ export function Hero() {
           fill
           /* The headline is the LCP element; this sits under it. */
           fetchPriority="low"
-          /* The source is 1000×1250, so at 520 CSS px a 2× screen is already
-             at the edge of it — default compression showed. */
-          quality={92}
+          quality={88}
           sizes="(max-width: 1024px) 100vw, 500px"
-          className="object-cover object-[50%_18%] lg:object-center"
+          /* On a phone the frame is wider than the photograph, so the crop
+             is vertical: aim between the etched logo and her face. */
+          className="object-cover object-[50%_34%] lg:object-center"
         />
         <div
           aria-hidden
