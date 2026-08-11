@@ -2,10 +2,11 @@ import { CalendarCheck, Clock, MapPin, Navigation, Phone } from "lucide-react";
 import { Instagram } from "@/components/ui/icons";
 import { BrandGlyph } from "@/components/ui/BrandMark";
 import { Button } from "@/components/ui/Button";
+import { LazyMap } from "@/components/ui/LazyMap";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SoftGlow } from "@/components/ui/Aurora";
-import { mapsDirectionsUrl, mapsEmbedUrl, site } from "@/lib/site";
+import { mapsDirectionsUrl, site } from "@/lib/site";
 
 const details = [
   {
@@ -120,14 +121,7 @@ export function Contacts() {
           {/* ---------- карта ---------- */}
           <Reveal direction="left" delay={0.12}>
             <div className="group relative h-full min-h-[26rem] overflow-hidden rounded-6xl shadow-lift ring-1 ring-graphite-200/70">
-              <iframe
-                title={`Карта: ${site.name}, ${site.address.full}`}
-                src={mapsEmbedUrl}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-                className="absolute inset-0 size-full border-0 grayscale-[35%] transition-all duration-700 group-hover:grayscale-0"
-              />
+              <LazyMap />
 
               {/* плаваюча картка адреси поверх карти */}
               <div className="pointer-events-none absolute inset-x-4 bottom-4 sm:inset-x-6 sm:bottom-6">
@@ -161,7 +155,7 @@ export function Contacts() {
             <div className="relative overflow-hidden rounded-6xl border border-graphite-200/70 bg-graphite-50 p-8 md:p-12 lg:p-16">
               <span
                 aria-hidden
-                className="pointer-events-none absolute -top-32 -left-24 size-96 rounded-full bg-brand-200/40 blur-[110px]"
+                className="pointer-events-none absolute inset-0 bg-radial-[at_4%_0%] from-brand-200/50 to-transparent to-55%"
               />
               <div className="relative z-10 grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
                 <div>
@@ -185,7 +179,7 @@ export function Contacts() {
                 <div className="relative grain overflow-hidden rounded-5xl bg-linear-to-br from-brand-800 via-brand-900 to-brand-950 p-8 shadow-[0_50px_100px_-40px_rgb(10_27_68/0.7)] sm:p-10">
                   <span
                     aria-hidden
-                    className="pointer-events-none absolute -top-24 -right-16 size-64 animate-float-slow rounded-full bg-aqua-500/25 blur-[80px]"
+                    className="pointer-events-none absolute inset-0 bg-radial-[at_92%_4%] from-aqua-500/28 to-transparent to-58%"
                   />
                   <BrandGlyph className="pointer-events-none absolute -right-8 -bottom-10 size-48 text-white/[0.06]" />
 

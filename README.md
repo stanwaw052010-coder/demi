@@ -4,7 +4,8 @@
 подологія, манікюр і педикюр, естетика брів, лазерна епіляція.
 пл. Шевченка, 3, приміщення 143, м. Вишгород (поруч із Книгарнею «Є»).
 
-Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion · lucide-react.
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · lucide-react.
+Без анімаційних бібліотек — усі переходи на CSS.
 
 ---
 
@@ -34,12 +35,12 @@ src/
 │   ├── layout/               # Header, Footer, MobileActionBar
 │   ├── sections/             # Hero, About, Services, Advantages, Pricing,
 │   │                         # Gallery, Testimonials, Faq, CtaBanner, Contacts
-│   ├── ui/                   # Button, Accordion, Reveal, SectionHeading,
-│   │                         # BrandMark, ArtTile, Aurora, MotionItem, icons
+│   ├── ui/                   # Button, Accordion, Reveal, RevealObserver,
+│   │                         # SectionHeading, BrandMark, ArtTile, Aurora,
+│   │                         # LazyMap, MotionItem, icons
 │   └── PriceList.tsx         # повний прайс із перемиканням напрямків
 └── lib/
     ├── site.ts               # ⭐ увесь контент: контакти, послуги, прайс, FAQ, відгуки
-    ├── motion.ts             # спільні криві та варіанти анімацій
     └── utils.ts
 ```
 
@@ -118,7 +119,9 @@ src/
 
 ## Карта та маршрут
 
-Google Maps вбудований через `iframe` без API-ключа, координати `50.58276, 30.48422`.
+Google Maps вбудований через `iframe` без API-ключа, координати `50.583437, 30.484062`
+(з плюс-коду `HFMM+9J` мітки студії в Google Business). Карта вставляється лише
+коли користувач наближається до секції — див. `LazyMap`.
 Кнопка **«Прокласти маршрут»** відкриває Google Maps із побудованою навігацією
 до студії (`/maps/dir/?api=1&destination=…`).
 
@@ -142,8 +145,48 @@ Google Maps вбудований через `iframe` без API-ключа, ко
 - **Типографіка** — Manrope (заголовки й текст) + Playfair Display Italic
   (акцентні слова в заголовках). Обидва з кириличною підмножиною, підключені
   через `next/font` (self-hosted, без запитів до Google).
-- **Анімації** — Framer Motion: fade up/left/right, scale, stagger, паралакс
-  у hero, slider відгуків, accordion FAQ; CSS — floating, marquee, aurora.
-  Усе поважає `prefers-reduced-motion`.
-- **Зображення** — жодних зовнішніх хостів: логотип, іконки та арт галереї
-  векторні й вбудовані.
+- **Анімації** — чистий CSS: fade up/left/right, scale, послідовна поява
+  карток, slider відгуків, accordion FAQ, floating, marquee.
+  Клас `.is-visible` вішає один IntersectionObserver на всю сторінку
+  (`RevealObserver`). Усе поважає `prefers-reduced-motion`.
+- **Зображення** — жодних зовнішніх хостів: логотип та іконки векторні,
+  арт галереї лежить у `public/art` і вантажиться ліниво.
+
+
+---
+
+## Продуктивність
+
+Сайт свідомо тримається легким. Заміри — Chromium, емуляція середнього
+телефона (4× уповільнення CPU, Slow 4G):
+
+| | Було | Стало |
+|---|---|---|
+| LCP | 4340 мс | **1732 мс** |
+| DOM interactive | 2288 мс | **755 мс** |
+| JavaScript | 731 КБ | **410 КБ** |
+| Шрифти | 172 КБ (15 файлів) | **114 КБ (4 файли)** |
+| HTML | 435 КБ | **378 КБ** |
+| DOM-вузлів | 1783 | **1497** |
+
+Що саме зроблено:
+
+1. **Прибрано Framer Motion** (−180 КБ JS). Усі появи блоків тепер — CSS-переходи,
+   які вмикає один IntersectionObserver. Секції знову стали серверними
+   компонентами, тож гідратації майже немає.
+2. **Шрифти — variable-версії.** Один файл на підмножину замість п'яти нарізок
+   на кожну вагу; Playfair вантажиться лише курсивом.
+3. **Текст першого екрана без вхідної анімації.** Заголовок із `opacity: 0`
+   не рахується намальованим, тому анімація прямо відкладала LCP.
+4. **`filter: blur()` замінено на radial-gradient.** Розмиття на площі кількох
+   екранів — найдорожча операція для мобільного GPU, а візуально градієнт
+   дає те саме. `backdrop-filter` лишився тільки там, де за поверхнею реально
+   рухається контент.
+5. **Графіка галереї — у /public/art.** Шість SVG по ~1 КБ замість інлайну
+   в розмітці; вантажаться ліниво і кешуються окремо.
+6. **Логотип — один `<symbol>`** на сторінку замість п'яти копій контурів.
+7. **Карта Google вставляється при наближенні** до секції контактів, а не
+   на старті: це кілька сотень кілобайт чужого коду, які потрібні не всім.
+
+Заміряти після змін: `npm run build && npm start`, далі скрипт із
+`perf.js` (Playwright із CPU- та мережевим тротлінгом).

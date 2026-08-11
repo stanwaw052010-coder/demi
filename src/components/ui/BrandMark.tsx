@@ -1,13 +1,29 @@
 import { cn } from "@/lib/utils";
 import { LOGO_PATHS } from "./logo-paths";
 
+/**
+ * Один опис знака на всю сторінку. Рендериться в layout прихованим —
+ * далі кожне використання лише посилається на нього через <use>.
+ * Інакше 7 контурів логотипа їхали б у розмітці стільки разів,
+ * скільки разів він з'являється (шапка, hero, CTA, контакти, підвал).
+ */
+export function BrandGlyphSprite() {
+  return (
+    <svg width="0" height="0" aria-hidden focusable="false" className="absolute">
+      <symbol id="pt-glyph" viewBox="0 0 64 64">
+        {LOGO_PATHS.map((d) => (
+          <path key={d.slice(0, 24)} d={d} fill="currentColor" />
+        ))}
+      </symbol>
+    </svg>
+  );
+}
+
 /** Фірмовий знак ProfiTime — оригінальний логотип студії у вигляді вектора. */
 export function BrandGlyph({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 64 64" className={className} aria-hidden focusable="false">
-      {LOGO_PATHS.map((d) => (
-        <path key={d.slice(0, 24)} d={d} fill="currentColor" />
-      ))}
+      <use href="#pt-glyph" />
     </svg>
   );
 }

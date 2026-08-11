@@ -1,13 +1,16 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { useId, useState } from "react";
 import { cn } from "@/lib/utils";
-import { EASE } from "./Reveal";
 
 export type AccordionItem = { q: string; a: string };
 
+/**
+ * Акордеон FAQ.
+ * Розкриття зроблене переходом grid-template-rows 0fr → 1fr:
+ * плавно, з реальною висотою контенту й без JS-анімації.
+ */
 export function Accordion({ items }: { items: readonly AccordionItem[] }) {
   const [open, setOpen] = useState<number | null>(0);
   const uid = useId();
@@ -20,12 +23,9 @@ export function Accordion({ items }: { items: readonly AccordionItem[] }) {
         const buttonId = `${uid}-button-${i}`;
 
         return (
-          <motion.div
+          <div
             key={item.q}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6, delay: i * 0.05, ease: EASE }}
+            data-reveal="up"
             className={cn(
               "group overflow-hidden rounded-4xl border transition-colors duration-400",
               isOpen
@@ -63,26 +63,22 @@ export function Accordion({ items }: { items: readonly AccordionItem[] }) {
               </button>
             </h3>
 
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={buttonId}
-                  key="content"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.45, ease: EASE }}
-                  className="overflow-hidden"
-                >
-                  <p className="px-6 pb-7 text-[0.98rem] leading-relaxed text-graphite-600 text-pretty md:px-8 md:pr-20">
-                    {item.a}
-                  </p>
-                </motion.div>
+            <div
+              id={panelId}
+              role="region"
+              aria-labelledby={buttonId}
+              className={cn(
+                "grid transition-[grid-template-rows,opacity] duration-450 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
               )}
-            </AnimatePresence>
-          </motion.div>
+            >
+              <div className="overflow-hidden">
+                <p className="px-6 pb-7 text-[0.98rem] leading-relaxed text-graphite-600 text-pretty md:px-8 md:pr-20">
+                  {item.a}
+                </p>
+              </div>
+            </div>
+          </div>
         );
       })}
     </div>

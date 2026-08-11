@@ -20,7 +20,7 @@ export function Footer() {
     <footer className="relative isolate grain overflow-hidden bg-ink pb-20 text-white sm:pb-0">
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 size-[40rem] -translate-x-1/2 rounded-full bg-brand-700/25 blur-[130px]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[28rem] bg-radial-[at_50%_0%] from-brand-700/30 to-transparent to-62%"
       />
 
       <div className="container-x relative z-10">

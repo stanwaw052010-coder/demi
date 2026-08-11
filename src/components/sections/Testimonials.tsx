@@ -1,11 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Quote, Star } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { EASE } from "@/lib/motion";
 import { testimonials } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -52,7 +50,7 @@ export function Testimonials() {
             <div className="relative overflow-hidden rounded-6xl border border-graphite-200/70 bg-graphite-50 p-8 shadow-soft sm:p-12 md:p-16">
               <span
                 aria-hidden
-                className="pointer-events-none absolute -top-24 -right-16 size-72 rounded-full bg-brand-200/40 blur-[90px]"
+                className="pointer-events-none absolute -top-24 -right-16 size-72 rounded-full bg-radial from-brand-200/60 to-transparent to-70%"
               />
               <Quote
                 aria-hidden
@@ -61,48 +59,45 @@ export function Testimonials() {
               />
 
               <div className="relative z-10 min-h-[19rem] sm:min-h-[15rem]" aria-live="polite">
-                <AnimatePresence mode="wait" custom={direction}>
-                  <motion.blockquote
-                    key={index}
-                    custom={direction}
-                    initial={{ opacity: 0, x: direction * 48 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: direction * -48 }}
-                    transition={{ duration: 0.55, ease: EASE }}
-                    className="flex h-full flex-col"
-                  >
-                    <div className="flex gap-1" aria-label={`Оцінка ${active.rating} з 5`}>
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star
-                          key={i}
-                          className={cn(
-                            "size-[1.1rem]",
-                            i < active.rating ? "fill-brand-500 text-brand-500" : "text-graphite-200",
-                          )}
-                          strokeWidth={2}
-                        />
-                      ))}
-                    </div>
+                {/* key змушує браузер програти анімацію заново на кожному слайді */}
+                <blockquote
+                  key={index}
+                  className={cn(
+                    "flex h-full flex-col",
+                    direction > 0 ? "animate-slide-in-right" : "animate-slide-in-left",
+                  )}
+                >
+                  <div className="flex gap-1" aria-label={`Оцінка ${active.rating} з 5`}>
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className={cn(
+                          "size-[1.1rem]",
+                          i < active.rating ? "fill-brand-500 text-brand-500" : "text-graphite-200",
+                        )}
+                        strokeWidth={2}
+                      />
+                    ))}
+                  </div>
 
-                    <p className="mt-7 text-[1.15rem] leading-relaxed font-medium tracking-[-0.015em] text-ink text-pretty sm:text-[1.4rem] sm:leading-[1.55]">
-                      «{active.text}»
-                    </p>
+                  <p className="mt-7 text-[1.15rem] leading-relaxed font-medium tracking-[-0.015em] text-ink text-pretty sm:text-[1.4rem] sm:leading-[1.55]">
+                    «{active.text}»
+                  </p>
 
-                    <footer className="mt-auto flex items-center gap-4 pt-9">
-                      <span className="grid size-13 place-items-center rounded-2xl bg-linear-to-br from-brand-600 to-brand-900 text-[1.05rem] font-extrabold text-white shadow-glow">
-                        {active.name.charAt(0)}
+                  <footer className="mt-auto flex items-center gap-4 pt-9">
+                    <span className="grid size-13 place-items-center rounded-2xl bg-linear-to-br from-brand-600 to-brand-900 text-[1.05rem] font-extrabold text-white shadow-glow">
+                      {active.name.charAt(0)}
+                    </span>
+                    <span className="flex flex-col">
+                      <cite className="text-[1rem] font-extrabold tracking-[-0.02em] text-ink not-italic">
+                        {active.name}
+                      </cite>
+                      <span className="mt-0.5 text-[0.82rem] font-medium text-graphite-500">
+                        {active.role}
                       </span>
-                      <span className="flex flex-col">
-                        <cite className="text-[1rem] font-extrabold tracking-[-0.02em] text-ink not-italic">
-                          {active.name}
-                        </cite>
-                        <span className="mt-0.5 text-[0.82rem] font-medium text-graphite-500">
-                          {active.role}
-                        </span>
-                      </span>
-                    </footer>
-                  </motion.blockquote>
-                </AnimatePresence>
+                    </span>
+                  </footer>
+                </blockquote>
               </div>
             </div>
 

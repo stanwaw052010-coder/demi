@@ -42,7 +42,7 @@ export function Advantages() {
                 <div className="group relative flex h-full flex-col overflow-hidden rounded-5xl p-8 transition-all duration-500 ease-out glass hover:-translate-y-1.5 hover:bg-white/[0.11]">
                   <span
                     aria-hidden
-                    className="pointer-events-none absolute -top-20 -right-14 size-48 rounded-full bg-aqua-400/20 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
+                    className="pointer-events-none absolute inset-0 bg-radial-[at_92%_4%] from-aqua-400/22 to-transparent to-55% opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   />
 
                   <div className="relative z-10 flex items-center justify-between">

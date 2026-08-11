@@ -1,61 +1,51 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { EASE } from "@/lib/motion";
 import { priceList, type PriceRow } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 /** Повний прайс-лист із перемиканням між напрямками. */
 export function PriceList() {
-  const [active, setActive] = useState(priceList[0].id);
-  const category = priceList.find((c) => c.id === active) ?? priceList[0];
+  const [active, setActive] = useState(0);
+  const category = priceList[active];
 
   return (
     <div>
-      {/* перемикач напрямків */}
+      {/* перемикач напрямків: індикатор їде transform-ом, без JS-анімації */}
       <div className="flex justify-center">
         <div
           role="tablist"
           aria-label="Напрямки прайсу"
-          className="inline-flex gap-1 rounded-full border border-graphite-200/80 bg-white p-1.5 shadow-soft"
+          className="relative inline-flex rounded-full border border-graphite-200/80 bg-white p-1.5 shadow-soft"
         >
-          {priceList.map((item) => {
-            const isActive = item.id === active;
-            return (
-              <button
-                key={item.id}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => setActive(item.id)}
-                className={cn(
-                  "relative cursor-pointer rounded-full px-6 py-3 text-[0.92rem] font-bold tracking-[-0.01em] transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 sm:px-8",
-                  isActive ? "text-white" : "text-graphite-600 hover:text-brand-800",
-                )}
-              >
-                {isActive && (
-                  <motion.span
-                    layoutId="price-tab"
-                    transition={{ duration: 0.45, ease: EASE }}
-                    className="absolute inset-0 rounded-full bg-linear-to-br from-brand-600 via-brand-700 to-brand-900 shadow-glow"
-                  />
-                )}
-                <span className="relative z-10">{item.label}</span>
-              </button>
-            );
-          })}
+          <span
+            aria-hidden
+            className="absolute inset-y-1.5 left-1.5 rounded-full bg-linear-to-br from-brand-600 via-brand-700 to-brand-900 shadow-glow transition-transform duration-450 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            style={{
+              width: `calc((100% - 0.75rem) / ${priceList.length})`,
+              transform: `translateX(${active * 100}%)`,
+            }}
+          />
+          {priceList.map((item, i) => (
+            <button
+              key={item.id}
+              type="button"
+              role="tab"
+              aria-selected={i === active}
+              onClick={() => setActive(i)}
+              className={cn(
+                "relative z-10 flex-1 cursor-pointer rounded-full px-6 py-3 text-[0.92rem] font-bold tracking-[-0.01em] whitespace-nowrap transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 sm:px-8",
+                i === active ? "text-white" : "text-graphite-600 hover:text-brand-800",
+              )}
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={category.id}
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.4, ease: EASE }}
-        >
+      {/* key перезапускає CSS-анімацію появи при зміні вкладки */}
+      <div key={category.id} className="animate-tab-in">
           <p className="mt-6 text-center text-[0.92rem] font-medium text-graphite-500">
             {category.caption}
           </p>
@@ -96,8 +86,7 @@ export function PriceList() {
               </section>
             ))}
           </div>
-        </motion.div>
-      </AnimatePresence>
+      </div>
     </div>
   );
 }

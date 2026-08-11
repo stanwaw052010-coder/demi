@@ -3,20 +3,25 @@ import { Manrope, Playfair_Display } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileActionBar } from "@/components/layout/MobileActionBar";
+import { RevealObserver } from "@/components/ui/RevealObserver";
+import { BrandGlyphSprite } from "@/components/ui/BrandMark";
 import { site } from "@/lib/site";
 import "./globals.css";
 
+/**
+ * Обидва шрифти підключені як variable-версії: один файл на підмножину
+ * покриває всю вісь ваги. Раніше це були 15 окремих woff2 на 172 КБ.
+ * Playfair потрібен лише курсивом — прямий накреслення не вантажимо.
+ */
 const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700", "800"],
   variable: "--font-manrope",
   display: "swap",
 });
 
 const playfair = Playfair_Display({
   subsets: ["latin", "cyrillic"],
-  weight: ["500", "600"],
-  style: ["italic", "normal"],
+  style: ["italic"],
   variable: "--font-playfair",
   display: "swap",
 });
@@ -130,6 +135,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="uk" className={`${manrope.variable} ${playfair.variable}`}>
       <body className="antialiased">
+        {/* Без JS блоки, що з'являються при скролі, показуємо одразу */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+
         <a
           href="#hero"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-90 focus:rounded-full focus:bg-brand-900 focus:px-6 focus:py-3 focus:text-sm focus:font-bold focus:text-white"
@@ -137,10 +147,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Перейти до вмісту
         </a>
 
+        <BrandGlyphSprite />
         <Header />
         <main>{children}</main>
         <Footer />
         <MobileActionBar />
+        <RevealObserver />
 
         <script
           type="application/ld+json"

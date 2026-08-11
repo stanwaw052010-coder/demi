@@ -38,11 +38,11 @@ export function Pricing() {
                   <>
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute -top-28 -right-20 size-72 animate-float-slow rounded-full bg-aqua-500/25 blur-[80px]"
+                      className="pointer-events-none absolute inset-0 bg-radial-[at_88%_6%] from-aqua-500/25 to-transparent to-55%"
                     />
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute -bottom-24 -left-16 size-64 animate-float rounded-full bg-brand-500/30 blur-[80px]"
+                      className="pointer-events-none absolute inset-0 bg-radial-[at_8%_96%] from-brand-500/30 to-transparent to-55%"
                     />
                   </>
                 )}
@@ -157,7 +157,7 @@ export function Pricing() {
             <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-5xl bg-linear-to-r from-brand-50 via-white to-aqua-200/40 p-8 ring-1 ring-brand-100 sm:flex-row sm:items-center md:p-10">
               <span
                 aria-hidden
-                className="pointer-events-none absolute -top-16 right-10 size-52 rounded-full bg-brand-300/25 blur-3xl"
+                className="pointer-events-none absolute inset-0 bg-radial-[at_78%_0%] from-brand-300/30 to-transparent to-55%"
               />
               <div className="relative z-10 flex items-start gap-5">
                 <span className="grid size-14 shrink-0 place-items-center rounded-3xl bg-linear-to-br from-brand-600 to-brand-900 text-white shadow-glow">

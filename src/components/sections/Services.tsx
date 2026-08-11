@@ -50,7 +50,7 @@ export function Services() {
                   />
                   <span
                     aria-hidden
-                    className="pointer-events-none absolute -top-24 -right-16 size-56 rounded-full bg-brand-300/25 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
+                    className="pointer-events-none absolute inset-0 bg-radial-[at_92%_4%] from-brand-300/30 to-transparent to-55% opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   />
 
                   <div className="relative z-10 flex items-start justify-between gap-4">
