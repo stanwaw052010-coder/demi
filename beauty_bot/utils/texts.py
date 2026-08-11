@@ -105,6 +105,14 @@ CONTACTS: Final[str] = (
     "🕒 Графік роботи:\n{schedule}"
 )
 
+BTN_RULES: Final[str] = "📜 Правила салону"
+
+RULES_HEADER: Final[str] = "📜 <b>Правила салону</b>\n"
+RULES_FOOTER: Final[str] = (
+    "\n<i>Дякуємо за розуміння — ці правила допомагають нам працювати "
+    "вчасно та якісно для кожної клієнтки 🤍</i>"
+)
+
 WRITE_MASTER_PROMPT: Final[str] = (
     "✍️ Напишіть ваше запитання одним повідомленням — "
     "майстер отримає його та відповість вам особисто.\n\n"
@@ -240,6 +248,14 @@ REMINDER_2: Final[str] = (
     "Чекаємо на вас 🤍"
 )
 
+FOLLOWUP: Final[str] = (
+    "💅 <b>Час оновити красу!</b>\n\n"
+    "Від вашої процедури «{service}» минуло вже {days} {days_word}.\n"
+    "Саме час на оновлення — оберіть зручний час просто зараз 🤍"
+)
+
+BTN_BOOK_AGAIN: Final[str] = "📅 Записатися знову"
+
 CANCELLED_BY_MASTER: Final[str] = (
     "❗️ <b>Запис скасовано</b>\n\n"
     "📅 {date}, о {time}\n"
@@ -366,6 +382,27 @@ def format_price_list() -> str:
             )
     chunks.append(PRICES_FOOTER)
     return "\n".join(chunks)
+
+
+def format_rules() -> str:
+    """Правила салона нумерованным списком из config.SALON_RULES."""
+    lines = [RULES_HEADER]
+    for number, rule in enumerate(config.SALON_RULES, start=1):
+        lines.append(f"<b>{number}.</b> {rule}")
+    lines.append(RULES_FOOTER)
+    return "\n".join(lines)
+
+
+def plural_days(days: int) -> str:
+    """Украинское склонение: 1 день, 3 дні, 21 день, 25 днів."""
+    if days % 100 in range(11, 15):
+        return "днів"
+    last = days % 10
+    if last == 1:
+        return "день"
+    if last in (2, 3, 4):
+        return "дні"
+    return "днів"
 
 
 def format_duration(minutes: int) -> str:

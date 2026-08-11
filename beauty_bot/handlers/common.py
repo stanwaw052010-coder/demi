@@ -107,6 +107,14 @@ async def menu_contacts(message: Message, state: FSMContext) -> None:
 # --------------------------------------------------------------------------- #
 
 
+@router.callback_query(F.data == kb.CB_RULES)
+async def show_rules(callback: CallbackQuery) -> None:
+    await callback.answer()
+    message = callback.message
+    if isinstance(message, Message):
+        await message.answer(texts.format_rules())
+
+
 @router.callback_query(F.data == kb.CB_WRITE_MASTER)
 async def write_master_start(callback: CallbackQuery, state: FSMContext) -> None:
     await callback.answer()

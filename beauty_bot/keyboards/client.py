@@ -30,6 +30,8 @@ CB_MY_CANCEL_YES = "my:yes"
 CB_MY_CANCEL_NO = "my:no"
 
 CB_WRITE_MASTER = "ct:write"
+CB_RULES = "ct:rules"
+CB_BOOK_AGAIN = "bk:again"
 
 
 def main_menu() -> ReplyKeyboardMarkup:
@@ -160,7 +162,15 @@ def my_cancel_confirm_keyboard(booking_id: int) -> InlineKeyboardMarkup:
 def contacts_keyboard() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.row(InlineKeyboardButton(text=texts.BTN_INSTAGRAM, url=config.INSTAGRAM_URL))
+    builder.row(InlineKeyboardButton(text=texts.BTN_RULES, callback_data=CB_RULES))
     builder.row(InlineKeyboardButton(text=texts.BTN_WRITE_MASTER, callback_data=CB_WRITE_MASTER))
+    return builder.as_markup()
+
+
+def book_again_keyboard() -> InlineKeyboardMarkup:
+    """Кнопка под напоминанием о повторной записи."""
+    builder = InlineKeyboardBuilder()
+    builder.row(InlineKeyboardButton(text=texts.BTN_BOOK_AGAIN, callback_data=CB_BOOK_AGAIN))
     return builder.as_markup()
 
 

@@ -35,6 +35,7 @@ SCHEMA: tuple[str, ...] = (
         cancelled_by  TEXT,
         reminded_24   INTEGER NOT NULL DEFAULT 0,
         reminded_2    INTEGER NOT NULL DEFAULT 0,
+        followup_sent INTEGER NOT NULL DEFAULT 0,
         created_at    TEXT    NOT NULL
     )
     """,
@@ -55,6 +56,17 @@ SCHEMA: tuple[str, ...] = (
     )
     """,
     "CREATE INDEX IF NOT EXISTS ix_blocked_start ON blocked(start_at)",
+)
+
+# Колонки, добавленные после первого релиза. Применяются к уже существующему
+# bot.db, если их там ещё нет: обновление кода не ломает рабочую базу.
+# Формат: (таблица, колонка, SQL для добавления).
+MIGRATIONS: tuple[tuple[str, str, str], ...] = (
+    (
+        "bookings",
+        "followup_sent",
+        "ALTER TABLE bookings ADD COLUMN followup_sent INTEGER NOT NULL DEFAULT 0",
+    ),
 )
 
 STATUS_ACTIVE = "active"
@@ -85,6 +97,7 @@ class Booking:
     cancelled_by: str | None
     reminded_24: bool
     reminded_2: bool
+    followup_sent: bool
     created_at: str
 
     @classmethod
@@ -106,6 +119,7 @@ class Booking:
             cancelled_by=row["cancelled_by"],
             reminded_24=bool(row["reminded_24"]),
             reminded_2=bool(row["reminded_2"]),
+            followup_sent=bool(row["followup_sent"]),
             created_at=row["created_at"],
         )
 

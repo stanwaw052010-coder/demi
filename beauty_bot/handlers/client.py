@@ -88,6 +88,18 @@ async def show_categories(target: Target, state: FSMContext) -> None:
     await _show(target, texts.STEP_CATEGORY, kb.categories_keyboard())
 
 
+@router.callback_query(F.data == kb.CB_BOOK_AGAIN)
+async def on_book_again(callback: CallbackQuery, state: FSMContext) -> None:
+    """Кнопка «Записатися знову» под напоминанием о повторном визите."""
+    await callback.answer()
+    await tg.drop_markup(callback)
+    message = _as_message(callback)
+    if message is None:
+        return
+    await state.clear()
+    await show_categories(message, state)
+
+
 @router.callback_query(F.data.startswith(f"{kb.CB_CATEGORY}:"))
 async def on_category(callback: CallbackQuery, state: FSMContext) -> None:
     await callback.answer()

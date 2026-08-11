@@ -22,6 +22,7 @@ from typing import Any, Callable, Literal, NamedTuple, TypeVar
 import config
 from database.models import (
     CANCELLED_BY_CLIENT,
+    MIGRATIONS,
     SCHEMA,
     STATUS_ACTIVE,
     STATUS_CANCELLED,
@@ -87,11 +88,19 @@ async def _run_write(func: Callable[[sqlite3.Connection], T]) -> T:
 
 
 async def init_db() -> None:
-    """Создать файл БД и схему, если их ещё нет."""
+    """Создать файл БД и схему, если их ещё нет, и догнать миграции."""
 
     def _init(conn: sqlite3.Connection) -> None:
         for statement in SCHEMA:
             conn.execute(statement)
+
+        # Догоняем колонки, добавленные после первого релиза, — чтобы
+        # обновление кода не требовало удалять рабочую базу с записями.
+        for table, column, statement in MIGRATIONS:
+            existing = {row["name"] for row in conn.execute(f"PRAGMA table_info({table})")}
+            if column not in existing:
+                conn.execute(statement)
+                logger.info("Міграція: до таблиці %s додано колонку %s", table, column)
 
     await _run_write(_init)
     logger.info("База даних готова: %s", DB_PATH)
@@ -340,6 +349,59 @@ async def mark_reminded(booking_id: int, *, kind_24: bool = False, kind_2: bool 
     await _run_write(_mark)
 
 
+async def get_followup_candidates(oldest: datetime, newest: datetime) -> list[Booking]:
+    """
+    Завершённые визиты, по которым ещё не предлагали записаться снова.
+
+    Берём окно [oldest, newest]: слишком старые визиты не трогаем вообще,
+    чтобы бот не написал клиентке про процедуру полугодовой давности.
+    """
+    oldest_db, newest_db = dt.to_db(oldest), dt.to_db(newest)
+
+    def _get(conn: sqlite3.Connection) -> list[Booking]:
+        rows = conn.execute(
+            "SELECT * FROM bookings "
+            " WHERE status = ? AND followup_sent = 0 AND end_at BETWEEN ? AND ? "
+            " ORDER BY end_at",
+            (STATUS_DONE, oldest_db, newest_db),
+        ).fetchall()
+        return [Booking.from_row(row) for row in rows]
+
+    return await _run(_get)
+
+
+async def get_last_visit_end(user_id: int) -> datetime | None:
+    """
+    Когда клиентка была у мастера в последний раз (или записана в будущем).
+
+    Нужно, чтобы предложение записаться снова уходило только по самому
+    свежему визиту, а не по каждому старому подряд.
+    """
+
+    def _get(conn: sqlite3.Connection) -> datetime | None:
+        row = conn.execute(
+            "SELECT MAX(end_at) AS last FROM bookings WHERE user_id = ? AND status IN (?, ?)",
+            (user_id, STATUS_DONE, STATUS_ACTIVE),
+        ).fetchone()
+        return dt.from_db(row["last"]) if row and row["last"] else None
+
+    return await _run(_get)
+
+
+async def mark_followup_sent(booking_ids: list[int]) -> None:
+    """Отметить визиты как отработанные — повторно предлагать по ним не будем."""
+    if not booking_ids:
+        return
+
+    placeholders = ", ".join("?" for _ in booking_ids)
+    sql = f"UPDATE bookings SET followup_sent = 1 WHERE id IN ({placeholders})"
+
+    def _mark(conn: sqlite3.Connection) -> None:
+        conn.execute(sql, booking_ids)
+
+    await _run_write(_mark)
+
+
 async def close_past_bookings() -> int:
     """Перевести прошедшие активные записи в статус done. Возвращает их количество."""
     now_db = dt.to_db(dt.now())
@@ -421,7 +483,9 @@ __all__ = [
     "get_booking",
     "get_bookings_between",
     "get_busy_intervals",
+    "get_followup_candidates",
     "get_user_active_bookings",
     "init_db",
+    "mark_followup_sent",
     "mark_reminded",
 ]
