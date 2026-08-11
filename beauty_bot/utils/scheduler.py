@@ -50,6 +50,7 @@ async def send_due_reminders(bot: Bot) -> None:
             text = texts.REMINDER_2.format(
                 time=dt.fmt_time(booking.start_at),
                 service=booking.service_name,
+                master=texts.master_name(booking.master_code),
             )
             await tg.notify(bot, booking.user_id, text)
             await db.mark_reminded(booking.id, kind_24=True, kind_2=True)
@@ -61,6 +62,7 @@ async def send_due_reminders(bot: Bot) -> None:
                 date=dt.fmt_date_full(booking.start_at.date()),
                 time=dt.fmt_time(booking.start_at),
                 service=booking.service_name,
+                master=texts.master_name(booking.master_code),
             )
             await tg.notify(bot, booking.user_id, text)
             await db.mark_reminded(booking.id, kind_24=True)

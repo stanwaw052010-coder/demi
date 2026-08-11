@@ -10,6 +10,7 @@ class BookingSG(StatesGroup):
 
     category = State()
     service = State()
+    master = State()
     day = State()
     slot = State()
     name = State()
@@ -24,8 +25,9 @@ class ContactSG(StatesGroup):
 
 
 class BlockSG(StatesGroup):
-    """Мастер помечает время как недоступное."""
+    """Менеджер помечает время как недоступное."""
 
+    master = State()
     day = State()
     start = State()
     end = State()

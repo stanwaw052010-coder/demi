@@ -19,6 +19,7 @@ from utils import dt, texts
 # Префиксы callback_data. Держим их короткими: лимит Telegram — 64 байта.
 CB_CATEGORY = "bk:cat"
 CB_SERVICE = "bk:srv"
+CB_MASTER = "bk:mst"
 CB_DAY = "bk:day"
 CB_SLOT = "bk:slot"
 CB_CONFIRM = "bk:ok"
@@ -82,6 +83,32 @@ def categories_keyboard() -> InlineKeyboardMarkup:
     return builder.as_markup()
 
 
+def masters_keyboard(category_code: str) -> InlineKeyboardMarkup | None:
+    """Мастера, которые делают это направление, плюс «будь-який вільний»."""
+    masters = config.masters_for_category(category_code)
+    if not masters:
+        return None
+
+    builder = InlineKeyboardBuilder()
+    # «Будь-який» показываем только когда есть из кого выбирать.
+    if len(masters) > 1:
+        builder.row(
+            InlineKeyboardButton(
+                text=texts.BTN_ANY_MASTER,
+                callback_data=f"{CB_MASTER}:{config.ANY_MASTER}",
+            )
+        )
+    for master in masters:
+        builder.row(
+            InlineKeyboardButton(
+                text=f"{master['emoji']} {master['name']} — {master['role']}",
+                callback_data=f"{CB_MASTER}:{master['code']}",
+            )
+        )
+    _nav_row(builder, back_to="service")
+    return builder.as_markup()
+
+
 def services_keyboard(category_code: str) -> InlineKeyboardMarkup | None:
     category = config.get_category(category_code)
     if category is None:
@@ -110,7 +137,7 @@ def days_keyboard(days: list[date]) -> InlineKeyboardMarkup:
             )
         )
     builder.adjust(2)
-    _nav_row(builder, back_to="service")
+    _nav_row(builder, back_to="master")
     return builder.as_markup()
 
 

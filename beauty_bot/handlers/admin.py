@@ -17,7 +17,7 @@ from aiogram.types import CallbackQuery, Message, TelegramObject
 
 import config
 from database import db
-from database.models import CANCELLED_BY_MASTER, STATUS_ACTIVE, Booking
+from database.models import ALL_MASTERS, CANCELLED_BY_MASTER, STATUS_ACTIVE, Booking
 from keyboards import admin as kb
 from states.booking import BlockSG
 from utils import dt, slots, texts, tg, validators
@@ -48,21 +48,40 @@ def _render_day(day: date, bookings: list[Booking]) -> str:
     if not bookings:
         return texts.ADMIN_DAY_EMPTY.format(title=title)
 
-    lines = [texts.ADMIN_DAY_HEADER.format(title=title), ""]
+    lines = [texts.ADMIN_DAY_HEADER.format(title=title)]
+
+    # Группируем по мастерам в порядке из config.MASTERS — так менеджеру
+    # видно загрузку каждого, а не сплошную ленту записей.
+    by_master: dict[str, list[Booking]] = {}
     for booking in bookings:
+        by_master.setdefault(booking.master_code, []).append(booking)
+
+    order = list(config.MASTERS) + [code for code in by_master if code not in config.MASTERS]
+    for code in order:
+        own = by_master.get(code)
+        if not own:
+            continue
+        master = config.get_master(code)
         lines.append(
-            texts.ADMIN_BOOKING_LINE.format(
-                time=dt.fmt_time(booking.start_at),
-                end_time=dt.fmt_time(booking.end_at),
-                service=booking.service_name,
-                name=booking.client_name,
-                phone=validators.format_phone(booking.phone),
-                price=booking.price,
-                currency=config.CURRENCY,
-                id=booking.id,
+            texts.ADMIN_MASTER_HEADER.format(
+                emoji=master["emoji"] if master else "👩‍🎨",
+                name=texts.master_name(code),
             )
         )
-        lines.append("")
+        for booking in sorted(own, key=lambda item: item.start_at):
+            lines.append(
+                texts.ADMIN_BOOKING_LINE.format(
+                    time=dt.fmt_time(booking.start_at),
+                    end_time=dt.fmt_time(booking.end_at),
+                    service=booking.service_name,
+                    name=booking.client_name,
+                    phone=validators.format_phone(booking.phone),
+                    price=booking.price,
+                    currency=config.CURRENCY,
+                    id=booking.id,
+                )
+            )
+            lines.append("")
 
     lines.append(
         texts.ADMIN_DAY_TOTAL.format(
@@ -138,6 +157,7 @@ async def admin_cancel_ask(callback: CallbackQuery) -> None:
             id=booking.id,
             date=dt.fmt_date_full(booking.start_at.date()),
             time=dt.fmt_time(booking.start_at),
+            master=texts.master_name(booking.master_code),
             name=booking.client_name,
             phone=validators.format_phone(booking.phone),
             service=booking.service_name,
@@ -174,6 +194,7 @@ async def admin_cancel_yes(callback: CallbackQuery, bot: Bot) -> None:
             date=dt.fmt_date_full(booking.start_at.date()),
             time=dt.fmt_time(booking.start_at),
             service=booking.service_name,
+            master=texts.master_name(booking.master_code),
             phone=config.PHONE,
         ),
     )
@@ -196,20 +217,32 @@ async def admin_cancel_yes(callback: CallbackQuery, bot: Bot) -> None:
 # --------------------------------------------------------------------------- #
 
 
-def _block_days() -> list[date]:
-    return [day for day in dt.horizon_days() if config.is_working_day(day)]
+def _block_days(master_code: str | None = None) -> list[date]:
+    return [day for day in dt.horizon_days() if config.is_working_day(day, master_code)]
+
+
+def _block_master_code(raw: str) -> str:
+    """Маркер «all» из callback_data -> пустая строка (вся студия)."""
+    return ALL_MASTERS if raw == kb.ALL_MASTERS_CB else raw
 
 
 @router.message(Command("block"))
 async def cmd_block(message: Message, state: FSMContext) -> None:
     await state.clear()
-    days = _block_days()
-    if not days:
-        await message.answer(texts.ADMIN_NO_WORK_DAYS)
+    await state.set_state(BlockSG.master)
+    await message.answer(texts.ADMIN_BLOCK_MASTER, reply_markup=kb.block_masters_keyboard())
+
+
+@router.callback_query(F.data.startswith(f"{kb.CB_BLK_MASTER}:"))
+async def block_master_chosen(callback: CallbackQuery, state: FSMContext) -> None:
+    await callback.answer()
+    raw = callback.data.split(":", 2)[2]
+    if raw != kb.ALL_MASTERS_CB and config.get_master(raw) is None:
+        await _block_show_masters(callback, state)
         return
 
-    await state.set_state(BlockSG.day)
-    await message.answer(texts.ADMIN_BLOCK_DAY, reply_markup=kb.block_days_keyboard(days))
+    await state.update_data(block_master=_block_master_code(raw))
+    await _block_show_days(callback, state)
 
 
 @router.callback_query(F.data.startswith(f"{kb.CB_BLK_DAY}:"))
@@ -244,7 +277,7 @@ async def block_whole_day(callback: CallbackQuery, state: FSMContext) -> None:
         await _block_show_days(callback, state)
         return
 
-    hours = config.get_work_hours(day)
+    hours = config.get_work_hours(day, await _block_master_from_state(state) or None)
     if hours is None:
         await _block_show_days(callback, state)
         return
@@ -291,7 +324,9 @@ async def block_cancel(callback: CallbackQuery, state: FSMContext) -> None:
 async def block_back(callback: CallbackQuery, state: FSMContext) -> None:
     await callback.answer()
     target = callback.data.split(":", 2)[2]
-    if target == "day":
+    if target == "master":
+        await _block_show_masters(callback, state)
+    elif target == "day":
         await _block_show_days(callback, state)
     elif target == "start":
         await _block_show_start(callback, state)
@@ -309,13 +344,41 @@ async def _block_day_from_state(state: FSMContext) -> date | None:
     return dt.parse_iso_date(data.get("block_day", ""))
 
 
-async def _block_show_days(target: Message | CallbackQuery, state: FSMContext) -> None:
-    await state.set_state(BlockSG.day)
-    markup = kb.block_days_keyboard(_block_days())
+async def _block_master_from_state(state: FSMContext) -> str:
+    data = await state.get_data()
+    return data.get("block_master", ALL_MASTERS)
+
+
+async def _block_show_masters(target: Message | CallbackQuery, state: FSMContext) -> None:
+    await state.set_state(BlockSG.master)
+    markup = kb.block_masters_keyboard()
     if isinstance(target, CallbackQuery):
-        await tg.safe_edit(target, texts.ADMIN_BLOCK_DAY, markup)
+        await tg.safe_edit(target, texts.ADMIN_BLOCK_MASTER, markup)
     else:
-        await target.answer(texts.ADMIN_BLOCK_DAY, reply_markup=markup)
+        await target.answer(texts.ADMIN_BLOCK_MASTER, reply_markup=markup)
+
+
+async def _block_show_days(target: Message | CallbackQuery, state: FSMContext) -> None:
+    master_code = await _block_master_from_state(state)
+    days = _block_days(master_code or None)
+    if not days:
+        await _show_admin(target, texts.ADMIN_NO_WORK_DAYS)
+        await state.clear()
+        return
+
+    await state.set_state(BlockSG.day)
+    text = texts.ADMIN_BLOCK_DAY.format(master=texts.master_name(master_code))
+    markup = kb.block_days_keyboard(days)
+    if isinstance(target, CallbackQuery):
+        await tg.safe_edit(target, text, markup)
+    else:
+        await target.answer(text, reply_markup=markup)
+
+
+async def _show_admin(target: Message | CallbackQuery, text: str) -> None:
+    message = target.message if isinstance(target, CallbackQuery) else target
+    if isinstance(message, Message):
+        await message.answer(text)
 
 
 async def _block_show_start(callback: CallbackQuery, state: FSMContext) -> None:
@@ -324,11 +387,15 @@ async def _block_show_start(callback: CallbackQuery, state: FSMContext) -> None:
         await _block_show_days(callback, state)
         return
 
+    master_code = await _block_master_from_state(state)
     await state.set_state(BlockSG.start)
     await tg.safe_edit(
         callback,
-        texts.ADMIN_BLOCK_START.format(date=dt.fmt_date_full(day)),
-        kb.block_start_keyboard(slots.work_slots(day)),
+        texts.ADMIN_BLOCK_START.format(
+            master=texts.master_name(master_code),
+            date=dt.fmt_date_full(day),
+        ),
+        kb.block_start_keyboard(slots.work_slots(day, master_code or None)),
     )
 
 
@@ -340,7 +407,8 @@ async def _block_show_end(callback: CallbackQuery, state: FSMContext) -> None:
         await _block_show_days(callback, state)
         return
 
-    later = [slot for slot in slots.work_slots(day) if slot.time() > start]
+    master_code = await _block_master_from_state(state)
+    later = [slot for slot in slots.work_slots(day, master_code or None) if slot.time() > start]
     if not later:
         await _block_show_start(callback, state)
         return
@@ -348,7 +416,11 @@ async def _block_show_end(callback: CallbackQuery, state: FSMContext) -> None:
     await state.set_state(BlockSG.end)
     await tg.safe_edit(
         callback,
-        texts.ADMIN_BLOCK_END.format(date=dt.fmt_date_full(day), start=start.strftime("%H:%M")),
+        texts.ADMIN_BLOCK_END.format(
+            master=texts.master_name(master_code),
+            date=dt.fmt_date_full(day),
+            start=start.strftime("%H:%M"),
+        ),
         kb.block_end_keyboard(later),
     )
 
@@ -366,6 +438,7 @@ async def _block_show_reason(callback: CallbackQuery, state: FSMContext) -> None
     await tg.safe_edit(
         callback,
         texts.ADMIN_BLOCK_REASON.format(
+            master=texts.master_name(await _block_master_from_state(state)),
             date=dt.fmt_date_full(day),
             start=start.strftime("%H:%M"),
             end=end.strftime("%H:%M"),
@@ -382,6 +455,7 @@ async def _block_finish(
 ) -> None:
     day = await _block_day_from_state(state)
     data = await state.get_data()
+    master_code = data.get("block_master", ALL_MASTERS)
     start_time = dt.parse_hhmm(data.get("block_start", ""))
     end_time = dt.parse_hhmm(data.get("block_end", ""))
     await state.clear()
@@ -397,19 +471,23 @@ async def _block_finish(
     start_at = dt.combine(day, start_time)
     end_at = dt.combine(day, end_time)
 
-    busy = await db.count_active_in_range(start_at, end_at)
+    busy = await db.count_active_in_range(start_at, end_at, master_code)
     if busy:
         await message.answer(texts.ADMIN_BLOCK_CONFLICT.format(count=busy))
         return
 
-    await db.add_block(start_at, end_at, reason)
-    logger.info("Майстер заблокував %s %s–%s", day, start_time, end_time)
+    await db.add_block(start_at, end_at, reason, master_code)
+    logger.info(
+        "Заблоковано час: %s, %s %s–%s",
+        texts.master_name(master_code), day, start_time, end_time,
+    )
 
     if isinstance(target, CallbackQuery):
         await tg.drop_markup(target)
 
     await message.answer(
         texts.ADMIN_BLOCK_DONE.format(
+            master=texts.master_name(master_code),
             date=dt.fmt_date_full(day),
             start=start_time.strftime("%H:%M"),
             end=end_time.strftime("%H:%M"),

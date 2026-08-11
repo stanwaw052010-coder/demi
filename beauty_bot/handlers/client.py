@@ -34,7 +34,8 @@ router = Router(name="client")
 # Куда возвращает «⬅️ Назад» с каждого шага ввода текста.
 BACK_FROM_STATE: dict[str, str] = {
     BookingSG.service.state: "category",
-    BookingSG.day.state: "service",
+    BookingSG.master.state: "service",
+    BookingSG.day.state: "master",
     BookingSG.slot.state: "day",
     BookingSG.name.state: "slot",
     BookingSG.phone.state: "name",
@@ -61,6 +62,14 @@ def _as_message(target: Target) -> Message | None:
     if isinstance(target, CallbackQuery):
         return target.message if isinstance(target.message, Message) else None
     return target
+
+
+def _master_label(master_code: str) -> str:
+    """Как назвать мастера в тексте: имя или «будь-який вільний майстер»."""
+    if master_code == config.ANY_MASTER:
+        return texts.ANY_MASTER_LABEL
+    master = config.get_master(master_code)
+    return master["name"] if master else texts.ANY_MASTER_LABEL
 
 
 async def _service_from_state(state: FSMContext) -> tuple[dict, dict] | None:
@@ -146,11 +155,69 @@ async def on_service(callback: CallbackQuery, state: FSMContext) -> None:
 
     category, service = found
     await state.update_data(category_code=category["code"], service_code=service["code"])
+
+    masters = config.masters_for_category(category["code"])
+    if len(masters) == 1:
+        # Направление делает один мастер — не заставляем «выбирать» из одного.
+        await state.update_data(master_code=masters[0]["code"])
+        await show_days(callback, state)
+        return
+
+    await show_masters(callback, state)
+
+
+# --------------------------------------------------------------------------- #
+# Шаг 3. Мастер
+# --------------------------------------------------------------------------- #
+
+
+async def show_masters(target: Target, state: FSMContext) -> None:
+    found = await _service_from_state(state)
+    if found is None:
+        await show_categories(target, state)
+        return
+
+    category, service = found
+    markup = kb.masters_keyboard(category["code"])
+    if markup is None:
+        await _show(target, texts.ERR_NO_MASTERS.format(phone=config.PHONE), None)
+        await show_categories(target, state)
+        return
+
+    await state.set_state(BookingSG.master)
+    await _show(
+        target,
+        texts.STEP_MASTER.format(
+            service=service["name"],
+            duration=texts.format_duration(service["duration"]),
+            price=service["price"],
+            currency=config.CURRENCY,
+        ),
+        markup,
+    )
+
+
+@router.callback_query(F.data.startswith(f"{kb.CB_MASTER}:"))
+async def on_master(callback: CallbackQuery, state: FSMContext) -> None:
+    await callback.answer()
+    code = callback.data.split(":", 2)[2]
+    found = await _service_from_state(state)
+    if found is None:
+        await show_categories(callback, state)
+        return
+
+    category, _ = found
+    if code != config.ANY_MASTER and not slots.eligible_masters(category["code"], code):
+        # Кнопка из старого сообщения: мастер убран из конфига или не делает услугу.
+        await show_masters(callback, state)
+        return
+
+    await state.update_data(master_code=code)
     await show_days(callback, state)
 
 
 # --------------------------------------------------------------------------- #
-# Шаг 3. Дата
+# Шаг 4. Дата
 # --------------------------------------------------------------------------- #
 
 
@@ -160,12 +227,16 @@ async def show_days(target: Target, state: FSMContext) -> None:
         await show_categories(target, state)
         return
 
-    _, service = found
-    available = await slots.get_available_dates(service["duration"])
+    category, service = found
+    data = await state.get_data()
+    master_code = data.get("master_code", config.ANY_MASTER)
+
+    available = await slots.get_available_dates(
+        service["duration"], category["code"], master_code
+    )
     if not available:
-        data = await state.get_data()
-        markup = kb.services_keyboard(data.get("category_code", "")) or kb.categories_keyboard()
-        await state.set_state(BookingSG.service)
+        markup = kb.masters_keyboard(category["code"]) or kb.categories_keyboard()
+        await state.set_state(BookingSG.master)
         await _show(
             target,
             texts.ERR_NO_DATES.format(days=config.BOOKING_HORIZON_DAYS, phone=config.PHONE),
@@ -178,6 +249,7 @@ async def show_days(target: Target, state: FSMContext) -> None:
         target,
         texts.STEP_DATE.format(
             service=service["name"],
+            master=_master_label(master_code),
             duration=texts.format_duration(service["duration"]),
             price=service["price"],
             currency=config.CURRENCY,
@@ -190,7 +262,7 @@ async def show_days(target: Target, state: FSMContext) -> None:
 async def on_day(callback: CallbackQuery, state: FSMContext) -> None:
     await callback.answer()
     day = dt.parse_iso_date(callback.data.split(":", 2)[2])
-    if day is None or day < dt.today() or not config.is_working_day(day):
+    if day is None or day < dt.today():
         await callback.answer(texts.ERR_DATE_PASSED, show_alert=True)
         await show_days(callback, state)
         return
@@ -212,8 +284,9 @@ async def show_slots(target: Target, state: FSMContext) -> None:
         await show_categories(target, state)
         return
 
-    _, service = found
-    free = await slots.get_free_slots(day, service["duration"])
+    category, service = found
+    master_code = data.get("master_code", config.ANY_MASTER)
+    free = await slots.get_free_slots(day, service["duration"], category["code"], master_code)
     if not free:
         # Слоты разобрали, пока клиентка думала — молча возвращаем к выбору даты.
         if isinstance(target, CallbackQuery):
@@ -229,6 +302,7 @@ async def show_slots(target: Target, state: FSMContext) -> None:
         texts.STEP_TIME.format(
             date=dt.fmt_date_full(day),
             service=service["name"],
+            master=_master_label(master_code),
             duration=texts.format_duration(service["duration"]),
         ),
         kb.slots_keyboard(free),
@@ -247,9 +321,10 @@ async def on_slot(callback: CallbackQuery, state: FSMContext) -> None:
         await show_categories(callback, state)
         return
 
-    _, service = found
+    category, service = found
+    master_code = data.get("master_code", config.ANY_MASTER)
     start_at = dt.combine(day, moment)
-    if not await slots.is_slot_free(start_at, service["duration"]):
+    if await slots.resolve_master(start_at, service["duration"], category["code"], master_code) is None:
         await callback.answer(texts.ERR_SLOT_TAKEN, show_alert=True)
         await show_slots(callback, state)
         return
@@ -371,6 +446,7 @@ async def show_confirm(target: Target, state: FSMContext) -> None:
 
     card = texts.CONFIRM_CARD.format(
         service=service["name"],
+        master=_master_label(data.get("master_code", config.ANY_MASTER)),
         duration=texts.format_duration(service["duration"]),
         price=service["price"],
         currency=config.CURRENCY,
@@ -406,8 +482,14 @@ async def on_confirm(callback: CallbackQuery, state: FSMContext) -> None:
     category, service = found
     start_at = dt.combine(day, moment)
     end_at = start_at + timedelta(minutes=service["duration"])
+    chosen = data.get("master_code", config.ANY_MASTER)
 
-    if not await slots.is_slot_free(start_at, service["duration"]):
+    # Кто именно делает услугу, решается здесь: для «будь-який вільний» —
+    # наименее загруженный из свободных на это время.
+    master_code = await slots.resolve_master(
+        start_at, service["duration"], category["code"], chosen
+    )
+    if master_code is None:
         await tg.safe_edit(callback, texts.ERR_SLOT_TAKEN, None)
         await show_slots(callback, state)
         return
@@ -417,6 +499,7 @@ async def on_confirm(callback: CallbackQuery, state: FSMContext) -> None:
         username=user.username,
         client_name=data.get("client_name", user.first_name or "Клієнт"),
         phone=data["phone"],
+        master_code=master_code,
         category_code=category["code"],
         service_code=service["code"],
         service_name=service["name"],
@@ -449,6 +532,7 @@ async def on_confirm(callback: CallbackQuery, state: FSMContext) -> None:
             date=dt.fmt_date_full(booking.start_at.date()),
             time=dt.fmt_time(booking.start_at),
             service=booking.service_name,
+            master=_master_label(booking.master_code),
             price=booking.price,
             currency=config.CURRENCY,
         ),
@@ -471,6 +555,7 @@ async def notify_master_new(callback: CallbackQuery, booking: Booking) -> None:
             date=dt.fmt_date_full(booking.start_at.date()),
             time=dt.fmt_time(booking.start_at),
             end_time=dt.fmt_time(booking.end_at),
+            master=_master_label(booking.master_code),
             service=booking.service_name,
             price=booking.price,
             currency=config.CURRENCY,
@@ -493,6 +578,8 @@ async def render_step(step: str, target: Target, state: FSMContext) -> None:
         await show_categories(target, state)
     elif step == "service":
         await show_services(target, state)
+    elif step == "master":
+        await show_masters(target, state)
     elif step == "day":
         await show_days(target, state)
     elif step == "slot":
@@ -533,6 +620,7 @@ async def show_my_bookings(message: Message, state: FSMContext) -> None:
                 date=dt.fmt_date_full(booking.start_at.date()),
                 time=dt.fmt_time(booking.start_at),
                 service=booking.service_name,
+                master=_master_label(booking.master_code),
                 duration=texts.format_duration(booking.duration),
                 price=booking.price,
                 currency=config.CURRENCY,
@@ -554,6 +642,7 @@ async def on_my_cancel_ask(callback: CallbackQuery) -> None:
             date=dt.fmt_date_full(booking.start_at.date()),
             time=dt.fmt_time(booking.start_at),
             service=booking.service_name,
+            master=_master_label(booking.master_code),
         ),
         kb.my_cancel_confirm_keyboard(booking.id),
     )
@@ -592,6 +681,7 @@ async def on_my_cancel_yes(callback: CallbackQuery) -> None:
             texts.ADMIN_CLIENT_CANCELLED.format(
                 date=dt.fmt_date_full(booking.start_at.date()),
                 time=dt.fmt_time(booking.start_at),
+                master=_master_label(booking.master_code),
                 service=booking.service_name,
                 name=booking.client_name,
                 phone=validators.format_phone(booking.phone),

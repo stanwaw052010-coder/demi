@@ -7,9 +7,13 @@
 
 from __future__ import annotations
 
+from datetime import date, timedelta
 from typing import Final
 
 import config
+
+# Понедельник — опорная дата, чтобы спросить у config график по номеру дня недели.
+_WEEK_ANCHOR: Final[date] = date(2024, 1, 1)
 
 # --------------------------------------------------------------------------- #
 # Календарь: украинские названия месяцев и дней недели
@@ -52,6 +56,7 @@ BTN_YES_CANCEL: Final[str] = "✅ Так, скасувати"
 BTN_NO_KEEP: Final[str] = "↩️ Ні, залишити"
 
 BTN_WHOLE_DAY: Final[str] = "🚫 Весь день"
+BTN_WHOLE_SALON: Final[str] = "🏠 Уся студія"
 BTN_SKIP: Final[str] = "⏭ Пропустити"
 
 # --------------------------------------------------------------------------- #
@@ -71,7 +76,7 @@ MENU_PROMPT: Final[str] = "Оберіть дію 👇"
 
 HELP: Final[str] = (
     "ℹ️ <b>Як користуватися</b>\n\n"
-    f"{BTN_BOOK} — обрати послугу, дату та час.\n"
+    f"{BTN_BOOK} — обрати послугу, майстра, дату та час.\n"
     f"{BTN_MY_BOOKINGS} — переглянути або скасувати свій запис.\n"
     f"{BTN_PRICES} — актуальний прайс.\n"
     f"{BTN_CONTACTS} — телефон, Instagram, зв'язок з майстром.\n\n"
@@ -98,14 +103,24 @@ PRICES_FOOTER: Final[str] = (
 CONTACTS: Final[str] = (
     "📍 <b>{salon}</b>\n"
     "<i>{subtitle}</i>\n\n"
-    "👩‍🎨 Майстер: {master}\n"
     "📱 Телефон: {phone}\n"
     "📸 Instagram: {instagram}\n"
     "{address}"
-    "🕒 Графік роботи:\n{schedule}"
+    "🕒 Графік студії:\n{schedule}\n"
+    "{masters}"
 )
 
 BTN_RULES: Final[str] = "📜 Правила салону"
+BTN_ANY_MASTER: Final[str] = "✨ Будь-який вільний майстер"
+ANY_MASTER_LABEL: Final[str] = "будь-який вільний майстер"
+
+MASTERS_HEADER: Final[str] = "\n👩‍🎨 <b>Наші майстри</b>"
+MASTER_LINE: Final[str] = "{emoji} <b>{name}</b> — {role}\n{schedule}"
+
+ERR_NO_MASTERS: Final[str] = (
+    "На цю послугу зараз немає вільного майстра 😔\n"
+    "Зателефонуйте нам — підберемо час: {phone}"
+)
 
 RULES_HEADER: Final[str] = "📜 <b>Правила салону</b>\n"
 RULES_FOOTER: Final[str] = (
@@ -126,19 +141,27 @@ WRITE_MASTER_EMPTY: Final[str] = "Напишіть, будь ласка, тек�
 # Сценарий записи
 # --------------------------------------------------------------------------- #
 
-STEP_CATEGORY: Final[str] = "<b>Крок 1 з 5.</b> Оберіть напрямок:"
-STEP_SERVICE: Final[str] = "<b>Крок 2 з 5.</b> {emoji} <b>{category}</b> — оберіть послугу:"
-STEP_DATE: Final[str] = (
-    "<b>Крок 3 з 5.</b> Оберіть зручну дату:\n\n"
+STEP_CATEGORY: Final[str] = "<b>Крок 1 з 6.</b> Оберіть напрямок:"
+STEP_SERVICE: Final[str] = "<b>Крок 2 з 6.</b> {emoji} <b>{category}</b> — оберіть послугу:"
+STEP_MASTER: Final[str] = (
+    "<b>Крок 3 з 6.</b> До кого записуємось?\n\n"
     "💅 {service}\n"
     "🕒 {duration} · 💰 {price} {currency}"
 )
-STEP_TIME: Final[str] = (
-    "<b>Крок 4 з 5.</b> Оберіть час на <b>{date}</b>:\n\n"
+
+STEP_DATE: Final[str] = (
+    "<b>Крок 4 з 6.</b> Оберіть зручну дату:\n\n"
     "💅 {service}\n"
+    "👩‍🎨 {master}\n"
+    "🕒 {duration} · 💰 {price} {currency}"
+)
+STEP_TIME: Final[str] = (
+    "<b>Крок 5 з 6.</b> Оберіть час на <b>{date}</b>:\n\n"
+    "💅 {service}\n"
+    "👩‍🎨 {master}\n"
     "🕒 {duration}"
 )
-STEP_NAME: Final[str] = "<b>Крок 5 з 5.</b> Як вас звати? Напишіть ім'я 👇"
+STEP_NAME: Final[str] = "<b>Крок 6 з 6.</b> Як вас звати? Напишіть ім'я 👇"
 STEP_PHONE: Final[str] = (
     "І останнє — ваш номер телефону.\n\n"
     "Надішліть його кнопкою нижче або напишіть вручну, "
@@ -150,6 +173,7 @@ ALMOST_DONE: Final[str] = "Майже готово 🤍"
 CONFIRM_CARD: Final[str] = (
     "📝 <b>Перевірте, будь ласка, запис</b>\n\n"
     "💅 Послуга: <b>{service}</b>\n"
+    "👩‍🎨 Майстер: <b>{master}</b>\n"
     "🕒 Тривалість: {duration}\n"
     "💰 Вартість: {price} {currency}\n\n"
     "📅 Дата: <b>{date}</b>\n"
@@ -164,12 +188,13 @@ BOOKING_DONE: Final[str] = (
     "📅 {date}\n"
     "⏰ {time}\n"
     "💅 {service}\n"
+    "👩‍🎨 Майстер: {master}\n"
     "💰 {price} {currency}\n\n"
     "Чекаємо на вас за адресою студії 🤍\n"
     "Ми нагадаємо про візит за добу та за 2 години.\n\n"
     "Якщо плани зміняться — скасуйте запис у розділі «{my}»."
 ).format(
-    date="{date}", time="{time}", service="{service}",
+    date="{date}", time="{time}", service="{service}", master="{master}",
     price="{price}", currency="{currency}", my=BTN_MY_BOOKINGS,
 )
 
@@ -216,13 +241,15 @@ MY_HEADER: Final[str] = "📋 <b>Ваші записи</b>\n"
 MY_ITEM: Final[str] = (
     "📅 <b>{date}</b>, о <b>{time}</b>\n"
     "💅 {service}\n"
+    "👩‍🎨 {master}\n"
     "🕒 {duration} · 💰 {price} {currency}"
 )
 
 MY_CANCEL_ASK: Final[str] = (
     "Скасувати запис?\n\n"
     "📅 {date}, о {time}\n"
-    "💅 {service}"
+    "💅 {service}\n"
+    "👩‍🎨 {master}"
 )
 MY_CANCEL_DONE: Final[str] = "Запис скасовано. Будемо раді бачити вас іншим разом 🤍"
 MY_CANCEL_KEPT: Final[str] = "Добре, запис залишається без змін 🤍"
@@ -237,14 +264,16 @@ BTN_CANCEL_BOOKING: Final[str] = "❌ Скасувати {time}, {date}"
 REMINDER_24: Final[str] = (
     "🔔 <b>Нагадування про запис</b>\n\n"
     "Чекаємо на вас <b>завтра, {date}</b>, о <b>{time}</b>.\n"
-    "💅 {service}\n\n"
+    "💅 {service}\n"
+    "👩‍🎨 Майстер: {master}\n\n"
     "Якщо плани змінилися — скасуйте запис у «{my}», "
     "щоб час дістався іншій клієнтці 🤍"
-).format(date="{date}", time="{time}", service="{service}", my=BTN_MY_BOOKINGS)
+).format(date="{date}", time="{time}", service="{service}", master="{master}", my=BTN_MY_BOOKINGS)
 
 REMINDER_2: Final[str] = (
     "⏰ <b>Ваш запис уже сьогодні о {time}</b>\n"
-    "💅 {service}\n\n"
+    "💅 {service}\n"
+    "👩‍🎨 Майстер: {master}\n\n"
     "Чекаємо на вас 🤍"
 )
 
@@ -259,7 +288,8 @@ BTN_BOOK_AGAIN: Final[str] = "📅 Записатися знову"
 CANCELLED_BY_MASTER: Final[str] = (
     "❗️ <b>Запис скасовано</b>\n\n"
     "📅 {date}, о {time}\n"
-    "💅 {service}\n\n"
+    "💅 {service}\n"
+    "👩‍🎨 {master}\n\n"
     "Вибачте за незручності. Зателефонуйте нам, щоб підібрати новий час: {phone}\n"
     "Або оберіть інший вільний час у боті."
 )
@@ -281,6 +311,7 @@ ADMIN_NEW_BOOKING: Final[str] = (
     "🔔 <b>НОВИЙ ЗАПИС</b>\n\n"
     "📅 {date}\n"
     "⏰ {time} — {end_time}\n"
+    "👩‍🎨 Майстер: <b>{master}</b>\n"
     "💅 {service}\n"
     "💰 {price} {currency}\n\n"
     "👤 {name}\n"
@@ -292,6 +323,7 @@ ADMIN_NEW_BOOKING: Final[str] = (
 ADMIN_CLIENT_CANCELLED: Final[str] = (
     "❌ <b>КЛІЄНТ СКАСУВАВ ЗАПИС</b>\n\n"
     "📅 {date}, о {time}\n"
+    "👩‍🎨 {master}\n"
     "💅 {service}\n"
     "👤 {name} · {phone}\n\n"
     "<i>Час знову вільний для запису.</i>"
@@ -306,6 +338,8 @@ ADMIN_MESSAGE_FROM_CLIENT: Final[str] = (
 
 ADMIN_DAY_HEADER: Final[str] = "📅 <b>{title}</b>"
 ADMIN_DAY_EMPTY: Final[str] = "📅 <b>{title}</b>\n\nЗаписів немає."
+
+ADMIN_MASTER_HEADER: Final[str] = "\n{emoji} <b>{name}</b>"
 
 ADMIN_BOOKING_LINE: Final[str] = (
     "⏰ <b>{time} — {end_time}</b>\n"
@@ -322,6 +356,7 @@ ADMIN_ONLY: Final[str] = "Ця команда доступна лише майс
 ADMIN_CANCEL_ASK: Final[str] = (
     "Скасувати запис №{id}?\n\n"
     "📅 {date}, о {time}\n"
+    "👩‍🎨 {master}\n"
     "👤 {name} · {phone}\n"
     "💅 {service}\n\n"
     "Клієнт отримає повідомлення."
@@ -335,21 +370,23 @@ ADMIN_CANCEL_GONE: Final[str] = "Цей запис уже скасовано."
 ADMIN_PICK_BOOKING: Final[str] = "Оберіть запис, який потрібно скасувати:"
 
 # Блокировка времени
-ADMIN_BLOCK_DAY: Final[str] = "🚫 <b>Недоступний час.</b> Крок 1 — оберіть день:"
+ADMIN_BLOCK_MASTER: Final[str] = "🚫 <b>Недоступний час.</b> Крок 1 — чий час блокуємо?"
+ADMIN_BLOCK_DAY: Final[str] = "🚫 <b>{master}</b>\n\nКрок 2 — оберіть день:"
 ADMIN_BLOCK_START: Final[str] = (
-    "🚫 <b>{date}</b>\n\n"
-    "Крок 2 — з якого часу ви недоступні?"
+    "🚫 <b>{master}</b> · {date}\n\n"
+    "Крок 3 — з якого часу недоступні?"
 )
 ADMIN_BLOCK_END: Final[str] = (
-    "🚫 <b>{date}</b>, з <b>{start}</b>\n\n"
-    "Крок 3 — до якого часу?"
+    "🚫 <b>{master}</b> · {date}, з <b>{start}</b>\n\n"
+    "Крок 4 — до якого часу?"
 )
 ADMIN_BLOCK_REASON: Final[str] = (
-    "🚫 <b>{date}</b>, {start} — {end}\n\n"
-    "Крок 4 — напишіть причину (для себе) або пропустіть."
+    "🚫 <b>{master}</b> · {date}, {start} — {end}\n\n"
+    "Крок 5 — напишіть причину (для себе) або пропустіть."
 )
 ADMIN_BLOCK_DONE: Final[str] = (
     "✅ Час заблоковано:\n"
+    "👩‍🎨 {master}\n"
     "📅 {date}, {start} — {end}\n"
     "{reason}"
     "\nЦі години більше не пропонуються клієнтам."
@@ -384,6 +421,29 @@ def format_price_list() -> str:
     return "\n".join(chunks)
 
 
+def master_name(master_code: str) -> str:
+    """Имя мастера по коду. Пустой код — вся студия, неизвестный — как есть."""
+    if not master_code:
+        return BTN_WHOLE_SALON
+    master = config.get_master(master_code)
+    return master["name"] if master else master_code
+
+
+def format_masters() -> str:
+    """Список мастеров с их специализацией и графиком — для раздела «Контакти»."""
+    lines = [MASTERS_HEADER]
+    for master in config.MASTERS.values():
+        lines.append(
+            MASTER_LINE.format(
+                emoji=master["emoji"],
+                name=master["name"],
+                role=master["role"],
+                schedule=format_schedule(master["code"]),
+            )
+        )
+    return "\n".join(lines)
+
+
 def format_rules() -> str:
     """Правила салона нумерованным списком из config.SALON_RULES."""
     lines = [RULES_HEADER]
@@ -415,8 +475,12 @@ def format_duration(minutes: int) -> str:
     return f"{mins} хв"
 
 
-def format_schedule() -> str:
-    """Рабочий график словами, одинаковые дни группируются."""
+def format_schedule(master_code: str | None = None) -> str:
+    """
+    Рабочий график словами, одинаковые подряд идущие дни группируются.
+
+    Без master_code — график студии, с ним — личный график мастера.
+    """
     lines: list[str] = []
     current: tuple[str, str] | None = None
     start_idx = 0
@@ -431,7 +495,7 @@ def format_schedule() -> str:
         lines.append(f"   {days}: {current[0]}")
 
     for idx in range(7):
-        hours = config.WORK_SCHEDULE.get(idx)
+        hours = config.get_work_hours(_WEEK_ANCHOR + timedelta(days=idx), master_code)
         label = (
             f"{hours[0].strftime('%H:%M')} – {hours[1].strftime('%H:%M')}"
             if hours

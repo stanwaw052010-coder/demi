@@ -92,11 +92,11 @@ async def menu_contacts(message: Message, state: FSMContext) -> None:
         texts.CONTACTS.format(
             salon=config.SALON_NAME,
             subtitle=config.SALON_SUBTITLE,
-            master=config.MASTER_NAME,
             phone=config.PHONE,
             instagram=config.INSTAGRAM_LABEL,
             address=address,
             schedule=texts.format_schedule(),
+            masters=texts.format_masters(),
         ),
         reply_markup=kb.contacts_keyboard(),
     )

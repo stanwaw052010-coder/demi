@@ -21,12 +21,15 @@ from typing import Any, Callable, Literal, NamedTuple, TypeVar
 
 import config
 from database.models import (
+    ALL_MASTERS,
     CANCELLED_BY_CLIENT,
+    DATA_FIXUPS,
+    INDEXES,
     MIGRATIONS,
-    SCHEMA,
     STATUS_ACTIVE,
     STATUS_CANCELLED,
     STATUS_DONE,
+    TABLES,
     Block,
     Booking,
 )
@@ -91,7 +94,7 @@ async def init_db() -> None:
     """Создать файл БД и схему, если их ещё нет, и догнать миграции."""
 
     def _init(conn: sqlite3.Connection) -> None:
-        for statement in SCHEMA:
+        for statement in TABLES:
             conn.execute(statement)
 
         # Догоняем колонки, добавленные после первого релиза, — чтобы
@@ -102,6 +105,16 @@ async def init_db() -> None:
                 conn.execute(statement)
                 logger.info("Міграція: до таблиці %s додано колонку %s", table, column)
 
+        # Индексы создаём после миграций: они опираются на новые колонки.
+        for statement in INDEXES:
+            conn.execute(statement)
+
+        # Записи, сделанные до появления мастеров, закрепляем за первым мастером.
+        for statement in DATA_FIXUPS:
+            cursor = conn.execute(statement, (config.default_master_code(),))
+            if cursor.rowcount > 0:
+                logger.info("Міграція: %s записів прив'язано до майстра за замовчуванням", cursor.rowcount)
+
     await _run_write(_init)
     logger.info("База даних готова: %s", DB_PATH)
 
@@ -111,17 +124,24 @@ async def init_db() -> None:
 # --------------------------------------------------------------------------- #
 
 
-def _has_overlap(conn: sqlite3.Connection, start: str, end: str) -> bool:
-    """Есть ли активная запись или блокировка, пересекающая интервал."""
+def _has_overlap(conn: sqlite3.Connection, master_code: str, start: str, end: str) -> bool:
+    """
+    Занят ли конкретный мастер в этом интервале.
+
+    Мешают: его собственные активные записи, его личные блокировки и
+    блокировки всей студии (master_code = '').
+    """
     row = conn.execute(
-        "SELECT 1 FROM bookings WHERE status = ? AND start_at < ? AND end_at > ? LIMIT 1",
-        (STATUS_ACTIVE, end, start),
+        "SELECT 1 FROM bookings "
+        " WHERE status = ? AND master_code = ? AND start_at < ? AND end_at > ? LIMIT 1",
+        (STATUS_ACTIVE, master_code, end, start),
     ).fetchone()
     if row is not None:
         return True
     row = conn.execute(
-        "SELECT 1 FROM blocked WHERE start_at < ? AND end_at > ? LIMIT 1",
-        (end, start),
+        "SELECT 1 FROM blocked "
+        " WHERE master_code IN (?, ?) AND start_at < ? AND end_at > ? LIMIT 1",
+        (master_code, ALL_MASTERS, end, start),
     ).fetchone()
     return row is not None
 
@@ -132,6 +152,7 @@ async def create_booking(
     username: str | None,
     client_name: str,
     phone: str,
+    master_code: str,
     category_code: str,
     service_code: str,
     service_name: str,
@@ -144,8 +165,8 @@ async def create_booking(
     Создать запись в одной транзакции.
 
     Внутри BEGIN IMMEDIATE ещё раз проверяются: лимит активных записей,
-    пересечение с чужими записями и с блокировками мастера. Если между
-    показом слотов и подтверждением время успели занять — вернётся "busy".
+    занятость выбранного мастера и блокировки. Если между показом слотов
+    и подтверждением время успели занять — вернётся "busy".
     """
 
     start_db = dt.to_db(start_at)
@@ -164,21 +185,21 @@ async def create_booking(
                 conn.execute("ROLLBACK")
                 return CreateResult("limit")
 
-            if _has_overlap(conn, start_db, end_db):
+            if _has_overlap(conn, master_code, start_db, end_db):
                 conn.execute("ROLLBACK")
                 return CreateResult("busy")
 
             cursor = conn.execute(
                 """
                 INSERT INTO bookings (
-                    user_id, username, client_name, phone,
+                    user_id, username, client_name, phone, master_code,
                     category_code, service_code, service_name,
                     price, duration, start_at, end_at,
                     status, created_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
-                    user_id, username, client_name, phone,
+                    user_id, username, client_name, phone, master_code,
                     category_code, service_code, service_name,
                     price, duration, start_db, end_db,
                     STATUS_ACTIVE, now_db,
@@ -187,9 +208,10 @@ async def create_booking(
             booking_id = cursor.lastrowid
             conn.execute("COMMIT")
         except sqlite3.IntegrityError:
-            # Сработал UNIQUE-индекс ux_active_slot — слот заняли параллельно.
+            # Сработал UNIQUE-индекс ux_active_master_slot: этот мастер
+            # на это время уже занят — слот перехватили параллельно.
             conn.execute("ROLLBACK")
-            logger.info("Конфликт слота %s — запись отклонена БД", start_db)
+            logger.info("Конфлікт слота %s у майстра %s — запис відхилено БД", start_db, master_code)
             return CreateResult("busy")
         except sqlite3.Error:
             conn.execute("ROLLBACK")
@@ -244,10 +266,15 @@ async def get_bookings_between(start: datetime, end: datetime) -> list[Booking]:
     return await _run(_get)
 
 
-async def get_busy_intervals(start: datetime, end: datetime) -> list[tuple[datetime, datetime]]:
+async def get_busy_intervals(
+    master_code: str,
+    start: datetime,
+    end: datetime,
+) -> list[tuple[datetime, datetime]]:
     """
-    Все занятые интервалы, пересекающие [start, end): чужие записи + блокировки.
+    Занятые интервалы конкретного мастера, пересекающие [start, end).
 
+    Считаются его записи, его личные блокировки и блокировки всей студии.
     Используется генератором слотов.
     """
     start_db, end_db = dt.to_db(start), dt.to_db(end)
@@ -256,27 +283,52 @@ async def get_busy_intervals(start: datetime, end: datetime) -> list[tuple[datet
         rows = conn.execute(
             """
             SELECT start_at, end_at FROM bookings
-             WHERE status = ? AND start_at < ? AND end_at > ?
+             WHERE status = ? AND master_code = ? AND start_at < ? AND end_at > ?
             UNION ALL
             SELECT start_at, end_at FROM blocked
-             WHERE start_at < ? AND end_at > ?
+             WHERE master_code IN (?, ?) AND start_at < ? AND end_at > ?
             """,
-            (STATUS_ACTIVE, end_db, start_db, end_db, start_db),
+            (STATUS_ACTIVE, master_code, end_db, start_db,
+             master_code, ALL_MASTERS, end_db, start_db),
         ).fetchall()
         return [(dt.from_db(row["start_at"]), dt.from_db(row["end_at"])) for row in rows]
 
     return await _run(_get)
 
 
-async def count_active_in_range(start: datetime, end: datetime) -> int:
-    """Сколько активных записей попадает в интервал — нужно перед блокировкой времени."""
-    start_db, end_db = dt.to_db(start), dt.to_db(end)
+async def count_bookings_on_day(master_code: str, day_start: datetime, day_end: datetime) -> int:
+    """Сколько записей у мастера в этот день — для выбора наименее загруженного."""
+    start_db, end_db = dt.to_db(day_start), dt.to_db(day_end)
 
     def _count(conn: sqlite3.Connection) -> int:
         return conn.execute(
             "SELECT COUNT(*) AS n FROM bookings "
-            "WHERE status = ? AND start_at < ? AND end_at > ?",
-            (STATUS_ACTIVE, end_db, start_db),
+            " WHERE status = ? AND master_code = ? AND start_at >= ? AND start_at < ?",
+            (STATUS_ACTIVE, master_code, start_db, end_db),
+        ).fetchone()["n"]
+
+    return await _run(_count)
+
+
+async def count_active_in_range(start: datetime, end: datetime, master_code: str = ALL_MASTERS) -> int:
+    """
+    Сколько активных записей попадает в интервал.
+
+    Нужно перед блокировкой времени. master_code == '' — считаем по всей студии.
+    """
+    start_db, end_db = dt.to_db(start), dt.to_db(end)
+
+    def _count(conn: sqlite3.Connection) -> int:
+        if master_code == ALL_MASTERS:
+            return conn.execute(
+                "SELECT COUNT(*) AS n FROM bookings "
+                " WHERE status = ? AND start_at < ? AND end_at > ?",
+                (STATUS_ACTIVE, end_db, start_db),
+            ).fetchone()["n"]
+        return conn.execute(
+            "SELECT COUNT(*) AS n FROM bookings "
+            " WHERE status = ? AND master_code = ? AND start_at < ? AND end_at > ?",
+            (STATUS_ACTIVE, master_code, end_db, start_db),
         ).fetchone()["n"]
 
     return await _run(_count)
@@ -421,14 +473,21 @@ async def close_past_bookings() -> int:
 # --------------------------------------------------------------------------- #
 
 
-async def add_block(start: datetime, end: datetime, reason: str | None) -> int:
+async def add_block(
+    start: datetime,
+    end: datetime,
+    reason: str | None,
+    master_code: str = ALL_MASTERS,
+) -> int:
+    """Пометить время недоступным. master_code == '' — у всей студии."""
     start_db, end_db = dt.to_db(start), dt.to_db(end)
     created = dt.to_db(dt.now())
 
     def _add(conn: sqlite3.Connection) -> int:
         cursor = conn.execute(
-            "INSERT INTO blocked (start_at, end_at, reason, created_at) VALUES (?, ?, ?, ?)",
-            (start_db, end_db, reason, created),
+            "INSERT INTO blocked (master_code, start_at, end_at, reason, created_at) "
+            "VALUES (?, ?, ?, ?, ?)",
+            (master_code, start_db, end_db, reason, created),
         )
         return int(cursor.lastrowid)
 
@@ -476,6 +535,7 @@ __all__ = [
     "cancel_booking",
     "close_past_bookings",
     "count_active_in_range",
+    "count_bookings_on_day",
     "create_booking",
     "delete_block",
     "delete_past_blocks",

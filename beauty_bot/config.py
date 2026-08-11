@@ -127,10 +127,12 @@ FOLLOWUP_MAX_AGE_DAYS: Final[int] = 120
 FOLLOWUP_ENABLED: Final[bool] = True
 
 # --------------------------------------------------------------------------- #
-# Рабочий график
+# Рабочий график студии
 # --------------------------------------------------------------------------- #
 # Ключ — день недели по правилам date.weekday(): 0 = понедельник … 6 = воскресенье.
 # Значение — кортеж (начало смены, конец смены) либо None для выходного дня.
+#
+# Это график студии по умолчанию. У мастера может быть свой — см. MASTERS ниже.
 
 WORK_SCHEDULE: Final[dict[int, tuple[time, time] | None]] = {
     0: (time(9, 0), time(19, 0)),   # понеділок
@@ -141,6 +143,73 @@ WORK_SCHEDULE: Final[dict[int, tuple[time, time] | None]] = {
     5: (time(9, 0), time(19, 0)),   # субота
     6: None,                        # неділя — вихідний
 }
+
+# --------------------------------------------------------------------------- #
+# Мастера
+# --------------------------------------------------------------------------- #
+# ⚠️ Состав мастеров — предварительный. Подтвердить у Анны: реальные имена,
+# кто какие направления делает и график каждого. Удалить лишнего мастера =
+# удалить его блок из словаря.
+
+
+class Master(TypedDict):
+    """Мастер студии."""
+
+    code: str        # короткий уникальный код, уезжает в callback_data и в БД
+    name: str        # имя, которое видит клиентка
+    role: str        # специализация одной строкой
+    emoji: str
+    categories: tuple[str, ...]                       # какие направления делает
+    schedule: dict[int, tuple[time, time] | None] | None   # None -> график студии
+
+
+MASTERS: Final[dict[str, Master]] = {
+    "anna": {
+        "code": "anna",
+        "name": "Анна",
+        "role": "подолог, майстер манікюру та педикюру",
+        "emoji": "👑",
+        "categories": ("man", "ped", "pod"),
+        "schedule": None,
+    },
+    "iryna": {
+        "code": "iryna",
+        "name": "Ірина",
+        "role": "майстер манікюру",
+        "emoji": "💅",
+        "categories": ("man",),
+        "schedule": {
+            0: (time(9, 0), time(19, 0)),
+            1: (time(9, 0), time(19, 0)),
+            2: (time(9, 0), time(19, 0)),
+            3: (time(9, 0), time(19, 0)),
+            4: (time(9, 0), time(19, 0)),
+            5: None,
+            6: None,
+        },
+    },
+    "oksana": {
+        "code": "oksana",
+        "name": "Оксана",
+        "role": "майстер манікюру та педикюру",
+        "emoji": "🦶",
+        "categories": ("man", "ped"),
+        "schedule": {
+            0: None,
+            1: (time(10, 0), time(19, 0)),
+            2: (time(10, 0), time(19, 0)),
+            3: (time(10, 0), time(19, 0)),
+            4: (time(10, 0), time(19, 0)),
+            5: (time(10, 0), time(19, 0)),
+            6: None,
+        },
+    },
+}
+
+# Псевдокод «мені будь-хто, аби швидше». В БД никогда не попадает:
+# при подтверждении записи подставляется конкретный мастер.
+ANY_MASTER: Final[str] = "any"
+
 
 # --------------------------------------------------------------------------- #
 # Прайс
@@ -235,11 +304,35 @@ def get_service(code: str) -> tuple[Category, Service] | None:
     return None
 
 
-def get_work_hours(day: date) -> tuple[time, time] | None:
-    """Рабочие часы конкретной даты. None — выходной."""
+def get_master(code: str) -> Master | None:
+    """Мастер по коду или None, если код неизвестен."""
+    return MASTERS.get(code)
+
+
+def masters_for_category(category_code: str) -> list[Master]:
+    """Мастера, которые делают услуги этого направления, в порядке из MASTERS."""
+    return [m for m in MASTERS.values() if category_code in m["categories"]]
+
+
+def default_master_code() -> str:
+    """Первый мастер в списке. Нужен для миграции старых записей."""
+    return next(iter(MASTERS))
+
+
+def get_work_hours(day: date, master_code: str | None = None) -> tuple[time, time] | None:
+    """
+    Рабочие часы конкретной даты. None — выходной.
+
+    Без master_code возвращается график студии, с master_code — личный
+    график мастера (если он задан) либо тот же график студии.
+    """
+    if master_code:
+        master = MASTERS.get(master_code)
+        if master is not None and master["schedule"] is not None:
+            return master["schedule"].get(day.weekday())
     return WORK_SCHEDULE.get(day.weekday())
 
 
-def is_working_day(day: date) -> bool:
-    """True, если в этот день салон работает."""
-    return get_work_hours(day) is not None
+def is_working_day(day: date, master_code: str | None = None) -> bool:
+    """True, если в этот день работает студия (или конкретный мастер)."""
+    return get_work_hours(day, master_code) is not None

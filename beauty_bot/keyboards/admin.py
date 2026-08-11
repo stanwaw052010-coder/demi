@@ -7,13 +7,18 @@ from datetime import date, datetime
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+import config
 from database.models import Block, Booking
 from utils import dt, texts
+
+# В callback_data пустую строку не передать — для «всей студии» нужен явный маркер.
+ALL_MASTERS_CB = "all"
 
 CB_ADM_CANCEL = "ad:cancel"
 CB_ADM_CANCEL_YES = "ad:yes"
 CB_ADM_CANCEL_NO = "ad:no"
 
+CB_BLK_MASTER = "ad:bmst"
 CB_BLK_DAY = "ad:bday"
 CB_BLK_START = "ad:bstart"
 CB_BLK_END = "ad:bend"
@@ -41,7 +46,10 @@ def day_bookings_keyboard(bookings: list[Booking]) -> InlineKeyboardMarkup | Non
     for booking in bookings:
         builder.row(
             InlineKeyboardButton(
-                text=f"❌ {dt.fmt_time(booking.start_at)} · {booking.client_name}",
+                text=(
+                    f"❌ {dt.fmt_time(booking.start_at)} · "
+                    f"{texts.master_name(booking.master_code)} · {booking.client_name}"
+                ),
                 callback_data=f"{CB_ADM_CANCEL}:{booking.id}",
             )
         )
@@ -57,6 +65,23 @@ def admin_cancel_confirm_keyboard(booking_id: int) -> InlineKeyboardMarkup:
     return builder.as_markup()
 
 
+def block_masters_keyboard() -> InlineKeyboardMarkup:
+    """Чей время блокируем: конкретного мастера или всю студию."""
+    builder = InlineKeyboardBuilder()
+    builder.row(
+        InlineKeyboardButton(text=texts.BTN_WHOLE_SALON, callback_data=f"{CB_BLK_MASTER}:{ALL_MASTERS_CB}")
+    )
+    for master in config.MASTERS.values():
+        builder.row(
+            InlineKeyboardButton(
+                text=f"{master['emoji']} {master['name']}",
+                callback_data=f"{CB_BLK_MASTER}:{master['code']}",
+            )
+        )
+    _cancel_row(builder)
+    return builder.as_markup()
+
+
 def block_days_keyboard(days: list[date]) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     for day in days:
@@ -67,7 +92,7 @@ def block_days_keyboard(days: list[date]) -> InlineKeyboardMarkup:
             )
         )
     builder.adjust(2)
-    _cancel_row(builder)
+    _cancel_row(builder, back_to="master")
     return builder.as_markup()
 
 
@@ -111,7 +136,8 @@ def blocks_keyboard(blocks: list[Block]) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     for block in blocks:
         label = (
-            f"🗑 {dt.fmt_date_short(block.start_at.date())} "
+            f"🗑 {texts.master_name(block.master_code)} · "
+            f"{dt.fmt_date_short(block.start_at.date())} "
             f"{dt.fmt_time(block.start_at)}–{dt.fmt_time(block.end_at)}"
         )
         if block.reason:
