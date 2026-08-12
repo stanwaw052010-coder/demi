@@ -87,7 +87,7 @@ export function BeforeAfter() {
           </p>
         </Reveal>
 
-        {/* How the finished work looks outside the surgery */}
+        {/* An extra frame: the finished work in life, or a stage of it */}
         {item.result && (
           <Reveal className="mx-auto mt-5 max-w-[980px]" y={30} delay={0.08}>
             <figure className="flex flex-col gap-5 overflow-hidden rounded-[24px] bg-mist p-5 sm:flex-row sm:items-center md:p-6">
@@ -105,7 +105,9 @@ export function BeforeAfter() {
                 />
               </div>
               <figcaption className="text-[15px] leading-relaxed text-graphite md:text-[16px]">
-                <span className="eyebrow block text-clay">Результат</span>
+                <span className="eyebrow block text-clay">
+                  {item.result.label ?? "Результат"}
+                </span>
                 <span className="mt-3 block">{item.result.caption}</span>
               </figcaption>
             </figure>

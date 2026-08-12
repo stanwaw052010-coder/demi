@@ -457,8 +457,12 @@ export type Case = {
   before: string;
   after: string;
   ratio: string;
-  /** An optional everyday photo of the finished work. */
-  result?: { src: string; caption: string; ratio: string };
+  /**
+   * An optional extra frame: the finished work in everyday life, or a stage
+   * of it. `label` overrides the «Результат» eyebrow — a gypsum model is a
+   * step in the lab, not a result.
+   */
+  result?: { src: string; caption: string; ratio: string; label?: string };
 };
 
 export const cases: Case[] = [
@@ -484,6 +488,12 @@ export const cases: Case[] = [
     before: "/images/case-crown-before.jpg",
     after: "/images/case-crown-after.jpg",
     ratio: "1200 / 950",
+    result: {
+      src: "/images/case-crown-model.jpg",
+      caption: "Робота на гіпсовій моделі — етап у зуботехнічній лабораторії",
+      ratio: "1 / 1",
+      label: "Етап роботи",
+    },
   },
   {
     id: "case-3",
