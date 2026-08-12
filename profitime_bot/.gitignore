@@ -1,0 +1,17 @@
+# Секреты
+.env
+!.env.example
+
+# База данных
+bot.db
+bot.db-shm
+bot.db-wal
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.mypy_cache/
+.ruff_cache/
