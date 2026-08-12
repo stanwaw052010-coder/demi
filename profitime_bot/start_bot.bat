@@ -1,51 +1,58 @@
 @echo off
 rem ============================================================
-rem  Запуск бота Profi Time одним двойным кликом.
-rem  Файл должен лежать рядом с bot.py.
+rem  Profi Time bot launcher.
 rem
-rem  Первый запуск сам создаст виртуальное окружение и поставит
-rem  зависимости — это займёт минуту. Дальше запуск мгновенный.
+rem  ВНИМАНИЕ: весь текст в этом файле только латиницей.
+rem  Windows читает .bat не в UTF-8, и кириллица здесь ломает
+rem  разбор команд — строки распадаются и cmd пытается выполнить
+rem  куски слов как команды.
+rem  Комментарии после rem безопасны, а вот echo — только ASCII.
 rem ============================================================
 
-chcp 65001 >nul
+setlocal
+chcp 65001 >nul 2>&1
 cd /d "%~dp0"
 title Profi Time bot
 
 if not exist ".env" (
     echo.
-    echo [!] Не найден файл .env
-    echo     Скопируйте .env.example в .env и впишите BOT_TOKEN и ADMIN_IDS.
+    echo [!] File .env not found.
+    echo     Copy .env.example to .env and fill BOT_TOKEN and ADMIN_IDS.
     echo.
     pause
     exit /b 1
 )
 
 if not exist ".venv\Scripts\python.exe" (
-    echo Первый запуск: создаю окружение...
+    echo.
+    echo First run: creating virtual environment...
     python -m venv .venv
-    if errorlevel 1 (
+    if not exist ".venv\Scripts\python.exe" (
         echo.
-        echo [!] Python не найден. Установите его с python.org
-        echo     и обязательно поставьте галочку "Add python.exe to PATH".
+        echo [!] Python not found or venv failed.
+        echo     Install Python from python.org
+        echo     and CHECK the box "Add python.exe to PATH".
         echo.
         pause
         exit /b 1
     )
-    echo Устанавливаю зависимости...
+    echo Installing dependencies, please wait...
     ".venv\Scripts\python.exe" -m pip install --quiet --upgrade pip
     ".venv\Scripts\python.exe" -m pip install --quiet -r requirements.txt
+    echo Done.
 )
 
 :run
 echo.
-echo === Бот запускается. Это окно закрывать нельзя. ===
-echo === Остановка: Ctrl+C ===
+echo ============================================
+echo   Bot is starting. Do NOT close this window.
+echo   Stop: Ctrl+C
+echo ============================================
 echo.
 ".venv\Scripts\python.exe" bot.py
 
-rem Бот упал (например, оборвался интернет) — ждём и поднимаем заново.
 echo.
-echo [!] Бот остановился. Перезапуск через 15 секунд...
-echo     Чтобы выйти совсем — закройте это окно.
+echo [!] Bot stopped. Restarting in 15 seconds...
+echo     To exit completely, just close this window.
 timeout /t 15 /nobreak >nul
 goto run
