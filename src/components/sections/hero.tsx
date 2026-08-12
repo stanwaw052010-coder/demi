@@ -182,11 +182,13 @@ export function Hero() {
       </div>
 
       {/* ── The doctor ───────────────────────────────────
-          The frame keeps the photograph's own 4:5 at every width, so nothing
+          The frame keeps the photograph's own 7:10 at every width, so nothing
           is cropped: a fixed height used to swallow the bottom third of the
           picture on a phone and turn it into a 3:1 panorama on a desktop.
+          The file itself is a taller crop than before — at 4:5 her hands and
+          the instrument fell outside the frame.
           Full width on a phone, centred at its own size from lg. */}
-      <div className="relative mt-6 aspect-4/5 lg:mx-auto lg:mt-10 lg:w-[440px] lg:overflow-hidden lg:rounded-t-[28px] xl:w-[500px]">
+      <div className="relative mt-6 aspect-7/10 lg:mx-auto lg:mt-10 lg:w-[420px] lg:overflow-hidden lg:rounded-t-[28px] xl:w-[470px]">
         <Image
           src="/images/hero.jpg"
           alt={`${site.doctor} — лікар-стоматолог, ${site.name}`}
@@ -194,7 +196,7 @@ export function Hero() {
           /* The headline is the LCP element; this sits under it. */
           fetchPriority="low"
           quality={88}
-          sizes="(max-width: 1024px) 100vw, 500px"
+          sizes="(max-width: 1024px) 100vw, 470px"
           className="object-cover object-center"
         />
         <div
