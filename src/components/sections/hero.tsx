@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowDownRight, MapPin, Phone } from "lucide-react";
 import { site } from "@/lib/site";
+import { heroServices } from "@/lib/content";
 import { ButtonLink } from "@/components/ui/button";
 import { InstagramIcon, ViberIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
@@ -46,16 +47,35 @@ export function Hero() {
           </span>
         </h1>
 
+        {/* Раніше це був суцільний абзац через кому — клініка попросила
+            розписати кожну послугу окремим рядком, щоб перелік читався. */}
         <p
           style={{ animationDelay: "0.1s" }}
-          className="enter mx-auto mt-6 max-w-[46ch] text-[15px] leading-relaxed text-white/75 md:max-w-[70ch] md:text-[16px]"
+          className="enter mx-auto mt-6 max-w-[46ch] text-[15px] font-medium leading-relaxed text-white md:text-[17px]"
         >
-          Надаємо весь спектр стоматологічних послуг: дитяча та доросла
-          терапевтична стоматологія, сучасні методи пломбування каналів,
-          естетична художня реставрація зубів, усі види протезування —
-          знімне та незнімне, хірургічна стоматологія та імплантація,
-          ортодонтичне лікування, відбілювання зубів лампою Beyond.
+          Надаємо весь спектр стоматологічних послуг:
         </p>
+
+        <ul
+          style={{ animationDelay: "0.14s" }}
+          className="enter mx-auto mt-4 grid max-w-[440px] gap-x-10 gap-y-2 text-left md:max-w-[880px] md:grid-cols-2"
+        >
+          {heroServices.map((s) => (
+            <li
+              key={s}
+              className="flex items-start gap-2.5 text-[15px] leading-snug text-white/80 md:text-[16px]"
+            >
+              {/* em-based offset lands the dash on the x-height of the first
+                  line, whatever the font size — items-baseline dropped it to
+                  the bottom of a wrapped item instead. */}
+              <span
+                aria-hidden
+                className="mt-[0.62em] h-px w-3 shrink-0 bg-white/45"
+              />
+              <span>{s}</span>
+            </li>
+          ))}
+        </ul>
 
         <div
           style={{ animationDelay: "0.16s" }}
@@ -162,11 +182,11 @@ export function Hero() {
       </div>
 
       {/* ── The doctor ───────────────────────────────────
-          A narrow screen is close to the photograph's own 4:5, so there it
-          runs full width. A wide one is not: stretched edge to edge the frame
-          becomes a 3:1 panorama and crops the portrait down to a forehead.
-          From lg it keeps its proportions and stands centred instead. */}
-      <div className="relative mt-6 h-[340px] sm:h-[420px] lg:mx-auto lg:mt-10 lg:aspect-4/5 lg:h-auto lg:w-[440px] lg:overflow-hidden lg:rounded-t-[28px] xl:w-[500px]">
+          The frame keeps the photograph's own 4:5 at every width, so nothing
+          is cropped: a fixed height used to swallow the bottom third of the
+          picture on a phone and turn it into a 3:1 panorama on a desktop.
+          Full width on a phone, centred at its own size from lg. */}
+      <div className="relative mt-6 aspect-4/5 lg:mx-auto lg:mt-10 lg:w-[440px] lg:overflow-hidden lg:rounded-t-[28px] xl:w-[500px]">
         <Image
           src="/images/hero.jpg"
           alt={`${site.doctor} — лікар-стоматолог, ${site.name}`}
@@ -175,14 +195,13 @@ export function Hero() {
           fetchPriority="low"
           quality={88}
           sizes="(max-width: 1024px) 100vw, 500px"
-          /* On a phone the frame is wider than the photograph, so the crop
-             is vertical: aim between the etched logo and her face. */
-          className="object-cover object-[50%_34%] lg:object-center"
+          className="object-cover object-center"
         />
         <div
           aria-hidden
-          /* Melts into the cream band that follows — only while full-bleed */
-          className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-cream to-transparent lg:hidden"
+          /* Melts into the cream band that follows — only while full-bleed.
+             Kept short so it never washes over the logo on her polo. */
+          className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-cream to-transparent lg:hidden"
         />
       </div>
     </section>

@@ -216,12 +216,14 @@ export function Prices() {
           ))}
         </div>
 
-        <div className="mt-4 grid gap-4 lg:grid-cols-2 lg:gap-5">
+        {/* items-start: a group with one line (естетика) sat next to a group
+            with four and got stretched into a half-empty white box. */}
+        <div className="mt-4 grid items-start gap-4 lg:grid-cols-2 lg:gap-5">
           {priceGroups.map((group, i) => {
             const Icon = icons[group.icon];
             return (
-              <Reveal key={group.id} delay={(i % 2) * 0.08} className="h-full">
-                <div className="hairline flex h-full flex-col rounded-[24px] bg-white p-6 md:p-8">
+              <Reveal key={group.id} delay={(i % 2) * 0.08}>
+                <div className="hairline flex flex-col rounded-[24px] bg-white p-6 md:p-8">
                   <div className="flex items-center gap-3.5 border-b border-ink/[0.07] pb-5">
                     <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-mist text-ink">
                       {Icon && (
@@ -250,8 +252,8 @@ export function Prices() {
           })}
 
           {/* Closing note + call, filling the odd cell of the grid */}
-          <Reveal delay={0.08} className="h-full">
-            <div className="flex h-full flex-col justify-between gap-8 rounded-[24px] bg-ink p-7 text-white md:p-9">
+          <Reveal delay={0.08}>
+            <div className="flex flex-col justify-between gap-8 rounded-[24px] bg-ink p-7 text-white md:p-9">
               <div>
                 <span className="eyebrow text-white/70">Точна сума</span>
                 <p className="mt-5 font-display text-[24px] font-light leading-snug tracking-[-0.02em] md:text-[28px]">
