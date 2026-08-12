@@ -282,10 +282,10 @@ export const priceGroups: {
     label: "Ортодонтія",
     items: [
       { title: "Ортодонтична консультація", price: 650 },
-      { title: "Брекет-система", price: 60000 },
+      { title: "Брекет-система", note: "дві щелепи", price: 60000 },
       {
         title: "Лікування елайнерами",
-        note: "прозорі капи",
+        note: "прозорі капи · повний курс",
         price: 2000,
         currency: "EUR",
       },
