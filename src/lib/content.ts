@@ -68,7 +68,8 @@ export const services: Service[] = [
     summary: "Виправлення прикусу",
     detail:
       "Консультація ортодонта, план виправлення прикусу та підбір конструкції під вашу ситуацію й вік.",
-    image: "/images/equipment.jpg",
+    /* Робота клініки: вирівняний зубний ряд верхньої щелепи */
+    image: "/images/service-ortho.jpg",
   },
   {
     id: "kids",
@@ -479,6 +480,15 @@ export const cases: Case[] = [
       caption: "Так робота виглядає в житті — за межами кабінету",
       ratio: "16 / 10",
     },
+  },
+  {
+    id: "case-7",
+    title: "Ортодонтичне лікування",
+    short: "Ортодонтія",
+    detail: "Вирівняний зубний ряд верхньої щелепи",
+    before: "/images/case-ortho-before.jpg",
+    after: "/images/case-ortho-after.jpg",
+    ratio: "546 / 403",
   },
   {
     id: "case-4",

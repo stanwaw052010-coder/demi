@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import { cases } from "@/lib/content";
-import { cn } from "@/lib/utils";
+import { cn, plural } from "@/lib/utils";
 import { Reveal } from "@/components/ui/reveal";
 import { LogoWatermark } from "@/components/ui/logo-watermark";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -34,7 +34,7 @@ export function BeforeAfter() {
               <span className="accent text-clay">без пояснень</span>
             </>
           }
-          description={`${cases.length} реальних клінічних випадки. Кейс перемикається плиткою внизу.`}
+          description={`${cases.length} ${plural(cases.length, "реальний клінічний випадок", "реальні клінічні випадки", "реальних клінічних випадків")}. Кейс перемикається плиткою внизу.`}
         />
 
         <Reveal className="mt-14 md:mt-20" y={40}>
@@ -115,7 +115,8 @@ export function BeforeAfter() {
         {/* Case switcher. Thumbnails, not a row of words — otherwise the
             strip reads as a caption and the other cases go unnoticed. */}
         <p className="mx-auto mt-10 max-w-[980px] text-[14px] font-semibold uppercase tracking-[0.16em] text-clay">
-          Усі {cases.length} кейси — натисніть, щоб подивитись
+          Усі {cases.length} {plural(cases.length, "кейс", "кейси", "кейсів")} —
+          натисніть, щоб подивитись
         </p>
 
         <div className="mx-auto mt-4 grid max-w-[980px] grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
