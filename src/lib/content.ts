@@ -84,7 +84,7 @@ export const services: Service[] = [
     summary: "Виправлення прикусу",
     detail:
       "Консультація ортодонта, план виправлення прикусу та підбір конструкції під вашу ситуацію й вік.",
-    /* Робота клініки: вирівняний зубний ряд верхньої щелепи */
+    /* Робота клініки: брекет-система в роботі */
     image: "/images/service-ortho.jpg",
   },
   {
@@ -467,6 +467,20 @@ export type Case = {
 
 export const cases: Case[] = [
   {
+    id: "case-8",
+    title: "Повна реабілітація пацієнта",
+    short: "Повна реабілітація",
+    detail: "Від зруйнованих зубів — до відновленого прикусу та усмішки",
+    before: "/images/case-rehab-before.jpg",
+    after: "/images/case-rehab-after.jpg",
+    ratio: "1 / 1",
+    result: {
+      src: "/images/case-rehab-life.jpg",
+      caption: "Так робота виглядає в житті — за межами кабінету",
+      ratio: "1 / 1",
+    },
+  },
+  {
     id: "case-5",
     title: "Протезування на імплантах",
     short: "На імплантах",
@@ -517,6 +531,12 @@ export const cases: Case[] = [
     before: "/images/case-ortho-before.jpg",
     after: "/images/case-ortho-after.jpg",
     ratio: "546 / 403",
+    result: {
+      src: "/images/case-ortho-braces.jpg",
+      caption: "Брекет-система в роботі — між «до» і «після»",
+      ratio: "916 / 468",
+      label: "Під час лікування",
+    },
   },
   {
     id: "case-4",
