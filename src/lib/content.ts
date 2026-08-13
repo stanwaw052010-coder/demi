@@ -33,7 +33,7 @@ export const services: Service[] = [
     summary: "Дитяча та доросла",
     detail:
       "Лікування карієсу та його ускладнень у будь-якому віці — спокійно, з анестезією та у власному темпі пацієнта.",
-    image: "/images/service-1.jpg",
+    image: "/images/service-therapy.jpg",
   },
   {
     id: "endo",
@@ -475,6 +475,8 @@ export const cases: Case[] = [
     after: "/images/case-rehab-after.jpg",
     ratio: "1 / 1",
     result: {
+      /* Кадр переведено в графітовий монохром: зелений светр вибивався
+         з палітри сайту. Клінічні «до» і «після» лишаються в кольорі. */
       src: "/images/case-rehab-life.jpg",
       caption: "Так робота виглядає в житті — за межами кабінету",
       ratio: "1 / 1",
