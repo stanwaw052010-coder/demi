@@ -19,7 +19,10 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         "hover:-translate-y-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/70 focus-visible:ring-offset-2",
         "h-full",
         hasImage
-          ? "min-h-[420px] bg-ink text-white shadow-[0_30px_80px_-50px_rgba(17,17,17,0.6)] md:min-h-[460px]"
+          ? /* Висота підібрана так, щоб пропорції картки на всіх ширинах
+               трималися близько 0.85: у вужчій рамці object-cover зрізає
+               боки фото — саме через це «обрізався» зуб на терапії. */
+            "min-h-[420px] bg-ink text-white shadow-[0_30px_80px_-50px_rgba(17,17,17,0.6)] sm:min-h-[350px] md:min-h-[390px] lg:min-h-[355px] xl:min-h-[440px]"
           : "min-h-[300px] bg-mist text-ink hairline hover:border-sand/60 hover:bg-cream hover:shadow-[0_30px_70px_-45px_rgba(17,17,17,0.45)]",
       )}
     >
@@ -126,7 +129,9 @@ export function Services() {
           }
         />
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 md:mt-20 md:grid-cols-3 md:gap-5">
+        {/* Третя колонка лише з lg: на 768 px три картки давали смужки
+            216 px завширшки при висоті 460 — фото в них не виживало. */}
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 md:mt-20 md:gap-5 lg:grid-cols-3">
           {services.map((service, i) => (
             <Reveal
               key={service.id}
