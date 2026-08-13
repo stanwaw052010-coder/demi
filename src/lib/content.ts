@@ -541,6 +541,15 @@ export const cases: Case[] = [
     },
   },
   {
+    id: "case-9",
+    title: "Лікування карієсу бічних зубів",
+    short: "Лікування карієсу",
+    detail: "Пломбування під кофердамом — анатомія жувальної поверхні відновлена",
+    before: "/images/case-caries-before.jpg",
+    after: "/images/case-caries-after.jpg",
+    ratio: "882 / 414",
+  },
+  {
     id: "case-4",
     title: "Професійна гігієна",
     short: "Професійна гігієна",
