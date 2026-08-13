@@ -1,5 +1,5 @@
 import { Quote } from "lucide-react";
-import { ArtTile } from "@/components/ui/ArtTile";
+import Image from "next/image";
 import { SoftGlow } from "@/components/ui/Aurora";
 import { Reveal, StaggerGroup } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -23,7 +23,17 @@ export function About() {
           <Reveal direction="right" className="order-2 lg:order-1">
             <div className="relative">
               <div className="relative aspect-4/5 overflow-hidden rounded-6xl shadow-lift ring-1 ring-brand-100">
-                <ArtTile art="bloom" />
+                <Image
+                  src="/gallery/studio-sign.jpg"
+                  alt="Вивіска ProfiTime у студії на пл. Шевченка, 3"
+                  fill
+                  sizes="(max-width: 1024px) 90vw, 38vw"
+                  className="object-cover"
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-linear-to-t from-brand-950/85 via-brand-950/15 to-transparent"
+                />
                 <div className="absolute inset-x-6 bottom-6 rounded-4xl px-6 py-5 glass">
                   <p className="text-[0.68rem] font-bold tracking-[0.2em] text-aqua-300 uppercase">
                     Простір у центрі міста

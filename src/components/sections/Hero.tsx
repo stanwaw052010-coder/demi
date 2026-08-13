@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ArrowRight, CalendarCheck, MapPin, ShieldCheck, Sparkles, Tag } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 import { Aurora } from "@/components/ui/Aurora";
@@ -84,44 +85,23 @@ export function Hero() {
               className="enter-scale relative aspect-4/5 w-full overflow-hidden rounded-6xl bg-linear-to-br from-brand-800 via-brand-900 to-brand-950 shadow-[0_60px_120px_-40px_rgb(4_12_36/0.9)] ring-1 ring-white/12"
               style={delay(0.05)}
             >
-              {/* світло всередині панелі — градієнтами, без blur-фільтрів */}
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-radial-[at_82%_8%] from-aqua-500/30 to-transparent to-60%"
-              />
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-radial-[at_12%_92%] from-brand-500/35 to-transparent to-58%"
+              <Image
+                src="/gallery/hero-manicure.jpg"
+                alt="Манікюр із ніжним покриттям, виконаний у студії ProfiTime"
+                fill
+                // головне зображення сторінки — вантажимо першим
+                priority
+                sizes="(max-width: 1024px) 90vw, 40vw"
+                className="object-cover"
               />
 
-              {/* концентричні дуги */}
-              <svg
+              {/* затемнення знизу, щоб підпис і логотип лишалися читабельними */}
+              <div
                 aria-hidden
-                viewBox="0 0 400 500"
-                preserveAspectRatio="xMidYMid slice"
-                className="absolute inset-0 size-full"
-              >
-                <defs>
-                  <linearGradient id="hero-arc" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#c2e7ff" stopOpacity="0.85" />
-                    <stop offset="100%" stopColor="#c2e7ff" stopOpacity="0.04" />
-                  </linearGradient>
-                </defs>
-                {[150, 250, 350, 450].map((r, i) => (
-                  <circle
-                    key={r}
-                    cx="200"
-                    cy="255"
-                    r={r}
-                    fill="none"
-                    stroke="url(#hero-arc)"
-                    strokeWidth={i % 2 === 0 ? 1.4 : 0.7}
-                    opacity={0.55 - i * 0.1}
-                  />
-                ))}
-              </svg>
+                className="absolute inset-0 bg-linear-to-t from-brand-950/90 via-brand-950/25 to-brand-950/10"
+              />
 
-              <BrandGlyph className="absolute top-1/2 left-1/2 h-[52%] w-[52%] -translate-x-1/2 -translate-y-1/2 text-white/90" />
+              <BrandGlyph className="absolute top-6 right-6 size-12 text-white/85 drop-shadow-[0_4px_12px_rgb(4_12_36/0.6)]" />
 
               {/* нижня скляна підпис-панель */}
               <div className="absolute inset-x-5 bottom-5 rounded-4xl px-6 py-5 glass">

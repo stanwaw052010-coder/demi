@@ -401,19 +401,82 @@ export const promo = {
 export type GalleryItem = {
   title: string;
   caption: string;
-  /** Покладіть фото у /public/gallery і вкажіть шлях — плитка автоматично стане фото. */
+  /** Фото з /public/gallery. Якщо не вказано — малюється векторна плитка `art`. */
   src?: string;
-  art: "arc" | "bloom" | "wave" | "orbit" | "grid" | "drop";
+  art?: "arc" | "bloom" | "wave" | "orbit" | "grid" | "drop";
   span?: "wide" | "tall";
 };
 
+/**
+ * Справжні фото студії.
+ * 12 плиток, з них 4 широкі → 16 колонок сітки = рівно чотири ряди по чотири,
+ * по одній широкій плитці в кожному ряду.
+ */
 export const gallery: GalleryItem[] = [
-  { title: "Простір подології", caption: "Окрема зона для роботи зі стопами", art: "arc", span: "wide" },
-  { title: "Апаратний педикюр", caption: "Делікатна обробка без леза", art: "bloom" },
-  { title: "Естетика нігтів", caption: "Форма, покриття, чисті валики", art: "drop", span: "tall" },
-  { title: "Стерильні набори", caption: "Крафт-пакет відкривається при вас", art: "grid" },
-  { title: "Брови та лазерна епіляція", caption: "Догляд, що економить ваш час", art: "orbit" },
-  { title: "Догляд між візитами", caption: "Професійні засоби для ніг", art: "wave", span: "wide" },
+  {
+    title: "Робоче місце майстра",
+    caption: "Світло, техніка та чисті поверхні",
+    src: "/gallery/studio-interior.jpg",
+    span: "wide",
+  },
+  {
+    title: "Робота подолога",
+    caption: "Точна обробка нігтьової пластини",
+    src: "/gallery/podology-work.jpg",
+  },
+  {
+    title: "Естетика нігтів",
+    caption: "Акуратна форма та рівне покриття",
+    src: "/gallery/manicure-shirt.jpg",
+  },
+  {
+    title: "Апаратний педикюр",
+    caption: "Делікатно, без леза й замочування",
+    src: "/gallery/pedicure-chair.jpg",
+  },
+  {
+    title: "Фірмові засоби",
+    caption: "Догляд із логотипом студії",
+    src: "/gallery/branded-products.jpg",
+    span: "wide",
+  },
+  {
+    title: "Результат педикюру",
+    caption: "Доглянуті нігті та гладенька стопа",
+    src: "/gallery/pedicure-result.jpg",
+  },
+  {
+    title: "Протезування пластини",
+    caption: "Матеріал полімеризується під лампою",
+    src: "/gallery/nail-prosthetics.jpg",
+  },
+  {
+    title: "Професійні засоби",
+    caption: "Підбираємо догляд, що працює вдома",
+    src: "/gallery/care-products.jpg",
+    span: "wide",
+  },
+  {
+    title: "Здорові нігті",
+    caption: "Так виглядає стопа після курсу",
+    src: "/gallery/toenails-result.jpg",
+  },
+  {
+    title: "Після процедури",
+    caption: "Пов'язка та рекомендації з догляду",
+    src: "/gallery/after-procedure.jpg",
+    span: "wide",
+  },
+  {
+    title: "Манікюр, що тримається",
+    caption: "Покриття без сколів і затіків",
+    src: "/gallery/manicure-detail.jpg",
+  },
+  {
+    title: "Лікувальний догляд",
+    caption: "Засіб наноситься точково на пластину",
+    src: "/gallery/nail-treatment.jpg",
+  },
 ];
 
 /* ------------------------------------------------------------------ */

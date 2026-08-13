@@ -50,11 +50,15 @@ export function Gallery() {
                       src={item.src}
                       alt={item.title}
                       fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                      sizes={
+                        item.span === "wide"
+                          ? "(max-width: 1024px) 100vw, 50vw"
+                          : "(max-width: 1024px) 50vw, 25vw"
+                      }
                       className="object-cover"
                     />
                   ) : (
-                    <ArtTile art={item.art} />
+                    item.art && <ArtTile art={item.art} />
                   )}
                 </div>
 
