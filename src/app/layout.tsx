@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileActionBar } from "@/components/layout/MobileActionBar";
 import { RevealObserver } from "@/components/ui/RevealObserver";
 import { BrandGlyphSprite } from "@/components/ui/BrandMark";
-import { site } from "@/lib/site";
+import { masters, site } from "@/lib/site";
 import "./globals.css";
 
 /**
@@ -122,6 +122,12 @@ const jsonLd = {
     },
     result: { "@type": "Reservation", name: "Запис на процедуру" },
   },
+  employee: masters.map((master) => ({
+    "@type": "Person",
+    name: master.name,
+    jobTitle: master.role,
+    image: `${site.url}${master.photo}`,
+  })),
   makesOffer: [
     { "@type": "Offer", itemOffered: { "@type": "Service", name: "Подологія" } },
     { "@type": "Offer", itemOffered: { "@type": "Service", name: "Апаратний педикюр" } },

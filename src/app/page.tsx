@@ -8,6 +8,7 @@ import { Hero } from "@/components/sections/Hero";
 import { Marquee } from "@/components/sections/Marquee";
 import { Pricing } from "@/components/sections/Pricing";
 import { Services } from "@/components/sections/Services";
+import { Team } from "@/components/sections/Team";
 import { Testimonials } from "@/components/sections/Testimonials";
 
 export default function HomePage() {
@@ -17,6 +18,7 @@ export default function HomePage() {
       <Marquee />
       <About />
       <Services />
+      <Team />
       <Advantages />
       <Pricing />
       <Gallery />

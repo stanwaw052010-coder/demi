@@ -62,6 +62,7 @@ export const mapsPlaceUrl = `https://www.google.com/maps/search/?api=1&query=${s
 export const nav = [
   { label: "Про нас", href: "#about" },
   { label: "Послуги", href: "#services" },
+  { label: "Майстри", href: "#team" },
   { label: "Переваги", href: "#advantages" },
   { label: "Прайс", href: "#price" },
   { label: "Галерея", href: "#gallery" },
@@ -131,6 +132,51 @@ export const services: Service[] = [
       "Підбираємо професійні засоби для ніг, щоб результат зберігався між візитами. У студії доступний антиперспірант SYNEO 5.",
     points: ["Підбір засобів для ніг", "SYNEO 5 у наявності", "Інструкція від майстра"],
     icon: "care",
+  },
+];
+
+/* ------------------------------------------------------------------ */
+
+export type Master = {
+  name: string;
+  role: string;
+  /** Напрямки, за якими до майстра записуються. */
+  tags: string[];
+  photo: string;
+};
+
+/**
+ * Команда студії.
+ *
+ * ⚠️ Відповідність «ім'я → фото» для трьох портретів (master-1…3) потребує
+ * підтвердження студії: на знімках чотири різні майстрині, і впевнено
+ * упізнати вдалося лише Аліну — вона на робочих кадрах із бровами.
+ * Щоб переставити, достатньо поміняти шляхи в полі `photo`.
+ */
+export const masters: Master[] = [
+  {
+    name: "Катерина",
+    role: "Майстер манікюру та педикюру",
+    tags: ["Манікюр", "Педикюр"],
+    photo: "/team/master-1.jpg",
+  },
+  {
+    name: "Катерина",
+    role: "Подолог",
+    tags: ["Подологія", "Врослий ніготь"],
+    photo: "/team/master-2.jpg",
+  },
+  {
+    name: "Аліна",
+    role: "Майстер-бровіст",
+    tags: ["Брови", "Корекція та фарбування"],
+    photo: "/team/alina.jpg",
+  },
+  {
+    name: "Анна",
+    role: "Подолог",
+    tags: ["Подологія", "Корекційні системи"],
+    photo: "/team/master-3.jpg",
   },
 ];
 
@@ -409,8 +455,7 @@ export type GalleryItem = {
 
 /**
  * Справжні фото студії.
- * 12 плиток, з них 4 широкі → 16 колонок сітки = рівно чотири ряди по чотири,
- * по одній широкій плитці в кожному ряду.
+ * 16 плиток, з них 4 широкі → 20 колонок сітки = рівно п'ять рядів по чотири.
  */
 export const gallery: GalleryItem[] = [
   {
@@ -446,9 +491,9 @@ export const gallery: GalleryItem[] = [
     src: "/gallery/pedicure-result.jpg",
   },
   {
-    title: "Протезування пластини",
-    caption: "Матеріал полімеризується під лампою",
-    src: "/gallery/nail-prosthetics.jpg",
+    title: "Робота бровиста",
+    caption: "Форма підбирається під риси обличчя",
+    src: "/gallery/brow-work.jpg",
   },
   {
     title: "Професійні засоби",
@@ -457,15 +502,35 @@ export const gallery: GalleryItem[] = [
     span: "wide",
   },
   {
-    title: "Здорові нігті",
-    caption: "Так виглядає стопа після курсу",
-    src: "/gallery/toenails-result.jpg",
+    title: "Протезування пластини",
+    caption: "Матеріал полімеризується під лампою",
+    src: "/gallery/nail-prosthetics.jpg",
+  },
+  {
+    title: "Манікюр у роботі",
+    caption: "Кожен набір інструментів — окремий",
+    src: "/gallery/manicure-in-progress.jpg",
   },
   {
     title: "Після процедури",
     caption: "Пов'язка та рекомендації з догляду",
     src: "/gallery/after-procedure.jpg",
     span: "wide",
+  },
+  {
+    title: "Здорові нігті",
+    caption: "Так виглядає стопа після курсу",
+    src: "/gallery/toenails-result.jpg",
+  },
+  {
+    title: "Апаратна обробка",
+    caption: "Захисний щиток і повна стерильність",
+    src: "/gallery/podology-apparatus.jpg",
+  },
+  {
+    title: "Подолог за роботою",
+    caption: "Спокійний темп, без поспіху",
+    src: "/gallery/podologist-at-work.jpg",
   },
   {
     title: "Манікюр, що тримається",
