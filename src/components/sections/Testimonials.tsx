@@ -1,10 +1,12 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Quote, Star } from "lucide-react";
+import { ArrowLeft, ArrowRight, MessageSquarePlus, Quote, Star } from "lucide-react";
+import { Instagram } from "@/components/ui/icons";
+import { Button } from "@/components/ui/Button";
 import { useCallback, useEffect, useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { testimonials } from "@/lib/site";
+import { reviewUrl, site, testimonials } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const AUTOPLAY_MS = 7000;
@@ -130,6 +132,42 @@ export function Testimonials() {
                   <ArrowRight className="size-5" strokeWidth={2.3} />
                 </SliderButton>
               </div>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* ---------- запрошення залишити відгук ---------- */}
+        <Reveal direction="up" delay={0.1} className="mt-10">
+          <div className="relative mx-auto flex max-w-4xl flex-col gap-7 overflow-hidden rounded-6xl border border-brand-100 bg-linear-to-br from-brand-50 via-white to-aqua-200/35 p-8 md:flex-row md:items-center md:justify-between md:p-10">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 bg-radial-[at_88%_0%] from-brand-300/25 to-transparent to-55%"
+            />
+
+            <div className="relative z-10 flex items-start gap-5">
+              <span className="grid size-14 shrink-0 place-items-center rounded-3xl bg-linear-to-br from-brand-600 to-brand-900 text-white shadow-glow">
+                <MessageSquarePlus className="size-6" strokeWidth={2.2} />
+              </span>
+              <div>
+                <h3 className="text-[1.3rem] leading-tight font-extrabold tracking-[-0.03em] text-ink">
+                  Були у нас? Залишіть відгук
+                </h3>
+                <p className="mt-2 max-w-md text-[0.92rem] leading-relaxed text-graphite-600 text-pretty">
+                  Ваша думка допомагає нам ставати кращими, а іншим — зважитися на перший візит.
+                  Це займе хвилину.
+                </p>
+              </div>
+            </div>
+
+            <div className="relative z-10 flex shrink-0 flex-col gap-3 sm:flex-row md:flex-col lg:flex-row">
+              <Button href={reviewUrl} size="md">
+                <Star className="size-[1.05rem]" strokeWidth={2.4} />
+                Відгук у Google
+              </Button>
+              <Button href={site.instagram.url} variant="outline" size="md">
+                <Instagram className="size-[1.05rem]" strokeWidth={2.2} />
+                Написати в Instagram
+              </Button>
             </div>
           </div>
         </Reveal>

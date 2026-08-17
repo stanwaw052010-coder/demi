@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight, CalendarCheck, MapPin, ShieldCheck, Sparkles, Tag } from "lucide-react";
+import { ArrowRight, CalendarCheck, MapPin, ShieldCheck, Sparkles } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 import { Aurora } from "@/components/ui/Aurora";
 import { BrandGlyph } from "@/components/ui/BrandMark";
@@ -9,7 +9,6 @@ import { site } from "@/lib/site";
 const trust = [
   { icon: ShieldCheck, label: "Стерильний інструмент" },
   { icon: CalendarCheck, label: "Онлайн запис 24/7" },
-  { icon: Tag, label: "−20% на першу процедуру" },
 ];
 
 /** Затримка вхідної анімації — через CSS-змінну, без JS. */

@@ -12,7 +12,7 @@ const details = [
   {
     icon: MapPin,
     label: "Адреса",
-    value: `${site.address.streetWithUnit}, ${site.address.city}`,
+    value: `${site.address.street}, ${site.address.city}`,
     hint: site.address.landmark,
     extra: `Плюс-код Google: ${site.geo.plusCode}`,
   },
@@ -48,7 +48,7 @@ export function Contacts() {
           eyebrow="Як нас знайти"
           title="Ми у центрі Вишгорода —"
           accent="поруч із Книгарнею «Є»"
-          text="пл. Шевченка, 3, приміщення 143. Натисніть «Прокласти маршрут» — навігація до студії відкриється одразу з вашою поточною локацією."
+          text="пл. Шевченка, 3. Натисніть «Прокласти маршрут» — навігація до студії відкриється одразу з вашою поточною локацією."
         />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-[0.85fr_1.15fr] md:mt-16">
@@ -132,7 +132,7 @@ export function Contacts() {
                     </span>
                     <div>
                       <p className="text-[1rem] leading-tight font-extrabold tracking-[-0.02em] text-ink">
-                        ProfiTime · {site.address.streetWithUnit}
+                        ProfiTime · {site.address.street}
                       </p>
                       <p className="mt-1 text-[0.83rem] font-medium text-graphite-500">
                         {site.address.city} · {site.address.landmark}

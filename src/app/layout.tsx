@@ -96,7 +96,7 @@ const jsonLd = {
   image: `${site.url}/opengraph-image`,
   address: {
     "@type": "PostalAddress",
-    streetAddress: `${site.address.street}, ${site.address.unit}`,
+    streetAddress: site.address.street,
     addressLocality: site.address.city,
     addressRegion: site.address.region,
     postalCode: site.address.postalCode,

@@ -33,7 +33,7 @@ export function Footer() {
             </div>
             <p className="mt-6 max-w-xs text-[0.92rem] leading-relaxed text-white/55 text-pretty">
               Простір подології та нігтьового сервісу у Вишгороді. Здорові стопи, естетика нігтів і брів,
-              лазерна епіляція та стерильність, яку видно.
+              лазерна епіляція та стерильність.
             </p>
             <a
               href={site.booking.url}
@@ -108,7 +108,7 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="mt-0.5 size-[1.05rem] shrink-0 text-aqua-300" strokeWidth={2.3} />
                 <span className="text-[0.92rem] leading-snug font-semibold text-white/70">
-                  {site.address.streetWithUnit}
+                  {site.address.street}
                   <br />
                   {site.address.city}, {site.address.region}
                   <br />

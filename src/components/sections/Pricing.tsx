@@ -1,11 +1,11 @@
-import { ArrowRight, BadgePercent, Check, Info } from "lucide-react";
+import { ArrowRight, Check, Info } from "lucide-react";
 import { MotionItem } from "@/components/ui/MotionItem";
 import { PriceList } from "@/components/PriceList";
 import { Reveal, StaggerGroup } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SoftGlow } from "@/components/ui/Aurora";
 import { Button } from "@/components/ui/Button";
-import { priceTiers, promo, site } from "@/lib/site";
+import { priceTiers, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export function Pricing() {
@@ -151,43 +151,16 @@ export function Pricing() {
           ))}
         </StaggerGroup>
 
-        {/* промо + примітка */}
-        <div className="mt-8 grid gap-4 lg:grid-cols-[1.35fr_0.65fr]">
-          <Reveal direction="up" delay={0.1}>
-            <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-5xl bg-linear-to-r from-brand-50 via-white to-aqua-200/40 p-8 ring-1 ring-brand-100 sm:flex-row sm:items-center md:p-10">
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 bg-radial-[at_78%_0%] from-brand-300/30 to-transparent to-55%"
-              />
-              <div className="relative z-10 flex items-start gap-5">
-                <span className="grid size-14 shrink-0 place-items-center rounded-3xl bg-linear-to-br from-brand-600 to-brand-900 text-white shadow-glow">
-                  <BadgePercent className="size-6" strokeWidth={2.2} />
-                </span>
-                <div>
-                  <h3 className="text-[1.35rem] leading-tight font-extrabold tracking-[-0.03em] text-ink">
-                    {promo.title}
-                  </h3>
-                  <p className="mt-2 max-w-lg text-[0.92rem] leading-relaxed text-graphite-600 text-pretty">
-                    {promo.text}
-                  </p>
-                </div>
-              </div>
-              <Button href={site.booking.url} size="lg" className="relative z-10 shrink-0">
-                Скористатись
-              </Button>
-            </div>
-          </Reveal>
-
-          <Reveal direction="up" delay={0.18}>
-            <div className="flex h-full items-start gap-4 rounded-5xl border border-graphite-200/70 bg-graphite-50 p-8">
-              <Info className="mt-0.5 size-5 shrink-0 text-brand-500" strokeWidth={2.3} />
-              <p className="text-[0.88rem] leading-relaxed text-graphite-600 text-pretty">
-                Там, де вказано діапазон, точну суму називаємо після огляду — вона залежить від складності
-                роботи та стану стоп. Жодних доплат «по факту» в кінці візиту.
-              </p>
-            </div>
-          </Reveal>
-        </div>
+        {/* примітка про діапазони цін */}
+        <Reveal direction="up" delay={0.1} className="mt-8">
+          <div className="mx-auto flex max-w-3xl items-start gap-4 rounded-5xl border border-graphite-200/70 bg-graphite-50 p-8">
+            <Info className="mt-0.5 size-5 shrink-0 text-brand-500" strokeWidth={2.3} />
+            <p className="text-[0.92rem] leading-relaxed text-graphite-600 text-pretty">
+              Там, де вказано діапазон, точну суму називаємо після огляду — вона залежить від складності
+              роботи та стану стоп. Жодних доплат «по факту» в кінці візиту.
+            </p>
+          </div>
+        </Reveal>
 
         {/* повний прайс-лист */}
         <Reveal direction="up" className="mt-20 md:mt-28">
