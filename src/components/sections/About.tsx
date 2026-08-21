@@ -13,7 +13,7 @@ const splitFact = (value: string) => {
 
 export function About() {
   return (
-    <Section id="pro-studiyu" tone="cream">
+    <Section id="pro-studiyu" tone="cream" curveTop>
       <div className="grid items-start gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
         <div className="flex flex-col gap-6">
           <SectionLabel tone="ink">{aboutText.label}</SectionLabel>
@@ -38,7 +38,12 @@ export function About() {
             {studioFacts.map((fact, index) => {
               const numeric = splitFact(fact.value);
               return (
-                <Reveal as="div" key={fact.label} index={index} className="flex flex-col gap-1.5">
+                <Reveal
+                  as="div"
+                  key={fact.label}
+                  index={index}
+                  className="card card-light flex flex-col gap-1.5 rounded-[var(--r-md)] px-5 py-5"
+                >
                   <dt className="font-display text-[2rem] leading-none text-ink">
                     {numeric ? (
                       <CountUp value={numeric.number} suffix={numeric.suffix} />
@@ -54,7 +59,7 @@ export function About() {
         </div>
 
         <div className="relative">
-          <RevealImage className="relative aspect-[4/5] w-full">
+          <RevealImage className="arch relative aspect-[4/5] w-full shadow-[var(--shadow-light)]">
             <Image
               src="/images/studio-1.jpg"
               alt="Кабінет масажу студії SISTER'S у теплому світлі"
@@ -65,7 +70,7 @@ export function About() {
           </RevealImage>
           <div
             aria-hidden
-            className="pointer-events-none absolute -bottom-4 -right-4 hidden h-full w-full border border-ink/20 sm:block"
+            className="arch pointer-events-none absolute -bottom-4 -right-4 hidden h-full w-full border border-ink/20 sm:block"
           />
         </div>
       </div>

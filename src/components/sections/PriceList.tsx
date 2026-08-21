@@ -55,12 +55,14 @@ function CategoryBody({ category }: { category: ServiceCategory }) {
         ) : null}
 
         {category.note ? (
-          <p className="mt-7 border-l border-gold/40 pl-4 text-xs text-beige">{category.note}</p>
+          <p className="mt-7 rounded-[var(--r-md)] border border-gold/25 bg-espresso/40 px-5 py-4 text-xs text-beige">
+            {category.note}
+          </p>
         ) : null}
       </div>
 
       <div className="flex flex-col gap-8">
-        <div className="relative aspect-[4/3] w-full overflow-hidden lg:aspect-[3/4]">
+        <div className="arch relative aspect-[4/3] w-full shadow-[var(--shadow-soft)] lg:aspect-[3/4]">
           <Image
             src={category.image}
             alt={category.imageAlt}
@@ -106,7 +108,10 @@ export function PriceList() {
   }, [syncFromHash]);
 
   return (
-    <section id="prays" className="scroll-mt-24 bg-cocoa px-5 py-20 sm:px-8 md:py-28">
+    <section
+      id="prays"
+      className="curve-top relative z-10 scroll-mt-24 bg-cocoa px-5 py-20 sm:px-8 md:py-28"
+    >
       <div className="mx-auto w-full max-w-[1160px]">
         {/* якорі для карток напрямків */}
         {priceCategories.map((category) => (
@@ -135,7 +140,7 @@ export function PriceList() {
           <div
             role="tablist"
             aria-label="Категорії прайсу"
-            className="flex flex-wrap gap-x-8 gap-y-3 border-b border-gold/15 pb-4"
+            className="flex flex-wrap gap-2"
           >
             {priceCategories.map((category) => (
               <button
@@ -147,21 +152,21 @@ export function PriceList() {
                 aria-controls={`panel-${category.id}`}
                 onClick={() => setActiveId(category.id)}
                 className={cn(
-                  "label-spaced relative pb-3 transition-colors duration-300",
+                  "label-spaced relative rounded-[var(--r-pill)] px-5 py-3 transition-colors duration-300",
                   activeId === category.id
-                    ? "text-gold-light"
+                    ? "text-espresso"
                     : "text-beige hover:text-sand",
                 )}
               >
-                {category.tabTitle}
                 {activeId === category.id ? (
                   <motion.span
                     aria-hidden
-                    layoutId="price-tab-underline"
-                    transition={{ type: "spring", stiffness: 320, damping: 32 }}
-                    className="absolute inset-x-0 bottom-0 h-px bg-gold"
+                    layoutId="price-tab-pill"
+                    transition={{ type: "spring", stiffness: 320, damping: 34 }}
+                    className="absolute inset-0 rounded-[var(--r-pill)] bg-gold"
                   />
                 ) : null}
+                <span className="relative">{category.tabTitle}</span>
               </button>
             ))}
           </div>
@@ -176,7 +181,7 @@ export function PriceList() {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="hairline mt-10 p-10"
+                className="hairline mt-10 rounded-[var(--r-xl)] bg-espresso/35 p-10 shadow-[var(--shadow-soft)]"
               >
                 <p className="label-spaced text-gold">{category.label}</p>
                 <h3 className="mt-4 text-4xl text-sand">{category.title}</h3>
@@ -193,7 +198,13 @@ export function PriceList() {
           {priceCategories.map((category) => {
             const open = openId === category.id;
             return (
-              <div key={category.id} className="border-b border-gold/15">
+              <div
+                key={category.id}
+                className={cn(
+                  "card mb-3 overflow-hidden rounded-[var(--r-lg)] px-5 transition-colors duration-500",
+                  open ? "border-gold/45" : "",
+                )}
+              >
                 <h3>
                   <button
                     type="button"
@@ -203,14 +214,16 @@ export function PriceList() {
                     className="flex w-full items-center justify-between gap-4 py-6 text-left"
                   >
                     <span>
-                      <span className="label-spaced block text-gold">{category.label}</span>
+                      <span className="label-spaced block text-[0.6rem] tracking-[0.16em] text-gold sm:text-xs sm:tracking-[0.25em]">
+                        {category.label}
+                      </span>
                       <span className="mt-2 block font-display text-2xl text-sand">
                         {category.title}
                       </span>
                     </span>
                     <ChevronDown
                       className={cn(
-                        "h-5 w-5 shrink-0 text-gold transition-transform duration-500",
+                        "h-9 w-9 shrink-0 rounded-full border border-gold/30 p-2 text-gold transition-transform duration-500",
                         open && "rotate-180",
                       )}
                       strokeWidth={1.25}
@@ -219,7 +232,7 @@ export function PriceList() {
                   </button>
                 </h3>
                 <Collapse open={open} id={`acc-${category.id}`}>
-                  <div className="pb-10">
+                  <div className="pb-8">
                     <CategoryBody category={category} />
                   </div>
                 </Collapse>

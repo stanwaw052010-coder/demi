@@ -7,7 +7,7 @@ import { site } from "@/lib/site";
 
 export function Footer() {
   return (
-    <footer className="border-t border-gold/15 bg-espresso px-5 pb-28 pt-16 sm:px-8 lg:pb-16">
+    <footer className="curve-top relative z-10 -mt-10 border-t border-gold/15 bg-espresso px-5 pb-28 pt-24 sm:px-8 md:-mt-14 md:pt-28 lg:pb-16">
       <div className="mx-auto w-full max-w-[1160px]">
         <div className="grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
           <div>
@@ -16,7 +16,16 @@ export function Footer() {
               SISTER&rsquo;S
               <span className="block text-xl text-beige">Beauty Studio</span>
             </p>
-            <p className="label-spaced mt-5 text-beige">{site.tagline}</p>
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {site.tagline.split("|").map((item) => (
+                <li
+                  key={item}
+                  className="label-spaced rounded-[var(--r-pill)] border border-gold/20 px-4 py-2 text-beige"
+                >
+                  {item.trim()}
+                </li>
+              ))}
+            </ul>
           </div>
 
           <nav aria-label="Навігація у футері" className="flex flex-col gap-3">

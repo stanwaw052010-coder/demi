@@ -10,7 +10,7 @@ const arosha = priceCategories.find((category) => category.id === "arosha")!;
 
 export function Arosha() {
   return (
-    <Section id="arosha" tone="espresso" className="border-t border-gold/12">
+    <Section id="arosha" tone="espresso" curveTop glow="left">
       <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr] lg:items-end lg:gap-20">
         <Reveal className="flex flex-col gap-5">
           <SectionLabel>{arosha.label}</SectionLabel>
@@ -21,7 +21,10 @@ export function Arosha() {
           <p className="max-w-[62ch] text-pretty text-[0.98rem] text-beige">{arosha.intro}</p>
         </Reveal>
 
-        <Reveal index={1} className="flex items-end gap-4 border-l border-gold/25 pl-6 lg:pl-8">
+        <Reveal
+          index={1}
+          className="card flex items-end gap-4 rounded-[var(--r-lg)] bg-cocoa/60 px-8 py-6"
+        >
           <div>
             <p className="label-spaced text-beige">Кожна програма</p>
             <p className="mt-2 flex items-baseline gap-2">
@@ -34,17 +37,17 @@ export function Arosha() {
         </Reveal>
       </div>
 
-      <ul className="mt-16 grid gap-px overflow-hidden border border-gold/20 bg-gold/20 sm:grid-cols-2">
+      <ul className="mt-16 grid gap-4 sm:grid-cols-2">
         {arosha.services.map((service, index) => (
           <Reveal
             as="li"
             key={service.id}
             index={index}
-            className="group relative flex flex-col gap-4 overflow-hidden bg-espresso p-8 transition-colors duration-700 hover:bg-cocoa sm:p-10"
+            className="card card-hover group relative flex flex-col gap-4 overflow-hidden bg-espresso p-8 sm:p-10"
           >
             <span
               aria-hidden
-              className="absolute inset-y-0 left-0 w-px origin-bottom scale-y-0 bg-gold transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:origin-top group-hover:scale-y-100"
+              className="absolute inset-y-6 left-0 w-px origin-bottom scale-y-0 rounded-full bg-gold transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:origin-top group-hover:scale-y-100"
             />
             <p className="label-spaced text-gold transition-colors duration-500 group-hover:text-gold-light">
               {service.name}
@@ -60,7 +63,7 @@ export function Arosha() {
 
       <div className="mt-12 grid gap-8 border-t border-gold/12 pt-10 sm:grid-cols-[1fr_auto] sm:items-center">
         <div className="flex items-center gap-6">
-          <div className="relative hidden h-24 w-24 shrink-0 overflow-hidden sm:block">
+          <div className="arch-sm relative hidden h-24 w-24 shrink-0 sm:block">
             <Image
               src="/images/wrap-arosha.jpg"
               alt="Бандажі AROSHA перед процедурою обгортання"

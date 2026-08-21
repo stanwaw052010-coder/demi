@@ -13,7 +13,7 @@ export function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <Section id="faq" tone="espresso">
+    <Section id="faq" tone="espresso" curveTop glow="right">
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <div className="flex flex-col gap-5 lg:sticky lg:top-28 lg:self-start">
           <SectionLabel>F A Q</SectionLabel>
@@ -28,11 +28,17 @@ export function Faq() {
           </Reveal>
         </div>
 
-        <div className="flex flex-col border-t border-gold/15">
+        <div className="flex flex-col gap-3">
           {faq.map((item, index) => {
             const open = openIndex === index;
             return (
-              <div key={item.question} className="border-b border-gold/15">
+              <div
+                key={item.question}
+                className={cn(
+                  "card overflow-hidden px-6 transition-colors duration-500 sm:px-8",
+                  open ? "border-gold/45" : "",
+                )}
+              >
                 <h3>
                   <button
                     type="button"
@@ -46,7 +52,7 @@ export function Faq() {
                     </span>
                     <Plus
                       className={cn(
-                        "mt-1.5 h-5 w-5 shrink-0 text-gold transition-transform duration-500",
+                        "mt-0.5 h-9 w-9 shrink-0 rounded-full border border-gold/30 p-2 text-gold transition-transform duration-500",
                         open && "rotate-45",
                       )}
                       strokeWidth={1.25}

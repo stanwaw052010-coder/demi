@@ -7,7 +7,7 @@ import { reviews } from "@/data/content";
 
 export function Reviews() {
   return (
-    <Section id="vidhuky" tone="cocoa">
+    <Section id="vidhuky" tone="cocoa" curveTop glow="left">
       <div className="flex flex-col gap-5">
         <SectionLabel>В І Д Г У К И</SectionLabel>
         <MaskText
@@ -27,9 +27,11 @@ export function Reviews() {
             as="li"
             key={review.name + index}
             index={index}
-            className="hairline group flex flex-col gap-6 p-8 transition-[transform,border-color,background-color] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:border-gold/50 hover:bg-espresso/40 sm:p-10"
+            className="card card-hover group flex flex-col gap-6 bg-espresso/45 p-8 sm:p-10"
           >
-            <LogoMark className="h-4 w-4 text-gold transition-transform duration-700 group-hover:rotate-90" />
+            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-gold/25 bg-gold/5">
+              <LogoMark className="h-4 w-4 text-gold transition-transform duration-700 group-hover:rotate-90" />
+            </span>
             <blockquote className="font-display text-[1.35rem] leading-snug text-sand sm:text-[1.5rem]">
               «{review.text}»
             </blockquote>

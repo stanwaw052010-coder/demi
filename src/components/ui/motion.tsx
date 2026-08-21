@@ -28,7 +28,7 @@ export function ScrollProgress() {
     <motion.div
       aria-hidden
       style={{ scaleX }}
-      className="absolute inset-x-0 bottom-0 h-px origin-left bg-gradient-to-r from-gold/40 via-gold to-gold-light"
+      className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-gold/50 via-gold to-gold-light"
     />
   );
 }
@@ -306,7 +306,7 @@ export function Marquee({ items }: { items: string[] }) {
   const track = [...items, ...items];
 
   return (
-    <div className="marquee group relative flex overflow-hidden border-y border-gold/15 bg-espresso py-6">
+    <div className="marquee group relative z-20 mx-3 my-2 flex overflow-hidden rounded-[var(--r-pill)] border border-gold/15 bg-espresso py-6 shadow-[var(--shadow-soft)] sm:mx-6">
       <div className="marquee-track flex shrink-0 items-center gap-10 pr-10">
         {track.map((item, index) => (
           <span key={`${item}-${index}`} className="flex shrink-0 items-center gap-10">

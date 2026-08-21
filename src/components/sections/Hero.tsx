@@ -26,7 +26,7 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-espresso pt-28"
+      className="curve-bottom relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-espresso pt-28"
     >
       <motion.div
         aria-hidden

@@ -30,13 +30,19 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-colors duration-500",
-        scrolled || open
-          ? "border-b border-gold/15 bg-espresso/92 backdrop-blur-md"
-          : "border-b border-transparent",
+        "fixed inset-x-0 top-0 z-50 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        scrolled && !open ? "px-3 pt-3 sm:px-5 sm:pt-4" : "px-0 pt-0",
       )}
     >
-      <div className="mx-auto flex h-[68px] w-full max-w-[1160px] items-center justify-between px-5 sm:px-8 md:h-[76px]">
+      <div
+        className={cn(
+          "relative mx-auto flex h-[64px] w-full items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] md:h-[72px]",
+          scrolled && !open
+            ? "max-w-[1120px] rounded-[var(--r-pill)] border border-gold/20 bg-espresso/85 px-5 shadow-[var(--shadow-soft)] backdrop-blur-xl sm:px-7"
+            : "max-w-[1160px] border border-transparent px-5 sm:px-8",
+          open && "max-w-[1160px] bg-espresso px-5 sm:px-8",
+        )}
+      >
         <Link href="/" aria-label={`${site.name} — на головну`} onClick={() => setOpen(false)}>
           <Logo />
         </Link>
@@ -76,14 +82,16 @@ export function Header() {
           )}
           <span className="sr-only">{open ? "Закрити меню" : "Відкрити меню"}</span>
         </button>
+
       </div>
 
+      {/* смужка прогресу читання — по верхньому краю екрана */}
       <ScrollProgress />
 
       <div
         id="mobile-menu"
         hidden={!open}
-        className="border-t border-gold/12 bg-espresso px-5 pb-10 pt-6 sm:px-8 lg:hidden"
+        className="mx-3 mt-2 rounded-[var(--r-xl)] border border-gold/15 bg-espresso/95 px-6 pb-8 pt-6 shadow-[var(--shadow-lift)] backdrop-blur-xl sm:mx-5 lg:hidden"
       >
         <nav aria-label="Мобільна навігація" className="flex flex-col">
           {navLinks.map((link) => (
@@ -91,7 +99,7 @@ export function Header() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="border-b border-gold/12 py-4 font-display text-2xl text-sand transition-colors duration-300 hover:text-gold"
+              className="border-b border-gold/12 py-4 font-display text-2xl text-sand transition-colors duration-300 last:border-b-0 hover:text-gold"
             >
               {link.label}
             </Link>

@@ -16,19 +16,42 @@ export function Section({
   className,
   innerClassName,
   children,
+  /** вигинає верх секції, накриваючи попередню — м'який перехід замість прямої лінії */
+  curveTop = false,
+  /** тепла світлова пляма на тлі */
+  glow,
 }: {
   id?: string;
   tone?: Tone;
   className?: string;
   innerClassName?: string;
   children: ReactNode;
+  curveTop?: boolean;
+  glow?: "left" | "right";
 }) {
   return (
     <section
       id={id}
-      className={cn("scroll-mt-24 px-5 py-20 sm:px-8 md:py-28", tones[tone], className)}
+      className={cn(
+        "relative scroll-mt-24 px-5 py-20 sm:px-8 md:py-28",
+        tones[tone],
+        /* clip, а не hidden: hidden зробив би секцію скрол-контейнером і зламав sticky */
+        glow && "overflow-clip",
+        curveTop && "curve-top -mt-10 pt-24 md:-mt-14 md:pt-32",
+        curveTop && "z-10",
+        className,
+      )}
     >
-      <div className={cn("mx-auto w-full max-w-[1160px]", innerClassName)}>{children}</div>
+      {glow ? (
+        <span
+          aria-hidden
+          className={cn(
+            "glow-spot hidden h-[420px] w-[420px] md:block",
+            glow === "left" ? "-left-24 top-24" : "-right-24 bottom-16",
+          )}
+        />
+      ) : null}
+      <div className={cn("relative mx-auto w-full max-w-[1160px]", innerClassName)}>{children}</div>
     </section>
   );
 }

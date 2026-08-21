@@ -21,6 +21,21 @@
   --hairline-dark: color-mix(in srgb, var(--espresso) 22%, transparent);
   --ink: #241a13; /* текст на світлих секціях: контраст 12:1 до --cream */
   --ink-soft: #5a4636; /* вторинний текст на світлому: контраст 6.9:1 */
+
+  /* Радіуси: одна шкала на весь сайт, нічого «на око» */
+  --r-xs: 0.625rem;   /* чіпи, дрібні лейбли */
+  --r-sm: 0.875rem;   /* поля вводу */
+  --r-md: 1.25rem;    /* картки */
+  --r-lg: 1.75rem;    /* великі картки, фото */
+  --r-xl: 2.5rem;     /* панелі, вигини секцій */
+  --r-2xl: 3.5rem;    /* вигин переходу між секціями */
+  --r-pill: 999px;
+
+  /* Тіні теплі, не чорні: чорна тінь на шоколаді читається як бруд */
+  --shadow-soft: 0 22px 60px -34px rgba(10, 6, 3, 0.9);
+  --shadow-lift: 0 34px 80px -40px rgba(10, 6, 3, 0.95);
+  --shadow-gold: 0 30px 80px -40px rgba(201, 165, 77, 0.45);
+  --shadow-light: 0 26px 60px -34px rgba(90, 70, 54, 0.28);
 }
 
 @theme inline {
@@ -40,6 +55,14 @@
 
   --tracking-label: 0.25em;
   --tracking-wide-title: 0.16em;
+
+  --radius-xs: var(--r-xs);
+  --radius-sm: var(--r-sm);
+  --radius-md: var(--r-md);
+  --radius-lg: var(--r-lg);
+  --radius-xl: var(--r-xl);
+  --radius-2xl: var(--r-2xl);
+  --radius-pill: var(--r-pill);
 }
 
 @layer base {
@@ -81,7 +104,7 @@
   :focus-visible {
     outline: 2px solid var(--gold);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: var(--r-xs);
   }
 
   /* Прибираємо синій autofill Chrome — він рве палітру */
@@ -115,6 +138,73 @@
 
   .hairline {
     border: 1px solid var(--hairline);
+    border-radius: var(--r-lg);
+  }
+
+  /* ── Картка: заокруглення + тепла тінь + hairline ── */
+  .card {
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-soft);
+    background-color: var(--cocoa);
+    transition:
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 700ms ease,
+      box-shadow 700ms ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-8px);
+    border-color: color-mix(in srgb, var(--gold) 60%, transparent);
+    box-shadow: var(--shadow-gold);
+  }
+
+  .card-light {
+    border-color: color-mix(in srgb, var(--ink) 14%, transparent);
+    background-color: color-mix(in srgb, var(--cream) 60%, white);
+    box-shadow: var(--shadow-light);
+  }
+
+  /* ── Арка: класична форма спа-ніші над портретним фото ── */
+  .arch {
+    border-radius: 999px 999px var(--r-lg) var(--r-lg) / 42% 42% var(--r-lg) var(--r-lg);
+    overflow: hidden;
+  }
+
+  .arch-sm {
+    border-radius: 999px 999px var(--r-md) var(--r-md) / 34% 34% var(--r-md) var(--r-md);
+    overflow: hidden;
+  }
+
+  /* ── Вигин переходу між світлою і темною секцією ── */
+  .curve-top {
+    border-top-left-radius: var(--r-2xl);
+    border-top-right-radius: var(--r-2xl);
+  }
+
+  .curve-bottom {
+    border-bottom-left-radius: var(--r-2xl);
+    border-bottom-right-radius: var(--r-2xl);
+  }
+
+  /* ── Дуже делікатне зерно: прибирає «пластиковість» рівних заливок ── */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ── Тепла світлова пляма під секцією ── */
+  .glow-spot {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(90px);
+    opacity: 0.35;
+    pointer-events: none;
+    background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
   }
 
   /* ── Кнопки: золото змиває фон зліва направо ── */
@@ -122,6 +212,7 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
+    border-radius: var(--r-pill);
   }
 
   .btn::before {
@@ -242,16 +333,24 @@
   .price-row {
     transition:
       transform 560ms cubic-bezier(0.22, 1, 0.36, 1),
-      background-color 560ms ease,
-      padding 560ms cubic-bezier(0.22, 1, 0.36, 1);
+      background-image 560ms ease;
+  }
+
+  /* Заокруглене підсвічування ширше за контент — без переверстки на hover */
+  .price-row {
+    border-radius: var(--r-md);
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
   }
 
   .price-row:hover,
   .price-row:focus-within {
     background-image: linear-gradient(
       90deg,
-      color-mix(in srgb, var(--gold) 9%, transparent) 0%,
-      transparent 65%
+      color-mix(in srgb, var(--gold) 11%, transparent) 0%,
+      transparent 70%
     );
     transform: translateX(6px);
   }

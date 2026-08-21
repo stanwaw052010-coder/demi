@@ -13,7 +13,7 @@ import { cn, normalizePhone } from "@/lib/utils";
 type Errors = Partial<Record<"name" | "phone" | "service", string>>;
 
 const fieldClass =
-  "w-full border border-gold/25 bg-espresso px-4 py-3.5 text-sand placeholder:text-beige/50 transition-colors duration-300 focus:border-gold focus:outline-none";
+  "w-full rounded-[var(--r-sm)] border border-gold/25 bg-espresso/70 px-5 py-4 text-sand placeholder:text-beige/50 transition-colors duration-300 focus:border-gold focus:outline-none";
 
 export function Booking() {
   const [name, setName] = useState("");
@@ -86,7 +86,7 @@ export function Booking() {
   };
 
   return (
-    <Section id="zapys" tone="cocoa">
+    <Section id="zapys" tone="cocoa" curveTop glow="left">
       <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
         <div>
           <div className="flex flex-col gap-5">
@@ -219,7 +219,7 @@ export function Booking() {
                   <label
                     key={item.phone}
                     className={cn(
-                      "label-spaced cursor-pointer border px-5 py-3 transition-colors duration-300",
+                      "label-spaced cursor-pointer rounded-[var(--r-pill)] border px-6 py-3 transition-colors duration-300",
                       master === item.name
                         ? "border-gold bg-gold/10 text-gold-light"
                         : "border-gold/25 text-beige hover:border-gold/60",
@@ -248,9 +248,11 @@ export function Booking() {
           </form>
 
           {message ? (
-            <div className="hairline mt-8 p-6 sm:p-8" role="status">
+            <div className="card mt-8 bg-espresso/50 p-6 sm:p-8" role="status">
               <p className="label-spaced text-gold">П О В І Д О М Л Е Н Н Я   Г О Т О В Е</p>
-              <pre className="mt-5 whitespace-pre-wrap font-sans text-sm text-sand">{message}</pre>
+              <pre className="mt-5 whitespace-pre-wrap rounded-[var(--r-md)] border border-gold/15 bg-espresso/60 p-5 font-sans text-sm text-sand">
+                {message}
+              </pre>
               <p className="mt-5 text-xs text-beige">
                 Оберіть месенджер — текст підставиться автоматично. Пишемо {activeMaster.nameDative}{" "}на{" "}
                 {activeMaster.phoneLabel}.
@@ -307,7 +309,7 @@ export function Booking() {
             <a
               key={item.phone}
               href={`tel:${item.phone}`}
-              className="group flex items-center justify-between gap-4 border border-gold/25 px-6 py-6 transition-[transform,border-color,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-gold hover:bg-gold/5"
+              className="card card-hover group flex items-center justify-between gap-4 bg-espresso/45 px-7 py-6"
             >
               <span>
                 <span className="block font-display text-2xl text-sand">
@@ -316,7 +318,7 @@ export function Booking() {
                 <span className="mt-1 block text-sm text-beige">{item.phoneLabel}</span>
               </span>
               <Phone
-                className="h-5 w-5 shrink-0 text-gold transition-transform duration-500 group-hover:-rotate-12"
+                className="h-11 w-11 shrink-0 rounded-full border border-gold/25 p-3 text-gold transition-transform duration-500 group-hover:-rotate-12"
                 strokeWidth={1.25}
                 aria-hidden
               />
@@ -332,7 +334,7 @@ export function Booking() {
               <span className="block font-display text-2xl text-sand">Написати в Direct</span>
               <span className="mt-1 block text-sm text-beige">{site.instagram.handle}</span>
             </span>
-            <InstagramIcon className="h-5 w-5 shrink-0 text-gold" />
+            <InstagramIcon className="h-11 w-11 shrink-0 rounded-full border border-gold/25 p-3 text-gold" />
           </a>
           <p className="mt-2 flex items-start gap-3 text-xs text-beige">
             <Send className="mt-0.5 h-4 w-4 shrink-0 text-gold" strokeWidth={1.25} aria-hidden />

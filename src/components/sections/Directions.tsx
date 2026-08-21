@@ -9,7 +9,7 @@ import { directions } from "@/data/content";
 
 export function Directions() {
   return (
-    <Section id="napryamky" tone="espresso">
+    <Section id="napryamky" tone="espresso" curveTop glow="right">
       <div className="flex flex-col gap-5">
         <SectionLabel>Н А П Р Я М К И</SectionLabel>
         <MaskText
@@ -28,9 +28,9 @@ export function Directions() {
           <Reveal as="li" key={direction.id} index={index} className="group">
             <Link
               href={`#prays-${direction.target}`}
-              className="relative flex h-full flex-col border border-gold/20 bg-cocoa transition-[transform,border-color,box-shadow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:border-gold/60 hover:shadow-[0_24px_60px_-32px_rgba(201,165,77,0.55)]"
+              className="card card-hover relative flex h-full flex-col overflow-hidden"
             >
-              <div className="relative aspect-[4/3] w-full overflow-hidden">
+              <div className="relative m-3 aspect-[4/3] overflow-hidden rounded-[var(--r-md)]">
                 <Image
                   src={direction.image}
                   alt={direction.imageAlt}
@@ -44,7 +44,7 @@ export function Directions() {
                 />
               </div>
 
-              <div className="flex flex-1 flex-col gap-3 p-6">
+              <div className="flex flex-1 flex-col gap-3 px-6 pb-7 pt-4">
                 <h3 className="text-2xl text-sand transition-colors duration-500 group-hover:text-gold-light">
                   {direction.title}
                 </h3>
@@ -62,7 +62,7 @@ export function Directions() {
               {/* золота лінія, що проступає знизу картки */}
               <span
                 aria-hidden
-                className="absolute inset-x-0 bottom-0 h-px origin-right scale-x-0 bg-gradient-to-r from-transparent via-gold to-transparent transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:origin-left group-hover:scale-x-100"
+                className="absolute inset-x-8 bottom-0 h-px origin-right scale-x-0 rounded-full bg-gradient-to-r from-transparent via-gold to-transparent transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:origin-left group-hover:scale-x-100"
               />
             </Link>
           </Reveal>

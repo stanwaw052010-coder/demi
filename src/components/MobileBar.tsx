@@ -26,20 +26,20 @@ export function MobileBar() {
   return (
     <div
       className={cn(
-        "fixed inset-x-0 bottom-0 z-40 lg:hidden",
+        "fixed inset-x-3 bottom-3 z-40 lg:hidden",
         "transition-transform duration-500",
         visible ? "translate-y-0" : "translate-y-full",
       )}
       aria-hidden={!visible}
     >
       {phonesOpen ? (
-        <div className="border-t border-gold/20 bg-cocoa px-4 py-3">
+        <div className="mb-2 rounded-[var(--r-lg)] border border-gold/20 bg-cocoa/95 p-3 shadow-[var(--shadow-lift)] backdrop-blur-xl">
           <div className="flex flex-col gap-2">
             {site.masters.map((master) => (
               <a
                 key={master.phone}
                 href={`tel:${master.phone}`}
-                className="flex items-center justify-between border border-gold/25 px-4 py-3 text-sm text-sand"
+                className="flex items-center justify-between rounded-[var(--r-sm)] border border-gold/25 px-4 py-3 text-sm text-sand"
               >
                 <span>{master.name}</span>
                 <span className="text-gold">{master.phoneLabel}</span>
@@ -49,12 +49,12 @@ export function MobileBar() {
         </div>
       ) : null}
 
-      <div className="grid grid-cols-[1fr_auto_auto] items-stretch border-t border-gold/20 bg-espresso/97 backdrop-blur-md pb-[env(safe-area-inset-bottom)]">
+      <div className="grid grid-cols-[1fr_auto_auto] items-stretch overflow-hidden rounded-[var(--r-pill)] border border-gold/25 bg-espresso/90 shadow-[var(--shadow-lift)] backdrop-blur-xl">
         <Link
           href="/#zapys"
           onClick={() => setPhonesOpen(false)}
           tabIndex={visible ? undefined : -1}
-          className="label-spaced flex items-center justify-center bg-gold px-4 py-4 text-espresso"
+          className="label-spaced flex items-center justify-center bg-gold px-5 py-4 text-espresso"
         >
           Записатися
         </Link>

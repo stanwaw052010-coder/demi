@@ -15,12 +15,14 @@ function ContactRow({
   children: React.ReactNode;
 }) {
   return (
-    <div className="py-6">
+    <div className="rounded-[var(--r-md)] px-4 py-5 transition-colors duration-500 hover:bg-gold/5">
       <dt className="label-spaced flex items-center gap-3 text-beige">
-        <Icon className="h-5 w-5 shrink-0 text-gold" strokeWidth={1.25} aria-hidden />
+        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-gold/25 text-gold">
+          <Icon className="h-4 w-4" strokeWidth={1.25} aria-hidden />
+        </span>
         {label}
       </dt>
-      <dd className="mt-2 pl-8">{children}</dd>
+      <dd className="mt-3 pl-12">{children}</dd>
     </div>
   );
 }
@@ -43,7 +45,7 @@ export function Contacts({ compact = false }: { compact?: boolean } = {}) {
             </>
           )}
 
-          <dl className="mt-6 flex flex-col divide-y divide-gold/12 border-y border-gold/12">
+          <dl className="mt-6 flex flex-col divide-y divide-gold/12 rounded-[var(--r-lg)] border border-gold/15 p-2">
             <ContactRow icon={MapPin} label="Адреса">
               <a
                 href={site.mapLinkUrl}
@@ -88,13 +90,13 @@ export function Contacts({ compact = false }: { compact?: boolean } = {}) {
           </dl>
         </div>
 
-        <div className="hairline overflow-hidden p-2">
+        <div className="hairline overflow-hidden p-2 shadow-[var(--shadow-soft)]">
           <iframe
             src={site.mapEmbedUrl}
             title="Карта: SISTER'S Beauty Studio, Чернівці, вул. Головна, 283 Б"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            className="h-[380px] w-full border-0 grayscale-[35%] sm:h-[520px]"
+            className="h-[380px] w-full rounded-[var(--r-md)] border-0 grayscale-[35%] sm:h-[520px]"
           />
         </div>
       </div>
