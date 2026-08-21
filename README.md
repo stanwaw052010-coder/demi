@@ -1,36 +1,174 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SISTER'S Beauty Studio — сайт студії масажу в Чернівцях
 
-## Getting Started
+Лендинг студії **SISTER'S Beauty Studio** (м. Чернівці, вул. Головна, 283 Б) з повним прайсом,
+формою запису та контактами. Next.js 16 (App Router) + TypeScript + Tailwind CSS 4 + framer-motion.
 
-First, run the development server:
+---
+
+## Швидкий старт
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Інші команди:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build      # продакшн-збірка
+npm start          # запуск продакшн-збірки
+npm run lint       # ESLint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Де що змінювати
 
-To learn more about Next.js, take a look at the following resources:
+| Що змінити | Файл |
+|---|---|
+| **Ціни та назви послуг, описи, «ефекти»** | `src/data/services.ts` |
+| Телефони, адреса, Instagram, години роботи | `src/lib/site.ts` |
+| Тексти «Про студію», відгуки, FAQ, галерея, напрямки | `src/data/content.ts` |
+| Кольори, шрифти, анімації | `src/app/globals.css` (усі токени в `:root`) |
+| Пункти меню | `src/lib/nav.ts` |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Як змінити ціну
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Відкрийте `src/data/services.ts` і знайдіть потрібну послугу:
 
-## Deploy on Vercel
+```ts
+{
+  id: "manual-back",
+  name: "Масаж спини",
+  price: 700,          // ← ціна в гривнях, тільки число
+  description: "…",
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Якщо ціна договірна:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```ts
+{ id: "beauty-lashes", name: "Нарощення вій", price: null, priceLabel: "за запитом" }
+```
+
+Ціна автоматично оновиться і на головній, і на сторінці `/pryslist`, і в списку послуг
+у формі запису — правити треба лише в одному місці.
+
+---
+
+## Фотографії
+
+Зараз у `public/images/` лежать **елегантні плейсхолдери** в кольорах студії (темний шоколад
+із теплим золотистим світлом). Верстка на них не ламається, але їх треба замінити реальними
+кадрами з Instagram-профілю. Просто покладіть свій файл із **тим самим ім'ям** — і все.
+
+| Файл | Що має бути на фото | Пропорції |
+|---|---|---|
+| `hero-oil.jpg` | Перший екран: тепла олія, руки майстра, світло свічок | горизонтальне, 1920×1280 |
+| `stone-therapy.jpg` | Гаряче каміння на спині | горизонтальне |
+| `wrap-arosha.jpg` | Обгортання AROSHA, бандажі | горизонтальне |
+| `firemix.jpg` | Вогняний масаж FIREMIX | горизонтальне |
+| `vacuum-roller.jpg` | Апарат для вакуумно-роликового масажу | горизонтальне |
+| `bodycode.jpg` | Гіпсування тіла BODY CODE | горизонтальне |
+| `cups-back.jpg` | Масаж банками, спина | горизонтальне |
+| `pregnancy.jpg` | Масаж для вагітних | вертикальне, 1200×1500 |
+| `face-lifting.jpg` | Масаж обличчя | вертикальне |
+| `studio-1.jpg` … `studio-6.jpg` | Атмосфера студії, кабінет, свічки, деталі, робота майстра | 1–3 вертикальні, решта квадратні/горизонтальні |
+| `og-cover.jpg` | Обкладинка для пересилання посилання в месенджерах (1200×630) | **готова**, замінювати не обов'язково |
+
+Поради: тримайте вагу файлу до ~400 КБ, формат JPG. Next.js сам віддасть WebP/AVIF
+і потрібний розмір під екран.
+
+Підписи (alt) до фото — в `src/data/content.ts` та `src/data/services.ts` (поле `imageAlt`).
+
+---
+
+## TODO — що треба уточнити у власниці
+
+- [ ] **Ціни на б'юті-послуги.** Нарощення вій і воскова епіляція зараз стоять як
+      «ціна за запитом» (`src/data/services.ts`, категорія `beauty`). Коли будуть цифри —
+      замініть `price: null` на число і приберіть `priceLabel`.
+- [ ] **Години роботи.** Поставлено `Пн–Сб, 09:00–20:00` (`src/lib/site.ts` → `hours`).
+      Цей же графік іде в структуровані дані Google. Уточніть реальний.
+- [ ] **Відгуки.** У `src/data/content.ts` → `reviews` зараз тексти-плейсхолдери.
+      Замініть їх реальними відгуками з хайлайту «Відгуки» в Instagram (ім'я + процедура + цитата).
+- [ ] **Фотографії** — див. таблицю вище.
+- [ ] **Домен.** У `src/lib/site.ts` → `url` стоїть `https://sisters-beauty-studio.vercel.app`.
+      Після покупки домену замініть — від нього залежать canonical, OpenGraph і sitemap.
+- [ ] **Координати на карті.** У JSON-LD (`src/app/layout.tsx`) стоять приблизні координати
+      центру Чернівців. За бажанням замініть на точні з Google Maps.
+- [ ] **Тексти «Про студію»** написані з наших припущень — перечитайте й підправте під себе.
+
+---
+
+## Прийняті рішення
+
+- **Tailwind CSS 4.** У четвертій версії конфіг живе не в `tailwind.config.ts`, а прямо
+  в CSS: токени оголошені в `:root` файлу `src/app/globals.css` і прокинуті в Tailwind
+  через `@theme inline`. Тому файлу `tailwind.config.ts` у проєкті немає — це не помилка.
+  Хардкоду hex-кольорів у компонентах немає: тільки класи `bg-espresso`, `text-gold` тощо.
+- **Форма запису працює без бекенду.** Вона збирає дані в готове повідомлення прямо
+  в браузері й відкриває Viber / Telegram / WhatsApp / SMS з підставленим текстом.
+  Нічого нікуди не надсилається і ніде не зберігається — тому не треба ні сервера,
+  ні бази, ні згоди на обробку даних.
+- **Telegram-кнопка** веде на `https://t.me/+38050…`. Вона спрацює, якщо на цьому номері
+  зареєстрований Telegram і в налаштуваннях приватності дозволений пошук за номером.
+  Якщо у студії є @username у Telegram — надійніше вписати його в `src/lib/site.ts`.
+- **Дві світлі секції** («Про студію» та «Ефект») зроблені навмисно: сторінка чергує
+  темні й кремові блоки, щоб не читатися як суцільна темрява.
+- **Анімації.** Сайт має шар руху, який вмикається сам і скрізь вимикається,
+  якщо в системі стоїть «зменшити рух» (`prefers-reduced-motion`):
+  паралакс і тепле світло за курсором у першому екрані, заголовки, що виїжджають
+  з-під маски, числа, що набігають, стрічка послуг, що пливе, підсвічування
+  рядків прайсу, лайтбокс у галереї з гортанням стрілками, плавні акордеони.
+  **Важливо:** поява першого екрана зроблена на CSS, а не на JS — інакше на
+  повільному телефоні екран лишався б порожнім, доки не завантажиться скрипт.
+  Не переносьте hero на framer-motion «для однаковості» — це коштувало б
+  кількох секунд LCP.
+- **Позначки прайсу** («Р У Ч Н И Й   М А С А Ж») навмисно набрані з пробілами між
+  літерами — це фірмова деталь друкованих прайсів студії, вона повторюється по всьому сайту.
+
+---
+
+## Структура
+
+```
+src/
+├─ app/
+│  ├─ layout.tsx        шрифти, meta, OpenGraph, JSON-LD (BeautySalon)
+│  ├─ page.tsx          головна сторінка (усі секції)
+│  ├─ globals.css       ← кольори, типографіка, анімації
+│  ├─ pryslist/         окрема сторінка повного прайсу
+│  ├─ kontakty/         окрема сторінка контактів
+│  ├─ sitemap.ts        /sitemap.xml
+│  └─ robots.ts         /robots.txt
+├─ components/
+│  ├─ sections/         по одному файлу на секцію сторінки
+│  └─ ui/               кнопки, лейбли, рядок прайсу, анімація появи
+├─ data/                ← прайс і тексти
+└─ lib/                 контакти, навігація, утиліти
+```
+
+---
+
+## Перевірено
+
+- Збірка `npm run build` — без помилок, усі сторінки статичні.
+- ESLint — чисто.
+- Верстка на 375 px, 390 px і 1440 px — без горизонтального скролу.
+- Анімації перевірені й у режимі «зменшити рух» — увесь контент лишається видимим.
+- Lighthouse (мобільний, продакшн-збірка): **Performance 90, Accessibility 100,
+  Best Practices 100, SEO 100**.
+
+---
+
+## Деплой на Vercel
+
+1. Репозиторій уже на GitHub — сайт лежить у його корені.
+2. [vercel.com/new](https://vercel.com/new) → Import Git Repository → оберіть репозиторій.
+3. Framework Preset визначиться сам (Next.js). Build Command, Output і Root Directory
+   залиште за замовчуванням — сайт лежить у корені репозиторію.
+4. Deploy. Далі: Settings → Domains → додайте свій домен і пропишіть DNS у реєстратора.
+5. Після підключення домену замініть `url` у `src/lib/site.ts` і задеплойте ще раз.
+
+Змінні оточення не потрібні — сайт повністю статичний.
