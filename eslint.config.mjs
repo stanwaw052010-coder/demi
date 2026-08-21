@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Окремий проєкт сайту студії має власні конфіги.
+    "sisters-beauty/**",
   ]),
 ]);
 
