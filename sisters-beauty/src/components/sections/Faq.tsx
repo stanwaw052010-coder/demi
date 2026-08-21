@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import { Section, SectionHeading } from "@/components/ui/Section";
+import { Section } from "@/components/ui/Section";
+import { Collapse, MaskText } from "@/components/ui/motion";
+import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { faq } from "@/data/content";
 import { cn } from "@/lib/utils";
@@ -13,17 +15,18 @@ export function Faq() {
   return (
     <Section id="faq" tone="espresso">
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <SectionHeading
-          title={
-            <>
-              Часті <span className="italic text-gold-light">питання</span>
-            </>
-          }
-          intro="Якщо вашого питання тут немає — зателефонуйте, ми відповімо чесно й без нав’язування."
-          className="lg:sticky lg:top-28 lg:self-start"
-        >
+        <div className="flex flex-col gap-5 lg:sticky lg:top-28 lg:self-start">
           <SectionLabel>F A Q</SectionLabel>
-        </SectionHeading>
+          <MaskText
+            parts={[{ text: "Часті" }, { text: "питання", className: "italic text-gold-light" }]}
+            className="text-balance text-[2.1rem] leading-[1.08] text-sand sm:text-5xl md:text-[3.4rem]"
+          />
+          <Reveal>
+            <p className="max-w-[62ch] text-pretty text-[0.98rem] text-beige sm:text-base">
+              Якщо вашого питання тут немає — зателефонуйте, ми відповімо чесно й без нав’язування.
+            </p>
+          </Reveal>
+        </div>
 
         <div className="flex flex-col border-t border-gold/15">
           {faq.map((item, index) => {
@@ -36,9 +39,9 @@ export function Faq() {
                     onClick={() => setOpenIndex(open ? null : index)}
                     aria-expanded={open}
                     aria-controls={`faq-${index}`}
-                    className="flex w-full items-start justify-between gap-6 py-6 text-left"
+                    className="group flex w-full items-start justify-between gap-6 py-6 text-left"
                   >
-                    <span className="font-display text-xl text-sand sm:text-[1.55rem]">
+                    <span className="font-display text-xl text-sand transition-colors duration-500 group-hover:text-gold-light sm:text-[1.55rem]">
                       {item.question}
                     </span>
                     <Plus
@@ -51,11 +54,11 @@ export function Faq() {
                     />
                   </button>
                 </h3>
-                <div id={`faq-${index}`} hidden={!open}>
+                <Collapse open={open} id={`faq-${index}`}>
                   <p className="max-w-[68ch] text-pretty pb-7 text-[0.95rem] text-beige">
                     {item.answer}
                   </p>
-                </div>
+                </Collapse>
               </div>
             );
           })}

@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { motion } from "framer-motion";
+import { Collapse, MaskText } from "@/components/ui/motion";
 import { PriceRow } from "@/components/ui/PriceRow";
 import { EffectsList } from "@/components/ui/EffectsList";
 import { SectionLabel } from "@/components/ui/SectionLabel";
@@ -22,11 +24,25 @@ function CategoryBody({ category }: { category: ServiceCategory }) {
           <p className="max-w-[68ch] text-pretty text-[0.98rem] text-beige">{category.intro}</p>
         ) : null}
 
-        <div className="mt-8">
+        <motion.div
+          className="mt-8"
+          initial="hidden"
+          animate="visible"
+          transition={{ staggerChildren: 0.07, delayChildren: 0.12 }}
+        >
           {category.services.map((service) => (
-            <PriceRow key={service.id} service={service} compact={isArosha} />
+            <motion.div
+              key={service.id}
+              variants={{
+                hidden: { opacity: 0, y: 16 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <PriceRow service={service} compact={isArosha} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {isArosha ? (
           <Link
@@ -104,9 +120,10 @@ export function PriceList() {
 
         <div className="flex flex-col gap-5">
           <SectionLabel>П Р А Й С</SectionLabel>
-          <h2 className="text-balance text-[2.2rem] leading-[1.06] text-sand sm:text-5xl md:text-[3.5rem]">
-            Меню процедур
-          </h2>
+          <MaskText
+            parts={[{ text: "Меню" }, { text: "процедур", className: "italic text-gold-light" }]}
+            className="text-balance text-[2.2rem] leading-[1.06] text-sand sm:text-5xl md:text-[3.5rem]"
+          />
           <p className="max-w-[62ch] text-pretty text-[0.98rem] text-beige">
             Повний перелік послуг студії з актуальними цінами. Тривалість і кількість процедур
             підбираємо на першій зустрічі.
@@ -137,24 +154,28 @@ export function PriceList() {
                 )}
               >
                 {category.tabTitle}
-                <span
-                  aria-hidden
-                  className={cn(
-                    "absolute bottom-0 left-0 h-px bg-gold transition-all duration-500",
-                    activeId === category.id ? "w-full" : "w-0",
-                  )}
-                />
+                {activeId === category.id ? (
+                  <motion.span
+                    aria-hidden
+                    layoutId="price-tab-underline"
+                    transition={{ type: "spring", stiffness: 320, damping: 32 }}
+                    className="absolute inset-x-0 bottom-0 h-px bg-gold"
+                  />
+                ) : null}
               </button>
             ))}
           </div>
 
           {priceCategories.map((category) =>
             category.id === activeId ? (
-              <div
+              <motion.div
                 key={category.id}
                 role="tabpanel"
                 id={`panel-${category.id}`}
                 aria-labelledby={`tab-${category.id}`}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 className="hairline mt-10 p-10"
               >
                 <p className="label-spaced text-gold">{category.label}</p>
@@ -162,7 +183,7 @@ export function PriceList() {
                 <div className="mt-8">
                   <CategoryBody category={category} />
                 </div>
-              </div>
+              </motion.div>
             ) : null,
           )}
         </div>
@@ -197,9 +218,11 @@ export function PriceList() {
                     />
                   </button>
                 </h3>
-                <div id={`acc-${category.id}`} hidden={!open} className="pb-10">
-                  <CategoryBody category={category} />
-                </div>
+                <Collapse open={open} id={`acc-${category.id}`}>
+                  <div className="pb-10">
+                    <CategoryBody category={category} />
+                  </div>
+                </Collapse>
               </div>
             );
           })}

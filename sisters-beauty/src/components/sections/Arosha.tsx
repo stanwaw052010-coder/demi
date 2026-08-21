@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/ui/Reveal";
+import { CountUp, MaskText } from "@/components/ui/motion";
 import { AROSHA_PRICE, priceCategories } from "@/data/services";
 
 const arosha = priceCategories.find((category) => category.id === "arosha")!;
@@ -13,9 +14,10 @@ export function Arosha() {
       <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr] lg:items-end lg:gap-20">
         <Reveal className="flex flex-col gap-5">
           <SectionLabel>{arosha.label}</SectionLabel>
-          <h2 className="text-balance text-[2.2rem] leading-[1.06] text-sand sm:text-5xl md:text-[3.5rem]">
-            Вісім програм <span className="italic text-gold-light">AROSHA</span>
-          </h2>
+          <MaskText
+            parts={[{ text: "Вісім програм" }, { text: "AROSHA", className: "italic text-gold-light" }]}
+            className="text-balance text-[2.2rem] leading-[1.06] text-sand sm:text-5xl md:text-[3.5rem]"
+          />
           <p className="max-w-[62ch] text-pretty text-[0.98rem] text-beige">{arosha.intro}</p>
         </Reveal>
 
@@ -24,7 +26,7 @@ export function Arosha() {
             <p className="label-spaced text-beige">Кожна програма</p>
             <p className="mt-2 flex items-baseline gap-2">
               <span className="font-display text-[3.4rem] leading-none text-gold-light">
-                {AROSHA_PRICE.toLocaleString("uk-UA")}
+                <CountUp value={AROSHA_PRICE} />
               </span>
               <span className="label-spaced text-beige">грн</span>
             </p>
@@ -38,9 +40,15 @@ export function Arosha() {
             as="li"
             key={service.id}
             index={index}
-            className="group flex flex-col gap-4 bg-espresso p-8 transition-colors duration-500 hover:bg-cocoa sm:p-10"
+            className="group relative flex flex-col gap-4 overflow-hidden bg-espresso p-8 transition-colors duration-700 hover:bg-cocoa sm:p-10"
           >
-            <p className="label-spaced text-gold">{service.name}</p>
+            <span
+              aria-hidden
+              className="absolute inset-y-0 left-0 w-px origin-bottom scale-y-0 bg-gold transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:origin-top group-hover:scale-y-100"
+            />
+            <p className="label-spaced text-gold transition-colors duration-500 group-hover:text-gold-light">
+              {service.name}
+            </p>
             <p className="text-pretty text-sm text-beige">{service.description}</p>
             <p className="mt-auto pt-2 font-display text-2xl text-sand">
               {AROSHA_PRICE.toLocaleString("uk-UA")}
@@ -68,7 +76,7 @@ export function Arosha() {
         </div>
         <Link
           href="#zapys"
-          className="label-spaced justify-self-start border border-gold/45 px-8 py-4 text-sand transition-colors duration-300 hover:border-gold hover:bg-gold/10 hover:text-gold-light sm:justify-self-end"
+          className="btn btn-outline label-spaced justify-self-start px-8 py-4 sm:justify-self-end"
         >
           Підібрати програму
         </Link>

@@ -3,6 +3,7 @@
 import { useMemo, useState, type FormEvent } from "react";
 import { Check, Copy, Phone, Send } from "lucide-react";
 import { Section } from "@/components/ui/Section";
+import { MaskText } from "@/components/ui/motion";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { InstagramIcon } from "@/components/ui/icons";
 import { allServices, priceCategories } from "@/data/services";
@@ -90,9 +91,10 @@ export function Booking() {
         <div>
           <div className="flex flex-col gap-5">
             <SectionLabel>З А П И С</SectionLabel>
-            <h2 className="text-balance text-[2.2rem] leading-[1.06] text-sand sm:text-5xl md:text-[3.5rem]">
-              Запишіться на процедуру
-            </h2>
+            <MaskText
+              parts={[{ text: "Запишіться" }, { text: "на процедуру", className: "italic text-gold-light" }]}
+              className="text-balance text-[2.2rem] leading-[1.06] text-sand sm:text-5xl md:text-[3.5rem]"
+            />
             <p className="max-w-[58ch] text-pretty text-[0.98rem] text-beige">
               Заповніть форму — вона збере ваші дані в готове повідомлення. Далі один дотик, і воно
               відкриється у вашому месенджері. Ми підтвердимо запис у відповідь.
@@ -239,7 +241,7 @@ export function Booking() {
 
             <button
               type="submit"
-              className="label-spaced mt-2 bg-gold px-8 py-4 text-espresso transition-colors duration-300 hover:bg-gold-light"
+              className="btn btn-solid label-spaced mt-2 px-8 py-4"
             >
               Сформувати повідомлення
             </button>
@@ -256,7 +258,7 @@ export function Booking() {
               <div className="mt-6 flex flex-wrap gap-3">
                 <a
                   href={links.viber}
-                  className="label-spaced border border-gold/45 px-6 py-3.5 text-sand transition-colors duration-300 hover:border-gold hover:bg-gold/10 hover:text-gold-light"
+                  className="btn btn-outline label-spaced px-6 py-3.5"
                 >
                   Viber
                 </a>
@@ -264,7 +266,7 @@ export function Booking() {
                   href={links.telegram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="label-spaced border border-gold/45 px-6 py-3.5 text-sand transition-colors duration-300 hover:border-gold hover:bg-gold/10 hover:text-gold-light"
+                  className="btn btn-outline label-spaced px-6 py-3.5"
                 >
                   Telegram
                 </a>
@@ -272,20 +274,20 @@ export function Booking() {
                   href={links.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="label-spaced border border-gold/45 px-6 py-3.5 text-sand transition-colors duration-300 hover:border-gold hover:bg-gold/10 hover:text-gold-light"
+                  className="btn btn-outline label-spaced px-6 py-3.5"
                 >
                   WhatsApp
                 </a>
                 <a
                   href={links.sms}
-                  className="label-spaced border border-gold/45 px-6 py-3.5 text-sand transition-colors duration-300 hover:border-gold hover:bg-gold/10 hover:text-gold-light"
+                  className="btn btn-outline label-spaced px-6 py-3.5"
                 >
                   SMS
                 </a>
                 <button
                   type="button"
                   onClick={handleCopy}
-                  className="label-spaced inline-flex items-center gap-2 border border-gold/45 px-6 py-3.5 text-sand transition-colors duration-300 hover:border-gold hover:bg-gold/10 hover:text-gold-light"
+                  className="btn btn-outline label-spaced inline-flex items-center gap-2 px-6 py-3.5"
                 >
                   {copied ? (
                     <Check className="h-4 w-4 text-gold" strokeWidth={1.25} aria-hidden />
@@ -305,7 +307,7 @@ export function Booking() {
             <a
               key={item.phone}
               href={`tel:${item.phone}`}
-              className="group flex items-center justify-between gap-4 border border-gold/25 px-6 py-6 transition-colors duration-300 hover:border-gold hover:bg-gold/5"
+              className="group flex items-center justify-between gap-4 border border-gold/25 px-6 py-6 transition-[transform,border-color,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-gold hover:bg-gold/5"
             >
               <span>
                 <span className="block font-display text-2xl text-sand">

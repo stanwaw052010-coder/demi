@@ -1,6 +1,7 @@
 import { Clock, MapPin, Phone, type LucideIcon } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { MaskText } from "@/components/ui/motion";
 import { InstagramIcon } from "@/components/ui/icons";
 import { site } from "@/lib/site";
 
@@ -35,9 +36,10 @@ export function Contacts({ compact = false }: { compact?: boolean } = {}) {
           {compact ? null : (
             <>
               <SectionLabel>К О Н Т А К Т И</SectionLabel>
-              <h2 className="text-balance text-[2.2rem] leading-[1.06] text-sand sm:text-5xl md:text-[3.5rem]">
-                Знайти нас
-              </h2>
+              <MaskText
+                parts={[{ text: "Знайти" }, { text: "нас", className: "italic text-gold-light" }]}
+                className="text-balance text-[2.2rem] leading-[1.06] text-sand sm:text-5xl md:text-[3.5rem]"
+              />
             </>
           )}
 

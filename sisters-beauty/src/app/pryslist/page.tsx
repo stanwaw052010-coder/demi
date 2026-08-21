@@ -33,7 +33,7 @@ export default function PriceListPage() {
           </p>
           <Link
             href="/#zapys"
-            className="label-spaced mt-9 inline-flex bg-gold px-8 py-4 text-espresso transition-colors duration-300 hover:bg-gold-light"
+            className="btn btn-solid label-spaced mt-9 inline-flex px-8 py-4"
           >
             Записатися
           </Link>

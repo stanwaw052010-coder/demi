@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
+import { ScrollProgress } from "@/components/ui/motion";
 import { navLinks } from "@/lib/nav";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -45,7 +46,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="label-spaced text-beige transition-colors duration-300 hover:text-gold"
+              className="nav-link label-spaced text-beige transition-colors duration-300 hover:text-gold"
             >
               {link.label}
             </Link>
@@ -55,7 +56,7 @@ export function Header() {
         <div className="hidden lg:block">
           <Link
             href="/#zapys"
-            className="label-spaced border border-gold/45 px-5 py-3 text-sand transition-colors duration-300 hover:border-gold hover:bg-gold/10 hover:text-gold-light"
+            className="btn btn-outline label-spaced px-5 py-3"
           >
             Записатися
           </Link>
@@ -77,6 +78,8 @@ export function Header() {
         </button>
       </div>
 
+      <ScrollProgress />
+
       <div
         id="mobile-menu"
         hidden={!open}
@@ -96,7 +99,7 @@ export function Header() {
           <Link
             href="/#zapys"
             onClick={() => setOpen(false)}
-            className="label-spaced mt-7 bg-gold px-6 py-4 text-center text-espresso"
+            className="btn btn-solid label-spaced mt-7 px-6 py-4 text-center"
           >
             Записатися
           </Link>

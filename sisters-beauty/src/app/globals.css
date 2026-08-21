@@ -117,6 +117,97 @@
     border: 1px solid var(--hairline);
   }
 
+  /* ── Кнопки: золото змиває фон зліва направо ── */
+  .btn {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .btn:hover::before,
+  .btn:focus-visible::before {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  .btn-solid {
+    background-color: var(--gold);
+    color: var(--espresso);
+  }
+
+  .btn-solid::before {
+    background-color: var(--gold-light);
+  }
+
+  .btn-outline {
+    border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+    color: var(--sand);
+    transition: color 420ms ease, border-color 420ms ease;
+  }
+
+  .btn-outline::before {
+    background-color: var(--gold);
+  }
+
+  .btn-outline:hover,
+  .btn-outline:focus-visible {
+    border-color: var(--gold);
+    color: var(--espresso);
+  }
+
+  /* ── Навігація: золота лінія росте від лівого краю ── */
+  .nav-link {
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.4rem;
+    height: 1px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: right center;
+    background-color: var(--gold);
+    transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  /* ── Стрічка послуг ── */
+  .marquee-track {
+    animation: marquee 46s linear infinite;
+    min-width: max-content;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
   /* ── Signature: leader dots «меню при свічках» ──
      Два шари крапок. Верхній — золотий, розкривається
      зліва направо при наведенні на весь рядок прайсу. */
@@ -148,9 +239,31 @@
     transition: width 700ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
+  .price-row {
+    transition:
+      transform 560ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 560ms ease,
+      padding 560ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .price-row:hover,
+  .price-row:focus-within {
+    background-image: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--gold) 9%, transparent) 0%,
+      transparent 65%
+    );
+    transform: translateX(6px);
+  }
+
   .price-row:hover .leader::after,
   .price-row:focus-within .leader::after {
     width: 100%;
+  }
+
+  .price-row:hover h4,
+  .price-row:focus-within h4 {
+    color: var(--gold-light);
   }
 }
 
@@ -187,6 +300,66 @@
     }
   }
 
+  /* ── Поява hero на CSS ──
+     Важливо: ці анімації стартують з першим кадром, ще до гідратації React.
+     Якби hero з'являвся через JS, на повільному телефоні екран лишався б
+     порожнім кілька секунд (і LCP злітав би до 4 с). */
+  .rise-in {
+    animation: rise-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 26px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .word-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+  }
+
+  .word-in {
+    display: inline-block;
+    animation: word-in 0.68s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes word-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 115%, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  /* Поява літер лейбла — на CSS, щоб не тримати motion-компонент на кожен символ */
+  .letter-in {
+    opacity: 0;
+    animation: letter-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes letter-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 6px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
   .text-balance {
     text-wrap: balance;
   }
@@ -212,5 +385,22 @@
   .ambient-glow {
     animation: none;
     opacity: 0.85;
+  }
+
+  .marquee-track {
+    animation: none;
+  }
+
+  .letter-in,
+  .rise-in,
+  .word-in {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+
+  .price-row:hover,
+  .price-row:focus-within {
+    transform: none;
   }
 }
