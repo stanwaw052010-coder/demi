@@ -9,7 +9,7 @@ export const site = {
   tagline: "Подологія • Манікюр • Педикюр",
   description:
     "Простір подології та нігтьового сервісу у Вишгороді. Здорові стопи, естетика нігтів і брів, лазерна епіляція, стерильні інструменти та онлайн-запис 24/7.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://profitime.ka",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.profitime.center",
   locale: "uk_UA",
 
   phone: {

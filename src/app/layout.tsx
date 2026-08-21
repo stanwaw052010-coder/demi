@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileActionBar } from "@/components/layout/MobileActionBar";
 import { RevealObserver } from "@/components/ui/RevealObserver";
 import { BrandGlyphSprite } from "@/components/ui/BrandMark";
-import { masters, mapsPlaceUrl, site } from "@/lib/site";
+import { faq, masters, mapsPlaceUrl, site } from "@/lib/site";
 import "./globals.css";
 
 /**
@@ -109,6 +109,20 @@ const jsonLd = {
   },
   hasMap: mapsPlaceUrl,
   sameAs: [site.instagram.url, mapsPlaceUrl],
+  /** Кого обслуговуємо — Вишгород і найближчі райони Києва. */
+  areaServed: [
+    { "@type": "City", name: "Вишгород" },
+    { "@type": "AdministrativeArea", name: "Вишгородський район" },
+    { "@type": "City", name: "Київ" },
+  ],
+  knowsAbout: [
+    "подологія",
+    "врослий ніготь",
+    "гіперкератоз",
+    "тріщини на п'ятах",
+    "апаратний педикюр",
+    "корекційні системи для нігтів",
+  ],
   potentialAction: {
     "@type": "ReserveAction",
     target: {
@@ -135,6 +149,22 @@ const jsonLd = {
     { "@type": "Offer", itemOffered: { "@type": "Service", name: "Естетика брів" } },
     { "@type": "Offer", itemOffered: { "@type": "Service", name: "Лазерна епіляція" } },
   ],
+};
+
+/**
+ * Розмітка блоку питань і відповідей.
+ * Дає Google право показувати їх прямо у видачі — це і більше місця
+ * на сторінці результатів, і відповідь на запит ще до переходу на сайт.
+ */
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${site.url}/#faq`,
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -164,6 +194,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       </body>
     </html>

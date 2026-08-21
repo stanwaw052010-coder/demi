@@ -31,7 +31,7 @@ export function Hero() {
               className="inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-[0.72rem] font-bold tracking-[0.16em] text-white/75 uppercase transition-colors duration-300 glass hover:text-white"
             >
               <MapPin className="size-3.5 text-aqua-400" strokeWidth={2.6} />
-              Вишгород · пл. Шевченка, 3
+              Подолог у Вишгороді · пл. Шевченка, 3
             </a>
 
             <h1
