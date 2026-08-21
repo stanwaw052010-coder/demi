@@ -129,11 +129,23 @@ JPEG q≈80) і **без EXIF**: дані зйомки, зокрема GPS із 
 Секція «Відгуки» показує слайдер із масиву `testimonials` і блок «Були у нас?
 Залишіть відгук» із двома кнопками — Google та Instagram.
 
-Кнопка «Відгук у Google» веде за адресою з `reviewUrl` (`src/lib/site.ts`).
-Зараз там картка студії на карті: клієнт потрапляє на профіль і лишає відгук
-у два дотики. **Щоб зробити це в один дотик**, візьміть у Google Business
-Profile → «Попросити відгуки» коротке посилання вигляду
-`https://g.page/r/…/review` і підставте його в `reviewUrl`.
+Кнопка «Відгук у Google» веде за адресою з `reviewUrl` (`src/lib/site.ts`) —
+це форма оцінки просто в картці ProfiTime, без проміжних переходів:
+
+```
+https://search.google.com/local/writereview?placeid=ChIJp6AnRgDT1EAR3VgIkt4JE0Q
+```
+
+`placeId` і `cid` лежать у `site.google`. Обидва отримані з посилання на
+профіль студії в Google Maps — з фрагмента
+`!1s0x40d4d3004627a0a7:0x441309de920858dd`: перше число це feature id,
+друге — CID. Place ID у форматі `ChIJ…` — це та сама пара, упакована в
+protobuf і закодована base64url.
+
+Той самий `cid` дає канонічне посилання на картку компанії
+(`mapsPlaceUrl` = `https://www.google.com/maps?cid=…`) — воно веде саме на
+профіль ProfiTime, а не на координатну точку, і використовується ще й у
+мікророзмітці (`hasMap`, `sameAs`).
 
 ---
 

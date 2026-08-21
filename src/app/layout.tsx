@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileActionBar } from "@/components/layout/MobileActionBar";
 import { RevealObserver } from "@/components/ui/RevealObserver";
 import { BrandGlyphSprite } from "@/components/ui/BrandMark";
-import { masters, site } from "@/lib/site";
+import { masters, mapsPlaceUrl, site } from "@/lib/site";
 import "./globals.css";
 
 /**
@@ -107,8 +107,8 @@ const jsonLd = {
     latitude: site.geo.lat,
     longitude: site.geo.lng,
   },
-  hasMap: `https://www.google.com/maps/search/?api=1&query=${site.geo.lat},${site.geo.lng}`,
-  sameAs: [site.instagram.url],
+  hasMap: mapsPlaceUrl,
+  sameAs: [site.instagram.url, mapsPlaceUrl],
   potentialAction: {
     "@type": "ReserveAction",
     target: {

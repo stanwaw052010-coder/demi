@@ -48,6 +48,19 @@ export const site = {
     plusCode: "HFMM+9J",
   },
 
+  /**
+   * Ідентифікатори картки студії в Google.
+   * Обидва взяті з посилання на профіль ProfiTime у Google Maps
+   * (фрагмент `!1s0x40d4d3004627a0a7:0x441309de920858dd`):
+   *   cid      — 0x441309de920858dd у десятковому вигляді;
+   *   placeId  — той самий ідентифікатор у канонічному форматі ChIJ…
+   * Саме placeId дає пряме посилання на форму відгуку.
+   */
+  google: {
+    placeId: "ChIJp6AnRgDT1EAR3VgIkt4JE0Q",
+    cid: "4905275270674012381",
+  },
+
   hours: "Уточнюйте телефоном",
 } as const;
 
@@ -55,18 +68,14 @@ export const site = {
 export const mapsEmbedUrl = `https://www.google.com/maps?q=${site.geo.lat},${site.geo.lng}(${encodeURIComponent(site.name)})&hl=uk&z=18&output=embed`;
 /** Навігація до студії з поточної локації користувача. */
 export const mapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${site.geo.lat},${site.geo.lng}`;
-export const mapsPlaceUrl = `https://www.google.com/maps/search/?api=1&query=${site.geo.lat},${site.geo.lng}`;
+/** Картка студії в Google Maps — не координати, а саме профіль компанії. */
+export const mapsPlaceUrl = `https://www.google.com/maps?cid=${site.google.cid}`;
 
 /**
- * Куди веде кнопка «Залишити відгук».
- *
- * Найкоротший шлях до прямої форми: Google Business Profile → «Попросити
- * відгуки» → скопіювати коротке посилання вигляду https://g.page/r/…/review
- * і підставити його сюди. Тоді клієнт одразу потрапляє на форму оцінки.
- * Поки такого посилання немає — відкриваємо картку студії на карті,
- * звідки відгук лишається в два дотики.
+ * Кнопка «Залишити відгук» — одразу форма оцінки в картці ProfiTime,
+ * без проміжного переходу на сторінку компанії.
  */
-export const reviewUrl = mapsPlaceUrl;
+export const reviewUrl = `https://search.google.com/local/writereview?placeid=${site.google.placeId}`;
 
 export const nav = [
   { label: "Про нас", href: "#about" },
