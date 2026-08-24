@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" width="1000" height="750" role="img">
+<defs>
+<linearGradient id="bg239" x1="0.1" y1="0" x2="0.85" y2="1">
+<stop offset="0" stop-color="#FFFFFF"/>
+<stop offset="1" stop-color="#E7E7E3"/>
+</linearGradient>
+<radialGradient id="glow239" cx="0.49" cy="0.2" r="0.85">
+<stop offset="0" stop-color="#FFFFFF" stop-opacity="0.95"/>
+<stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="depth239" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#111111" stop-opacity="0"/>
+<stop offset="1" stop-color="#111111" stop-opacity="0.2"/>
+</linearGradient>
+<linearGradient id="accent239" x1="0.1" y1="1" x2="0.9" y2="0.1">
+<stop offset="0" stop-color="#7E8A84" stop-opacity="0.22"/>
+<stop offset="0.55" stop-color="#7E8A84" stop-opacity="0.05"/>
+<stop offset="1" stop-color="#7E8A84" stop-opacity="0"/>
+</linearGradient>
+</defs>
+<rect width="1000" height="750" fill="url(#bg239)"/>
+<circle cx="454.4" cy="299.1" r="517.9" fill="rgba(17,17,17,0.075)"/>
+     <circle cx="454.4" cy="299.1" r="517.9" fill="none" stroke="rgba(17,17,17,0.13)" stroke-width="1.5"/>
+<circle cx="554.4" cy="419.1" r="233.0" fill="none" stroke="rgba(17,17,17,0.13)" stroke-width="1" opacity="0.6"/><circle cx="554.4" cy="419.1" r="378.0" fill="none" stroke="rgba(17,17,17,0.13)" stroke-width="1" opacity="0.6"/><circle cx="554.4" cy="419.1" r="523.0" fill="none" stroke="rgba(17,17,17,0.13)" stroke-width="1" opacity="0.6"/><circle cx="554.4" cy="419.1" r="668.0" fill="none" stroke="rgba(17,17,17,0.13)" stroke-width="1" opacity="0.6"/>
+<rect width="1000" height="750" fill="url(#glow239)"/>
+<rect width="1000" height="750" fill="url(#depth239)"/>
+<rect width="1000" height="750" fill="url(#accent239)"/>
+</svg>

@@ -1,90 +1,57 @@
-import Link from "next/link";
-import { MapPin, Phone } from "lucide-react";
-import { InstagramIcon } from "@/components/ui/icons";
-import { LogoMark } from "@/components/ui/Logo";
-import { navLinks } from "@/lib/nav";
+import { ArrowUpRight } from "lucide-react";
+import { Logo } from "./ui/Logo";
 import { site } from "@/lib/site";
 
 export function Footer() {
+  const year = new Date().getFullYear();
+
+  const links = [
+    { label: "Instagram", href: site.instagram.clinic, external: true },
+    { label: site.phone.label, href: site.phone.href, external: false },
+    { label: "Google Maps", href: site.address.maps, external: true },
+  ];
+
   return (
-    <footer className="curve-top relative z-10 -mt-10 border-t border-gold/15 bg-espresso px-5 pb-28 pt-24 sm:px-8 md:-mt-14 md:pt-28 lg:pb-16">
-      <div className="mx-auto w-full max-w-[1160px]">
-        <div className="grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
-          <div>
-            <LogoMark className="h-8 w-8 text-gold" />
-            <p className="mt-5 font-display text-3xl leading-tight text-sand">
-              SISTER&rsquo;S
-              <span className="block text-xl text-beige">Beauty Studio</span>
-            </p>
-            <ul className="mt-6 flex flex-wrap gap-2">
-              {site.tagline.split("|").map((item) => (
-                <li
-                  key={item}
-                  className="label-spaced rounded-[var(--r-pill)] border border-gold/20 px-4 py-2 text-beige"
+    <footer className="border-t border-white/10 bg-graphite text-white/70">
+      <div className="shell grid gap-12 py-16 md:grid-cols-3 md:py-20">
+        <div className="flex flex-col gap-4">
+          <Logo tone="light" />
+          <p className="text-sm text-white/50">{site.tagline}</p>
+        </div>
+
+        <nav aria-label="Швидкі посилання">
+          <ul className="flex flex-col gap-3 text-sm">
+            {links.map((link) => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  {...(link.external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
+                  className="link-underline inline-flex items-center gap-1.5 text-white/70 transition-colors duration-300 hover:text-white"
                 >
-                  {item.trim()}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <nav aria-label="Навігація у футері" className="flex flex-col gap-3">
-            <p className="label-spaced text-gold">Розділи</p>
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm text-beige transition-colors hover:text-gold"
-              >
-                {link.label}
-              </Link>
+                  {link.label}
+                  {link.external ? (
+                    <ArrowUpRight className="size-3.5" strokeWidth={1.5} aria-hidden />
+                  ) : null}
+                </a>
+              </li>
             ))}
-            <Link href="/pryslist" className="text-sm text-beige transition-colors hover:text-gold">
-              Повний прайс
-            </Link>
-            <Link href="/kontakty" className="text-sm text-beige transition-colors hover:text-gold">
-              Контакти й карта
-            </Link>
-          </nav>
+          </ul>
+        </nav>
 
-          <div className="flex flex-col gap-3">
-            <p className="label-spaced text-gold">Контакти</p>
-            <a
-              href={site.mapLinkUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-start gap-2.5 text-sm text-beige transition-colors hover:text-gold"
-            >
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" strokeWidth={1.25} aria-hidden />
-              {site.address.full}
-            </a>
-            {site.masters.map((master) => (
-              <a
-                key={master.phone}
-                href={`tel:${master.phone}`}
-                className="flex items-center gap-2.5 text-sm text-beige transition-colors hover:text-gold"
-              >
-                <Phone className="h-4 w-4 shrink-0 text-gold" strokeWidth={1.25} aria-hidden />
-                {master.phoneLabel} — {master.name}
-              </a>
-            ))}
-            <a
-              href={site.instagram.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2.5 text-sm text-beige transition-colors hover:text-gold"
-            >
-              <InstagramIcon className="h-4 w-4 shrink-0 text-gold" />
-              {site.instagram.handle}
-            </a>
-            <p className="mt-2 text-sm text-beige">{site.hours.label}</p>
-          </div>
-        </div>
+        <address className="text-sm not-italic text-white/50">
+          {site.address.street}
+          <br />
+          {site.address.district}, {site.address.region}
+          <br />
+          {site.address.postal}
+        </address>
+      </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-gold/12 pt-7 text-xs text-beige sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 SISTER&rsquo;S Beauty Studio · {site.address.locality}</p>
-          <p>Студія, створена з любов&rsquo;ю</p>
-        </div>
+      <div className="shell flex flex-col gap-2 border-t border-white/10 py-6 text-xs text-white/35 sm:flex-row sm:items-center sm:justify-between">
+        <p>
+          © {year} {site.name}. Усі права захищено.
+        </p>
+        <p>{site.claim}</p>
       </div>
     </footer>
   );

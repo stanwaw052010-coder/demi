@@ -1,8 +1,10 @@
-export const navLinks = [
-  { href: "/#pro-studiyu", label: "Про студію" },
-  { href: "/#napryamky", label: "Напрямки" },
-  { href: "/#prays", label: "Прайс" },
-  { href: "/#galereya", label: "Галерея" },
-  { href: "/#vidhuky", label: "Відгуки" },
-  { href: "/#kontakty", label: "Контакти" },
-] as const;
+export type NavItem = { label: string; href: string };
+
+/** Порядок пунктів меню = порядок секцій на сторінці. */
+export const navItems: NavItem[] = [
+  { label: "Про нас", href: "#about" },
+  { label: "Послуги", href: "#services" },
+  { label: "Переваги", href: "#benefits" },
+  { label: "Галерея", href: "#gallery" },
+  { label: "Контакти", href: "#location" },
+];

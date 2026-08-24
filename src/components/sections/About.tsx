@@ -1,79 +1,57 @@
-import Image from "next/image";
-import { Section } from "@/components/ui/Section";
-import { SectionLabel } from "@/components/ui/SectionLabel";
-import { Reveal } from "@/components/ui/Reveal";
-import { CountUp, MaskText, RevealImage } from "@/components/ui/motion";
-import { aboutText, studioFacts } from "@/data/content";
+"use client";
 
-/** «110+» → число, що набігає, і хвостик окремо. */
-const splitFact = (value: string) => {
-  const match = value.match(/^(\d+)(\D*)$/);
-  return match ? { number: Number(match[1]), suffix: match[2] } : null;
-};
+import Image from "next/image";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { Reveal } from "../ui/Reveal";
+import { SectionHeading } from "../ui/SectionHeading";
+import { aboutFeatures } from "@/data/content";
 
 export function About() {
-  return (
-    <Section id="pro-studiyu" tone="cream" curveTop>
-      <div className="grid items-start gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
-        <div className="flex flex-col gap-6">
-          <SectionLabel tone="ink">{aboutText.label}</SectionLabel>
+  const ref = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
 
-          <MaskText
-            parts={[
-              { text: "Студія, створена" },
-              { text: "з любов’ю", className: "italic text-ink/80" },
-            ]}
-            className="text-balance text-[2.2rem] leading-[1.06] text-ink sm:text-5xl md:text-[3.5rem]"
+  return (
+    <section id="about" className="scroll-mt-24 bg-white py-24 md:py-32">
+      <div className="shell grid gap-14 lg:grid-cols-2 lg:gap-20">
+        <div className="flex flex-col gap-10">
+          <SectionHeading
+            eyebrow="Про нас"
+            lines={["Більше, ніж", "стоматологія"]}
+            description="Ми створили простір, у якому стоматологія стає комфортною частиною турботи про себе. Поєднуємо сучасні підходи, естетику та уважне ставлення до кожного пацієнта."
           />
 
-          <div className="flex flex-col gap-5 text-[0.98rem] text-ink-soft sm:text-base">
-            {aboutText.paragraphs.map((paragraph, index) => (
-              <Reveal key={paragraph.slice(0, 24)} index={index}>
-                <p className="text-pretty">{paragraph}</p>
+          <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+            {aboutFeatures.map((feature, index) => (
+              <Reveal as="li" key={feature.title} delay={index * 0.08} className="flex flex-col gap-2">
+                <span className="hairline block pt-5 text-[1.0625rem] text-graphite">
+                  {feature.title}
+                </span>
+                <p className="text-[0.9375rem] leading-relaxed text-muted">{feature.text}</p>
               </Reveal>
             ))}
-          </div>
-
-          <dl className="mt-4 grid grid-cols-1 gap-x-6 gap-y-6 border-t border-ink/15 pt-8 sm:grid-cols-3">
-            {studioFacts.map((fact, index) => {
-              const numeric = splitFact(fact.value);
-              return (
-                <Reveal
-                  as="div"
-                  key={fact.label}
-                  index={index}
-                  className="card card-light flex flex-col gap-1.5 rounded-[var(--r-md)] px-5 py-5"
-                >
-                  <dt className="font-display text-[2rem] leading-none text-ink">
-                    {numeric ? (
-                      <CountUp value={numeric.number} suffix={numeric.suffix} />
-                    ) : (
-                      fact.value
-                    )}
-                  </dt>
-                  <dd className="label-spaced text-ink-soft">{fact.label}</dd>
-                </Reveal>
-              );
-            })}
-          </dl>
+          </ul>
         </div>
 
-        <div className="relative">
-          <RevealImage className="arch relative aspect-[4/5] w-full shadow-[var(--shadow-light)]">
-            <Image
-              src="/images/studio-1.jpg"
-              alt="Кабінет масажу студії SISTER'S у теплому світлі"
-              fill
-              sizes="(max-width: 1024px) 100vw, 46vw"
-              className="object-cover"
-            />
-          </RevealImage>
-          <div
-            aria-hidden
-            className="arch pointer-events-none absolute -bottom-4 -right-4 hidden h-full w-full border border-ink/20 sm:block"
-          />
+        <div ref={ref} className="relative">
+          <Reveal y={40}>
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-second lg:aspect-[3/4]">
+              <motion.div className="absolute -inset-y-[6%] inset-x-0" style={reduced ? undefined : { y }}>
+                <Image
+                  src="/images/about.svg"
+                  alt="Інтерʼєр клініки: спокійне світло й натуральні матеріали"
+                  fill
+                  loading="lazy"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  className="object-cover"
+                />
+              </motion.div>
+            </div>
+          </Reveal>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }

@@ -1,51 +1,53 @@
-import { Header } from "@/components/Header";
+import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { MobileBar } from "@/components/MobileBar";
+import { MobileCta } from "@/components/MobileCta";
+import { Cursor } from "@/components/ui/Cursor";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
-import { Directions } from "@/components/sections/Directions";
-import { PriceList } from "@/components/sections/PriceList";
-import { Arosha } from "@/components/sections/Arosha";
+import { Services } from "@/components/sections/Services";
+import { Massage } from "@/components/sections/Massage";
 import { Benefits } from "@/components/sections/Benefits";
-import { Gallery } from "@/components/sections/Gallery";
+import { GallerySection } from "@/components/sections/GallerySection";
+import { Trust } from "@/components/sections/Trust";
 import { Reviews } from "@/components/sections/Reviews";
-import { Faq } from "@/components/sections/Faq";
+import { Location } from "@/components/sections/Location";
+import { ContactCta } from "@/components/sections/ContactCta";
 import { Booking } from "@/components/sections/Booking";
-import { Contacts } from "@/components/sections/Contacts";
-import { Marquee } from "@/components/ui/motion";
+import { LocalBusinessSchema } from "@/components/Schema";
 
-const marqueeItems = [
-  "Р У Ч Н И Й   М А С А Ж",
-  "С Т О У Н - Т Е Р А П І Я",
-  "A R O S H A",
-  "B O D Y   C O D E",
-  "F I R E M I X",
-  "Л І Ф Т И Н Г   Б Е З   П Л А С Т И К И",
-  "М А С А Ж   Д Л Я   В А Г І Т Н И Х",
-  "Н А Р О Щ Е Н Н Я   В І Й",
-  "В О С К О В А   Е П І Л Я Ц І Я",
-];
-
-export default function HomePage() {
+export default function Home() {
   return (
     <>
-      <Header />
+      <LocalBusinessSchema />
+      <Cursor />
+
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[110] focus:rounded-sm focus:bg-graphite focus:px-4 focus:py-2 focus:text-sm focus:text-white"
+      >
+        Перейти до вмісту
+      </a>
+
+      <Navbar />
+
       <main id="main">
         <Hero />
         <About />
-        <Directions />
-        <Marquee items={marqueeItems} />
-        <PriceList />
-        <Arosha />
+        <Services />
+        <Massage />
         <Benefits />
-        <Gallery />
+        <GallerySection />
+        <Trust />
         <Reviews />
-        <Faq />
+        <Location />
+        <ContactCta />
         <Booking />
-        <Contacts />
       </main>
+
       <Footer />
-      <MobileBar />
+      {/* Відступ під липку мобільну панель, щоб футер не ховався. */}
+      <div aria-hidden className="h-20 bg-graphite lg:hidden" />
+      <MobileCta />
     </>
   );
 }

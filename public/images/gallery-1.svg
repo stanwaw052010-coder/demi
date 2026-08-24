@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img">
+<defs>
+<linearGradient id="bg51" x1="0.1" y1="0" x2="0.85" y2="1">
+<stop offset="0" stop-color="#FFFFFF"/>
+<stop offset="1" stop-color="#E7E7E3"/>
+</linearGradient>
+<radialGradient id="glow51" cx="0.30" cy="0.2" r="0.85">
+<stop offset="0" stop-color="#FFFFFF" stop-opacity="0.95"/>
+<stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="depth51" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#111111" stop-opacity="0"/>
+<stop offset="1" stop-color="#111111" stop-opacity="0.2"/>
+</linearGradient>
+<linearGradient id="accent51" x1="0.1" y1="1" x2="0.9" y2="0.1">
+<stop offset="0" stop-color="#7E8A84" stop-opacity="0.22"/>
+<stop offset="0.55" stop-color="#7E8A84" stop-opacity="0.05"/>
+<stop offset="1" stop-color="#7E8A84" stop-opacity="0"/>
+</linearGradient>
+</defs>
+<rect width="900" height="1200" fill="url(#bg51)"/>
+<path d="M 76.24131944444446 1200 L 76.24131944444446 741.7874871399176 A 373.75868055555554 373.75868055555554 0 0 1 823.7586805555555 741.7874871399176 L 823.7586805555555 1200 Z" fill="rgba(17,17,17,0.075)"/>
+     <path d="M 76.24131944444446 1200 L 76.24131944444446 741.7874871399176 A 373.75868055555554 373.75868055555554 0 0 1 823.7586805555555 741.7874871399176 L 823.7586805555555 1200" fill="none" stroke="rgba(17,17,17,0.13)" stroke-width="1.5"/>
+<circle cx="437.8" cy="882.0" r="228.0" fill="none" stroke="rgba(17,17,17,0.13)" stroke-width="1" opacity="0.6"/><circle cx="437.8" cy="882.0" r="369.9" fill="none" stroke="rgba(17,17,17,0.13)" stroke-width="1" opacity="0.6"/><circle cx="437.8" cy="882.0" r="511.8" fill="none" stroke="rgba(17,17,17,0.13)" stroke-width="1" opacity="0.6"/><circle cx="437.8" cy="882.0" r="653.7" fill="none" stroke="rgba(17,17,17,0.13)" stroke-width="1" opacity="0.6"/>
+<rect width="900" height="1200" fill="url(#glow51)"/>
+<rect width="900" height="1200" fill="url(#depth51)"/>
+<rect width="900" height="1200" fill="url(#accent51)"/>
+</svg>
