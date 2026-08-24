@@ -118,9 +118,9 @@ export function Hero() {
             initial={reduced ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 1.4, ease }}
-            className="mt-4 flex items-center justify-between gap-4 text-xs text-muted lg:absolute lg:-bottom-8 lg:left-0 lg:mt-0 lg:max-w-[17rem] lg:flex-col lg:items-start lg:gap-1.5 lg:rounded-md lg:border lg:border-line lg:bg-white lg:p-6"
+            className="mt-4 flex items-center justify-between gap-4 text-xs text-muted lg:absolute lg:-bottom-8 lg:left-0 lg:mt-0 lg:max-w-[16rem] lg:flex-col lg:items-start lg:gap-1.5 lg:rounded-md lg:border lg:border-line lg:bg-white lg:p-6"
           >
-            <span className="eyebrow whitespace-nowrap">{site.claim}</span>
+            <span className="eyebrow">{site.claim}</span>
             <span className="text-ink">Усі види стоматологічних послуг</span>
           </motion.div>
         </motion.div>

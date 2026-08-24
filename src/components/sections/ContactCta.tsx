@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { AnimatedText } from "../ui/AnimatedText";
 import { Reveal } from "../ui/Reveal";
@@ -8,7 +9,18 @@ export function ContactCta() {
   return (
     <section className="bg-white pt-24 md:pt-32">
       <div className="shell">
-        <div className="flex flex-col items-center gap-8 rounded-lg bg-graphite px-6 py-20 text-center md:px-16 md:py-28">
+        <div className="relative flex flex-col items-center gap-8 overflow-hidden rounded-lg bg-graphite px-6 py-20 text-center md:px-16 md:py-28">
+          {/* Знак як ледь помітний водяний знак — тримає блок у бренді */}
+          <Image
+            src="/images/logo.png"
+            alt=""
+            aria-hidden
+            width={520}
+            height={520}
+            loading="lazy"
+            className="pointer-events-none absolute -right-16 -bottom-20 w-[22rem] opacity-[0.06] invert md:-right-10 md:w-[26rem]"
+          />
+
           <Reveal y={12}>
             <span className="eyebrow text-white/50">Запис</span>
           </Reveal>

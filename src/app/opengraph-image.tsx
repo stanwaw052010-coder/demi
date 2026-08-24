@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { site } from "@/lib/site";
 
@@ -7,6 +9,9 @@ export const contentType = "image/png";
 
 /** OG-картинка генерується на білді — окремий JPG підтримувати не треба. */
 export default function OpengraphImage() {
+  // Знак вшивається в картинку як data URI: зовнішніх запитів у next/og немає.
+  const mark = readFileSync(join(process.cwd(), "public/images/logo.png")).toString("base64");
+
   return new ImageResponse(
     (
       <div
@@ -21,9 +26,12 @@ export default function OpengraphImage() {
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          <span style={{ fontSize: 22, letterSpacing: 8, color: "#111111" }}>CLINIC</span>
-          <span style={{ fontSize: 22, letterSpacing: 8, color: "#8D8D88" }}>STOMATOLOGY</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+          <img src={`data:image/png;base64,${mark}`} width={84} height={84} alt="" />
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            <span style={{ fontSize: 22, letterSpacing: 8, color: "#111111" }}>CLINIC</span>
+            <span style={{ fontSize: 22, letterSpacing: 8, color: "#8D8D88" }}>STOMATOLOGY</span>
+          </div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>

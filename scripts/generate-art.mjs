@@ -116,12 +116,6 @@ ${waves}
 </svg>`;
 }
 
-/** Логотип-моноліт: буква-зуб із іскрою, у стилі профілю клініки. */
-const mark = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img">
-<path d="M32 9c6-4 15-3 18 4 3 6 1 13-1 20-2 6-3 12-5 17-2 4-6 4-7 0l-4-13c-.4-1.4-1.6-1.4-2 0l-4 13c-1 4-5 4-7 0-2-5-3-11-5-17-2-7-4-14-1-20 3-7 12-8 18-4Z" fill="none" stroke="#111111" stroke-width="2.2" stroke-linejoin="round"/>
-<path d="M50 8l1.6 4.4L56 14l-4.4 1.6L50 20l-1.6-4.4L44 14l4.4-1.6Z" fill="#111111"/>
-</svg>`;
-
 const files = [
   ["hero.svg", { seed: 11, w: 1200, h: 1500, tone: "light", motif: 0 }],
   ["about.svg", { seed: 23, w: 1200, h: 900, tone: "light", motif: 3 }],
@@ -150,6 +144,5 @@ serviceSlugs.forEach((slug, i) => {
 for (const [name, config] of files) {
   writeFileSync(resolve(out, name), composition(config));
 }
-writeFileSync(resolve(out, "mark.svg"), mark);
 
-console.log(`Готово: ${files.length + 1} файлів у public/images`);
+console.log(`Готово: ${files.length} файлів у public/images`);

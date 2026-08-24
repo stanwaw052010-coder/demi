@@ -14,7 +14,8 @@ export function LocalBusinessSchema() {
     description: `${site.tagline}. Усі види стоматологічних послуг у Львові та Сокільниках.`,
     url: site.url,
     telephone: site.phone.label.replace(/\s/g, ""),
-    image: `${site.url}/images/hero.svg`,
+    image: `${site.url}/images/logo.png`,
+    logo: `${site.url}/images/logo.png`,
     address: {
       "@type": "PostalAddress",
       streetAddress: site.address.street,
