@@ -26,7 +26,11 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-const title = "ProfiTime — подологія, манікюр і педикюр у Вишгороді";
+/**
+ * Пошуковий запит стоїть попереду назви студії: бренд ProfiTime поки
+ * ніхто не шукає, шукають «подолог Вишгород».
+ */
+const title = "Подолог, педикюр і манікюр у Вишгороді — ProfiTime";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -177,7 +181,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
 
         <a
-          href="#hero"
+          href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-90 focus:rounded-full focus:bg-brand-900 focus:px-6 focus:py-3 focus:text-sm focus:font-bold focus:text-white"
         >
           Перейти до вмісту
@@ -185,7 +189,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <BrandGlyphSprite />
         <Header />
-        <main>{children}</main>
+        <main id="main">{children}</main>
         <Footer />
         <MobileActionBar />
         <RevealObserver />

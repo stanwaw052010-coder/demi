@@ -1,15 +1,20 @@
+import Link from "next/link";
 import { CalendarCheck, MapPin, Navigation, Phone } from "lucide-react";
 import { Instagram } from "@/components/ui/icons";
 import { BrandMark, Wordmark } from "@/components/ui/BrandMark";
+import { landingPages } from "@/lib/landing";
 import { mapsDirectionsUrl, nav, site } from "@/lib/site";
 
+/**
+ * Перші пункти ведуть на посадкові сторінки під пошукові запити.
+ * Підвал є на кожній сторінці, тому це ще й головна внутрішня
+ * перелінковка: саме по цих посиланнях робот і знаходить нові сторінки.
+ */
 const serviceLinks = [
-  { label: "Подологія", href: "#services" },
-  { label: "Апаратний педикюр", href: "#services" },
-  { label: "Манікюр і покриття", href: "#services" },
-  { label: "Естетика брів", href: "#services" },
-  { label: "Лазерна епіляція", href: "#services" },
-  { label: "Прайс", href: "#price" },
+  ...landingPages.map((page) => ({ label: page.short, href: `/${page.slug}` })),
+  { label: "Естетика брів", href: "/#services" },
+  { label: "Лазерна епіляція", href: "/#services" },
+  { label: "Повний прайс", href: "/#price" },
 ];
 
 export function Footer() {
@@ -69,12 +74,12 @@ export function Footer() {
             <ul className="mt-6 flex flex-col gap-3.5">
               {serviceLinks.map((item) => (
                 <li key={item.label}>
-                  <a
+                  <Link
                     href={item.href}
                     className="text-[0.92rem] font-semibold text-white/70 transition-colors duration-300 hover:text-aqua-300"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

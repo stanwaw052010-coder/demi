@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { CalendarCheck, Menu, Phone, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
@@ -68,14 +69,14 @@ export function Header() {
                 : "h-[4.5rem] bg-white/0 ring-1 ring-transparent",
             )}
           >
-            <a
-              href="#hero"
+            <Link
+              href="/#hero"
               className="flex items-center gap-3 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-500"
               aria-label={`${site.name} — на початок`}
             >
               <BrandMark className="size-11" />
               <Wordmark />
-            </a>
+            </Link>
 
             <nav aria-label="Головна навігація" className="hidden items-center gap-1 xl:flex">
               {nav.map((item) => (

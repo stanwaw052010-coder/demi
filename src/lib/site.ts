@@ -77,15 +77,19 @@ export const mapsPlaceUrl = `https://www.google.com/maps?cid=${site.google.cid}`
  */
 export const reviewUrl = `https://search.google.com/local/writereview?placeid=${site.google.placeId}`;
 
+/**
+ * Головне меню. Посилання абсолютні (`/#...`), а не голі якорі, —
+ * інакше з посадкових сторінок вони вели б у нікуди.
+ */
 export const nav = [
-  { label: "Про нас", href: "#about" },
-  { label: "Послуги", href: "#services" },
-  { label: "Майстри", href: "#team" },
-  { label: "Переваги", href: "#advantages" },
-  { label: "Прайс", href: "#price" },
-  { label: "Галерея", href: "#gallery" },
-  { label: "Відгуки", href: "#reviews" },
-  { label: "Контакти", href: "#contacts" },
+  { label: "Про нас", href: "/#about" },
+  { label: "Послуги", href: "/#services" },
+  { label: "Майстри", href: "/#team" },
+  { label: "Переваги", href: "/#advantages" },
+  { label: "Прайс", href: "/#price" },
+  { label: "Галерея", href: "/#gallery" },
+  { label: "Відгуки", href: "/#reviews" },
+  { label: "Контакти", href: "/#contacts" },
 ] as const;
 
 /* ------------------------------------------------------------------ */
@@ -97,6 +101,8 @@ export type Service = {
   points: string[];
   icon: "podology" | "nail" | "foot" | "brows" | "laser" | "care";
   featured?: boolean;
+  /** Слаг окремої сторінки послуги, якщо вона є (див. `landing.ts`). */
+  landing?: string;
 };
 
 export const services: Service[] = [
@@ -108,6 +114,7 @@ export const services: Service[] = [
     points: ["Врослий ніготь і корекція", "Тріщини, натоптиші, мозолі", "Індивідуальний план догляду"],
     icon: "podology",
     featured: true,
+    landing: "podolog-vyshhorod",
   },
   {
     slug: "pedicure",
@@ -117,6 +124,7 @@ export const services: Service[] = [
     points: ["Обробка нігтів і кутикули", "Шліфування стопи", "Покриття за бажанням"],
     icon: "foot",
     featured: true,
+    landing: "pedykiur-vyshhorod",
   },
   {
     slug: "manicure",
@@ -126,6 +134,7 @@ export const services: Service[] = [
     points: ["Комбінований манікюр", "Гель-лак і зміцнення", "Догляд за кутикулою"],
     icon: "nail",
     featured: true,
+    landing: "manikiur-vyshhorod",
   },
   {
     slug: "brows",

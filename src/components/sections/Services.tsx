@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowUpRight, Eye, Footprints, Leaf, Sparkles, Stethoscope, Zap } from "lucide-react";
 import type { ComponentType } from "react";
 import { MotionItem } from "@/components/ui/MotionItem";
@@ -80,19 +81,31 @@ export function Services() {
                     ))}
                   </ul>
 
-                  <a
-                    href={site.booking.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative z-10 mt-7 inline-flex items-center gap-2 text-[0.9rem] font-bold text-brand-700 transition-colors hover:text-brand-900"
-                  >
-                    Записатись
-                    <ArrowUpRight
-                      className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                      strokeWidth={2.6}
-                    />
-                    <span className="absolute inset-0" aria-hidden />
-                  </a>
+                  <div className="relative z-10 mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+                    {/* Посилання на окрему сторінку послуги — і зручність
+                        для читача, і шлях, яким робот її знаходить. */}
+                    {service.landing && (
+                      <Link
+                        href={`/${service.landing}`}
+                        className="inline-flex items-center gap-2 text-[0.9rem] font-bold text-brand-700 transition-colors hover:text-brand-900"
+                      >
+                        Детальніше
+                        <ArrowUpRight
+                          className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                          strokeWidth={2.6}
+                        />
+                      </Link>
+                    )}
+
+                    <a
+                      href={site.booking.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-[0.9rem] font-bold text-graphite-500 transition-colors hover:text-brand-800"
+                    >
+                      Записатись
+                    </a>
+                  </div>
                 </div>
               </MotionItem>
             );
