@@ -51,8 +51,8 @@ export function LogoMark({
         <path d="M7.4 30.9 40.6 29.1" />
       </g>
       <g stroke="var(--color-sage)" strokeWidth={sw} strokeLinejoin="round">
-        <path d="M24 20.9c2 1.7 2 4.8 0 6.6-2-1.8-2-4.9 0-6.6Z" />
-        {detail && size >= 32 ? <path d="M24 21.6v5.2" strokeWidth={sw * 0.72} /> : null}
+        <path d="M24 19.4c3.2 2.4 3.2 6.7 0 9.1-3.2-2.4-3.2-6.7 0-9.1Z" />
+        {detail && size >= 32 ? <path d="M24 20.4v7.1" strokeWidth={sw * 0.7} /> : null}
       </g>
     </svg>
   );

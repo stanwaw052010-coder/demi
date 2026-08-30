@@ -95,7 +95,7 @@
   },
   "catalog": {
     "title": "Tea",
-    "lede": "Twenty-eight batches of tea, nine pieces of teaware and three sets. Every tea has a year, an area and a garden, or it says outright that we do not know.",
+    "lede": "Thirty batches of tea, nine pieces of teaware and three sets. Every tea has a year, an area and a garden, or it says outright that we do not know.",
     "resultCount": "{count, plural, =0 {No batches} one {# batch} other {# batches}}",
     "filters": "Filters",
     "filterType": "Type",
@@ -202,7 +202,7 @@
   "cart": {
     "title": "Cart",
     "empty": "Your cart is empty.",
-    "emptyBody": "There are twenty-eight batches on the shelf, and the introduction set is a good place to start.",
+    "emptyBody": "There are thirty batches on the shelf, and the introduction set is a good place to start.",
     "item": "Item",
     "quantity": "Quantity",
     "quantityFor": "Quantity for {name}",

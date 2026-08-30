@@ -424,3 +424,100 @@
 @media print {
   .wy-noprint { display: none !important; }
 }
+
+/* ── The infusion: the one orchestrated scene on the site ─────────────────── */
+.wy-stain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  /* The filter is static; only transform and opacity animate underneath it. */
+  will-change: transform, opacity;
+}
+
+.wy-stain-core,
+.wy-stain-edge {
+  transform-origin: 742px 286px;
+  will-change: transform, opacity;
+}
+
+.wy-stain-core {
+  animation: wy-brew 2.4s cubic-bezier(0.16, 0.84, 0.28, 1) forwards;
+}
+
+.wy-stain-edge {
+  animation: wy-brew-edge 2.4s cubic-bezier(0.16, 0.84, 0.28, 1) forwards;
+}
+
+@keyframes wy-brew {
+  0%   { transform: scale(0.06); opacity: 0; }
+  10%  { opacity: 0.95; }
+  55%  { transform: scale(2.35); opacity: 0.72; }
+  100% { transform: scale(4.6); opacity: 0.16; }
+}
+
+@keyframes wy-brew-edge {
+  0%   { transform: scale(0.1); opacity: 0; }
+  18%  { opacity: 0.5; }
+  100% { transform: scale(6.4); opacity: 0.08; }
+}
+
+/* The wordmark stands up out of the stain. It is visible in the server HTML;
+   this only runs while the scene is actually playing. */
+#wy-hero[data-infusion="playing"] .wy-hero-rise {
+  animation: wy-rise 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.42s backwards;
+}
+
+#wy-hero[data-infusion="playing"] .wy-hero-rise-late {
+  animation: wy-rise 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.78s backwards;
+}
+
+@keyframes wy-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* The haze the stain leaves behind, which stays for the rest of the visit. */
+.wy-haze {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    62% 74% at 74% 40%,
+    color-mix(in srgb, var(--color-mist) 78%, transparent) 0%,
+    transparent 68%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wy-stain { display: none; }
+  #wy-hero[data-infusion] .wy-hero-rise,
+  #wy-hero[data-infusion] .wy-hero-rise-late { animation: none; }
+}
+
+/* ── Origin map ──────────────────────────────────────────────────────────── */
+.wy-map-point { cursor: pointer; }
+
+.wy-map-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0.7);
+  opacity: 0;
+  transition: transform 320ms var(--ease-settle), opacity 320ms var(--ease-settle);
+}
+
+.wy-map-point:hover .wy-map-ring,
+.wy-map-point:focus-visible .wy-map-ring { transform: scale(1); opacity: 1; }
+
+.wy-map-point:focus-visible { outline: 2px solid var(--color-pine); outline-offset: 2px; }
+
+.wy-map-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 320ms var(--ease-settle);
+}
+
+.wy-map-point:hover .wy-map-dot { transform: scale(1.35); }

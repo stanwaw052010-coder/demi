@@ -95,7 +95,7 @@
   },
   "catalog": {
     "title": "Thee",
-    "lede": "Achtentwintig partijen thee, negen stukken gerei en drie sets. Elke thee heeft een jaar, een gebied en een tuin, of het staat er expliciet bij als wij het niet weten.",
+    "lede": "Dertig partijen thee, negen stukken gerei en drie sets. Elke thee heeft een jaar, een gebied en een tuin, of het staat er expliciet bij als wij het niet weten.",
     "resultCount": "{count, plural, =0 {Geen partijen} one {# partij} other {# partijen}}",
     "filters": "Filters",
     "filterType": "Soort",
@@ -202,7 +202,7 @@
   "cart": {
     "title": "Winkelmand",
     "empty": "Uw mand is leeg.",
-    "emptyBody": "Er staan achtentwintig partijen thee in het rek, en de kennismakingsset is een goede plek om te beginnen.",
+    "emptyBody": "Er staan dertig partijen thee in het rek, en de kennismakingsset is een goede plek om te beginnen.",
     "item": "Artikel",
     "quantity": "Aantal",
     "quantityFor": "Aantal voor {name}",
