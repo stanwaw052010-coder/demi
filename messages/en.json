@@ -1,0 +1,849 @@
+{
+  "brand": {
+    "name": "Well’s of Yunnan",
+    "domain": "wellsofyunnan.be",
+    "city": "Kortrijk",
+    "line": "A tea house in Flanders. We buy by the batch, with the year, the mountain and the garden attached."
+  },
+  "nav": {
+    "tea": "Tea",
+    "collections": "Collections",
+    "guide": "Brewing guide",
+    "vault": "Vault",
+    "journal": "Journal",
+    "tastings": "Tastings",
+    "about": "About",
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "cart": "Cart",
+    "cartWithCount": "Cart, {count, plural, =0 {empty} one {# item} other {# items}}",
+    "language": "Language",
+    "switchToEnglish": "English",
+    "switchToDutch": "Nederlands",
+    "skipToContent": "Skip to content",
+    "primary": "Primary navigation",
+    "footerNav": "Footer navigation"
+  },
+  "actions": {
+    "addToCart": "Add to cart",
+    "addSample": "Add a 10 g sample",
+    "viewAll": "View all",
+    "allBatches": "All {count} batches",
+    "readMore": "Read on",
+    "howItWorks": "How it works",
+    "subscribe": "Subscribe",
+    "reserveSeat": "Reserve a seat",
+    "apply": "Apply",
+    "clearFilters": "Clear filters",
+    "sort": "Sort",
+    "filter": "Filter",
+    "back": "Back",
+    "toCheckout": "Checkout",
+    "placeOrder": "Place order",
+    "continueShopping": "Keep looking",
+    "startTimer": "Start",
+    "pauseTimer": "Pause",
+    "resetTimer": "Reset",
+    "nextInfusion": "Next infusion",
+    "next": "Next",
+    "previous": "Previous",
+    "startOver": "Start over",
+    "remove": "Remove",
+    "increase": "One more",
+    "decrease": "One fewer",
+    "close": "Close",
+    "skipAnimation": "Skip animation"
+  },
+  "state": {
+    "inStock": "In stock",
+    "lowStock": "{count} left",
+    "soldOut": "Sold out",
+    "sending": "Working",
+    "empty": "Nothing found"
+  },
+  "home": {
+    "heroLine": "Tea with an address. Mountain, year, garden.",
+    "heroIntro": "We buy directly in Yunnan, Fujian, Guangdong and Zhejiang, by the batch rather than from a catalogue. Every tea says where it comes from, when it was picked and how to brew it.",
+    "heroFactPlace": "Kortrijk, Belgium",
+    "heroFactBatches": "{count} batches",
+    "heroFactYears": "harvests {from} to {to}",
+    "scrollHint": "Scroll",
+    "eightTitle": "Eight kinds of tea",
+    "eightLede": "Ordered the way they are made: from unoxidised to fully post-fermented. The colour of each panel is the real colour of the liquor.",
+    "eightProgress": "Progress through the eight kinds",
+    "eightOxidation": "Oxidation",
+    "eightCount": "{count} in stock",
+    "eightHint": "Drag, or use the arrow keys",
+    "potTitle": "In the pot now",
+    "potLede": "What is open on our own table this month.",
+    "originTitle": "Where it comes from",
+    "originLede": "Six areas, four provinces and Taiwan. Click a mountain to see only that tea.",
+    "originHonesty": "And where we do not know, it says so. For two teas we do not know the garden, and for our matcha Japanese producers do not report altitude. We leave those fields empty rather than fill them.",
+    "originReadMore": "Read why a mountain name is not a guarantee",
+    "brewTitle": "How we brew",
+    "brewLede": "Four steps, and after that thirty seconds an infusion. Every product page carries that tea’s parameters and runs the timer alongside.",
+    "brewToGuide": "The full brewing guide",
+    "journalTitle": "From the journal",
+    "vaultTitle": "Puerh Vault",
+    "vaultLede": "You buy a cake, we keep it for three to ten years in a logged climate cabinet in Kortrijk. You get a certificate of origin, samples along the way, and you collect it whenever you want.",
+    "tastingsTitle": "At the table in Belgium",
+    "tastingsLede": "We run tastings in Ghent, Kortrijk and Brussels. Ten to fourteen seats, a gaiwan each, and you need bring nothing.",
+    "tastingsNext": "Next up",
+    "newsletterTitle": "Letter",
+    "newsletterLede": "Eight times a year, when something arrives that is worth it. No discount codes."
+  },
+  "catalog": {
+    "title": "Tea",
+    "lede": "Twenty-eight batches of tea, nine pieces of teaware and three sets. Every tea has a year, an area and a garden, or it says outright that we do not know.",
+    "resultCount": "{count, plural, =0 {No batches} one {# batch} other {# batches}}",
+    "filters": "Filters",
+    "filterType": "Type",
+    "filterRegion": "Area",
+    "filterYear": "Harvest year",
+    "filterOxidation": "Oxidation",
+    "filterCaffeine": "Caffeine",
+    "filterForm": "Form",
+    "filterPrice": "Price",
+    "filterAvailability": "Availability",
+    "onlyInStock": "In stock only",
+    "sortBy": "Sort by",
+    "sortRelevance": "Our order",
+    "sortPriceAsc": "Price, low to high",
+    "sortPriceDesc": "Price, high to low",
+    "sortYearDesc": "Harvest, newest first",
+    "sortYearAsc": "Harvest, oldest first",
+    "sortName": "Name",
+    "emptyTitle": "Nothing matches these filters",
+    "emptyBody": "No batch satisfies all of these at once. Turn one filter off and try again.",
+    "oxidationBand": "{from} to {to} %",
+    "priceFrom": "From {price}",
+    "perGrams": "{grams} g",
+    "noYear": "no year",
+    "columnTea": "Tea",
+    "columnOrigin": "Origin",
+    "columnYear": "Harvest",
+    "columnPrice": "Price"
+  },
+  "collections": {
+    "title": "Collections",
+    "lede": "Ten entrances. Every collection carries its own introduction, because a collection without one is just a filter.",
+    "count": "{count, plural, one {# batch} other {# batches}}",
+    "inCollection": "In this collection"
+  },
+  "product": {
+    "breadcrumb": "Breadcrumb",
+    "passport": "Passport",
+    "region": "Area",
+    "province": "Province",
+    "altitude": "Altitude",
+    "harvest": "Harvest",
+    "producer": "Garden or producer",
+    "cultivar": "Cultivar",
+    "oxidation": "Oxidation",
+    "fermentation": "Fermentation",
+    "roast": "Roast",
+    "caffeine": "Caffeine",
+    "storage": "Storage",
+    "form": "Form",
+    "unknownLabel": "What we do not know",
+    "notReported": "Not reported",
+    "metres": "{value} m",
+    "percent": "{value} %",
+    "chooseAmount": "Choose an amount",
+    "pricePerHundred": "{price} per 100 g",
+    "gallery": "Images",
+    "galleryDry": "Dry leaf",
+    "galleryLiquor": "Liquor",
+    "galleryWet": "Wet leaf",
+    "galleryPack": "Packaging",
+    "notes": "Tasting notes",
+    "wheel": "Flavour wheel",
+    "wheelHint": "Six axes. The shape shows where this tea’s notes gather.",
+    "gongfu": "Gongfu",
+    "gongfuVessel": "Vessel",
+    "gongfuLeaf": "Leaf",
+    "gongfuTemp": "Temperature",
+    "gongfuRinse": "Rinse",
+    "gongfuNoRinse": "Do not rinse",
+    "gongfuFirst": "First infusion",
+    "gongfuStep": "Added per infusion",
+    "gongfuCount": "Infusions",
+    "western": "Western",
+    "westernLede": "If you have no gaiwan. It works, but you get the average of the tea instead of the series.",
+    "westernLeaf": "{grams} g to {ml} ml",
+    "westernTemp": "{celsius} °C",
+    "westernTime": "{minutes} minutes",
+    "westernResteeps": "{count, plural, one {# more steep} other {# more steeps}}",
+    "timerTitle": "Gongfu timer",
+    "timerLede": "The circle is the gaiwan seen from above. It fills with the colour this infusion gives in the cup.",
+    "timerInfusion": "Infusion",
+    "timerRinse": "Rinse",
+    "timerOf": "of {total}",
+    "timerSeconds": "{seconds} s",
+    "timerDone": "The leaf is spent. Look at what is left in the gaiwan.",
+    "timerSound": "Sound",
+    "timerVibrate": "Vibrate",
+    "timerAria": "Gongfu timer, infusion {current} of {total}, {seconds} seconds remaining",
+    "timerAnnounce": "Infusion {current} done. Pour it out completely.",
+    "vault": "Can also be stored in the Puerh Vault",
+    "vaultLink": "How the Vault works",
+    "related": "Related batches",
+    "reviews": "What others said",
+    "reviewCount": "{count, plural, one {# review} other {# reviews}}",
+    "ratingOf": "{rating} out of 5",
+    "noReviews": "No reviews on this batch yet.",
+    "stickyBuy": "Buy",
+    "matchaTitle": "Whisking matcha",
+    "matchaLede": "No gongfu series: matcha is Japanese and gets whisked, not poured off. Two grams, seventy millilitres, eighty degrees.",
+    "matchaToGuide": "The matcha chapter in the brewing guide",
+    "objectNoBrewing": "This is teaware, not tea, so there are no brewing parameters."
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty.",
+    "emptyBody": "There are twenty-eight batches on the shelf, and the introduction set is a good place to start.",
+    "item": "Item",
+    "quantity": "Quantity",
+    "quantityFor": "Quantity for {name}",
+    "removeItem": "Remove {name}",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "shippingAtCheckout": "Calculated at checkout",
+    "freeShippingLeft": "{amount} more for free shipping to Belgium and the Netherlands",
+    "freeShippingReached": "Shipping to Belgium and the Netherlands is free",
+    "discount": "Discount",
+    "total": "Total",
+    "promoLabel": "Discount code",
+    "promoPlaceholder": "Code",
+    "promoApply": "Apply",
+    "promoInvalid": "We do not know that code.",
+    "promoApplied": "Code {code} applied.",
+    "upsellTitle": "Before anything is missing",
+    "upsellBody": "Add a 10 g sample for {price}. That way you find out whether the next shelf suits you.",
+    "vaultOption": "Store in the Vault",
+    "vaultYears": "{years} years",
+    "openCart": "Open cart"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "lede": "No account needed. Three blocks and you are done.",
+    "stepContact": "Contact",
+    "stepDelivery": "Delivery",
+    "stepPayment": "Payment",
+    "email": "Email address",
+    "emailHint": "This is where the confirmation and tracking number go.",
+    "phone": "Phone",
+    "phoneHint": "Only if the courier cannot find you.",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "company": "Company",
+    "vatNumber": "VAT number",
+    "street": "Street",
+    "houseNumber": "Number",
+    "bus": "Box",
+    "postcode": "Postcode",
+    "city": "Town",
+    "country": "Country",
+    "countryBE": "Belgium",
+    "countryNL": "Netherlands",
+    "countryOther": "Elsewhere in the EU",
+    "notes": "Note with the order",
+    "deliveryMethod": "Delivery method",
+    "pickupNote": "Baudelostraat 24, 9000 Ghent. We email you when it is ready.",
+    "paymentMethod": "Payment method",
+    "mockNotice": "This installation runs without payment keys, so payment is simulated. Nothing is charged.",
+    "summary": "Summary",
+    "net": "Net",
+    "vat": "VAT",
+    "vatRate": "VAT {rate} %",
+    "vatSplitTea": "VAT 6 % on tea",
+    "vatSplitGoods": "VAT 21 % on teaware and vouchers",
+    "total": "To pay",
+    "terms": "I have read the terms and conditions and agree to them.",
+    "newsletterOptIn": "Send me the letter, eight times a year.",
+    "placing": "Placing your order",
+    "errorTitle": "The order did not go through",
+    "errorBody": "Something went wrong while processing it. Nothing was charged. Try again, or email us.",
+    "emptyCart": "Your cart is empty, so there is nothing to check out yet.",
+    "required": "This field is required",
+    "invalidEmail": "That does not look like a valid email address",
+    "invalidPostcodeBE": "A Belgian postcode is four digits",
+    "invalidPostcodeNL": "A Dutch postcode looks like 1234 AB",
+    "invalidPhone": "That does not look like a valid phone number",
+    "termsRequired": "You need to agree to the terms"
+  },
+  "shippingMethods": {
+    "bpostHome": "bpost to your door",
+    "bpostHomeDetail": "One to two working days in Belgium, two to three in the Netherlands.",
+    "bpostLocker": "bpost parcel locker",
+    "bpostLockerDetail": "Collect when it suits you, evenings included.",
+    "mondialRelay": "Mondial Relay",
+    "mondialRelayDetail": "A pickup point nearby, a little slower and cheaper.",
+    "pickup": "Collect in Ghent",
+    "pickupDetail": "Free. We email you when it is ready.",
+    "free": "Free"
+  },
+  "payment": {
+    "bancontact": "Bancontact",
+    "ideal": "iDEAL",
+    "payconiq": "Payconiq",
+    "card": "Debit or credit card",
+    "paypal": "PayPal",
+    "transfer": "Bank transfer",
+    "transferDetail": "We ship once the money arrives, usually after one working day."
+  },
+  "order": {
+    "thanksTitle": "Thank you",
+    "thanksLede": "Your order is noted. The confirmation is on its way to {email}.",
+    "number": "Order number",
+    "date": "Date",
+    "status": "Status",
+    "statusPaid": "Paid",
+    "statusPending": "Awaiting payment",
+    "statusMock": "Simulated payment",
+    "items": "Items ordered",
+    "deliveryTo": "Delivery",
+    "tracking": "Tracking",
+    "trackingPending": "The tracking number appears here once the parcel is handed over. You get it by email too.",
+    "trackingNumber": "Tracking number",
+    "questions": "Questions about this order? Email us and quote the order number.",
+    "notFoundTitle": "We do not know this order",
+    "notFoundBody": "Check the number in your confirmation email, or email us."
+  },
+  "quiz": {
+    "title": "Tea finder",
+    "lede": "Five questions, then three batches that fit your answers. We show why, so you can disagree.",
+    "start": "Begin",
+    "questionOf": "Question {current} of {total}",
+    "resultsTitle": "Three batches for you",
+    "resultsLede": "These three scored highest on your answers. They come from different families, because three versions of the same thing is not a choice.",
+    "why": "Why this one",
+    "buildSet": "Turn it into a sample set",
+    "buildSetBody": "Take all three in the smallest amount and see for yourself who was right.",
+    "addAllThree": "Add all three",
+    "restart": "Start over",
+    "progress": "Progress through the questions"
+  },
+  "guide": {
+    "title": "Brewing guide",
+    "lede": "Six chapters on getting it out of the leaf. Procedure and numbers, not atmosphere.",
+    "readingTime": "{minutes} minutes",
+    "chapters": "Chapters",
+    "nextChapter": "Next chapter",
+    "backToGuide": "Back to the guide"
+  },
+  "vault": {
+    "title": "Puerh Vault",
+    "lede": "You buy the cake, we keep it. Three to ten years in a logged climate cabinet in Kortrijk, with a certificate of origin in your name and samples along the way.",
+    "howTitle": "How it runs",
+    "pricingTitle": "What it costs",
+    "pricingLede": "Per cake, per year, paid up front when it goes in. Longer terms cost less per year, because we fill the cabinet more efficiently.",
+    "perYear": "{price} per cake per year",
+    "totalTerm": "{price} for {years} years",
+    "samples": "Samples",
+    "conditionsTitle": "The small print, in plain language",
+    "eligibleTitle": "What can go in",
+    "eligibleBody": "Every cake and every pressed disc on our shelf. Not loose leaf: it ages too fast and too unevenly for us to promise anything sensible about it.",
+    "eligibleList": "On the shelf now and eligible for the Vault",
+    "faqTitle": "What people ask"
+  },
+  "about": {
+    "title": "About us",
+    "lede": "There are two of us, we are in Kortrijk, and we fly to China twice a year because email does not do it.",
+    "sealAlt": "Cinnabar red seal with the characters 云南井, Yunnan Well",
+    "sealCaption": "Our seal. It appears on the Vault certificate of origin and nowhere else.",
+    "certificateTitle": "Certificate of origin"
+  },
+  "journal": {
+    "title": "Journal",
+    "lede": "What we run into and what we check. Sometimes technical, sometimes a purchase that went wrong.",
+    "readingTime": "{minutes} minutes",
+    "published": "Published",
+    "mentioned": "Tea in this piece",
+    "backToJournal": "Back to the journal",
+    "more": "More from the journal"
+  },
+  "tastings": {
+    "title": "Tastings in Belgium",
+    "lede": "Ghent, Kortrijk and Brussels. Ten to fourteen seats, a gaiwan each, two hours. You need bring nothing and know nothing.",
+    "upcoming": "Upcoming sessions",
+    "seatsLeft": "{count, plural, =0 {full} one {# seat left} other {# seats left}}",
+    "duration": "{minutes} minutes",
+    "perSeat": "{price} per seat",
+    "bookTitle": "Reserve a seat",
+    "bookLede": "We confirm by email within one working day. Pay on the day or in advance, as you like.",
+    "chooseSession": "Session",
+    "seatsWanted": "Number of seats",
+    "dietary": "Anything we should know",
+    "submitted": "Noted. You will hear from us within one working day.",
+    "full": "This session is full. Pick another date, or leave your email for the next run.",
+    "privateTitle": "Away from the table",
+    "privateBody": "We also run sessions at people’s homes or offices, from six people up. Email us and we will see what is possible."
+  },
+  "contact": {
+    "title": "Contact",
+    "lede": "We read everything ourselves and usually answer within one working day.",
+    "addressTitle": "Address",
+    "addressBody": "Baudelostraat 24, 9000 Ghent",
+    "warehouseTitle": "Warehouse and Vault",
+    "warehouseBody": "Kortrijk, by appointment only",
+    "hoursTitle": "Open",
+    "hoursBody": "Thursday to Saturday, 11 to 18. Other days by appointment.",
+    "emailTitle": "Email",
+    "phoneTitle": "Phone",
+    "companyTitle": "Company details",
+    "formTitle": "Write to us",
+    "message": "Message",
+    "subject": "Subject",
+    "sent": "Sent. You will hear from us."
+  },
+  "newsletter": {
+    "emailLabel": "Email address",
+    "placeholder": "you@example.com",
+    "consent": "I would like the letter and know I can unsubscribe at any time.",
+    "success": "Noted. You will get the next letter.",
+    "error": "That did not work. Try again in a moment."
+  },
+  "cookieBanner": {
+    "title": "Cookies",
+    "body": "We set only what the cart needs to work. Statistics go on when you say yes, and we load nothing for them until you do.",
+    "accept": "Allow everything",
+    "necessary": "Necessary only",
+    "settings": "Settings",
+    "policy": "Cookie policy",
+    "categoryNecessary": "Necessary",
+    "categoryNecessaryBody": "Cart, language choice and security. These cannot be turned off.",
+    "categoryAnalytics": "Statistics",
+    "categoryAnalyticsBody": "Anonymous measurement of which pages get read. Off until you consent.",
+    "save": "Save"
+  },
+  "footer": {
+    "shop": "Shop",
+    "learn": "Learn",
+    "house": "The house",
+    "legal": "Terms",
+    "vatNumber": "VAT BE 0785.412.907",
+    "rights": "© {year} Well’s of Yunnan",
+    "madeIn": "Made in Kortrijk and drunk in Ghent."
+  },
+  "meta": {
+    "homeTitle": "Well’s of Yunnan — Chinese tea with year, mountain and garden",
+    "homeDescription": "Belgian tea house. Chinese tea direct from Yunnan, Fujian, Guangdong and Zhejiang, with a batch passport, gongfu parameters and a working timer. Pu-erh storage and tastings in Ghent, Kortrijk and Brussels.",
+    "catalogTitle": "Tea — every batch",
+    "catalogDescription": "Twenty-eight batches of Chinese tea with harvest year, area, altitude and producer. Filter by type, area, year, oxidation, caffeine and form.",
+    "productDescription": "{name} from {region}, harvested {year}. Passport, gongfu parameters and a working timer.",
+    "collectionsTitle": "Collections",
+    "quizTitle": "Tea finder — your tea in five questions",
+    "quizDescription": "Five questions about strength, flavour, moment, experience and occasion, then three batches that fit.",
+    "guideTitle": "Brewing guide — gongfu, gaiwan, water and storage",
+    "guideDescription": "Six chapters of procedure and numbers: gongfu, holding a gaiwan, Yixing, whisking matcha, water and temperature, and storing pu-erh.",
+    "vaultTitle": "Puerh Vault — storage and ageing as a service",
+    "vaultDescription": "We keep your cake for three to ten years in a logged climate cabinet in Kortrijk, with a certificate and samples along the way.",
+    "aboutTitle": "About us",
+    "aboutDescription": "Two people in Kortrijk who fly to China twice a year to buy by the batch.",
+    "journalTitle": "Journal",
+    "journalDescription": "Pieces on ageing, rock tea, water, labels and a purchase that went wrong.",
+    "tastingsTitle": "Tastings in Ghent, Kortrijk and Brussels",
+    "tastingsDescription": "Reserve a seat at a gongfu session or a vertical tasting. Ten to fourteen seats per session.",
+    "checkoutTitle": "Checkout",
+    "contactTitle": "Contact",
+    "faqTitle": "Frequently asked questions",
+    "shippingTitle": "Shipping and returns",
+    "termsTitle": "Terms and conditions",
+    "privacyTitle": "Privacy policy",
+    "cookiesTitle": "Cookie policy",
+    "withdrawalTitle": "Right of withdrawal",
+    "orderTitle": "Order {number}"
+  },
+  "category": {
+    "sheng": "Sheng pu-erh",
+    "shou": "Shou pu-erh",
+    "oolong": "Oolong",
+    "white": "White tea",
+    "red": "Red tea",
+    "green": "Green tea",
+    "yellow": "Yellow tea",
+    "matcha": "Matcha",
+    "teaware": "Teaware",
+    "sets": "Sets and gifts"
+  },
+  "caffeine": {
+    "label": "Caffeine",
+    "none": "None",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High"
+  },
+  "form": {
+    "label": "Form",
+    "loose": "Loose leaf",
+    "cake": "Cake",
+    "tuocha": "Tuocha",
+    "brick": "Brick",
+    "powder": "Powder",
+    "object": "Object",
+    "voucher": "Voucher"
+  },
+  "roast": {
+    "label": "Roast",
+    "none": "Unroasted",
+    "light": "Light",
+    "medium": "Medium",
+    "heavy": "Heavy"
+  },
+  "vessel": {
+    "gaiwan": "Gaiwan",
+    "yixing": "Yixing",
+    "chawan": "Chawan",
+    "teapot": "Teapot"
+  },
+  "flavourAxis": {
+    "floral": "Floral",
+    "fruit": "Fruit",
+    "sweet": "Sweet",
+    "green": "Green",
+    "mineral": "Mineral",
+    "wood": "Wood"
+  },
+  "flavour": {
+    "orchid": "orchid",
+    "osmanthus": "osmanthus",
+    "jasmine": "jasmine",
+    "magnolia": "magnolia",
+    "honeysuckle": "honeysuckle",
+    "lilac": "lilac",
+    "gardenia": "gardenia",
+    "rose": "rose",
+    "peach": "peach",
+    "apricot": "apricot",
+    "lychee": "lychee",
+    "longan": "longan",
+    "citrusPeel": "citrus peel",
+    "raisin": "raisin",
+    "plum": "plum",
+    "greenApple": "green apple",
+    "melon": "melon",
+    "redBerry": "red berry",
+    "driedFig": "dried fig",
+    "honey": "honey",
+    "caneSugar": "cane sugar",
+    "caramel": "caramel",
+    "brownSugar": "brown sugar",
+    "malt": "malt",
+    "vanilla": "vanilla",
+    "driedDate": "dried date",
+    "darkChocolate": "dark chocolate",
+    "cream": "cream",
+    "butter": "butter",
+    "sweetPea": "sweet pea",
+    "steamedGreens": "steamed greens",
+    "seaweed": "seaweed",
+    "chestnut": "chestnut",
+    "bamboo": "bamboo",
+    "hay": "hay",
+    "cucumber": "cucumber",
+    "spinach": "spinach",
+    "greenBean": "green bean",
+    "pineNeedle": "pine needle",
+    "wetStone": "wet stone",
+    "flint": "flint",
+    "limestone": "limestone",
+    "brine": "brine",
+    "coolMint": "cool mint",
+    "camphor": "camphor",
+    "cedar": "cedar",
+    "sandalwood": "sandalwood",
+    "oldWood": "old wood",
+    "forestFloor": "forest floor",
+    "dampEarth": "damp earth",
+    "leather": "leather",
+    "tobacco": "tobacco",
+    "betelNut": "betel nut",
+    "driedLeaf": "dried leaf",
+    "cinnamon": "cinnamon",
+    "clove": "clove",
+    "roastedRice": "toasted rice",
+    "charcoal": "charcoal",
+    "pineSmoke": "pine smoke",
+    "mushroom": "mushroom"
+  },
+  "units": {
+    "grams": "{value} g",
+    "ml": "{value} ml",
+    "celsius": "{value} °C",
+    "seconds": "{value} s",
+    "years": "{value, plural, one {# year} other {# years}}",
+    "infusions": "{value, plural, one {# infusion} other {# infusions}}"
+  },
+  "notFound": {
+    "title": "This page does not exist",
+    "body": "Perhaps the batch sold out and came off the site, or the link is no longer right.",
+    "toCatalog": "To the shelf"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "body": "We could not build this page. Try again; if it keeps failing, email us.",
+    "retry": "Try again"
+  },
+  "aboutContent": {
+    "sections": [
+      {
+        "heading": "How it started",
+        "body": "In 2019 a gaiwan was put in front of us in a Kunming tea house holding a 2005 sheng, and the woman behind the table told us which village it came from, which slope, and what the rain had done that year. Back in Ghent, none of that was for sale. Not the tea, but the account that came with it: everywhere it said only Chinese green or black tea, a hundred grams, nine euro."
+      },
+      {
+        "heading": "How we buy",
+        "body": "We fly twice a year, in April for the spring harvest and in October for the autumn picking and the roasted oolongs. We buy by the batch, usually between five and forty kilos, and pay at the garden or the workshop. That is slower and dearer than ordering from a European wholesaler, and it is the only way to ask the questions whose answers end up on our product pages."
+      },
+      {
+        "heading": "What we ask before we pay",
+        "body": "Which year and which month. Which garden, which slope, which altitude. Who killed and rolled it. How long it was roasted and over how many rounds. Where it has been since and at what humidity. If someone has no answer to three of those five, we do not buy — not because they are untrustworthy, but because we would then be filling in a passport we cannot stand behind."
+      },
+      {
+        "heading": "The people",
+        "body": "In Wuyi we buy from the Chen family, who hold three plots in the Huiyuan gorge and roast their own. In Tongmu from the Jiang family, inside the reserve, where access is limited and prices follow. In Mahei from the Li family, from whom we now have four consecutive vintages — that is the vertical set. In Lincang and Menghai we work with two cooperatives, and in Fuding with one garden. It is not many, and that is deliberate."
+      },
+      {
+        "heading": "What we do not do",
+        "body": "We do not flavour anything. We do not blend batches to keep a taste profile constant from year to year; a harvest is a harvest. We do not write a mountain name on a label we cannot point to on a map. And we sell our matcha as Japanese tea, because that is what it is."
+      },
+      {
+        "heading": "Where we are",
+        "body": "The shop is on Baudelostraat in Ghent and is open Thursday to Saturday. The warehouse and the Vault cabinet are in Kortrijk, where the rent is lower and the cellar drier. If you want to see the cabinet you can, by appointment; it seems fair to us that you would want to look at where your cake is kept."
+      }
+    ]
+  },
+  "vaultFaq": {
+    "items": [
+      {
+        "q": "What if you stop doing this?",
+        "a": "Then you get your cakes back, at our cost, within thirty days. The cakes are legally yours and are registered as such; they are not part of our stock. That is exactly why there is a certificate in your name."
+      },
+      {
+        "q": "Can I collect it early?",
+        "a": "At any moment, without explanation. We do not charge for the remaining years and we do not refund them either: storage is paid a year at a time, in advance."
+      },
+      {
+        "q": "How do I know the cabinet does what you say?",
+        "a": "There is a data logger inside writing temperature and humidity every hour. You can ask for the series covering your storage period, and you are welcome to come and look."
+      },
+      {
+        "q": "What if it goes mouldy?",
+        "a": "Then we replace the cake with an equivalent one from our shelf, or refund the purchase price, whichever you prefer. That is the risk we take on by selling storage."
+      },
+      {
+        "q": "Will you sell it on for me?",
+        "a": "We connect you with buyers from our own circle and handle the transfer. We charge ten percent of the sale price. We guarantee no increase in value and make no claims about it."
+      },
+      {
+        "q": "Can loose leaf go in?",
+        "a": "No. Loose leaf ages too fast and too unevenly; we could not promise anything sensible about it. Cakes and pressed discs only."
+      }
+    ]
+  },
+  "faqContent": {
+    "title": "Frequently asked questions",
+    "lede": "The questions we get by email most often, with the answer we would give by email.",
+    "items": [
+      {
+        "q": "How much tea do I need for one session?",
+        "a": "For gongfu in a 110 ml gaiwan, reckon on six to eight grams, and that gives you ten to fifteen cups. So twenty-five grams is about three to four sessions; fifty grams six to eight. Every product page gives the amount for that specific tea."
+      },
+      {
+        "q": "I have no gaiwan. Can I just brew your tea in a pot?",
+        "a": "Yes. Alongside the gongfu parameters, every tea carries a western brewing note: grams, millilitres, degrees and minutes. You then get the average of the tea instead of the series of infusions, which is less interesting but not wrong."
+      },
+      {
+        "q": "Why is there tea at 39 euro for 25 grams?",
+        "a": "Because the village is small and the harvest lasts less than two weeks. At prices like that the passport sits next to it so you can see where the money goes: mountain, altitude, tree age, year. If none of that speaks to you, that tea is not for you, and that is fine — there is also fifteen euro tea on the shelf we stand behind just as firmly."
+      },
+      {
+        "q": "How long does tea keep?",
+        "a": "Green, yellow and light oolong: finish it this year, keep it in the fridge. Red tea and roasted oolong: two years. White tea: years, and pressed white tea improves. Sheng and shou pu-erh: those are made to be put away. Every tea carries its storage advice."
+      },
+      {
+        "q": "Is your matcha Chinese?",
+        "a": "No, and we say so explicitly. Matcha comes from Japan, from shade-grown tencha, ground on stone. We sell two Japanese matchas as a guest collection and do not pretend they belong with the rest."
+      },
+      {
+        "q": "Can I order samples before taking a full packet?",
+        "a": "The introduction set is the answer to that: six kinds of ten grams for 39 euro. If you then order a full packet of one of those six, we deduct the price of that sample — quote your order number."
+      },
+      {
+        "q": "Does your tea contain caffeine?",
+        "a": "Everything except the teaware, yes. Every tea is marked low, medium or high. White tea and aged pressed white sit at the low end; matcha and young sheng at the high end, because with matcha you drink the leaf and sheng is brewed with a lot of it."
+      },
+      {
+        "q": "Do you ship outside Belgium and the Netherlands?",
+        "a": "Within the EU, yes. Free from 75 euro. Outside the EU not for now, because customs formalities for foodstuffs differ per country and we cannot promise that reliably."
+      },
+      {
+        "q": "Can I come by?",
+        "a": "The shop on Baudelostraat in Ghent is open Thursday to Saturday, 11 to 18. For the warehouse and the Vault cabinet in Kortrijk, make an appointment."
+      },
+      {
+        "q": "Do you give a discount on larger quantities?",
+        "a": "Not as standard. For hospitality trade and orders above five hundred euro we quote separately; email us with what you are after."
+      }
+    ]
+  },
+  "shippingContent": {
+    "title": "Shipping and returns",
+    "lede": "Rates, timings, and what happens when something goes wrong.",
+    "sections": [
+      {
+        "heading": "Dispatch",
+        "body": "We ship on working days. Orders in before 14:00 go out the same day; after that, the next working day. You get the tracking number by email as soon as the parcel is handed over."
+      },
+      {
+        "heading": "Rates",
+        "body": "Belgium: bpost to your door 4.95 euro, parcel locker 3.95 euro, Mondial Relay 3.50 euro. Netherlands: to your door 6.95 euro, pickup point 4.95 euro. Rest of the EU: 9.95 euro. Collection in Ghent is free. Shipping to Belgium and the Netherlands is free from 50 euro; to the rest of the EU from 75 euro."
+      },
+      {
+        "heading": "Delivery time",
+        "body": "Belgium one to two working days, the Netherlands two to three, the rest of the EU three to six. Those are the carrier's timings, not ours; in busy weeks they run over."
+      },
+      {
+        "heading": "Packaging",
+        "body": "Tea goes into resealable aluminium pouches with a label carrying the batch, the year and the brewing parameters. Cakes stay in their original paper and go into card. We use no plastic void fill; the card is unbleached and reusable."
+      },
+      {
+        "heading": "Returns",
+        "body": "You have fourteen days to change your mind from the moment you receive the order. Unopened packages come back in full. Opened packages of tea we cannot take back for food safety reasons, unless there is something wrong with the product — and in that case we want to hear about it, so email us with a photo and your order number."
+      },
+      {
+        "heading": "Broken or wrong",
+        "body": "Tell us within seven days with a photo. We send a replacement or refund, without you having to send anything back. With a broken chawan or gaiwan we do not need the pieces."
+      }
+    ]
+  },
+  "legal": {
+    "termsTitle": "Terms and conditions",
+    "termsLede": "In force since 1 January 2026. Written to be readable rather than unreadable.",
+    "privacyTitle": "Privacy policy",
+    "privacyLede": "What we keep, why, for how long, and who we share it with.",
+    "cookiesTitle": "Cookie policy",
+    "cookiesLede": "Short, because there is not much on this site.",
+    "withdrawalTitle": "Right of withdrawal",
+    "withdrawalLede": "Your statutory fourteen days to change your mind, and the exception that applies to tea.",
+    "lastUpdated": "Last updated {date}",
+    "changeCookieChoice": "Change cookie choice",
+    "termsSections": [
+      {
+        "heading": "1. Who we are",
+        "body": "Well’s of Yunnan is a trading name of Well’s BV, registered office at Baudelostraat 24, 9000 Ghent, entered in the Belgian Crossroads Bank for Enterprises under number BE 0785.412.907. These terms apply to every order placed on wellsofyunnan.be."
+      },
+      {
+        "heading": "2. Offer and prices",
+        "body": "All prices on shop pages are in euro and include VAT. Tea falls under the reduced rate of 6 percent; teaware and gift vouchers under 21 percent. At checkout we show the split between net, VAT and total. Shipping costs are stated separately before you confirm. We may change prices, but not after you have ordered."
+      },
+      {
+        "heading": "3. Stock",
+        "body": "We buy by the batch. If a batch sells out between your order and dispatch, we tell you and refund that part within five working days. We do not quietly substitute another harvest."
+      },
+      {
+        "heading": "4. Payment",
+        "body": "You can pay by Bancontact, iDEAL, Payconiq, debit or credit card, PayPal or bank transfer. With a bank transfer we hold the order for seven calendar days; after that it is released again. We ship only once payment has been received."
+      },
+      {
+        "heading": "5. Delivery",
+        "body": "We deliver in Belgium, the Netherlands and the rest of the European Union. Stated delivery times are indicative and come from the carrier. Risk passes to you as soon as you, or someone you designate, takes receipt of the parcel."
+      },
+      {
+        "heading": "6. Right of withdrawal",
+        "body": "You have fourteen days to change your mind. The exceptions and the procedure are on the Right of withdrawal page, which forms part of these terms."
+      },
+      {
+        "heading": "7. Conformity and guarantee",
+        "body": "You have the statutory guarantee of conformity. Foodstuffs carry a best-before date; it is on the pouch. We are glad to hear quality complaints within the shelf life, quoting the batch on the label."
+      },
+      {
+        "heading": "8. Puerh Vault",
+        "body": "For storage in the Vault: the cakes remain your property, are registered separately from our stock and are insured against fire and water damage up to the purchase value. The storage fee is payable a year in advance and is not refunded on early collection. We make no statement whatsoever about future value."
+      },
+      {
+        "heading": "9. Tastings",
+        "body": "A reserved seat can be cancelled free of charge up to seven days before the session. After that the seat is payable, unless we can still fill it. If we cancel a session, we refund in full."
+      },
+      {
+        "heading": "10. Liability",
+        "body": "We are liable for damage that is the direct result of a failure on our part, up to the amount of the order concerned. This limitation does not apply in case of intent, gross fault or personal injury."
+      },
+      {
+        "heading": "11. Applicable law",
+        "body": "Belgian law applies to this agreement. Disputes are brought before the competent courts of the judicial district of East Flanders, Ghent division. As a consumer you may also turn to the European ODR platform or to the Belgian Consumer Ombudsman Service."
+      }
+    ],
+    "privacySections": [
+      {
+        "heading": "Who processes your data",
+        "body": "Well’s BV, Baudelostraat 24, 9000 Ghent, BE 0785.412.907. Questions about your data go to privacy@wellsofyunnan.be and are read by us."
+      },
+      {
+        "heading": "What we keep and why",
+        "body": "For an order: name, email address, delivery address, phone number if you give one, and what you ordered. Basis: performance of the contract. For the letter: your email address, on the basis of your consent. For a tasting: name, email address and the number of seats. For the Vault: additionally a register of your cakes with batch number and date."
+      },
+      {
+        "heading": "For how long",
+        "body": "We keep order data for seven years, because Belgian accounting law requires it. Letter subscriptions we keep until you unsubscribe. Vault registers we keep until five years after the last return."
+      },
+      {
+        "heading": "Who we share it with",
+        "body": "With the carrier bringing your parcel, the payment provider handling the transaction, and the email service sending the confirmation. Beyond that, nobody. We do not sell data and we use no advertising networks."
+      },
+      {
+        "heading": "Statistics",
+        "body": "We measure anonymously which pages get read, and only after you have consented in the cookie banner. Until then no measurement script is loaded at all. If you say no, the shop works as normal."
+      },
+      {
+        "heading": "Your rights",
+        "body": "You may request access, correction, erasure, restriction of processing, object, and obtain your data in a portable format. Email us and we answer within thirty days. If you disagree with how we handle it, you can complain to the Belgian Data Protection Authority, Drukpersstraat 35, 1000 Brussels."
+      }
+    ],
+    "cookiesSections": [
+      {
+        "heading": "What we set",
+        "body": "Two things without consent, because the shop cannot work without them: your cart, which lives in your own browser's storage and does not reach us until you check out, and your language choice. Both expire on their own and contain no identifier."
+      },
+      {
+        "heading": "What we set only if you say yes",
+        "body": "Anonymous page statistics. We do not load the script and set nothing until you click allow in the banner. If you click necessary only, nothing happens, and we do not ask again unless something changes."
+      },
+      {
+        "heading": "What we do not do",
+        "body": "We place no advertising cookies, no social media pixels and no third-party trackers. There is no advertising network script on this site at all."
+      },
+      {
+        "heading": "Changing your choice",
+        "body": "At the bottom of every page there is a link to set your choice again. You can also clear all storage for this site in your browser; everything then starts over, your cart included."
+      }
+    ],
+    "withdrawalSections": [
+      {
+        "heading": "Your right",
+        "body": "You have the right to withdraw from the contract within fourteen calendar days without giving a reason. That period runs from the day on which you, or someone you designated, physically takes receipt of the last item in the order."
+      },
+      {
+        "heading": "How to withdraw",
+        "body": "Send an unambiguous statement to hallo@wellsofyunnan.be quoting your order number. An email is enough; you need not use a form, though you may use the model form below. We confirm receipt the same working day."
+      },
+      {
+        "heading": "Refund",
+        "body": "We refund everything you paid, including standard outbound shipping, within fourteen days of receiving the goods back or of you demonstrating that you sent them. We use the same means of payment you used. If you chose a more expensive delivery method than the standard one, we do not reimburse the difference."
+      },
+      {
+        "heading": "Sending it back",
+        "body": "You send the goods back within fourteen days of notifying us. Return postage is at your expense. Send to: Well’s BV, returns, Ringlaan 7 box 3, 8500 Kortrijk."
+      },
+      {
+        "heading": "Exceptions",
+        "body": "Sealed foodstuffs whose seal has been broken after delivery cannot be taken back, for reasons of health protection and hygiene. Concretely: we do not take back an opened pouch of tea. Unopened packages we do. Gift vouchers already partly used cannot be withdrawn. A reserved seat at a tasting is covered by the cancellation arrangement in the terms and conditions, not by this right of withdrawal."
+      },
+      {
+        "heading": "Model form",
+        "body": "To Well’s BV, Baudelostraat 24, 9000 Ghent, hallo@wellsofyunnan.be. I hereby give notice that I withdraw from our contract of sale of the following goods. Ordered on / received on. Name of the consumer. Address of the consumer. Order number. Date."
+      }
+    ]
+  }
+}

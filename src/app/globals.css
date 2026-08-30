@@ -1,0 +1,426 @@
+@import "tailwindcss";
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Design tokens.
+
+   Two rules govern this palette and everything else follows from them:
+   1. --sage is a LINE and FILL colour, never text. It measures about 2.0:1 on
+      paper, well under AA. Text is --ink (15:1) or --stone (4.7:1, >= 14px).
+   2. --amber and the --liquor-* scale carry information, never decoration.
+      Gradients exist only to depict liquor.
+   ─────────────────────────────────────────────────────────────────────────── */
+@theme {
+  --color-paper: #fcfdfa;
+  --color-mist: #e7efe3;
+  --color-mist-deep: #dbe7d6;
+  --color-sage: #9fbe96;
+  --color-sage-soft: #c4d8bd;
+  --color-pine: #2e4a3a;
+  --color-pine-deep: #22382b;
+  --color-ink: #16211b;
+  --color-stone: #78857b;
+  --color-amber: #c08a3e;
+  /* Amber is 3.2:1 on paper: fine as a fill or a large numeral, not as text.
+     This darker cut is the one allowed to carry a discounted price. */
+  --color-amber-ink: #8a5f22;
+  --color-cinnabar: #9e3b2e;
+
+  --color-liquor-green: #d8dca6;
+  --color-liquor-white: #ebe4c0;
+  --color-liquor-oolong: #d9a85c;
+  --color-liquor-red: #a44a2a;
+  --color-liquor-shou: #4a2318;
+  --color-liquor-sheng: #c9942f;
+  --color-liquor-matcha: #7fa23f;
+  --color-liquor-yellow: #dfce87;
+  --color-liquor-neutral: #c9d2c2;
+
+  --font-display: var(--font-newsreader), "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter-tight), "Inter Tight", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-hanzi: "Noto Serif SC", var(--font-newsreader), "Songti SC", "SimSun", "Noto Serif CJK SC", serif;
+
+  --text-meta: 0.75rem;
+  --text-micro: 0.8125rem;
+  --text-ui: 0.9375rem;
+  --text-body: 1.0625rem;
+  --text-lead: 1.3125rem;
+  --text-h3: 1.625rem;
+  --text-h2: 2.125rem;
+  --text-h1: 2.75rem;
+
+  --radius-drop: 9999px;
+
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-rise: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@layer base {
+  :root {
+    /* Page rhythm. Sections sit at least 120px apart on desktop. */
+    --gutter: clamp(1.25rem, 5vw, 6rem);
+    --section: clamp(5rem, 12vw, 11.5rem);
+    --rule: color-mix(in srgb, var(--color-sage) 62%, transparent);
+    --measure: 34em;
+  }
+
+  * {
+    min-width: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-ui);
+    line-height: 1.6;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+
+  /* Newsreader is a variable face with optical sizing; letting the browser use
+     it is the difference between a display line and an enlarged text line. */
+  h1 { font-size: clamp(2.125rem, 1.4rem + 3vw, 3.625rem); font-optical-sizing: auto; }
+  h2 { font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem); font-optical-sizing: auto; }
+  h3 { font-size: var(--text-h3); }
+
+  p, li { text-wrap: pretty; }
+
+  a { color: inherit; text-decoration: none; }
+
+  ::selection {
+    background: var(--color-mist);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-pine);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  /* Inputs never inherit the display face; data stays in the UI face. */
+  input, select, textarea, button {
+    font: inherit;
+    color: inherit;
+  }
+
+  input, select, textarea {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--rule);
+    padding: 0.55rem 0;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  input:focus, select, textarea:focus {
+    outline-offset: 2px;
+  }
+
+  select {
+    border: 1px solid var(--rule);
+    padding: 0.55rem 2rem 0.55rem 0.7rem;
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--color-pine) 50%),
+      linear-gradient(135deg, var(--color-pine) 50%, transparent 50%);
+    background-position: right 1rem center, right 0.7rem center;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+  }
+
+  [type="checkbox"], [type="radio"] {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--color-pine);
+    border: 0;
+    padding: 0;
+  }
+
+  table { border-collapse: collapse; width: 100%; }
+
+  /* Tabular figures wherever numbers line up in columns. */
+  .tnum, td, th, time, .price {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /* ── Grid ──────────────────────────────────────────────────────────────
+     Twelve columns with a real margin column. Content sits left; columns 1-3
+     are the margin and carry passport data, which is why the grid exists in
+     this shape at all. */
+  .wy-shell {
+    width: 100%;
+    max-width: 96rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .wy-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  @media (max-width: 60rem) {
+    .wy-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  }
+
+  .wy-margin { grid-column: 1 / span 3; }
+  .wy-main { grid-column: 4 / span 8; }
+  .wy-wide { grid-column: 1 / span 12; }
+
+  @media (max-width: 60rem) {
+    .wy-margin { grid-column: 1 / span 6; }
+    .wy-main { grid-column: 1 / span 6; }
+    .wy-wide { grid-column: 1 / span 6; }
+  }
+
+  .wy-section { padding-block: var(--section); }
+
+  /* ── The hairline ──────────────────────────────────────────────────────
+     The structural device of the whole site. No cards, no shadows. */
+  .wy-rule { border-top: 1px solid var(--rule); }
+  .wy-rule-b { border-bottom: 1px solid var(--rule); }
+
+  /* Meta pairs are separated by a thin vertical rule, never by a middle dot. */
+  .wy-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 clamp(0.75rem, 2vw, 1.5rem);
+    font-size: var(--text-micro);
+    color: var(--color-stone);
+  }
+
+  .wy-meta > * + * {
+    padding-left: clamp(0.75rem, 2vw, 1.5rem);
+    border-left: 1px solid var(--rule);
+  }
+
+  .wy-prose {
+    font-family: var(--font-display);
+    font-size: var(--text-body);
+    line-height: 1.75;
+    max-width: var(--measure);
+  }
+
+  .wy-prose p + p { margin-top: 1.1em; }
+
+  .wy-lead {
+    font-family: var(--font-display);
+    font-size: clamp(1.125rem, 1rem + 0.6vw, var(--text-lead));
+    line-height: 1.55;
+    max-width: 30em;
+  }
+
+  /* Display italic is reserved for transcriptions and botanical names. */
+  .wy-latin { font-style: italic; }
+
+  .wy-hanzi {
+    font-family: var(--font-hanzi);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+  }
+
+  .wy-label {
+    font-size: var(--text-meta);
+    color: var(--color-stone);
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Button: the fill rises from the bottom, like tea in a cup ─────────── */
+  .wy-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.4rem;
+    border: 1px solid var(--color-pine);
+    color: var(--color-pine);
+    background: transparent;
+    font-size: var(--text-ui);
+    font-weight: 500;
+    cursor: pointer;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .wy-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-pine);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 380ms var(--ease-rise);
+  }
+
+  .wy-btn:hover::before,
+  .wy-btn:focus-visible::before { transform: scaleY(1); }
+  .wy-btn:hover, .wy-btn:focus-visible { color: var(--color-paper); }
+
+  .wy-btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+  .wy-btn[disabled]::before { transform: scaleY(0); }
+
+  .wy-btn-solid { background: var(--color-pine); color: var(--color-paper); }
+  .wy-btn-solid::before { background: var(--color-pine-deep); }
+
+  .wy-btn-quiet {
+    border-color: var(--rule);
+    padding: 0.5rem 0.9rem;
+  }
+
+  /* ── Link underline that draws in ─────────────────────────────────────── */
+  .wy-link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 320ms var(--ease-settle);
+    padding-bottom: 1px;
+  }
+
+  .wy-link:hover, .wy-link:focus-visible, .wy-row:hover .wy-link {
+    background-size: 100% 1px;
+  }
+
+  .wy-link-static {
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--color-sage);
+  }
+
+  /* ── The register row ─────────────────────────────────────────────────── */
+  .wy-row {
+    display: grid;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+    padding-block: clamp(1rem, 2.2vw, 1.6rem);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ── The liquor drop: the only saturated mark, and it carries meaning ─── */
+  .wy-drop {
+    position: relative;
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: var(--radius-drop);
+    border: 1px solid color-mix(in srgb, var(--drop) 70%, var(--color-ink) 30%);
+    overflow: hidden;
+    flex: none;
+  }
+
+  .wy-drop::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--drop);
+    transform: scaleY(0.22);
+    transform-origin: bottom;
+    transition: transform 460ms var(--ease-rise);
+  }
+
+  .wy-row:hover .wy-drop::after,
+  .wy-row:focus-within .wy-drop::after,
+  .wy-drop[data-full="true"]::after { transform: scaleY(1); }
+
+  .wy-skip {
+    position: absolute;
+    left: var(--gutter);
+    top: 0;
+    transform: translateY(-120%);
+    background: var(--color-pine);
+    color: var(--color-paper);
+    padding: 0.6rem 1rem;
+    z-index: 100;
+    transition: transform 180ms var(--ease-settle);
+  }
+
+  .wy-skip:focus { transform: translateY(0.5rem); }
+}
+
+@layer utilities {
+  /* Content that arrives once, in four places at most per page. */
+  .wy-reveal {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .wy-reveal[data-shown="true"] {
+    opacity: 1;
+    transform: none;
+    transition: opacity 620ms var(--ease-settle), transform 620ms var(--ease-settle);
+  }
+
+  .wy-hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .wy-hide-scrollbar::-webkit-scrollbar { display: none; }
+
+  .wy-snap-x {
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+  }
+
+  .wy-snap-item { scroll-snap-align: start; }
+}
+
+/* ── View transitions: the product image is the shared element ───────────── */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(product-image),
+  ::view-transition-new(product-image) {
+    animation-duration: 380ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 260ms;
+  }
+}
+
+/* ── Reduced motion: every decorative animation stops. The gongfu timer keeps
+      working, because it is a tool and not an ornament. ───────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .wy-reveal { opacity: 1; transform: none; }
+  .wy-drop::after { transform: scaleY(1); }
+  .wy-btn::before { display: none; }
+  .wy-btn:hover, .wy-btn:focus-visible { background: var(--color-pine); color: var(--color-paper); }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}
+
+@media print {
+  .wy-noprint { display: none !important; }
+}

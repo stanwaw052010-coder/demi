@@ -1,0 +1,849 @@
+{
+  "brand": {
+    "name": "Well’s of Yunnan",
+    "domain": "wellsofyunnan.be",
+    "city": "Kortrijk",
+    "line": "Theehuis in Vlaanderen. Wij kopen per partij, met jaar, berg en tuin erbij."
+  },
+  "nav": {
+    "tea": "Thee",
+    "collections": "Collecties",
+    "guide": "Zetgids",
+    "vault": "Vault",
+    "journal": "Journaal",
+    "tastings": "Proeverijen",
+    "about": "Over ons",
+    "contact": "Contact",
+    "openMenu": "Menu openen",
+    "closeMenu": "Menu sluiten",
+    "cart": "Winkelmand",
+    "cartWithCount": "Winkelmand, {count, plural, =0 {leeg} one {# artikel} other {# artikelen}}",
+    "language": "Taal",
+    "switchToEnglish": "English",
+    "switchToDutch": "Nederlands",
+    "skipToContent": "Naar de inhoud",
+    "primary": "Hoofdnavigatie",
+    "footerNav": "Voettekstnavigatie"
+  },
+  "actions": {
+    "addToCart": "In de mand",
+    "addSample": "Proefje van 10 g erbij",
+    "viewAll": "Alles bekijken",
+    "allBatches": "Alle {count} partijen",
+    "readMore": "Lees verder",
+    "howItWorks": "Hoe het werkt",
+    "subscribe": "Inschrijven",
+    "reserveSeat": "Plaats reserveren",
+    "apply": "Toepassen",
+    "clearFilters": "Filters wissen",
+    "sort": "Sorteren",
+    "filter": "Filteren",
+    "back": "Terug",
+    "toCheckout": "Afrekenen",
+    "placeOrder": "Bestelling plaatsen",
+    "continueShopping": "Verder winkelen",
+    "startTimer": "Start",
+    "pauseTimer": "Pauze",
+    "resetTimer": "Opnieuw",
+    "nextInfusion": "Volgende infusie",
+    "next": "Verder",
+    "previous": "Terug",
+    "startOver": "Opnieuw beginnen",
+    "remove": "Verwijderen",
+    "increase": "Eén meer",
+    "decrease": "Eén minder",
+    "close": "Sluiten",
+    "skipAnimation": "Animatie overslaan"
+  },
+  "state": {
+    "inStock": "Op voorraad",
+    "lowStock": "Nog {count} in huis",
+    "soldOut": "Uitverkocht",
+    "sending": "Bezig",
+    "empty": "Niets gevonden"
+  },
+  "home": {
+    "heroLine": "Thee met een adres. Berg, jaar, tuin.",
+    "heroIntro": "Wij kopen rechtstreeks in Yunnan, Fujian, Guangdong en Zhejiang, per partij en niet per catalogus. Bij elke thee staat waar hij vandaan komt, wanneer hij geplukt is en hoe u hem zet.",
+    "heroFactPlace": "Kortrijk, België",
+    "heroFactBatches": "{count} partijen",
+    "heroFactYears": "oogst {from} tot {to}",
+    "scrollHint": "Scroll",
+    "eightTitle": "Acht soorten thee",
+    "eightLede": "Geordend zoals ze gemaakt worden: van niet geoxideerd naar volledig nagefermenteerd. De kleur van elk paneel is de werkelijke kleur van het aftreksel.",
+    "eightProgress": "Voortgang door de acht soorten",
+    "eightOxidation": "Oxidatie",
+    "eightCount": "{count} in huis",
+    "eightHint": "Sleep of gebruik de pijltjestoetsen",
+    "potTitle": "Nu in de kan",
+    "potLede": "Wat er deze maand open staat op onze eigen tafel.",
+    "originTitle": "Waar het vandaan komt",
+    "originLede": "Zes gebieden, vier provincies en Taiwan. Klik een berg aan om alleen die thee te zien.",
+    "originHonesty": "En waar wij het niet weten, staat dat er. Bij twee thee’s kennen wij de tuin niet, en bij onze matcha geven Japanse producenten de hoogte niet op. Die velden laten wij leeg in plaats van ze te vullen.",
+    "originReadMore": "Lees waarom een bergnaam geen garantie is",
+    "brewTitle": "Zo zetten wij thee",
+    "brewLede": "Vier stappen, en daarna dertig seconden per infusie. Op elke productpagina staan de parameters van die thee en loopt de timer mee.",
+    "brewToGuide": "De volledige zetgids",
+    "journalTitle": "Uit het journaal",
+    "vaultTitle": "Puerh Vault",
+    "vaultLede": "U koopt een cake, wij bewaren hem drie tot tien jaar in een gelogde klimaatkast in Kortrijk. U krijgt een herkomstcertificaat, onderweg proefstukken, en u haalt hem op wanneer u wil.",
+    "tastingsTitle": "Aan tafel in België",
+    "tastingsLede": "Wij geven proeverijen in Gent, Kortrijk en Brussel. Tien tot veertien plaatsen, een gaiwan per persoon, en u hoeft niets mee te brengen.",
+    "tastingsNext": "Eerstvolgende",
+    "newsletterTitle": "Brief",
+    "newsletterLede": "Acht keer per jaar, als er iets binnenkomt dat het waard is. Geen kortingscodes."
+  },
+  "catalog": {
+    "title": "Thee",
+    "lede": "Achtentwintig partijen thee, negen stukken gerei en drie sets. Elke thee heeft een jaar, een gebied en een tuin, of het staat er expliciet bij als wij het niet weten.",
+    "resultCount": "{count, plural, =0 {Geen partijen} one {# partij} other {# partijen}}",
+    "filters": "Filters",
+    "filterType": "Soort",
+    "filterRegion": "Gebied",
+    "filterYear": "Oogstjaar",
+    "filterOxidation": "Oxidatie",
+    "filterCaffeine": "Cafeïne",
+    "filterForm": "Vorm",
+    "filterPrice": "Prijs",
+    "filterAvailability": "Beschikbaarheid",
+    "onlyInStock": "Alleen op voorraad",
+    "sortBy": "Sorteren op",
+    "sortRelevance": "Onze volgorde",
+    "sortPriceAsc": "Prijs, oplopend",
+    "sortPriceDesc": "Prijs, aflopend",
+    "sortYearDesc": "Oogst, nieuwste eerst",
+    "sortYearAsc": "Oogst, oudste eerst",
+    "sortName": "Naam",
+    "emptyTitle": "Niets gevonden met deze filters",
+    "emptyBody": "Er is geen partij die aan al deze voorwaarden voldoet. Zet één filter uit en probeer opnieuw.",
+    "oxidationBand": "{from} tot {to} %",
+    "priceFrom": "Vanaf {price}",
+    "perGrams": "{grams} g",
+    "noYear": "geen jaartal",
+    "columnTea": "Thee",
+    "columnOrigin": "Herkomst",
+    "columnYear": "Oogst",
+    "columnPrice": "Prijs"
+  },
+  "collections": {
+    "title": "Collecties",
+    "lede": "Tien ingangen. Elke collectie heeft een eigen inleiding, want een collectie zonder inleiding is gewoon een filter.",
+    "count": "{count, plural, one {# partij} other {# partijen}}",
+    "inCollection": "In deze collectie"
+  },
+  "product": {
+    "breadcrumb": "Kruimelpad",
+    "passport": "Paspoort",
+    "region": "Gebied",
+    "province": "Provincie",
+    "altitude": "Hoogte",
+    "harvest": "Oogst",
+    "producer": "Tuin of producent",
+    "cultivar": "Variëteit",
+    "oxidation": "Oxidatie",
+    "fermentation": "Fermentatie",
+    "roast": "Rooster",
+    "caffeine": "Cafeïne",
+    "storage": "Bewaren",
+    "form": "Vorm",
+    "unknownLabel": "Wat wij niet weten",
+    "notReported": "Niet opgegeven",
+    "metres": "{value} m",
+    "percent": "{value} %",
+    "chooseAmount": "Kies een hoeveelheid",
+    "pricePerHundred": "{price} per 100 g",
+    "gallery": "Beelden",
+    "galleryDry": "Droog blad",
+    "galleryLiquor": "Aftreksel",
+    "galleryWet": "Nat blad",
+    "galleryPack": "Verpakking",
+    "notes": "Degustatienoten",
+    "wheel": "Smaakwiel",
+    "wheelHint": "Zes assen. De vorm laat zien waar de noten van deze thee samenkomen.",
+    "gongfu": "Gongfu",
+    "gongfuVessel": "Kan",
+    "gongfuLeaf": "Blad",
+    "gongfuTemp": "Temperatuur",
+    "gongfuRinse": "Spoelen",
+    "gongfuNoRinse": "Niet spoelen",
+    "gongfuFirst": "Eerste infusie",
+    "gongfuStep": "Stap per infusie",
+    "gongfuCount": "Aantal infusies",
+    "western": "Europees",
+    "westernLede": "Als u geen gaiwan hebt. Het werkt, maar u krijgt het gemiddelde van de thee in plaats van de reeks.",
+    "westernLeaf": "{grams} g op {ml} ml",
+    "westernTemp": "{celsius} °C",
+    "westernTime": "{minutes} minuten",
+    "westernResteeps": "{count, plural, one {nog # keer} other {nog # keer}} te gebruiken",
+    "timerTitle": "Gongfu-timer",
+    "timerLede": "De cirkel is de gaiwan van boven. Hij vult zich in de kleur die déze infusie in het kopje geeft.",
+    "timerInfusion": "Infusie",
+    "timerRinse": "Spoelgang",
+    "timerOf": "van {total}",
+    "timerSeconds": "{seconds} s",
+    "timerDone": "Het blad is op. Kijk naar wat er in de gaiwan ligt.",
+    "timerSound": "Geluid",
+    "timerVibrate": "Trillen",
+    "timerAria": "Gongfu-timer, infusie {current} van {total}, nog {seconds} seconden",
+    "timerAnnounce": "Infusie {current} klaar. Giet volledig uit.",
+    "vault": "Ook op te slaan in de Puerh Vault",
+    "vaultLink": "Hoe de Vault werkt",
+    "related": "Verwante partijen",
+    "reviews": "Wat anderen zeiden",
+    "reviewCount": "{count, plural, one {# beoordeling} other {# beoordelingen}}",
+    "ratingOf": "{rating} van 5",
+    "noReviews": "Nog geen beoordelingen bij deze partij.",
+    "stickyBuy": "Kopen",
+    "matchaTitle": "Matcha kloppen",
+    "matchaLede": "Geen gongfu-reeks: matcha is Japans en wordt geklopt, niet afgegoten. Twee gram, zeventig milliliter, tachtig graden.",
+    "matchaToGuide": "Het matcha-hoofdstuk in de zetgids",
+    "objectNoBrewing": "Dit is gerei, geen thee. Er zijn dus geen zetparameters."
+  },
+  "cart": {
+    "title": "Winkelmand",
+    "empty": "Uw mand is leeg.",
+    "emptyBody": "Er staan achtentwintig partijen thee in het rek, en de kennismakingsset is een goede plek om te beginnen.",
+    "item": "Artikel",
+    "quantity": "Aantal",
+    "quantityFor": "Aantal voor {name}",
+    "removeItem": "{name} verwijderen",
+    "subtotal": "Subtotaal",
+    "shipping": "Verzending",
+    "shippingAtCheckout": "Wordt bij het afrekenen berekend",
+    "freeShippingLeft": "Nog {amount} tot gratis verzending in België en Nederland",
+    "freeShippingReached": "Verzending in België en Nederland is gratis",
+    "discount": "Korting",
+    "total": "Totaal",
+    "promoLabel": "Kortingscode",
+    "promoPlaceholder": "Code",
+    "promoApply": "Toepassen",
+    "promoInvalid": "Deze code kennen wij niet.",
+    "promoApplied": "Code {code} toegepast.",
+    "upsellTitle": "Voor er iets ontbreekt",
+    "upsellBody": "Voeg een proefje van 10 g toe voor {price}. Zo weet u of het volgende rek bij u past.",
+    "vaultOption": "In de Vault bewaren",
+    "vaultYears": "{years} jaar",
+    "openCart": "Winkelmand openen"
+  },
+  "checkout": {
+    "title": "Afrekenen",
+    "lede": "Geen account nodig. Drie blokken, en u bent klaar.",
+    "stepContact": "Contact",
+    "stepDelivery": "Levering",
+    "stepPayment": "Betaling",
+    "email": "E-mailadres",
+    "emailHint": "Hierheen sturen wij de bevestiging en het volgnummer.",
+    "phone": "Telefoon",
+    "phoneHint": "Alleen als de koerier u niet vindt.",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "company": "Bedrijf",
+    "vatNumber": "Btw-nummer",
+    "street": "Straat",
+    "houseNumber": "Nummer",
+    "bus": "Bus",
+    "postcode": "Postcode",
+    "city": "Gemeente",
+    "country": "Land",
+    "countryBE": "België",
+    "countryNL": "Nederland",
+    "countryOther": "Elders in de EU",
+    "notes": "Opmerking bij de bestelling",
+    "deliveryMethod": "Verzendwijze",
+    "pickupNote": "Baudelostraat 24, 9000 Gent. Wij mailen u wanneer het klaarstaat.",
+    "paymentMethod": "Betaalwijze",
+    "mockNotice": "Deze installatie draait zonder betaalsleutels, dus de betaling wordt gesimuleerd. Er wordt niets afgeschreven.",
+    "summary": "Overzicht",
+    "net": "Netto",
+    "vat": "Btw",
+    "vatRate": "Btw {rate} %",
+    "vatSplitTea": "Btw 6 % op thee",
+    "vatSplitGoods": "Btw 21 % op gerei en bonnen",
+    "total": "Te betalen",
+    "terms": "Ik heb de algemene voorwaarden gelezen en ga ermee akkoord.",
+    "newsletterOptIn": "Stuur mij de brief, acht keer per jaar.",
+    "placing": "Bezig met plaatsen",
+    "errorTitle": "De bestelling is niet doorgekomen",
+    "errorBody": "Er ging iets mis bij het verwerken. Er is niets afgeschreven. Probeer het opnieuw, of mail ons.",
+    "emptyCart": "Uw mand is leeg, dus er valt nog niets af te rekenen.",
+    "required": "Dit veld is verplicht",
+    "invalidEmail": "Dit lijkt geen geldig e-mailadres",
+    "invalidPostcodeBE": "Een Belgische postcode bestaat uit vier cijfers",
+    "invalidPostcodeNL": "Een Nederlandse postcode ziet eruit als 1234 AB",
+    "invalidPhone": "Dit lijkt geen geldig telefoonnummer",
+    "termsRequired": "U moet akkoord gaan met de voorwaarden"
+  },
+  "shippingMethods": {
+    "bpostHome": "bpost aan huis",
+    "bpostHomeDetail": "Één tot twee werkdagen in België, twee tot drie in Nederland.",
+    "bpostLocker": "bpost Pakjesautomaat",
+    "bpostLockerDetail": "Ophalen wanneer het u uitkomt, ook ’s avonds.",
+    "mondialRelay": "Mondial Relay",
+    "mondialRelayDetail": "Afhaalpunt in de buurt, iets trager en goedkoper.",
+    "pickup": "Afhalen in Gent",
+    "pickupDetail": "Gratis. Wij mailen u wanneer het klaarstaat.",
+    "free": "Gratis"
+  },
+  "payment": {
+    "bancontact": "Bancontact",
+    "ideal": "iDEAL",
+    "payconiq": "Payconiq",
+    "card": "Bankkaart of kredietkaart",
+    "paypal": "PayPal",
+    "transfer": "Overschrijving",
+    "transferDetail": "Wij versturen zodra het bedrag binnen is, meestal na één werkdag."
+  },
+  "order": {
+    "thanksTitle": "Dank u",
+    "thanksLede": "Uw bestelling staat genoteerd. De bevestiging is onderweg naar {email}.",
+    "number": "Bestelnummer",
+    "date": "Datum",
+    "status": "Status",
+    "statusPaid": "Betaald",
+    "statusPending": "In afwachting van betaling",
+    "statusMock": "Gesimuleerde betaling",
+    "items": "Bestelde artikelen",
+    "deliveryTo": "Levering",
+    "tracking": "Volgen",
+    "trackingPending": "Zodra het pakket is afgegeven, verschijnt hier het volgnummer. U krijgt het ook per e-mail.",
+    "trackingNumber": "Volgnummer",
+    "questions": "Vragen over deze bestelling? Mail ons met het bestelnummer erbij.",
+    "notFoundTitle": "Deze bestelling kennen wij niet",
+    "notFoundBody": "Controleer het nummer in uw bevestigingsmail, of mail ons."
+  },
+  "quiz": {
+    "title": "Theeproever",
+    "lede": "Vijf vragen, en daarna drie partijen die bij uw antwoorden passen. Wij tonen erbij waarom, zodat u het oneens kunt zijn.",
+    "start": "Beginnen",
+    "questionOf": "Vraag {current} van {total}",
+    "resultsTitle": "Drie partijen voor u",
+    "resultsLede": "Deze drie scoorden het hoogst op uw antwoorden. Ze komen uit verschillende families, want drie varianten van hetzelfde is geen keuze.",
+    "why": "Waarom deze",
+    "buildSet": "Zet er een proefset van",
+    "buildSetBody": "Neem alle drie in de kleinste hoeveelheid en zie zelf wie er gelijk had.",
+    "addAllThree": "Alle drie in de mand",
+    "restart": "Opnieuw beginnen",
+    "progress": "Voortgang door de vragen"
+  },
+  "guide": {
+    "title": "Zetgids",
+    "lede": "Zes hoofdstukken over hoe u het uit het blad krijgt. Procedure en getallen, geen sfeer.",
+    "readingTime": "{minutes} minuten",
+    "chapters": "Hoofdstukken",
+    "nextChapter": "Volgende hoofdstuk",
+    "backToGuide": "Terug naar de zetgids"
+  },
+  "vault": {
+    "title": "Puerh Vault",
+    "lede": "U koopt de cake, wij bewaren hem. Drie tot tien jaar in een gelogde klimaatkast in Kortrijk, met een herkomstcertificaat op uw naam en proefstukken onderweg.",
+    "howTitle": "Hoe het loopt",
+    "pricingTitle": "Wat het kost",
+    "pricingLede": "Per cake, per jaar, vooruit te betalen bij het inbrengen. Langere termijnen zijn goedkoper per jaar, omdat wij de kast dan efficiënter vullen.",
+    "perYear": "{price} per cake per jaar",
+    "totalTerm": "{price} voor {years} jaar",
+    "samples": "Proefstukken",
+    "conditionsTitle": "De kleine lettertjes, in gewone taal",
+    "eligibleTitle": "Wat er in mag",
+    "eligibleBody": "Elke cake en elke geperste schijf uit ons rek. Los blad niet: dat rijpt te snel en te ongelijk om er iets zinnigs over te beloven.",
+    "eligibleList": "Nu in het rek en geschikt voor de Vault",
+    "faqTitle": "Wat mensen vragen"
+  },
+  "about": {
+    "title": "Over ons",
+    "lede": "Wij zijn met z’n tweeën, wij zitten in Kortrijk, en wij vliegen twee keer per jaar naar China omdat het per e-mail niet werkt.",
+    "sealAlt": "Cinnaberrood zegel met de tekens 云南井, Yunnan Well",
+    "sealCaption": "Ons zegel. Het staat op het herkomstcertificaat van de Vault en verder nergens.",
+    "certificateTitle": "Herkomstcertificaat"
+  },
+  "journal": {
+    "title": "Journaal",
+    "lede": "Wat wij tegenkomen en wat wij nakijken. Soms technisch, soms een aankoop die misging.",
+    "readingTime": "{minutes} minuten",
+    "published": "Verschenen",
+    "mentioned": "Thee in dit stuk",
+    "backToJournal": "Terug naar het journaal",
+    "more": "Meer uit het journaal"
+  },
+  "tastings": {
+    "title": "Proeverijen in België",
+    "lede": "Gent, Kortrijk en Brussel. Tien tot veertien plaatsen, een gaiwan per persoon, twee uur. U hoeft niets mee te brengen en niets te weten.",
+    "upcoming": "Eerstvolgende sessies",
+    "seatsLeft": "{count, plural, =0 {volzet} one {nog # plaats} other {nog # plaatsen}}",
+    "duration": "{minutes} minuten",
+    "perSeat": "{price} per plaats",
+    "bookTitle": "Plaats reserveren",
+    "bookLede": "Wij bevestigen per e-mail binnen één werkdag. Betalen doet u ter plaatse of vooraf, zoals u wil.",
+    "chooseSession": "Sessie",
+    "seatsWanted": "Aantal plaatsen",
+    "dietary": "Iets dat wij moeten weten",
+    "submitted": "Genoteerd. U hoort binnen één werkdag van ons.",
+    "full": "Deze sessie is volzet. Kies een andere datum of laat uw e-mailadres achter voor de volgende reeks.",
+    "privateTitle": "Op verplaatsing",
+    "privateBody": "Wij geven ook sessies bij mensen thuis of op kantoor, vanaf zes personen. Mail ons en wij kijken wat er kan."
+  },
+  "contact": {
+    "title": "Contact",
+    "lede": "Wij lezen alles zelf en antwoorden meestal binnen één werkdag.",
+    "addressTitle": "Adres",
+    "addressBody": "Baudelostraat 24, 9000 Gent",
+    "warehouseTitle": "Magazijn en Vault",
+    "warehouseBody": "Kortrijk, alleen op afspraak",
+    "hoursTitle": "Open",
+    "hoursBody": "Donderdag tot zaterdag, 11 tot 18 uur. Andere dagen op afspraak.",
+    "emailTitle": "E-mail",
+    "phoneTitle": "Telefoon",
+    "companyTitle": "Ondernemingsgegevens",
+    "formTitle": "Schrijf ons",
+    "message": "Bericht",
+    "subject": "Onderwerp",
+    "sent": "Verstuurd. U hoort van ons."
+  },
+  "newsletter": {
+    "emailLabel": "E-mailadres",
+    "placeholder": "u@voorbeeld.be",
+    "consent": "Ik wil de brief ontvangen en weet dat ik mij altijd kan uitschrijven.",
+    "success": "Genoteerd. U krijgt de eerstvolgende brief.",
+    "error": "Dat is niet gelukt. Probeer het straks opnieuw."
+  },
+  "cookieBanner": {
+    "title": "Cookies",
+    "body": "Wij zetten alleen wat nodig is om de winkelmand te laten werken. Statistieken zetten wij pas als u ja zegt, en wij laden er niets voor tot dat moment.",
+    "accept": "Alles toestaan",
+    "necessary": "Alleen het noodzakelijke",
+    "settings": "Instellen",
+    "policy": "Cookiebeleid",
+    "categoryNecessary": "Noodzakelijk",
+    "categoryNecessaryBody": "Winkelmand, taalkeuze en beveiliging. Deze kunnen niet uit.",
+    "categoryAnalytics": "Statistiek",
+    "categoryAnalyticsBody": "Anoniem meten welke pagina’s gelezen worden. Staat uit tot u toestemt.",
+    "save": "Bewaren"
+  },
+  "footer": {
+    "shop": "Winkel",
+    "learn": "Leren",
+    "house": "Het huis",
+    "legal": "Voorwaarden",
+    "vatNumber": "Btw BE 0785.412.907",
+    "rights": "© {year} Well’s of Yunnan",
+    "madeIn": "Gemaakt in Kortrijk en gedronken in Gent."
+  },
+  "meta": {
+    "homeTitle": "Well’s of Yunnan — Chinese thee met jaar, berg en tuin",
+    "homeDescription": "Belgisch theehuis. Chinese thee rechtstreeks uit Yunnan, Fujian, Guangdong en Zhejiang, met partijpaspoort, gongfu-parameters en een werkende timer. Bewaring van pu-erh en proeverijen in Gent, Kortrijk en Brussel.",
+    "catalogTitle": "Thee — alle partijen",
+    "catalogDescription": "Achtentwintig partijen Chinese thee met oogstjaar, gebied, hoogte en producent. Filter op soort, gebied, jaar, oxidatie, cafeïne en vorm.",
+    "productDescription": "{name} uit {region}, oogst {year}. Paspoort, gongfu-parameters en een werkende timer.",
+    "collectionsTitle": "Collecties",
+    "quizTitle": "Theeproever — vind uw thee in vijf vragen",
+    "quizDescription": "Vijf vragen over sterkte, smaak, moment, ervaring en gelegenheid, en daarna drie partijen die passen.",
+    "guideTitle": "Zetgids — gongfu, gaiwan, water en bewaring",
+    "guideDescription": "Zes hoofdstukken met procedures en getallen: gongfu, de gaiwan vasthouden, Yixing, matcha kloppen, water en temperatuur, en pu-erh bewaren.",
+    "vaultTitle": "Puerh Vault — bewaring en veroudering als dienst",
+    "vaultDescription": "Wij bewaren uw cake drie tot tien jaar in een gelogde klimaatkast in Kortrijk, met certificaat en proefstukken onderweg.",
+    "aboutTitle": "Over ons",
+    "aboutDescription": "Twee mensen in Kortrijk die twee keer per jaar naar China vliegen om per partij in te kopen.",
+    "journalTitle": "Journaal",
+    "journalDescription": "Stukken over rijping, rotsthee, water, etiketten en een aankoop die misging.",
+    "tastingsTitle": "Proeverijen in Gent, Kortrijk en Brussel",
+    "tastingsDescription": "Reserveer een plaats bij een gongfu-sessie of een verticale proeverij. Tien tot veertien plaatsen per sessie.",
+    "checkoutTitle": "Afrekenen",
+    "contactTitle": "Contact",
+    "faqTitle": "Veelgestelde vragen",
+    "shippingTitle": "Verzending en retour",
+    "termsTitle": "Algemene voorwaarden",
+    "privacyTitle": "Privacybeleid",
+    "cookiesTitle": "Cookiebeleid",
+    "withdrawalTitle": "Herroepingsrecht",
+    "orderTitle": "Bestelling {number}"
+  },
+  "category": {
+    "sheng": "Sheng pu-erh",
+    "shou": "Shou pu-erh",
+    "oolong": "Oolong",
+    "white": "Witte thee",
+    "red": "Rode thee",
+    "green": "Groene thee",
+    "yellow": "Gele thee",
+    "matcha": "Matcha",
+    "teaware": "Gerei",
+    "sets": "Sets en cadeau"
+  },
+  "caffeine": {
+    "label": "Cafeïne",
+    "none": "Geen",
+    "low": "Laag",
+    "medium": "Middel",
+    "high": "Hoog"
+  },
+  "form": {
+    "label": "Vorm",
+    "loose": "Los blad",
+    "cake": "Cake",
+    "tuocha": "Tuocha",
+    "brick": "Baksteen",
+    "powder": "Poeder",
+    "object": "Voorwerp",
+    "voucher": "Bon"
+  },
+  "roast": {
+    "label": "Rooster",
+    "none": "Niet geroosterd",
+    "light": "Licht",
+    "medium": "Middel",
+    "heavy": "Zwaar"
+  },
+  "vessel": {
+    "gaiwan": "Gaiwan",
+    "yixing": "Yixing",
+    "chawan": "Chawan",
+    "teapot": "Theepot"
+  },
+  "flavourAxis": {
+    "floral": "Bloem",
+    "fruit": "Fruit",
+    "sweet": "Zoet",
+    "green": "Groen",
+    "mineral": "Mineraal",
+    "wood": "Hout"
+  },
+  "flavour": {
+    "orchid": "orchidee",
+    "osmanthus": "osmanthus",
+    "jasmine": "jasmijn",
+    "magnolia": "magnolia",
+    "honeysuckle": "kamperfoelie",
+    "lilac": "sering",
+    "gardenia": "gardenia",
+    "rose": "roos",
+    "peach": "perzik",
+    "apricot": "abrikoos",
+    "lychee": "lychee",
+    "longan": "longan",
+    "citrusPeel": "citrusschil",
+    "raisin": "rozijn",
+    "plum": "pruim",
+    "greenApple": "groene appel",
+    "melon": "meloen",
+    "redBerry": "rode bes",
+    "driedFig": "gedroogde vijg",
+    "honey": "honing",
+    "caneSugar": "rietsuiker",
+    "caramel": "karamel",
+    "brownSugar": "bruine suiker",
+    "malt": "mout",
+    "vanilla": "vanille",
+    "driedDate": "gedroogde dadel",
+    "darkChocolate": "pure chocolade",
+    "cream": "room",
+    "butter": "boter",
+    "sweetPea": "doperwt",
+    "steamedGreens": "gestoomde groenten",
+    "seaweed": "zeewier",
+    "chestnut": "kastanje",
+    "bamboo": "bamboe",
+    "hay": "hooi",
+    "cucumber": "komkommer",
+    "spinach": "spinazie",
+    "greenBean": "sperzieboon",
+    "pineNeedle": "dennennaald",
+    "wetStone": "natte steen",
+    "flint": "vuursteen",
+    "limestone": "kalksteen",
+    "brine": "pekel",
+    "coolMint": "koele munt",
+    "camphor": "kamfer",
+    "cedar": "ceder",
+    "sandalwood": "sandelhout",
+    "oldWood": "oud hout",
+    "forestFloor": "bosgrond",
+    "dampEarth": "vochtige aarde",
+    "leather": "leer",
+    "tobacco": "tabak",
+    "betelNut": "betelnoot",
+    "driedLeaf": "gedroogd blad",
+    "cinnamon": "kaneel",
+    "clove": "kruidnagel",
+    "roastedRice": "geroosterde rijst",
+    "charcoal": "houtskool",
+    "pineSmoke": "dennenrook",
+    "mushroom": "paddenstoel"
+  },
+  "units": {
+    "grams": "{value} g",
+    "ml": "{value} ml",
+    "celsius": "{value} °C",
+    "seconds": "{value} s",
+    "years": "{value, plural, one {# jaar} other {# jaar}}",
+    "infusions": "{value, plural, one {# infusie} other {# infusies}}"
+  },
+  "notFound": {
+    "title": "Deze pagina bestaat niet",
+    "body": "Misschien is de partij uitverkocht en van de site gehaald, of klopt de link niet meer.",
+    "toCatalog": "Naar het rek"
+  },
+  "error": {
+    "title": "Er ging iets mis",
+    "body": "Wij konden deze pagina niet opbouwen. Probeer het opnieuw; blijft het misgaan, mail ons dan.",
+    "retry": "Opnieuw proberen"
+  },
+  "aboutContent": {
+    "sections": [
+      {
+        "heading": "Hoe het begon",
+        "body": "In 2019 stond er in een theehuis in Kunming een gaiwan voor ons neus met een sheng uit 2005, en de vrouw achter de tafel vertelde erbij uit welk dorp hij kwam, van welke helling, en wat er dat jaar met de regen was gebeurd. Terug in Gent bleek dat nergens te koop. Niet de thee, maar het verhaal erbij: overal stond alleen dat het Chinese groene of zwarte thee was, honderd gram, negen euro."
+      },
+      {
+        "heading": "Hoe wij kopen",
+        "body": "Wij vliegen twee keer per jaar, in april voor de voorjaarsoogst en in oktober voor de najaarspluk en de geroosterde oolongs. Wij kopen per partij, meestal tussen de vijf en de veertig kilo, en betalen op de tuin of bij de werkplaats. Dat is trager en duurder dan bij een Europese groothandel bestellen, en het is de enige manier om de vragen te stellen waarvan het antwoord op onze productpagina’s terechtkomt."
+      },
+      {
+        "heading": "Wat wij vragen voor wij betalen",
+        "body": "Welk jaar en welke maand. Welke tuin, welke helling, welke hoogte. Wie het gedood en gerold heeft. Hoe lang het geroosterd is en hoeveel rondes. Waar het sindsdien heeft gelegen en bij welke vochtigheid. Als iemand op drie van die vijf vragen geen antwoord heeft, kopen wij niet — niet omdat hij onbetrouwbaar is, maar omdat wij dan een paspoort zouden moeten invullen dat wij niet kunnen onderbouwen."
+      },
+      {
+        "heading": "De mensen",
+        "body": "In Wuyi kopen wij bij de familie Chen, die in de Huiyuan-kloof drie percelen heeft en zelf roostert. In Tongmu bij de familie Jiang, binnen het reservaat, waar de toegang beperkt is en de prijzen navenant. In Mahei bij de familie Li, van wie wij inmiddels vier opeenvolgende jaargangen hebben — dat is de verticale set. In Lincang en Menghai werken wij met twee coöperaties, en in Fuding met één tuin. Het zijn er niet veel, en dat is de bedoeling."
+      },
+      {
+        "heading": "Wat wij niet doen",
+        "body": "Wij aromatiseren niet. Wij mengen geen partijen om een smaakprofiel constant te houden van jaar tot jaar; een oogst is een oogst. Wij schrijven geen bergnaam op een etiket die wij niet kunnen aanwijzen op een kaart. En wij verkopen onze matcha als Japanse thee, want dat is ze."
+      },
+      {
+        "heading": "Waar wij zitten",
+        "body": "De winkel staat in de Baudelostraat in Gent en is open van donderdag tot zaterdag. Het magazijn en de Vault-kast staan in Kortrijk, waar de huur lager is en de kelder droger. Als u de kast wil zien, kan dat op afspraak; wij vinden het redelijk dat u wil kijken waar uw cake ligt."
+      }
+    ]
+  },
+  "vaultFaq": {
+    "items": [
+      {
+        "q": "Wat als jullie ermee ophouden?",
+        "a": "Dan krijgt u uw cakes terug, op onze kosten, binnen dertig dagen. De cakes zijn juridisch uw eigendom en staan als zodanig geregistreerd; ze maken geen deel uit van onze voorraad. Dat is precies waarom er een certificaat op uw naam is."
+      },
+      {
+        "q": "Kan ik hem eerder ophalen?",
+        "a": "Op elk moment, zonder uitleg. Wij rekenen niet af voor de resterende jaren en betalen ze ook niet terug: de bewaring is per jaar vooruit betaald."
+      },
+      {
+        "q": "Hoe weet ik dat de kast doet wat jullie zeggen?",
+        "a": "Er ligt een datalogger in die elk uur temperatuur en luchtvochtigheid wegschrijft. U kunt de reeks voor uw bewaarperiode opvragen, en u mag langskomen om te kijken."
+      },
+      {
+        "q": "Wat als er schimmel op komt?",
+        "a": "Dan vervangen wij de cake door een gelijkwaardige uit ons rek, of betalen wij de aankoopprijs terug, wat u verkiest. Dat is het risico dat wij overnemen door de bewaring te verkopen."
+      },
+      {
+        "q": "Verkopen jullie hem ook voor mij door?",
+        "a": "Wij brengen u in contact met kopers uit onze eigen kring en handelen de overdracht af. Wij rekenen tien procent van de verkoopprijs. Wij garanderen geen waardestijging en doen daar ook geen uitspraken over."
+      },
+      {
+        "q": "Mag er losse thee in?",
+        "a": "Nee. Los blad rijpt te snel en te ongelijkmatig; wij zouden er niets zinnigs over kunnen beloven. Alleen cakes en geperste schijven."
+      }
+    ]
+  },
+  "faqContent": {
+    "items": [
+      {
+        "q": "Hoeveel thee heb ik nodig voor één sessie?",
+        "a": "Voor gongfu in een gaiwan van 110 ml reken op zes tot acht gram, en daarmee zet u tien tot vijftien kopjes. Vijfentwintig gram is dus ongeveer drie tot vier sessies; vijftig gram zes tot acht. Op elke productpagina staat de hoeveelheid voor die specifieke thee."
+      },
+      {
+        "q": "Ik heb geen gaiwan. Kan ik jullie thee gewoon in een kan zetten?",
+        "a": "Ja. Bij elke thee staat naast de gongfu-parameters ook een Europees zetadvies: gram, milliliter, graden en minuten. U krijgt dan het gemiddelde van de thee in plaats van de reeks infusies, wat minder interessant is maar niet fout."
+      },
+      {
+        "q": "Waarom is er thee van 39 euro voor 25 gram?",
+        "a": "Omdat het dorp klein is en de oogst korter dan twee weken duurt. Bij zulke prijzen staat het paspoort erbij zodat u kunt zien waar het geld heen gaat: berg, hoogte, boomleeftijd, jaar. Als dat u niets zegt, is die thee niet voor u, en dat is prima — er staat ook thee van vijftien euro in het rek waar wij net zo achter staan."
+      },
+      {
+        "q": "Hoe lang blijft thee goed?",
+        "a": "Groene, gele en lichte oolong: dit jaar opdrinken, in de koelkast bewaren. Rode thee en geroosterde oolong: twee jaar. Witte thee: jaren, en geperste witte thee wordt er beter van. Sheng en shou pu-erh: die zijn er juist op gemaakt om te blijven liggen. Bij elke thee staat het bewaaradvies."
+      },
+      {
+        "q": "Is jullie matcha Chinees?",
+        "a": "Nee, en dat zetten wij er expliciet bij. Matcha komt uit Japan, van in de schaduw gegroeide tencha, op steen gemalen. Wij verkopen twee Japanse matcha’s als gastcollectie en doen niet alsof ze bij de rest horen."
+      },
+      {
+        "q": "Kan ik proefjes bestellen voor ik een volle verpakking neem?",
+        "a": "De kennismakingsset is daar het antwoord op: zes soorten van tien gram voor 39 euro. Bestelt u daarna een volle verpakking van een van die zes, dan trekken wij de prijs van dat zakje eraf — vermeld uw bestelnummer."
+      },
+      {
+        "q": "Bevat jullie thee cafeïne?",
+        "a": "Alles behalve het gerei, ja. Bij elke thee staat laag, middel of hoog. Witte thee en oude geperste witte thee zitten aan de lage kant; matcha en jonge sheng aan de hoge, omdat u bij matcha het blad opdrinkt en sheng met veel blad gezet wordt."
+      },
+      {
+        "q": "Leveren jullie buiten België en Nederland?",
+        "a": "Binnen de EU, ja. Gratis vanaf 75 euro. Buiten de EU voorlopig niet, omdat de douaneformaliteiten voor levensmiddelen per land verschillen en wij dat niet betrouwbaar kunnen beloven."
+      },
+      {
+        "q": "Kan ik bij jullie langskomen?",
+        "a": "De winkel in de Baudelostraat in Gent is open van donderdag tot zaterdag, van 11 tot 18 uur. Voor het magazijn en de Vault-kast in Kortrijk maakt u een afspraak."
+      },
+      {
+        "q": "Geven jullie korting bij grotere hoeveelheden?",
+        "a": "Niet standaard. Bij horeca en bij bestellingen boven de vijfhonderd euro maken wij een aparte prijs; mail ons dan met wat u zoekt."
+      }
+    ],
+    "title": "Veelgestelde vragen",
+    "lede": "De vragen die wij het vaakst per mail krijgen, met het antwoord dat wij ook per mail zouden geven."
+  },
+  "shippingContent": {
+    "sections": [
+      {
+        "heading": "Verzenden",
+        "body": "Wij versturen op werkdagen. Bestellingen die voor 14 uur binnenkomen gaan dezelfde dag mee; daarna de eerstvolgende werkdag. U krijgt het volgnummer per e-mail zodra het pakket is afgegeven."
+      },
+      {
+        "heading": "Tarieven",
+        "body": "België: bpost aan huis 4,95 euro, Pakjesautomaat 3,95 euro, Mondial Relay 3,50 euro. Nederland: aan huis 6,95 euro, afhaalpunt 4,95 euro. Rest van de EU: 9,95 euro. Afhalen in Gent is gratis. Vanaf 50 euro is verzending naar België en Nederland gratis; vanaf 75 euro naar de rest van de EU."
+      },
+      {
+        "heading": "Levertijd",
+        "body": "België één tot twee werkdagen, Nederland twee tot drie, rest van de EU drie tot zes. Dat zijn de termijnen van de vervoerder, niet van ons; in drukke weken loopt het uit."
+      },
+      {
+        "heading": "Verpakking",
+        "body": "Thee gaat in hersluitbare aluminium zakjes met een label waarop de partij, het jaar en de zetparameters staan. Cakes blijven in hun originele papier en gaan in karton. Wij gebruiken geen plastic vulmateriaal; het karton is ongebleekt en herbruikbaar."
+      },
+      {
+        "heading": "Retour",
+        "body": "U hebt veertien dagen bedenktijd vanaf ontvangst. Ongeopende verpakkingen nemen wij volledig terug. Geopende verpakkingen thee kunnen wij om voedselveiligheidsredenen niet terugnemen, tenzij er iets mis is met het product — en in dat geval willen wij het juist horen, dus mail ons met een foto en uw bestelnummer."
+      },
+      {
+        "heading": "Iets stuk of verkeerd",
+        "body": "Meld het binnen zeven dagen met een foto. Wij sturen een vervanging of betalen terug, zonder dat u iets hoeft terug te sturen. Bij een gebroken chawan of gaiwan hoeven wij de scherven niet."
+      }
+    ],
+    "title": "Verzending en retour",
+    "lede": "Tarieven, termijnen en wat er gebeurt als er iets misgaat."
+  },
+  "legal": {
+    "termsSections": [
+      {
+        "heading": "1. Wie wij zijn",
+        "body": "Well’s of Yunnan is een handelsnaam van Well’s BV, met maatschappelijke zetel in de Baudelostraat 24, 9000 Gent, ingeschreven in de Kruispuntbank van Ondernemingen onder het nummer BE 0785.412.907. Deze voorwaarden gelden voor elke bestelling op wellsofyunnan.be."
+      },
+      {
+        "heading": "2. Aanbod en prijzen",
+        "body": "Alle prijzen op de winkelpagina’s zijn in euro en inclusief btw. Thee valt onder het verlaagde tarief van 6 procent; gerei en cadeaubonnen onder 21 procent. Bij het afrekenen tonen wij de opsplitsing netto, btw en totaal. Verzendkosten worden apart vermeld voor u bevestigt. Wij mogen prijzen wijzigen, maar niet nadat u besteld hebt."
+      },
+      {
+        "heading": "3. Voorraad",
+        "body": "Wij kopen per partij. Als een partij uitverkocht raakt tussen uw bestelling en de verzending in, laten wij dat weten en betalen wij dat deel terug binnen vijf werkdagen. Wij vervangen niet stilzwijgend door een andere oogst."
+      },
+      {
+        "heading": "4. Betaling",
+        "body": "Betalen kan met Bancontact, iDEAL, Payconiq, bank- of kredietkaart, PayPal of overschrijving. Bij overschrijving houden wij de bestelling zeven kalenderdagen vast; daarna komt ze weer vrij. Wij versturen pas na ontvangst van de betaling."
+      },
+      {
+        "heading": "5. Levering",
+        "body": "Wij leveren in België, Nederland en de rest van de Europese Unie. De vermelde levertijden zijn indicatief en komen van de vervoerder. Het risico gaat over op u zodra u of iemand die u aanwijst het pakket in ontvangst neemt."
+      },
+      {
+        "heading": "6. Herroepingsrecht",
+        "body": "U hebt veertien dagen bedenktijd. De uitzonderingen en de procedure staan op de pagina Herroepingsrecht, die deel uitmaakt van deze voorwaarden."
+      },
+      {
+        "heading": "7. Conformiteit en garantie",
+        "body": "U hebt de wettelijke garantie op conformiteit. Levensmiddelen hebben een houdbaarheidsdatum; die staat op het zakje. Klachten over kwaliteit horen wij graag binnen de houdbaarheidstermijn, met vermelding van de partij op het label."
+      },
+      {
+        "heading": "8. Puerh Vault",
+        "body": "Voor bewaring in de Vault geldt: de cakes blijven uw eigendom, worden apart van onze voorraad geregistreerd en zijn verzekerd tegen brand en waterschade tot de aankoopwaarde. De bewaarvergoeding is per jaar vooruit verschuldigd en wordt bij vroegtijdige ophaling niet terugbetaald. Wij doen geen enkele uitspraak over toekomstige waarde."
+      },
+      {
+        "heading": "9. Proeverijen",
+        "body": "Een gereserveerde plaats kan tot zeven dagen voor de sessie kosteloos geannuleerd worden. Daarna is de plaats verschuldigd, tenzij wij de plaats alsnog kunnen invullen. Als wij een sessie annuleren, betalen wij volledig terug."
+      },
+      {
+        "heading": "10. Aansprakelijkheid",
+        "body": "Wij zijn aansprakelijk voor schade die het rechtstreekse gevolg is van een tekortkoming van onze kant, tot maximaal het bedrag van de betrokken bestelling. Deze beperking geldt niet bij opzet, zware fout of lichamelijke schade."
+      },
+      {
+        "heading": "11. Toepasselijk recht",
+        "body": "Op deze overeenkomst is het Belgisch recht van toepassing. Geschillen worden voorgelegd aan de bevoegde rechtbanken van het gerechtelijk arrondissement Oost-Vlaanderen, afdeling Gent. Als consument kunt u ook terecht bij het Europees ODR-platform of bij de Consumentenombudsdienst."
+      }
+    ],
+    "privacySections": [
+      {
+        "heading": "Wie verwerkt uw gegevens",
+        "body": "Well’s BV, Baudelostraat 24, 9000 Gent, BE 0785.412.907. Vragen over uw gegevens gaan naar privacy@wellsofyunnan.be en worden door ons zelf gelezen."
+      },
+      {
+        "heading": "Wat wij bijhouden en waarom",
+        "body": "Voor een bestelling: naam, e-mailadres, afleveradres, telefoonnummer als u het geeft, en wat u besteld hebt. Grondslag: uitvoering van de overeenkomst. Voor de brief: uw e-mailadres, op basis van uw toestemming. Voor een proeverij: naam, e-mailadres en het aantal plaatsen. Voor de Vault: daarnaast een register van uw cakes met partijnummer en datum."
+      },
+      {
+        "heading": "Hoe lang",
+        "body": "Bestelgegevens houden wij zeven jaar bij, omdat de Belgische boekhoudwetgeving dat vraagt. Inschrijvingen op de brief houden wij bij tot u zich uitschrijft. Vault-registers houden wij bij tot vijf jaar na de laatste teruggave."
+      },
+      {
+        "heading": "Met wie wij delen",
+        "body": "Met de vervoerder die uw pakket brengt, met de betaaldienstverlener die de transactie afhandelt, en met de e-maildienst die de bevestiging verstuurt. Verder met niemand. Wij verkopen geen gegevens en wij gebruiken geen advertentienetwerken."
+      },
+      {
+        "heading": "Statistiek",
+        "body": "Wij meten anoniem welke pagina’s gelezen worden, en pas nadat u daarvoor toestemming hebt gegeven in de cookiebanner. Tot dat moment wordt er geen enkel meetscript geladen. Zegt u nee, dan werkt de winkel gewoon."
+      },
+      {
+        "heading": "Uw rechten",
+        "body": "U mag inzage vragen, laten corrigeren, laten wissen, de verwerking laten beperken, bezwaar maken en uw gegevens opvragen in een overdraagbaar formaat. Mail ons en wij antwoorden binnen dertig dagen. Bent u het oneens met hoe wij het aanpakken, dan kunt u klacht indienen bij de Gegevensbeschermingsautoriteit, Drukpersstraat 35, 1000 Brussel."
+      }
+    ],
+    "cookiesSections": [
+      {
+        "heading": "Wat wij zetten",
+        "body": "Twee dingen zonder toestemming, omdat de winkel er niet zonder kan: uw winkelmand, die in de opslag van uw eigen browser staat en ons niet bereikt tot u afrekent, en uw taalkeuze. Beide verlopen vanzelf en bevatten geen identificatie."
+      },
+      {
+        "heading": "Wat wij pas zetten als u ja zegt",
+        "body": "Anonieme paginastatistiek. Wij laden het script niet en zetten niets tot u in de banner op toestaan klikt. Klikt u op alleen het noodzakelijke, dan gebeurt er niets, en wij vragen het u pas opnieuw als er iets verandert."
+      },
+      {
+        "heading": "Wat wij niet doen",
+        "body": "Wij plaatsen geen advertentiecookies, geen sociale-mediapixels en geen trackers van derden. Er staat geen enkel script van een advertentienetwerk op deze site."
+      },
+      {
+        "heading": "Uw keuze wijzigen",
+        "body": "Onderaan elke pagina staat een link waarmee u uw keuze opnieuw kunt instellen. U kunt ook alle opslag voor deze site wissen in uw browser; dan begint alles opnieuw, inclusief uw winkelmand."
+      }
+    ],
+    "withdrawalSections": [
+      {
+        "heading": "Uw recht",
+        "body": "U hebt het recht om binnen veertien kalenderdagen zonder opgave van reden de overeenkomst te herroepen. Die termijn loopt vanaf de dag waarop u, of iemand die u hebt aangewezen, het laatste artikel van de bestelling fysiek in ontvangst neemt."
+      },
+      {
+        "heading": "Hoe u herroept",
+        "body": "Stuur een ondubbelzinnige verklaring naar hallo@wellsofyunnan.be met uw bestelnummer. Een e-mail volstaat; u hoeft geen formulier te gebruiken, al mag u het modelformulier hieronder gebruiken. Wij bevestigen de ontvangst dezelfde werkdag."
+      },
+      {
+        "heading": "Terugbetaling",
+        "body": "Wij betalen alles terug wat u betaald hebt, inclusief de standaardverzendkosten heen, binnen veertien dagen nadat wij de goederen terug hebben of u hebt aangetoond dat u ze verzonden hebt. Wij gebruiken hetzelfde betaalmiddel als u gebruikte. Kiest u een duurdere verzendwijze dan de standaard, dan vergoeden wij het verschil niet."
+      },
+      {
+        "heading": "Terugsturen",
+        "body": "U stuurt de goederen terug binnen veertien dagen na uw melding. De kosten van het terugsturen zijn voor u. Stuur naar: Well’s BV, retourafdeling, Ringlaan 7 bus 3, 8500 Kortrijk."
+      },
+      {
+        "heading": "Uitzonderingen",
+        "body": "Verzegelde levensmiddelen waarvan de verzegeling na levering is verbroken, kunnen om redenen van gezondheidsbescherming en hygiëne niet worden teruggenomen. Concreet: een geopend zakje thee nemen wij niet terug. Ongeopende verpakkingen wel. Cadeaubonnen die al gedeeltelijk gebruikt zijn, kunnen niet worden herroepen. Voor een gereserveerde plaats bij een proeverij geldt de annuleringsregeling in de algemene voorwaarden en niet dit herroepingsrecht."
+      },
+      {
+        "heading": "Modelformulier",
+        "body": "Aan Well’s BV, Baudelostraat 24, 9000 Gent, hallo@wellsofyunnan.be. Ik deel u hierbij mee dat ik onze overeenkomst betreffende de verkoop van de volgende goederen herroep. Besteld op / ontvangen op. Naam van de consument. Adres van de consument. Bestelnummer. Datum."
+      }
+    ],
+    "termsTitle": "Algemene voorwaarden",
+    "termsLede": "Van kracht sinds 1 januari 2026. Geschreven om leesbaar te zijn, niet om onleesbaar te zijn.",
+    "privacyTitle": "Privacybeleid",
+    "privacyLede": "Wat wij bijhouden, waarom, hoe lang, en met wie wij het delen.",
+    "cookiesTitle": "Cookiebeleid",
+    "cookiesLede": "Kort, want er staat weinig op deze site.",
+    "withdrawalTitle": "Herroepingsrecht",
+    "withdrawalLede": "Uw wettelijke bedenktijd van veertien dagen, en de uitzondering die voor thee geldt.",
+    "lastUpdated": "Laatst bijgewerkt op {date}",
+    "changeCookieChoice": "Cookiekeuze wijzigen"
+  }
+}
