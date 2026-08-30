@@ -123,7 +123,14 @@
     "columnTea": "Thee",
     "columnOrigin": "Herkomst",
     "columnYear": "Oogst",
-    "columnPrice": "Prijs"
+    "columnPrice": "Prijs",
+    "oxNone": "Niet geoxideerd, tot 15 %",
+    "oxLight": "Licht, 16 tot 45 %",
+    "oxMedium": "Middel, 46 tot 70 %",
+    "oxFull": "Volledig, vanaf 71 %",
+    "priceUnder20": "Tot € 20",
+    "price20to35": "€ 20 tot € 35",
+    "priceOver35": "Vanaf € 35"
   },
   "collections": {
     "title": "Collecties",

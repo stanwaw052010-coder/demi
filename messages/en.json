@@ -123,7 +123,14 @@
     "columnTea": "Tea",
     "columnOrigin": "Origin",
     "columnYear": "Harvest",
-    "columnPrice": "Price"
+    "columnPrice": "Price",
+    "oxNone": "Unoxidised, up to 15 %",
+    "oxLight": "Light, 16 to 45 %",
+    "oxMedium": "Medium, 46 to 70 %",
+    "oxFull": "Full, from 71 %",
+    "priceUnder20": "Up to €20",
+    "price20to35": "€20 to €35",
+    "priceOver35": "From €35"
   },
   "collections": {
     "title": "Collections",

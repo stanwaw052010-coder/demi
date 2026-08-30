@@ -149,12 +149,29 @@ export interface CatalogFilters {
   type?: Category[];
   region?: string[];
   year?: number[];
-  oxidation?: [number, number];
+  /** Ids from OXIDATION_BANDS. */
+  oxidation?: string[];
   caffeine?: string[];
   form?: string[];
-  maxPrice?: number;
+  /** Ids from PRICE_BANDS, applied to the cheapest variant. */
+  price?: string[];
   inStockOnly?: boolean;
 }
+
+/** Oxidation as the trade actually talks about it, not as a slider. */
+export const OXIDATION_BANDS = [
+  { id: "none", min: 0, max: 15 },
+  { id: "light", min: 16, max: 45 },
+  { id: "medium", min: 46, max: 70 },
+  { id: "full", min: 71, max: 100 },
+] as const;
+
+/** Price bands on the cheapest way into a tea, in euro cents. */
+export const PRICE_BANDS = [
+  { id: "under20", min: 0, max: 1999 },
+  { id: "20to35", min: 2000, max: 3499 },
+  { id: "over35", min: 3500, max: Number.MAX_SAFE_INTEGER },
+] as const;
 
 export type SortKey =
   | "relevance"
@@ -172,12 +189,17 @@ export function filterProducts(list: Product[], f: CatalogFilters): Product[] {
       return false;
     if (f.caffeine?.length && !f.caffeine.includes(p.caffeine)) return false;
     if (f.form?.length && !f.form.includes(p.form)) return false;
-    if (f.oxidation) {
+    if (f.oxidation?.length) {
       const ox = p.passport?.oxidation;
       if (ox === null || ox === undefined) return false;
-      if (ox < f.oxidation[0] || ox > f.oxidation[1]) return false;
+      const bands = OXIDATION_BANDS.filter((b) => f.oxidation!.includes(b.id));
+      if (!bands.some((b) => ox >= b.min && ox <= b.max)) return false;
     }
-    if (typeof f.maxPrice === "number" && priceFrom(p) > f.maxPrice) return false;
+    if (f.price?.length) {
+      const cents = priceFrom(p);
+      const bands = PRICE_BANDS.filter((b) => f.price!.includes(b.id));
+      if (!bands.some((b) => cents >= b.min && cents <= b.max)) return false;
+    }
     if (f.inStockOnly && !inStock(p)) return false;
     return true;
   });

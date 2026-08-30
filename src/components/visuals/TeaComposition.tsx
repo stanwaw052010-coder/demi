@@ -173,7 +173,10 @@ function Cake({
   );
 }
 
-/* ── Loose leaf: one macro leaf with its venation, plus scattered leaf ────── */
+/* ── Loose leaf: one macro leaf with its venation, plus scattered leaf ──────
+   Every tea gets a different leaf: the rotation, the width, the taper and the
+   number of vein pairs all come from the slug, so a shelf of loose teas does
+   not look like one drawing in eight colours. ─────────────────────────────── */
 function Leaf({
   colour,
   rand,
@@ -184,6 +187,15 @@ function Leaf({
   view: CompositionView;
 }) {
   const open = view === "wet";
+  // Draw the shape parameters first so the scatter below uses fresh numbers.
+  const tilt = -26 + rand() * 52;
+  const width = 34 + rand() * 20 + (open ? 6 : 0);
+  const top = (open ? 34 : 42) + rand() * 6;
+  const bottom = 200 - top - (open ? 2 : 8);
+  const veins = 7 + Math.floor(rand() * 5);
+  const shoulder = 0.52 + rand() * 0.22;
+  const midY = top + (bottom - top) * shoulder;
+
   return (
     <>
       {view === "pack" ? (
@@ -199,34 +211,32 @@ function Leaf({
         </>
       ) : null}
 
-      {/* The one large leaf. Slightly rotated so it does not read as a logo. */}
-      <g transform={`translate(100 100) rotate(${open ? -8 : 14}) translate(-100 -100)`}>
+      <g transform={`translate(100 ${((top + bottom) / 2).toFixed(1)}) rotate(${tilt.toFixed(1)}) translate(-100 -${((top + bottom) / 2).toFixed(1)})`}>
         <path
-          d={`M100 ${open ? 36 : 44}C${open ? 146 : 138} ${open ? 70 : 76} ${open ? 150 : 140} ${open ? 132 : 126} 100 ${open ? 168 : 158}C${open ? 50 : 60} ${open ? 132 : 126} ${open ? 54 : 62} ${open ? 70 : 76} 100 ${open ? 36 : 44}Z`}
+          d={`M100 ${top.toFixed(1)}C${(100 + width).toFixed(1)} ${(top + (midY - top) * 0.55).toFixed(1)} ${(100 + width * 1.05).toFixed(1)} ${midY.toFixed(1)} 100 ${bottom.toFixed(1)}C${(100 - width * 1.05).toFixed(1)} ${midY.toFixed(1)} ${(100 - width).toFixed(1)} ${(top + (midY - top) * 0.55).toFixed(1)} 100 ${top.toFixed(1)}Z`}
           fill={colour}
           fillOpacity={open ? 0.3 : 0.14}
           stroke="var(--color-sage)"
           strokeWidth="1.3"
         />
-        <path
-          d={`M100 ${open ? 40 : 48}V${open ? 164 : 154}`}
-          stroke={colour}
-          strokeWidth="1.3"
-          opacity="0.8"
-        />
-        {Array.from({ length: 9 }, (_, i) => {
-          const y = (open ? 54 : 60) + i * (open ? 12.5 : 11);
-          const spread = 30 - Math.abs(i - 4) * 4.5;
+        <path d={`M100 ${(top + 3).toFixed(1)}V${(bottom - 3).toFixed(1)}`} stroke={colour} strokeWidth="1.3" opacity="0.8" />
+
+        {Array.from({ length: veins }, (_, i) => {
+          const p = (i + 1) / (veins + 1);
+          const y = top + (bottom - top) * p;
+          // Widest in the middle of the blade, tapering to both tips.
+          const spread = width * 0.82 * Math.sin(Math.PI * p) ** 0.75;
+          const drop = 10 + (bottom - top) * 0.05;
           return (
             <g key={i} opacity={0.55}>
               <path
-                d={`M100 ${y}Q${100 + spread * 0.6} ${y + 5} ${100 + spread} ${y + 13}`}
+                d={`M100 ${y.toFixed(1)}Q${(100 + spread * 0.6).toFixed(1)} ${(y + drop * 0.35).toFixed(1)} ${(100 + spread).toFixed(1)} ${(y + drop).toFixed(1)}`}
                 fill="none"
                 stroke={colour}
                 strokeWidth="0.85"
               />
               <path
-                d={`M100 ${y}Q${100 - spread * 0.6} ${y + 5} ${100 - spread} ${y + 13}`}
+                d={`M100 ${y.toFixed(1)}Q${(100 - spread * 0.6).toFixed(1)} ${(y + drop * 0.35).toFixed(1)} ${(100 - spread).toFixed(1)} ${(y + drop).toFixed(1)}`}
                 fill="none"
                 stroke={colour}
                 strokeWidth="0.85"
@@ -234,9 +244,23 @@ function Leaf({
             </g>
           );
         })}
+
+        {/* Serrated edge, which is what tells Camellia sinensis apart. */}
+        {view !== "pack"
+          ? Array.from({ length: 9 }, (_, i) => {
+              const p = 0.15 + (i / 8) * 0.7;
+              const y = top + (bottom - top) * p;
+              const spread = width * 1.02 * Math.sin(Math.PI * p) ** 0.75;
+              return (
+                <g key={`s${i}`} opacity="0.4">
+                  <path d={`M${(100 + spread).toFixed(1)} ${y.toFixed(1)}l3 -2`} stroke={colour} strokeWidth="0.7" />
+                  <path d={`M${(100 - spread).toFixed(1)} ${y.toFixed(1)}l-3 -2`} stroke={colour} strokeWidth="0.7" />
+                </g>
+              );
+            })
+          : null}
       </g>
 
-      {/* Scattered rolled leaf around it. */}
       {Array.from({ length: 11 }, (_, i) => {
         const x = 24 + rand() * 152;
         const y = 26 + rand() * 148;

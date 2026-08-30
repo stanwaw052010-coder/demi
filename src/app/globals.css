@@ -521,3 +521,96 @@
 }
 
 .wy-map-point:hover .wy-map-dot { transform: scale(1.35); }
+
+/* A grid cell is a field with a hairline above it, never a floating card:
+   square corners, no shadow, no lift on hover. */
+.wy-field {
+  border-bottom: 0;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.25rem;
+  padding-bottom: 0;
+}
+
+/* ── Gongfu timer ─────────────────────────────────────────────────────────
+   Two half-discs sweeping under a CSS animation on transform only, so the
+   browser runs the countdown on the compositor and no script executes per
+   frame. The circle is the gaiwan seen from above. */
+.wy-pie {
+  position: relative;
+  width: clamp(11rem, 26vw, 15rem);
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  border: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--color-mist) 60%, var(--color-paper));
+  flex: none;
+  overflow: hidden;
+}
+
+.wy-pie-half {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.wy-pie-r { clip-path: inset(0 0 0 50%); }
+.wy-pie-l { clip-path: inset(0 50% 0 0); }
+
+.wy-pie-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--wy-pie-colour);
+  /* The fill is a left half-disc; rotating it sweeps the circle. */
+  clip-path: inset(0 50% 0 0);
+  transform-origin: center;
+  animation-duration: var(--wy-pie-duration);
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-play-state: var(--wy-pie-state);
+  will-change: transform;
+}
+
+.wy-pie-r .wy-pie-fill { animation-name: wy-pie-right; }
+.wy-pie-l .wy-pie-fill { animation-name: wy-pie-left; }
+
+@keyframes wy-pie-right {
+  0%   { transform: rotate(0deg); }
+  50%  { transform: rotate(180deg); }
+  100% { transform: rotate(180deg); }
+}
+
+@keyframes wy-pie-left {
+  0%   { transform: rotate(180deg); }
+  50%  { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.wy-pie-face {
+  position: absolute;
+  inset: 12%;
+  border-radius: 9999px;
+  background: var(--color-paper);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.wy-pie-count {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 7vw, 3.5rem);
+  line-height: 1;
+  font-optical-sizing: auto;
+}
+
+/* The timer is a tool, so it keeps its motion where decoration loses it. */
+@media (prefers-reduced-motion: reduce) {
+  .wy-pie-fill {
+    animation-duration: var(--wy-pie-duration) !important;
+    animation-play-state: var(--wy-pie-state) !important;
+  }
+}
