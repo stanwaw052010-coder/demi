@@ -17,13 +17,14 @@
     "openMenu": "Menu openen",
     "closeMenu": "Menu sluiten",
     "cart": "Winkelmand",
-    "cartWithCount": "Winkelmand, {count, plural, =0 {leeg} one {# artikel} other {# artikelen}}",
     "language": "Taal",
     "switchToEnglish": "English",
     "switchToDutch": "Nederlands",
     "skipToContent": "Naar de inhoud",
     "primary": "Hoofdnavigatie",
-    "footerNav": "Voettekstnavigatie"
+    "footerNav": "Voettekstnavigatie",
+    "switchLanguageTo": "Overschakelen naar {language}",
+    "itemsInCart": "artikelen in de winkelmand"
   },
   "actions": {
     "addToCart": "In de mand",
@@ -96,7 +97,7 @@
   "catalog": {
     "title": "Thee",
     "lede": "Dertig partijen thee, negen stukken gerei en drie sets. Elke thee heeft een jaar, een gebied en een tuin, of het staat er expliciet bij als wij het niet weten.",
-    "resultCount": "{count, plural, =0 {Geen partijen} one {# partij} other {# partijen}}",
+    "resultCount": "{count, plural, =0 {Geen resultaten} one {# resultaat} other {# resultaten}}",
     "filters": "Filters",
     "filterType": "Soort",
     "filterRegion": "Gebied",

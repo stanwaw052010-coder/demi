@@ -5,7 +5,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocale, useTranslations } from "next-intl";
 import { z } from "zod";
-import { useRouter } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { cartDiscount, cartSubtotal, lineTotal, useCart } from "@/lib/cart-store";
 import { formatPrice } from "@/lib/format";
@@ -97,7 +97,16 @@ export function CheckoutForm({ mockPayments }: { mockPayments: boolean }) {
   const available = methodsFor(country);
 
   if (hydrated && lines.length === 0) {
-    return <p className="wy-prose">{t("emptyCart")}</p>;
+    return (
+      <div className="wy-grid">
+        <div className="wy-main">
+          <p className="wy-prose">{t("emptyCart")}</p>
+          <Link href="/thee" className="wy-btn mt-6">
+            {actions("continueShopping")}
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   const err = (field: keyof FormValues) => {
@@ -105,7 +114,7 @@ export function CheckoutForm({ mockPayments }: { mockPayments: boolean }) {
     if (!issue) return null;
     const key = issue.message && issue.message.startsWith("invalid") ? issue.message : "required";
     return (
-      <p role="alert" className="text-[var(--text-meta)] text-amber-ink mt-1">
+      <p role="alert" className="text-meta text-amber-ink mt-1">
         {t(key as "required")}
       </p>
     );
@@ -260,12 +269,12 @@ export function CheckoutForm({ mockPayments }: { mockPayments: boolean }) {
                       className="translate-y-0.5"
                     />
                     <span>
-                      <span className="block text-[var(--text-ui)]">
+                      <span className="block text-ui">
                         {shippingT(shippingKey(method.id))}
                       </span>
                       <span className="wy-label">{shippingT(`${shippingKey(method.id)}Detail`)}</span>
                     </span>
-                    <span className="price ml-auto text-[var(--text-micro)]">
+                    <span className="price ml-auto text-micro">
                       {cost === 0 ? shippingT("free") : formatPrice(cost, locale)}
                     </span>
                   </label>
@@ -309,7 +318,7 @@ export function CheckoutForm({ mockPayments }: { mockPayments: boolean }) {
                   className="translate-y-0.5"
                 />
                 <span>
-                  <span className="block text-[var(--text-ui)]">{paymentT(method)}</span>
+                  <span className="block text-ui">{paymentT(method)}</span>
                   {method === "transfer" ? (
                     <span className="wy-label">{paymentT("transferDetail")}</span>
                   ) : null}
@@ -318,24 +327,24 @@ export function CheckoutForm({ mockPayments }: { mockPayments: boolean }) {
             ))}
           </div>
 
-          <label className="flex items-start gap-3 mt-8 text-[var(--text-micro)]">
+          <label className="flex items-start gap-3 mt-8 text-micro">
             <input type="checkbox" {...register("terms")} className="mt-1" />
             <span>{t("terms")}</span>
           </label>
           {errors.terms ? (
-            <p role="alert" className="text-[var(--text-meta)] text-amber-ink mt-1">
+            <p role="alert" className="text-meta text-amber-ink mt-1">
               {t("termsRequired")}
             </p>
           ) : null}
 
-          <label className="flex items-start gap-3 mt-3 text-[var(--text-micro)] text-stone">
+          <label className="flex items-start gap-3 mt-3 text-micro text-stone">
             <input type="checkbox" {...register("newsletter")} className="mt-1" />
             <span>{t("newsletterOptIn")}</span>
           </label>
 
           {failed ? (
             <div role="alert" className="mt-6 pl-4" style={{ borderLeft: "2px solid var(--color-amber)" }}>
-              <p className="text-[var(--text-ui)]">{t("errorTitle")}</p>
+              <p className="text-ui">{t("errorTitle")}</p>
               <p className="wy-label mt-1">{t("errorBody")}</p>
             </div>
           ) : null}
@@ -351,7 +360,7 @@ export function CheckoutForm({ mockPayments }: { mockPayments: boolean }) {
         <h2 className="wy-label pb-2 wy-rule-b">{t("summary")}</h2>
         <ul className="mt-3">
           {lines.map((line) => (
-            <li key={line.id} className="flex gap-3 py-2.5 wy-rule-b text-[var(--text-micro)]">
+            <li key={line.id} className="flex gap-3 py-2.5 wy-rule-b text-micro">
               <span
                 className="wy-drop mt-1.5"
                 data-full="true"
@@ -373,7 +382,7 @@ export function CheckoutForm({ mockPayments }: { mockPayments: boolean }) {
           ))}
         </ul>
 
-        <dl className="mt-4 space-y-1.5 text-[var(--text-micro)]">
+        <dl className="mt-4 space-y-1.5 text-micro">
           <div className="flex justify-between">
             <dt className="text-stone">{cartT("subtotal")}</dt>
             <dd className="price">{formatPrice(totals.subtotal, locale)}</dd>
@@ -400,7 +409,7 @@ export function CheckoutForm({ mockPayments }: { mockPayments: boolean }) {
               <dd className="price">{formatPrice(line.vat, locale)}</dd>
             </div>
           ))}
-          <div className="flex justify-between pt-2 wy-rule text-[var(--text-ui)]">
+          <div className="flex justify-between pt-2 wy-rule text-ui">
             <dt>{t("total")}</dt>
             <dd className="price">{formatPrice(totals.gross, locale)}</dd>
           </div>

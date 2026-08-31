@@ -17,6 +17,7 @@ export function LocaleSwitch() {
   const params = useParams();
 
   const other = routing.locales.find((l) => l !== locale) ?? routing.defaultLocale;
+  const label = other === "en" ? t("switchToEnglish") : t("switchToDutch");
 
   return (
     <Link
@@ -25,10 +26,10 @@ export function LocaleSwitch() {
       locale={other}
       lang={other}
       hrefLang={other}
-      className="wy-link text-[var(--text-micro)] text-stone hover:text-ink"
-      aria-label={t("language")}
+      className="wy-link text-micro text-stone hover:text-ink"
+      aria-label={t("switchLanguageTo", { language: label })}
     >
-      {other === "en" ? t("switchToEnglish") : t("switchToDutch")}
+      {label}
     </Link>
   );
 }

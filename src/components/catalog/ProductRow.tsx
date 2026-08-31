@@ -45,14 +45,14 @@ export async function ProductRow({
           </TransitionLink>
         </h3>
         {product.pinyin && product.pinyin !== product.name ? (
-          <p className="wy-latin text-[var(--text-micro)] text-stone mt-0.5"
+          <p className="wy-latin text-micro text-stone mt-0.5"
              style={{ fontFamily: "var(--font-display)" }}>
             {product.pinyin}
           </p>
         ) : null}
       </div>
 
-      <p className="col-start-2 md:col-start-3 text-[var(--text-micro)] text-stone min-w-0">
+      <p className="col-start-2 md:col-start-3 text-micro text-stone min-w-0">
         {region ? (
           <>
             <span className="wy-hanzi text-pine mr-2">{region.hanzi}</span>
@@ -66,12 +66,12 @@ export async function ProductRow({
         )}
       </p>
 
-      <p className="col-start-2 md:col-start-4 tnum text-[var(--text-micro)] text-stone">
+      <p className="col-start-2 md:col-start-4 tnum text-micro text-stone">
         {product.passport?.harvestYear ?? "—"}
       </p>
 
       <p className="col-start-2 md:col-start-5 md:text-right">
-        <span className="price text-[var(--text-ui)] text-ink">
+        <span className="price text-ui text-ink">
           {formatPrice(variant.price, locale)}
         </span>
         <span className="wy-label ml-2">

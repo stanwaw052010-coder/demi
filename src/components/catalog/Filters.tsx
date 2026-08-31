@@ -53,12 +53,12 @@ export function Filters({
 
   return (
     <form
-      className="text-[var(--text-micro)]"
+      className="text-micro"
       aria-busy={pending}
       onSubmit={(event) => event.preventDefault()}
     >
       <div className="flex items-baseline justify-between gap-4 pb-3 wy-rule-b">
-        <h2 className="font-medium text-pine">{t("filters")}</h2>
+        <h2 className="text-micro font-medium text-pine">{t("filters")}</h2>
         {active ? (
           <button
             type="button"

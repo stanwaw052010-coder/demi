@@ -100,7 +100,7 @@ export default async function ArticlePage({
       <header className="wy-grid mt-8 gap-y-4">
         <div className="wy-margin">
           <p className="wy-label">{t("published")}</p>
-          <time dateTime={article.date} className="block text-[var(--text-micro)] mt-1">
+          <time dateTime={article.date} className="block text-micro mt-1">
             {formatDate(article.date, locale)}
           </time>
           <p className="wy-label mt-3">{t("readingTime", { minutes: article.minutes })}</p>

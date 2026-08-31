@@ -62,7 +62,7 @@ export async function SiteFooter() {
           <div className="wy-main grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
             {columns.map((column) => (
               <nav key={column.title} aria-label={column.title}>
-                <h2 className="text-[var(--text-micro)] font-medium text-pine mb-3 font-sans">
+                <h2 className="text-micro font-medium text-pine mb-3 font-sans">
                   {column.title}
                 </h2>
                 <ul className="space-y-2">
@@ -70,7 +70,7 @@ export async function SiteFooter() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="wy-link text-[var(--text-micro)] text-stone hover:text-ink"
+                        className="wy-link text-micro text-stone hover:text-ink"
                       >
                         {link.label}
                       </Link>

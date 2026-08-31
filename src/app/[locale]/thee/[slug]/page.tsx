@@ -148,7 +148,7 @@ export default async function ProductPage({
           ) : null}
           {product.pinyin && product.pinyin !== product.name ? (
             <p
-              className="wy-latin text-[var(--text-micro)] text-stone mt-1"
+              className="wy-latin text-micro text-stone mt-1"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {product.pinyin}

@@ -53,7 +53,7 @@ export function MobileNav({
       <button
         ref={trigger}
         type="button"
-        className="lg:hidden inline-flex items-center text-[var(--text-micro)]"
+        className="lg:hidden inline-flex items-center text-micro"
         aria-expanded={open}
         aria-controls="wy-mobile-nav"
         onClick={() => setOpen((v) => !v)}

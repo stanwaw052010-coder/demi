@@ -45,7 +45,14 @@ export function Gallery({
       {/* Desktop: one large view with a hairline tab row underneath. */}
       <div className="hidden sm:block">
         {views.map((view, index) => (
-          <div key={view.key} hidden={index !== active}>
+          <div
+            key={view.key}
+            id={`wy-panel-${view.key}`}
+            role="tabpanel"
+            aria-labelledby={`wy-view-${view.key}`}
+            tabIndex={0}
+            hidden={index !== active}
+          >
             {view.node}
           </div>
         ))}
@@ -65,7 +72,7 @@ export function Gallery({
                 if (event.key === "ArrowRight") setActive((index + 1) % views.length);
                 if (event.key === "ArrowLeft") setActive((index - 1 + views.length) % views.length);
               }}
-              className="flex-1 py-2.5 text-[var(--text-meta)] text-left"
+              className="flex-1 py-2.5 text-meta text-left"
               style={{
                 borderTop: `1px solid ${index === active ? "var(--color-pine)" : "var(--rule)"}`,
                 color: index === active ? "var(--color-ink)" : "var(--color-stone)",

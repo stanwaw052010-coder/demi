@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { alternatesFor } from "@/lib/alternates";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { vaultSteps, vaultTiers } from "@content/vault";
@@ -15,7 +16,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
-  return { title: t("vaultTitle"), description: t("vaultDescription") };
+  return { title: t("vaultTitle"), description: t("vaultDescription"),
+    alternates: alternatesFor("/puerh-vault", locale as AppLocale),
+  };
 }
 
 export default async function VaultPage({
@@ -84,7 +87,7 @@ export default async function VaultPage({
             {vaultTiers.map((tier) => (
               <div key={tier.id} className="wy-rule pt-5">
                 <h3 className="text-[1.5rem]">{tier.title[locale]}</h3>
-                <p className="price text-[var(--text-ui)] mt-3">
+                <p className="price text-ui mt-3">
                   {t("perYear", { price: formatPrice(tier.pricePerCakePerYear, locale) })}
                 </p>
                 <p className="wy-label mt-1 tnum">

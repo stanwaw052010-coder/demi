@@ -8,6 +8,13 @@ import { routing } from "./i18n/routing";
 export default createMiddleware(routing);
 
 export const config = {
-  // Everything except API routes, Next internals and files with an extension.
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  /**
+   * Everything except API routes, Next internals, files with an extension, and
+   * the metadata file conventions. Without that last group the proxy would
+   * redirect /opengraph-image to /nl/opengraph-image and the social card would
+   * 307 instead of rendering.
+   */
+  matcher: [
+    "/((?!api|_next|_vercel|opengraph-image|twitter-image|apple-icon|icon|sitemap|robots|manifest|.*\\..*).*)",
+  ],
 };

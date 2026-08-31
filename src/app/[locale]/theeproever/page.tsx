@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { alternatesFor } from "@/lib/alternates";
 import type { AppLocale } from "@/i18n/routing";
 import { Quiz, type QuizCandidate } from "@/components/quiz/Quiz";
 import { cheapestVariant, getAllProducts, getRegion, inStock } from "@/lib/catalog";
@@ -11,7 +12,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
-  return { title: t("quizTitle"), description: t("quizDescription") };
+  return { title: t("quizTitle"), description: t("quizDescription"),
+    alternates: alternatesFor("/theeproever", locale as AppLocale),
+  };
 }
 
 export default async function QuizPage({

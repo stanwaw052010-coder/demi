@@ -52,7 +52,7 @@ export function GuideBlocks({
           case "table":
             return (
               <div key={index} className="overflow-x-auto">
-                <table className="text-[var(--text-micro)] min-w-[34rem]">
+                <table className="text-micro min-w-[34rem]">
                   <thead>
                     <tr>
                       {block.head.map((cell, i) => (

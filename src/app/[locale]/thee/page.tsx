@@ -190,7 +190,7 @@ export default async function CatalogPage({
 
         <div className="wy-main">
           <div className="flex flex-wrap items-baseline justify-between gap-4 pb-5 wy-rule-b">
-            <p className="tnum text-[var(--text-micro)] text-stone" aria-live="polite">
+            <p className="tnum text-micro text-stone" aria-live="polite">
               {t("resultCount", { count: results.length })}
             </p>
             <SortSelect />

@@ -105,7 +105,7 @@ export function CartDrawer() {
             ref={closeButton}
             type="button"
             onClick={close}
-            className="ml-auto wy-link text-[var(--text-micro)]"
+            className="ml-auto wy-link text-micro"
           >
             {actions("close")}
           </button>
@@ -115,7 +115,7 @@ export function CartDrawer() {
           {lines.length === 0 ? (
             <div className="py-10">
               <p className="wy-prose text-[1.0625rem]">{t("empty")}</p>
-              <p className="text-[var(--text-micro)] text-stone mt-2">{t("emptyBody")}</p>
+              <p className="text-micro text-stone mt-2">{t("emptyBody")}</p>
               <Link href="/thee" className="wy-btn mt-6" onClick={close}>
                 {actions("continueShopping")}
               </Link>
@@ -155,7 +155,7 @@ export function CartDrawer() {
                           &minus;
                         </button>
                         <span
-                          className="px-2 tnum text-[var(--text-micro)]"
+                          className="px-2 tnum text-micro"
                           aria-label={t("quantityFor", { name: line.name })}
                         >
                           {line.quantity}
@@ -171,14 +171,14 @@ export function CartDrawer() {
                       </div>
                       <button
                         type="button"
-                        className="wy-link text-[var(--text-meta)] text-stone"
+                        className="wy-link text-meta text-stone"
                         onClick={() => remove(line.id)}
                       >
                         {t("removeItem", { name: line.name })}
                       </button>
                     </div>
                   </div>
-                  <span className="price text-[var(--text-micro)] whitespace-nowrap">
+                  <span className="price text-micro whitespace-nowrap">
                     {formatPrice(lineTotal(line), locale)}
                   </span>
                 </li>
@@ -193,7 +193,7 @@ export function CartDrawer() {
           <div className="px-6 py-5 wy-rule">
             <PromoField />
 
-            <dl className="mt-4 space-y-1.5 text-[var(--text-micro)]">
+            <dl className="mt-4 space-y-1.5 text-micro">
               <div className="flex justify-between">
                 <dt className="text-stone">{t("subtotal")}</dt>
                 <dd className="price">{formatPrice(subtotal, locale)}</dd>

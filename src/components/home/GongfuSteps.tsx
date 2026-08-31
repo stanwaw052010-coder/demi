@@ -32,11 +32,11 @@ export async function GongfuSteps({ locale }: { locale: AppLocale }) {
             className="col-span-6 md:col-span-3 wy-rule pt-4"
             style={{ gridColumn: "span 3" }}
           >
-            <span className="tnum text-[var(--text-micro)] text-stone">
+            <span className="tnum text-micro text-stone">
               {String(index + 1).padStart(2, "0")}
             </span>
             <h3 className="text-[1.25rem] mt-2">{step.title[locale]}</h3>
-            <p className="text-[var(--text-micro)] text-stone mt-2" style={{ maxWidth: "34ch" }}>
+            <p className="text-micro text-stone mt-2" style={{ maxWidth: "34ch" }}>
               {step.text[locale]}
             </p>
           </li>

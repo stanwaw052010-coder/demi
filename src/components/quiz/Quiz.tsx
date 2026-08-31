@@ -243,7 +243,7 @@ export function Quiz({ candidates }: { candidates: QuizCandidate[] }) {
           {step > 0 ? (
             <button
               type="button"
-              className="wy-link text-[var(--text-micro)] text-stone mt-8"
+              className="wy-link text-micro text-stone mt-8"
               onClick={() => setStep((s) => s - 1)}
             >
               {actions("previous")}

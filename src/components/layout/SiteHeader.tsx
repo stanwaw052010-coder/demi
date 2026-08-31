@@ -37,7 +37,7 @@ export async function SiteHeader() {
 
         <nav
           aria-label={t("primary")}
-          className="hidden lg:flex items-center gap-5 text-[var(--text-micro)]"
+          className="hidden lg:flex items-center gap-5 text-micro"
         >
           {links.map((link) => (
             <Link key={link.href} href={link.href} className="wy-link text-ink">

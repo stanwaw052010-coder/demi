@@ -40,14 +40,20 @@ export function CartButton() {
     <button
       type="button"
       onClick={open}
-      className="inline-flex items-baseline gap-1.5 text-[var(--text-micro)] text-ink"
-      aria-label={t("cartWithCount", { count })}
+      className="inline-flex items-baseline gap-1.5 text-micro text-ink"
       data-cart-target
     >
+      {/*
+        No aria-label: the accessible name is built from what is on screen plus
+        one hidden word, so a voice-control user can say what they can read.
+        The digit renders as 0 on the server and on the first client paint, so
+        neither hydration nor the counter's width jumps.
+      */}
       <span className="wy-link">{t("cart")}</span>
       <span ref={counter} className="tnum inline-block text-stone">
-        {hydrated ? count : ""}
+        {hydrated ? count : 0}
       </span>
+      <span className="sr-only">{t("itemsInCart")}</span>
     </button>
   );
 }

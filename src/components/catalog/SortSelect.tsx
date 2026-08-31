@@ -29,7 +29,7 @@ export function SortSelect() {
       <select
         id="wy-sort"
         defaultValue={params.get("sort") ?? "relevance"}
-        className="text-[var(--text-micro)]"
+        className="text-micro"
         onChange={(event) => {
           const next = new URLSearchParams(params.toString());
           if (event.target.value === "relevance") next.delete("sort");

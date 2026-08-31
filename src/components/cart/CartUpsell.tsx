@@ -24,7 +24,7 @@ export function CartUpsell() {
   return (
     <div className="py-5 wy-rule-b">
       <h3 className="text-[1.0625rem] mb-1">{t("upsellTitle")}</h3>
-      <p className="text-[var(--text-micro)] text-stone">
+      <p className="text-micro text-stone">
         {t("upsellBody", { price: formatPrice(offer.price, locale) })}
       </p>
       <button

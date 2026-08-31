@@ -118,7 +118,7 @@ export function BookingForm({ sessions }: { sessions: SessionOption[] }) {
       </div>
 
       {status === "error" || status === "full" ? (
-        <p role="alert" className="text-[var(--text-micro)] text-amber-ink mt-4">
+        <p role="alert" className="text-micro text-amber-ink mt-4">
           {status === "full" ? t("full") : checkout("errorBody")}
         </p>
       ) : null}

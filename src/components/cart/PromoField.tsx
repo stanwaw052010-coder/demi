@@ -14,7 +14,7 @@ export function PromoField() {
 
   if (promo) {
     return (
-      <p className="text-[var(--text-micro)] flex items-center gap-3">
+      <p className="text-micro flex items-center gap-3">
         <span>{t("promoApplied", { code: promo.code })}</span>
         <button type="button" className="wy-link text-stone" onClick={clearPromo}>
           &times;

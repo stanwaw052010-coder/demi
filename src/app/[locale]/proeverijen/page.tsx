@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { alternatesFor } from "@/lib/alternates";
 import type { AppLocale } from "@/i18n/routing";
 import { tastings } from "@content/tastings";
 import { BookingForm } from "@/components/tastings/BookingForm";
@@ -14,7 +15,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
-  return { title: t("tastingsTitle"), description: t("tastingsDescription") };
+  return { title: t("tastingsTitle"), description: t("tastingsDescription"),
+    alternates: alternatesFor("/proeverijen", locale as AppLocale),
+  };
 }
 
 export default async function TastingsPage({
@@ -65,7 +68,7 @@ export default async function TastingsPage({
           {tastings.map((session) => (
             <li key={session.id} className="wy-grid wy-rule py-8 gap-y-3">
               <div className="wy-margin">
-                <time dateTime={session.date} className="block text-[var(--text-ui)]">
+                <time dateTime={session.date} className="block text-ui">
                   {formatDate(session.date, locale)}
                 </time>
                 <p className="wy-label tnum mt-1">{session.startTime}</p>

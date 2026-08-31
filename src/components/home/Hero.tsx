@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { LogoMark } from "@/components/brand/Logo";
 import { InfusionStain } from "./InfusionStain";
-import { getAllProducts, harvestRange } from "@/lib/catalog";
+import { getTeas, harvestRange } from "@/lib/catalog";
 
 /**
  * The heroscreen and the order confirmation are the only centred pages on the
@@ -10,7 +10,7 @@ import { getAllProducts, harvestRange } from "@/lib/catalog";
 export async function Hero() {
   const t = await getTranslations("home");
   const range = harvestRange();
-  const batches = getAllProducts().filter((p) => p.passport).length;
+  const batches = getTeas().length;
 
   return (
     <section
@@ -18,7 +18,6 @@ export async function Hero() {
       className="relative isolate overflow-hidden"
       style={{ minHeight: "min(86svh, 46rem)" }}
     >
-      <div className="wy-haze" aria-hidden="true" />
       <InfusionStain />
 
       <div className="wy-shell relative z-10 flex flex-col items-center justify-center text-center"
@@ -40,7 +39,7 @@ export async function Hero() {
         <p className="wy-hero-rise-late wy-lead mt-6 text-ink">{t("heroLine")}</p>
 
         <p
-          className="wy-hero-rise-late mt-4 text-[var(--text-micro)] text-stone"
+          className="wy-hero-rise-late mt-4 text-micro text-stone"
           style={{ maxWidth: "46ch" }}
         >
           {t("heroIntro")}

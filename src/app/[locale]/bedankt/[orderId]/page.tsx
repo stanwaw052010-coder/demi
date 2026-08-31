@@ -45,7 +45,9 @@ export default async function ThanksPage({
     return (
       <div className="wy-shell" style={{ paddingBlock: "clamp(4rem, 12vh, 8rem)" }}>
         <div className="mx-auto text-center" style={{ maxWidth: "42ch" }}>
-          <LogoMark size={48} />
+          <span className="flex justify-center">
+            <LogoMark size={48} />
+          </span>
           <h1 className="mt-6 text-[2rem]">{t("notFoundTitle")}</h1>
           <p className="wy-prose mt-4 mx-auto">{t("notFoundBody")}</p>
           <Link href="/thee" className="wy-btn mt-8">
@@ -66,7 +68,9 @@ export default async function ThanksPage({
   return (
     <div className="wy-shell" style={{ paddingBlock: "clamp(3rem, 9vh, 6rem)" }}>
       <div className="mx-auto text-center" style={{ maxWidth: "34rem" }}>
-        <LogoMark size={54} />
+        <span className="flex justify-center">
+          <LogoMark size={54} />
+        </span>
         <h1 className="mt-7" style={{ fontSize: "clamp(2.25rem, 1.6rem + 2.4vw, 3.25rem)" }}>
           {t("thanksTitle")}
         </h1>
@@ -94,7 +98,7 @@ export default async function ThanksPage({
         <h2 className="wy-label mt-10 pb-2 wy-rule-b">{t("items")}</h2>
         <ul>
           {order.input.lines.map((line) => (
-            <li key={line.sku} className="flex gap-4 py-3 wy-rule-b text-[var(--text-micro)]">
+            <li key={line.sku} className="flex gap-4 py-3 wy-rule-b text-micro">
               <span className="min-w-0 flex-1">
                 <Link
                   href={{ pathname: "/thee/[slug]", params: { slug: line.slug } }}
@@ -116,7 +120,7 @@ export default async function ThanksPage({
           ))}
         </ul>
 
-        <dl className="mt-5 space-y-1.5 text-[var(--text-micro)]">
+        <dl className="mt-5 space-y-1.5 text-micro">
           <div className="flex justify-between">
             <dt className="text-stone">{cartT("subtotal")}</dt>
             <dd className="price">{formatPrice(order.totals.subtotal, locale)}</dd>
@@ -147,7 +151,7 @@ export default async function ThanksPage({
               <dd className="price">{formatPrice(line.vat, locale)}</dd>
             </div>
           ))}
-          <div className="flex justify-between pt-2 wy-rule text-[var(--text-ui)]">
+          <div className="flex justify-between pt-2 wy-rule text-ui">
             <dt>{checkoutT("total")}</dt>
             <dd className="price">{formatPrice(order.totals.total, locale)}</dd>
           </div>
@@ -156,7 +160,7 @@ export default async function ThanksPage({
         <div className="grid sm:grid-cols-2 gap-8 mt-12">
           <section>
             <h2 className="wy-label pb-2 wy-rule-b">{t("deliveryTo")}</h2>
-            <address className="not-italic text-[var(--text-micro)] mt-3 leading-relaxed">
+            <address className="not-italic text-micro mt-3 leading-relaxed">
               {order.input.firstName} {order.input.lastName}
               <br />
               {order.input.street} {order.input.houseNumber}
@@ -168,7 +172,7 @@ export default async function ThanksPage({
           <section>
             <h2 className="wy-label pb-2 wy-rule-b">{t("tracking")}</h2>
             {order.trackingNumber ? (
-              <p className="tnum text-[var(--text-micro)] mt-3">{order.trackingNumber}</p>
+              <p className="tnum text-micro mt-3">{order.trackingNumber}</p>
             ) : (
               <p className="wy-label mt-3">{t("trackingPending")}</p>
             )}

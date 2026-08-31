@@ -1,7 +1,7 @@
 import { liquorHex } from "@/lib/liquor";
 import type { Form, LiquorKey } from "@content/types";
 import { ObjectSilhouette } from "./ObjectSilhouette";
-import { seeded } from "./noise";
+import { seeded } from "./seeded";
 
 export type CompositionView = "dry" | "liquor" | "wet" | "pack";
 

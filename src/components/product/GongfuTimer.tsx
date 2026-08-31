@@ -42,7 +42,13 @@ export function GongfuTimer({
   const steps = useMemo<Step[]>(() => {
     const list: Step[] = [];
     if (gongfu.rinseSeconds !== null) {
-      list.push({ index: 0, seconds: gongfu.rinseSeconds, colour: infusionColour(liquor, 1, gongfu.infusions) });
+      // The rinse gets poured away, so it wears a pale wash rather than the
+      // colour of the first real infusion.
+      list.push({
+        index: 0,
+        seconds: gongfu.rinseSeconds,
+        colour: `color-mix(in srgb, ${infusionColour(liquor, 1, gongfu.infusions)} 38%, var(--color-mist))`,
+      });
     }
     for (let i = 1; i <= gongfu.infusions; i += 1) {
       list.push({
@@ -199,7 +205,7 @@ export function GongfuTimer({
             </button>
           </div>
 
-          <label className="flex items-center gap-2.5 mt-4 text-[var(--text-micro)] text-stone">
+          <label className="flex items-center gap-2.5 mt-4 text-micro text-stone">
             <input
               type="checkbox"
               checked={sound}

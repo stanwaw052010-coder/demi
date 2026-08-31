@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { alternatesFor } from "@/lib/alternates";
+import type { AppLocale } from "@/i18n/routing";
 import { Seal } from "@/components/brand/Logo";
 import { COMPANY } from "@/lib/site";
 
@@ -10,7 +12,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
-  return { title: t("aboutTitle"), description: t("aboutDescription") };
+  return { title: t("aboutTitle"), description: t("aboutDescription"),
+    alternates: alternatesFor("/over-ons", locale as AppLocale),
+  };
 }
 
 export default async function AboutPage({
@@ -58,7 +62,7 @@ export default async function AboutPage({
           <h2 id="wy-cert" className="text-[2rem]">
             {t("certificateTitle")}
           </h2>
-          <dl className="text-[var(--text-micro)] mt-8 max-w-[34rem]">
+          <dl className="text-micro mt-8 max-w-[34rem]">
             {[
               [COMPANY.legalName, `${COMPANY.shop.street}, ${COMPANY.shop.postcode} ${COMPANY.shop.city}`],
               ["BTW", COMPANY.vat],

@@ -49,20 +49,36 @@ export async function OriginMap({ locale }: { locale: AppLocale }) {
 
   return (
     <figure className="mt-12">
+      {/*
+        Not role="img": the map contains real links, and role="img" would make
+        the whole subtree presentational and hide them from assistive tech.
+        The relief itself is decorative and hidden; each point names itself.
+      */}
       <svg
         viewBox="0 0 100 62"
         className="w-full h-auto"
-        role="img"
         aria-label={t("originTitle")}
         style={{ overflow: "visible" }}
       >
-        <g stroke="var(--color-sage)" fill="none" strokeWidth="0.2" strokeLinecap="round">
+        <g
+          stroke="var(--color-sage)"
+          fill="none"
+          strokeWidth="0.2"
+          strokeLinecap="round"
+          aria-hidden="true"
+        >
           {contours.map((d, i) => (
             <path key={i} d={d} opacity={0.32 + i * 0.045} />
           ))}
         </g>
 
-        <g stroke="var(--color-sage)" fill="none" strokeWidth="0.26" opacity="0.85">
+        <g
+          stroke="var(--color-sage)"
+          fill="none"
+          strokeWidth="0.26"
+          opacity="0.85"
+          aria-hidden="true"
+        >
           {[10, 7.4, 4.8, 2.4].map((r, i) => (
             <path key={`a${i}`} d={ring(21, 26, r * 1.25, r * 0.8, 0.6)} />
           ))}
@@ -82,7 +98,6 @@ export async function OriginMap({ locale }: { locale: AppLocale }) {
               key={region.id}
               href={{ pathname: "/thee", query: { region: region.id } }}
               className="wy-map-point"
-              aria-label={region.name}
             >
               <circle cx={x} cy={y} r="4" fill="transparent" />
               <circle cx={x} cy={y} r="1.05" fill="var(--color-pine)" className="wy-map-dot" />

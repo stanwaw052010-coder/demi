@@ -13,6 +13,9 @@ import { organisationJsonLd } from "@/lib/seo";
 import { SITE_URL } from "@/lib/site";
 import "../globals.css";
 
+const HANZI_FONT_HREF =
+  "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500&display=swap";
+
 /**
  * Two clearly different faces. Newsreader is variable with optical sizing, so
  * a heading is drawn as a display cut rather than as enlarged text.
@@ -97,16 +100,22 @@ export default async function LocaleLayout({
           CSS2 endpoint splits CJK into ~100 unicode-range subsets, so a page
           with six characters on it downloads six small files instead of a
           self-hosted 10 MB face.
+
+          It is attached from script rather than as a plain <link> so it never
+          blocks the first paint: the characters are an accent, and the
+          fallback stack in --font-hanzi carries them until it arrives. With
+          scripting off the <noscript> link takes over.
         */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font -- the rule
-            targets the Pages Router's _document; in the App Router this link
-            sits in the single root layout and applies to every page. */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500&display=swap"
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var l=document.createElement('link');l.rel='stylesheet';l.href=${JSON.stringify(HANZI_FONT_HREF)};document.head.appendChild(l);})();`,
+          }}
         />
+        <noscript>
+          <link rel="stylesheet" href={HANZI_FONT_HREF} />
+        </noscript>
       </head>
       <body>
         <NextIntlClientProvider>

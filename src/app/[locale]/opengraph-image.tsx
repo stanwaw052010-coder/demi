@@ -1,15 +1,42 @@
 import { ImageResponse } from "next/og";
+import { routing } from "@/i18n/routing";
 
 export const alt = "Well’s of Yunnan — Chinese tea with year, mountain and garden";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+const copy = {
+  nl: {
+    line: "Thee met een adres. Berg, jaar, tuin.",
+    place: "Kortrijk, België",
+    batches: "30 partijen",
+    years: "oogst 2015 tot 2026",
+  },
+  en: {
+    line: "Tea with an address. Mountain, year, garden.",
+    place: "Kortrijk, Belgium",
+    batches: "30 batches",
+    years: "harvests 2015 to 2026",
+  },
+} as const;
 
 /**
  * Drawn with the site's own vocabulary: the 井 mark, a hairline rule, and a
  * band of the liquor scale along the bottom. No photograph, because there is
  * none, and no gradient except as liquor.
  */
-export default function OgImage() {
+export default async function OgImage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = copy[locale === "en" ? "en" : "nl"];
+
   const liquors = [
     "#D8DCA6",
     "#DFCE87",
@@ -53,9 +80,7 @@ export default function OgImage() {
           <div style={{ fontSize: 96, letterSpacing: "-0.02em", lineHeight: 1 }}>
             Well’s of Yunnan
           </div>
-          <div style={{ fontSize: 34, color: "#2E4A3A", marginTop: 22 }}>
-            Thee met een adres. Berg, jaar, tuin.
-          </div>
+          <div style={{ fontSize: 34, color: "#2E4A3A", marginTop: 22 }}>{t.line}</div>
           <div
             style={{
               display: "flex",
@@ -67,9 +92,9 @@ export default function OgImage() {
               borderTop: "1px solid #9FBE96",
             }}
           >
-            <span>Kortrijk, België</span>
-            <span>30 partijen</span>
-            <span>oogst 2015 tot 2026</span>
+            <span>{t.place}</span>
+            <span>{t.batches}</span>
+            <span>{t.years}</span>
             <span>wellsofyunnan.be</span>
           </div>
         </div>

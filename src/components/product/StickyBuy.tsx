@@ -33,8 +33,8 @@ export function StickyBuy({ price, name }: { price: string; name: string }) {
     >
       <div className="wy-shell py-3 flex items-center gap-4">
         <div className="min-w-0 flex-1">
-          <p className="truncate text-[var(--text-micro)]">{name}</p>
-          <p className="price text-[var(--text-micro)] text-stone">{price}</p>
+          <p className="truncate text-micro">{name}</p>
+          <p className="price text-micro text-stone">{price}</p>
         </div>
         <a
           href="#wy-buy"

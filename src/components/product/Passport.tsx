@@ -64,7 +64,7 @@ export async function Passport({
       <h2 id="wy-passport" className="wy-label pb-2 wy-rule-b">
         {t("passport")}
       </h2>
-      <dl className="text-[var(--text-micro)]">
+      <dl className="text-micro">
         {rows.map((row) => (
           <div
             key={row.label}

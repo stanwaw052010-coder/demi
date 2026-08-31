@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { alternatesFor } from "@/lib/alternates";
+import type { AppLocale } from "@/i18n/routing";
 import { ProsePage, type Section } from "@/components/pages/Prose";
 
 export async function generateMetadata({
@@ -9,7 +11,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "legal" });
-  return { title: t("cookiesTitle") };
+  return { title: t("cookiesTitle"),
+    alternates: alternatesFor("/cookiebeleid", locale as AppLocale),
+  };
 }
 
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {

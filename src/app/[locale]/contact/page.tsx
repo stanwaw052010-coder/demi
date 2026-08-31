@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { alternatesFor } from "@/lib/alternates";
+import type { AppLocale } from "@/i18n/routing";
 import { COMPANY } from "@/lib/site";
 
 export async function generateMetadata({
@@ -9,7 +11,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "contact" });
-  return { title: t("title"), description: t("lede") };
+  return { title: t("title"), description: t("lede"),
+    alternates: alternatesFor("/contact", locale as AppLocale),
+  };
 }
 
 export default async function ContactPage({
@@ -42,7 +46,7 @@ export default async function ContactPage({
           <div>
             <h2 className="wy-label pb-2 wy-rule-b">{t("emailTitle")}</h2>
             <p className="mt-2">
-              <a href={`mailto:${COMPANY.email}`} className="wy-link text-[var(--text-ui)]">
+              <a href={`mailto:${COMPANY.email}`} className="wy-link text-ui">
                 {COMPANY.email}
               </a>
             </p>
@@ -50,7 +54,7 @@ export default async function ContactPage({
           <div>
             <h2 className="wy-label pb-2 wy-rule-b">{t("phoneTitle")}</h2>
             <p className="mt-2">
-              <a href={`tel:${COMPANY.phoneHref}`} className="wy-link tnum text-[var(--text-ui)]">
+              <a href={`tel:${COMPANY.phoneHref}`} className="wy-link tnum text-ui">
                 {COMPANY.phone}
               </a>
             </p>
@@ -70,7 +74,7 @@ export default async function ContactPage({
       <div className="wy-grid mt-20">
         <div className="wy-main">
           <h2 className="wy-label pb-2 wy-rule-b">{t("companyTitle")}</h2>
-          <dl className="text-[var(--text-micro)] mt-3">
+          <dl className="text-micro mt-3">
             <div className="grid grid-cols-[9rem_minmax(0,1fr)] gap-4 py-2 wy-rule-b">
               <dt className="text-stone">{COMPANY.legalName}</dt>
               <dd>

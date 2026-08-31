@@ -70,10 +70,10 @@ export function AddToCart({
                 onChange={() => setSelected(index)}
                 className="translate-y-0.5"
               />
-              <span className="text-[var(--text-ui)]">
+              <span className="text-ui">
                 {v.label ? v.label[locale] : `${v.grams} g`}
               </span>
-              <span className="price ml-auto text-[var(--text-ui)]">
+              <span className="price ml-auto text-ui">
                 {formatPrice(v.price, locale)}
               </span>
               {v.stock === 0 ? (
@@ -95,7 +95,7 @@ export function AddToCart({
             id={`${groupId}-vault`}
             value={vaultYears}
             onChange={(event) => setVaultYears(Number(event.target.value))}
-            className="text-[var(--text-micro)]"
+            className="text-micro"
           >
             <option value={0}>—</option>
             {[3, 5, 10].map((years) => (

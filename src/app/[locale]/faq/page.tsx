@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { alternatesFor } from "@/lib/alternates";
+import type { AppLocale } from "@/i18n/routing";
 import { JsonLd, faqJsonLd } from "@/lib/seo";
 
 interface Item {
@@ -14,7 +16,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "faqContent" });
-  return { title: t("title"), description: t("lede") };
+  return { title: t("title"), description: t("lede"),
+    alternates: alternatesFor("/faq", locale as AppLocale),
+  };
 }
 
 export default async function FaqPage({ params }: { params: Promise<{ locale: string }> }) {

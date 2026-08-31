@@ -53,7 +53,7 @@ export function CookieBanner() {
           <h2 id="wy-cookie-title" className="text-[1.125rem] mb-1">
             {t("title")}
           </h2>
-          <p className="text-[var(--text-micro)] text-stone">
+          <p className="text-micro text-stone">
             {t("body")}{" "}
             <Link href="/cookiebeleid" className="wy-link-static text-ink">
               {t("policy")}
@@ -63,14 +63,14 @@ export function CookieBanner() {
           {expanded ? (
             <fieldset className="mt-4 space-y-3 border-0 p-0">
               <legend className="sr-only">{t("settings")}</legend>
-              <label className="flex items-start gap-3 text-[var(--text-micro)]">
+              <label className="flex items-start gap-3 text-micro">
                 <input type="checkbox" checked disabled className="mt-1" />
                 <span>
                   <span className="block text-ink">{t("categoryNecessary")}</span>
                   <span className="text-stone">{t("categoryNecessaryBody")}</span>
                 </span>
               </label>
-              <label className="flex items-start gap-3 text-[var(--text-micro)]">
+              <label className="flex items-start gap-3 text-micro">
                 <input
                   type="checkbox"
                   checked={analytics}

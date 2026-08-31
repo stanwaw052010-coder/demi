@@ -40,13 +40,28 @@ verboden crème-gebied belanden.
 | `--amber` | `#C08A3E` | precies één accent: kleur van het aftreksel. Alleen afgeprijsde prijzen en de infusie-indicator. Nooit decoratief. |
 | `--cinnabar` | `#9E3B2E` | uitsluitend het zegel 云南井, precies één plek op de site (Over ons) |
 
-**Contrastcontrole.** `--sage` op `--paper` haalt ongeveer 2,0:1 — ruim onder AA. Sage is
-dus een *lijnkleur en vlakkleur*, nooit een tekstkleur, ook niet voor kleine labels. Tekst
-is altijd `--ink` (≈ 15:1 op paper) of `--stone` (≈ 4,7:1, alleen ≥ 14 px). `--pine` op
-`--paper` ≈ 8,9:1 en `--paper` op `--pine` idem, dus knoppen zijn veilig in beide
-richtingen. `--amber` op paper haalt ≈ 3,2:1: bruikbaar als vlak en als grote cijfers,
-niet als lopende tekst — de afgeprijsde prijs krijgt daarom een donkerder variant voor het
-cijfer zelf en amber alleen als drager.
+**Contrastcontrole, gemeten en gecorrigeerd.** De eerste versie van dit document
+schatte `--stone` op ongeveer 4,7:1. Nameten gaf 3,78:1, en dat is een buis: elke
+metaregel op de site viel eronder. `--stone` is daarom donkerder gezet naar
+`#5D6A5C`, wat 5,59:1 op paper en 4,85:1 op mist geeft. De les die daaruit volgt
+staat in § 8.4: een palet dat op het oog klopt, is niet gecontroleerd tot het
+doorgerekend is.
+
+De gemeten waarden:
+
+| Token | op `--paper` | op `--mist` | toegestaan gebruik |
+|---|---|---|---|
+| `--ink` `#16211B` | 16,2:1 | 14,1:1 | alle tekst |
+| `--pine` `#2E4A3A` | 9,5:1 | 8,3:1 | knoppen, links, actieve toestanden |
+| `--stone` `#5D6A5C` | 5,6:1 | 4,9:1 | secundaire tekst, meta, labels |
+| `--cinnabar` `#9E3B2E` | 6,6:1 | 5,7:1 | uitsluitend het zegel |
+| `--amber-ink` `#8A5F22` | 5,5:1 | 4,8:1 | het cijfer van een afgeprijsde prijs |
+| `--amber` `#C08A3E` | 3,0:1 | 2,6:1 | **geen tekst**: alleen vlak en indicator |
+| `--sage` `#9FBE96` | 2,0:1 | 1,7:1 | **geen tekst**: alleen lijn en vlak |
+
+Sage haalt 2,0:1 en is dus ook te zwak om in zijn eentje een link te markeren;
+de onderstreping wordt daarom uit de tekstkleur zelf getrokken
+(`color-mix(in srgb, currentColor 45%, transparent)`) en niet uit sage.
 
 ### De aftrekselschaal — `--liquor-*`
 
@@ -355,7 +370,46 @@ zin die de bezoeker leest is dus een feit, niet een belofte.
 
 ---
 
+## 8.4 Wat het meten alsnog omgooide
+
+Etappe 6 was geen oppoetsronde. Vier dingen die er in dit document goed uitzagen,
+haalden het niet toen ze doorgerekend werden.
+
+**De metingen die het palet omgooiden.** Zie de tabel in § 2: `--stone` stond op
+3,78:1 in plaats van de geschatte 4,7:1. Donkerder gezet.
+
+**De vlek verlaagde het contrast van de hero-tekst.** Gemeten op de werkelijke
+pixels zakte de secundaire regel tijdens de scène naar 3,0:1. Twee seconden lang
+onleesbaar is nog steeds onleesbaar. De vlek krijgt daarom een `mask-image` die
+haar uit de middenkolom weghoudt: het aftreksel loopt *om* het wordmark heen in
+plaats van eroverheen. Dat is inhoudelijk ook beter — het merk verdringt de
+vloeistof. Opnieuw gemeten over zestien frames: 5,40:1 in het slechtste geval.
+
+**Het opdoemen van inhoud kon niet met opacity.** Het plan schreef opacity plus
+8 px voor. Doorgerekend heeft `--stone` een alpha van 0,91 nodig voordat het
+4,5:1 haalt, dus élke merkbare fade zet lopende tekst 600 ms lang onder AA;
+Lighthouse mat 2,7:1. WCAG toetst de ruststand, dus formeel is het geen
+overtreding, maar het is wel slechter leesbaar. `.wy-reveal` doet daarom
+uitsluitend de verschuiving van 8 px. Hetzelfde gebaar, de hele weg leesbaar.
+
+**Kanonieke URL's ontbraken op veertien pagina's.** Alles wat geen eigen
+`alternates` had, erfde de canonical van de hoofdpagina. Opgelost met één helper
+die canonical en hreflang uit de gelokaliseerde padkaart afleidt, zodat ze niet
+uit elkaar kunnen lopen.
+
+---
+
 ## 9. De regel van Chanel
 
-Aan het eind van etappe 6 gaat er één decoratief element uit. Kandidaat op voorhand: de
-korrellaag over de hero. Definitief besluit na de schermafbeeldingen.
+Eruit gaat: **de waas achter de hero** (`.wy-haze`), het statische groene schijnsel
+rechtsboven.
+
+Waarom die en niet iets anders: het was het enige element op de hoofdpagina dat
+puur sfeer was en niets droeg. Het herhaalde bovendien wat de infusievlek al
+achterlaat, dus het maakte de handtekeningscène zwakker in plaats van sterker.
+Zonder de waas is de ruststand van de hero schoon papier, en is de vlek het enige
+kleurmoment op de pagina. Dat is precies wat een handtekening hoort te zijn.
+
+Ook verwijderd, maar dat telt niet mee als het ene element omdat het nooit heeft
+gedraaid: de ongebruikte korrellaag (`NoiseDefs`), die in het plan nog als
+kandidaat stond.

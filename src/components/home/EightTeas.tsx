@@ -144,7 +144,7 @@ export function EightTeas({ panels }: { panels: TeaPanel[] }) {
                   <h3 className="mt-1 text-[1.5rem]">
                     <span className="wy-link">{panel.label}</span>
                   </h3>
-                  <p className="mt-3 text-[var(--text-micro)] text-stone" style={{ maxWidth: "26ch" }}>
+                  <p className="mt-3 text-micro text-stone" style={{ maxWidth: "26ch" }}>
                     {panel.note}
                   </p>
                 </div>

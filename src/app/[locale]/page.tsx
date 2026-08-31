@@ -100,7 +100,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <p className="wy-lead mt-3 text-stone">{t("potLede")}</p>
           </div>
           <div className="md:col-start-12 md:col-span-1 col-span-6 md:text-right">
-            <Link href="/thee" className="wy-link text-[var(--text-micro)] whitespace-nowrap">
+            <Link href="/thee" className="wy-link text-micro whitespace-nowrap">
               {actions("allBatches", { count: total })}
             </Link>
           </div>
@@ -133,7 +133,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <p className="wy-prose">{t("originHonesty")}</p>
             <Link
               href={{ pathname: "/journaal/[slug]", params: { slug: "wat-er-op-het-etiket-staat" } }}
-              className="wy-link-static text-[var(--text-micro)] mt-5 inline-block"
+              className="wy-link-static text-micro mt-5 inline-block"
             >
               {t("originReadMore")}
             </Link>

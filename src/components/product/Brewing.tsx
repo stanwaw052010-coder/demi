@@ -33,7 +33,7 @@ export async function Brewing({
         <h2 id="wy-gongfu" className="wy-label pb-2 wy-rule-b">
           {t("gongfu")}
         </h2>
-        <dl className="text-[var(--text-micro)]">
+        <dl className="text-micro">
           {rows.map(([label, value]) => (
             <div
               key={label}
@@ -51,7 +51,7 @@ export async function Brewing({
           <h2 id="wy-western" className="wy-label pb-2 wy-rule-b">
             {t("western")}
           </h2>
-          <dl className="text-[var(--text-micro)]">
+          <dl className="text-micro">
             <div className="grid grid-cols-[9rem_minmax(0,1fr)] gap-4 py-2.5 wy-rule-b items-baseline">
               <dt className="text-stone">{t("gongfuLeaf")}</dt>
               <dd className="tnum">{t("westernLeaf", { grams: western.grams, ml: western.ml })}</dd>
@@ -72,7 +72,7 @@ export async function Brewing({
           <p className="wy-prose mt-4 text-[1rem]">{t("westernLede")}</p>
           <Link
             href={{ pathname: "/zetgids/[slug]", params: { slug: "gongfu" } }}
-            className="wy-link-static text-[var(--text-micro)] mt-4 inline-block"
+            className="wy-link-static text-micro mt-4 inline-block"
           >
             {t("gongfu")}
           </Link>

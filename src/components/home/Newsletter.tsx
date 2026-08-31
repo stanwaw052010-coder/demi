@@ -59,12 +59,12 @@ export function Newsletter() {
                   {status === "sending" ? actions("close") : actions("subscribe")}
                 </button>
               </div>
-              <label className="flex items-start gap-3 mt-4 text-[var(--text-micro)] text-stone">
+              <label className="flex items-start gap-3 mt-4 text-micro text-stone">
                 <input type="checkbox" required className="mt-1" />
                 <span>{t("consent")}</span>
               </label>
               {status === "error" ? (
-                <p role="alert" className="text-[var(--text-micro)] text-amber-ink mt-3">
+                <p role="alert" className="text-micro text-amber-ink mt-3">
                   {t("error")}
                 </p>
               ) : null}

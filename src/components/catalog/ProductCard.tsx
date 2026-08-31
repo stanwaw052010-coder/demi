@@ -49,7 +49,7 @@ export async function ProductCard({
         </div>
 
         {product.hanzi ? (
-          <p className="wy-hanzi text-[var(--text-micro)] text-stone mt-1 ml-[1.6rem]">
+          <p className="wy-hanzi text-micro text-stone mt-1 ml-[1.6rem]">
             {product.hanzi}
           </p>
         ) : null}
@@ -75,7 +75,7 @@ export async function ProductCard({
         </dl>
 
         <p className="mt-3 ml-[1.6rem]">
-          <span className="price text-[var(--text-ui)]">
+          <span className="price text-ui">
             {formatPrice(variant.price, locale)}
           </span>
           <span className="wy-label ml-2">

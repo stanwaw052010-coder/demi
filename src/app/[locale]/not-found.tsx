@@ -8,7 +8,9 @@ export default async function NotFound() {
   return (
     <div className="wy-shell" style={{ paddingBlock: "clamp(5rem, 16vh, 10rem)" }}>
       <div className="mx-auto text-center" style={{ maxWidth: "40ch" }}>
-        <LogoMark size={48} />
+        <span className="flex justify-center">
+          <LogoMark size={48} />
+        </span>
         <h1 className="mt-6 text-[2rem]">{t("title")}</h1>
         <p className="wy-prose mt-4 mx-auto">{t("body")}</p>
         <Link href="/thee" className="wy-btn mt-8">
