@@ -5,7 +5,7 @@ import type { AppLocale } from "@/i18n/routing";
 import { tastings } from "@content/tastings";
 import { BookingForm } from "@/components/tastings/BookingForm";
 import { JsonLd, eventJsonLd } from "@/lib/seo";
-import { SITE_URL } from "@/lib/site";
+import { absoluteUrl } from "@/lib/alternates";
 import { formatDate, formatPrice } from "@/lib/format";
 
 export async function generateMetadata({
@@ -30,7 +30,7 @@ export default async function TastingsPage({
   const locale = raw as AppLocale;
   const t = await getTranslations("tastings");
 
-  const url = `${SITE_URL}/${locale}/${locale === "nl" ? "proeverijen" : "tastings"}`;
+  const url = absoluteUrl("/proeverijen", locale);
 
   return (
     <div className="wy-shell" style={{ paddingBlock: "clamp(3rem, 7vw, 5.5rem)" }}>

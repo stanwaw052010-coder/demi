@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { alternatesFor } from "@/lib/alternates";
 import type { AppLocale } from "@/i18n/routing";
 import { ProsePage, type Section } from "@/components/pages/Prose";
+import { formatDate } from "@/lib/format";
 
 export async function generateMetadata({
   params,
@@ -28,7 +29,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
       lede={t("privacyLede")}
       sections={sections}
       namespace="privacybeleid"
-      updated={locale === "nl" ? "1 januari 2026" : "1 January 2026"}
+      updated={formatDate(t("effectiveDate"), locale as AppLocale)}
     />
   );
 }

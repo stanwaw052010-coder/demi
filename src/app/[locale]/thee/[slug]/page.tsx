@@ -14,7 +14,7 @@ import { StickyBuy } from "@/components/product/StickyBuy";
 import { Reviews } from "@/components/product/Reviews";
 import { ProductRegister } from "@/components/catalog/ProductRegister";
 import { JsonLd, breadcrumbJsonLd, productJsonLd } from "@/lib/seo";
-import { SITE_URL } from "@/lib/site";
+import { absoluteUrl, alternatesFor } from "@/lib/alternates";
 import { formatPrice } from "@/lib/format";
 import {
   cheapestVariant,
@@ -52,14 +52,7 @@ export async function generateMetadata({
   return {
     title: product.name,
     description,
-    alternates: {
-      canonical: locale === "nl" ? `/nl/thee/${slug}` : `/en/tea/${slug}`,
-      languages: {
-        nl: `/nl/thee/${slug}`,
-        en: `/en/tea/${slug}`,
-        "x-default": `/nl/thee/${slug}`,
-      },
-    },
+    alternates: alternatesFor({ pathname: "/thee/[slug]", params: { slug } }, locale),
     openGraph: {
       title: `${product.name} — Well’s of Yunnan`,
       description,
@@ -88,7 +81,7 @@ export default async function ProductPage({
 
   const related = getRelated(product, 3);
   const cheapest = cheapestVariant(product);
-  const url = `${SITE_URL}/${locale}/${locale === "nl" ? "thee" : "tea"}/${slug}`;
+  const url = absoluteUrl({ pathname: "/thee/[slug]", params: { slug } }, locale);
 
   const alt = `${product.name} — ${product.copy.tagline[locale]}`;
   const views = (["dry", "liquor", "wet", "pack"] as const).map((view) => ({
@@ -112,8 +105,8 @@ export default async function ProductPage({
       <JsonLd data={productJsonLd(product, locale, url)} />
       <JsonLd
         data={breadcrumbJsonLd([
-          { name: "Well’s of Yunnan", url: `${SITE_URL}/${locale}` },
-          { name: catalogT("title"), url: `${SITE_URL}/${locale}/${locale === "nl" ? "thee" : "tea"}` },
+          { name: "Well’s of Yunnan", url: absoluteUrl("/", locale) },
+          { name: catalogT("title"), url: absoluteUrl("/thee", locale) },
           { name: product.name, url },
         ])}
       />

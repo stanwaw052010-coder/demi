@@ -70,13 +70,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       collectionSlug: collection?.slug ?? "sheng-puerh",
       oxidation:
         key === "shou"
-          ? locale === "nl"
-            ? "nagefermenteerd"
-            : "post-fermented"
+          ? catalog("oxPostFermented")
           : key === "matcha"
-            ? locale === "nl"
-              ? "geen oxidatie"
-              : "no oxidation"
+            ? catalog("oxNone")
             : catalog("oxidationBand", { from: band[0], to: band[1] }),
       count: items.length,
       note: collection ? collection.intro[locale].split(". ")[0] + "." : "",

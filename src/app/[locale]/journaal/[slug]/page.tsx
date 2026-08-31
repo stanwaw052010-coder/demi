@@ -6,7 +6,7 @@ import { routing, type AppLocale } from "@/i18n/routing";
 import { articleBody, articleBySlug, articles } from "@content/journal";
 import { ProductRegister } from "@/components/catalog/ProductRegister";
 import { JsonLd, articleJsonLd, breadcrumbJsonLd } from "@/lib/seo";
-import { SITE_URL } from "@/lib/site";
+import { absoluteUrl, alternatesFor } from "@/lib/alternates";
 import { formatDate } from "@/lib/format";
 import { getProduct } from "@/lib/catalog";
 import type { Product } from "@content/types";
@@ -27,15 +27,10 @@ export async function generateMetadata({
   const article = articleBySlug.get(slug);
   if (!article) return {};
 
-  const nlPath = `/nl/journaal/${slug}`;
-  const enPath = `/en/journal/${slug}`;
   return {
     title: article.title[locale],
     description: article.lede[locale],
-    alternates: {
-      canonical: locale === "nl" ? nlPath : enPath,
-      languages: { nl: nlPath, en: enPath, "x-default": nlPath },
-    },
+    alternates: alternatesFor({ pathname: "/journaal/[slug]", params: { slug } }, locale),
     openGraph: {
       type: "article",
       publishedTime: article.date,
@@ -65,7 +60,7 @@ export default async function ArticlePage({
     .map((s) => getProduct(s))
     .filter((p): p is Product => Boolean(p));
   const more = articles.filter((a) => a.slug !== slug).slice(0, 3);
-  const url = `${SITE_URL}/${locale}/${locale === "nl" ? "journaal" : "journal"}/${slug}`;
+  const url = absoluteUrl({ pathname: "/journaal/[slug]", params: { slug } }, locale);
 
   return (
     <div className="wy-shell" style={{ paddingBlock: "clamp(3rem, 7vw, 5rem)" }}>
@@ -79,11 +74,8 @@ export default async function ArticlePage({
       />
       <JsonLd
         data={breadcrumbJsonLd([
-          { name: "Well’s of Yunnan", url: `${SITE_URL}/${locale}` },
-          {
-            name: t("title"),
-            url: `${SITE_URL}/${locale}/${locale === "nl" ? "journaal" : "journal"}`,
-          },
+          { name: "Well’s of Yunnan", url: absoluteUrl("/", locale) },
+          { name: t("title"), url: absoluteUrl("/journaal", locale) },
           { name: article.title[locale], url },
         ])}
       />

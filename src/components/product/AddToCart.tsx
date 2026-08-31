@@ -101,7 +101,7 @@ export function AddToCart({
             {[3, 5, 10].map((years) => (
               <option key={years} value={years}>
                 {cart("vaultYears", { years })}
-                {" · "}
+                {", "}
                 {formatPrice(years * (years >= 10 ? 700 : years >= 5 ? 800 : 900), locale)}
               </option>
             ))}

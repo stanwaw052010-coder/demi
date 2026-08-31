@@ -24,7 +24,7 @@ export default async function ContactPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("contact");
-  const footer = await getTranslations("footer");
+  const about = await getTranslations("about");
 
   const blocks = [
     { title: t("addressTitle"), body: t("addressBody") },
@@ -82,14 +82,12 @@ export default async function ContactPage({
               </dd>
             </div>
             <div className="grid grid-cols-[9rem_minmax(0,1fr)] gap-4 py-2 wy-rule-b">
-              <dt className="text-stone">{footer("vatNumber").split(" ")[0]}</dt>
+              <dt className="text-stone">{about("vatLabel")}</dt>
               <dd className="tnum">{COMPANY.vat}</dd>
             </div>
           </dl>
           <p className="wy-label mt-6">
-            {locale === "nl"
-              ? "Wij lezen alle post zelf. Voor een bestelling helpt het als u het bestelnummer vermeldt."
-              : "We read all of it ourselves. For an order, quoting the order number helps."}
+            {t("quoteOrderNumber")}
           </p>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { routing, type AppLocale } from "@/i18n/routing";
 import { guideBySlug, guideChapters } from "@content/guide";
 import { GuideBlocks } from "@/components/pages/GuideBlocks";
 import { JsonLd, breadcrumbJsonLd } from "@/lib/seo";
-import { SITE_URL } from "@/lib/site";
+import { absoluteUrl, alternatesFor } from "@/lib/alternates";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -24,15 +24,10 @@ export async function generateMetadata({
   const chapter = guideBySlug.get(slug);
   if (!chapter) return {};
 
-  const nlPath = `/nl/zetgids/${slug}`;
-  const enPath = `/en/brewing-guide/${slug}`;
   return {
     title: chapter.title[locale],
     description: chapter.lede[locale],
-    alternates: {
-      canonical: locale === "nl" ? nlPath : enPath,
-      languages: { nl: nlPath, en: enPath, "x-default": nlPath },
-    },
+    alternates: alternatesFor({ pathname: "/zetgids/[slug]", params: { slug } }, locale),
   };
 }
 
@@ -56,14 +51,11 @@ export default async function GuideChapterPage({
     <div className="wy-shell" style={{ paddingBlock: "clamp(3rem, 7vw, 5rem)" }}>
       <JsonLd
         data={breadcrumbJsonLd([
-          { name: "Well’s of Yunnan", url: `${SITE_URL}/${locale}` },
-          {
-            name: t("title"),
-            url: `${SITE_URL}/${locale}/${locale === "nl" ? "zetgids" : "brewing-guide"}`,
-          },
+          { name: "Well’s of Yunnan", url: absoluteUrl("/", locale) },
+          { name: t("title"), url: absoluteUrl("/zetgids", locale) },
           {
             name: chapter.title[locale],
-            url: `${SITE_URL}/${locale}/${locale === "nl" ? "zetgids" : "brewing-guide"}/${slug}`,
+            url: absoluteUrl({ pathname: "/zetgids/[slug]", params: { slug } }, locale),
           },
         ])}
       />

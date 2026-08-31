@@ -125,13 +125,14 @@
     "columnOrigin": "Origin",
     "columnYear": "Harvest",
     "columnPrice": "Price",
-    "oxNone": "Unoxidised, up to 15 %",
+    "oxNone": "no oxidation",
     "oxLight": "Light, 16 to 45 %",
     "oxMedium": "Medium, 46 to 70 %",
     "oxFull": "Full, from 71 %",
     "priceUnder20": "Up to €20",
     "price20to35": "€20 to €35",
-    "priceOver35": "From €35"
+    "priceOver35": "From €35",
+    "oxPostFermented": "post-fermented"
   },
   "collections": {
     "title": "Collections",
@@ -361,7 +362,9 @@
     "lede": "There are two of us, we are in Kortrijk, and we fly to China twice a year because email does not do it.",
     "sealAlt": "Cinnabar red seal with the characters 云南井, Yunnan Well",
     "sealCaption": "Our seal. It appears on the Vault certificate of origin and nowhere else.",
-    "certificateTitle": "Certificate of origin"
+    "certificateTitle": "Certificate of origin",
+    "storagePlace": "Storage",
+    "vatLabel": "VAT"
   },
   "journal": {
     "title": "Journal",
@@ -404,7 +407,8 @@
     "formTitle": "Write to us",
     "message": "Message",
     "subject": "Subject",
-    "sent": "Sent. You will hear from us."
+    "sent": "Sent. You will hear from us.",
+    "quoteOrderNumber": "We read all of it ourselves. For an order, quoting the order number helps."
   },
   "newsletter": {
     "emailLabel": "Email address",
@@ -852,6 +856,7 @@
         "heading": "Model form",
         "body": "To Well’s BV, Baudelostraat 24, 9000 Ghent, hallo@wellsofyunnan.be. I hereby give notice that I withdraw from our contract of sale of the following goods. Ordered on / received on. Name of the consumer. Address of the consumer. Order number. Date."
       }
-    ]
+    ],
+    "effectiveDate": "2026-01-01"
   }
 }

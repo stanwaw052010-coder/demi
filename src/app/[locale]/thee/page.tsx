@@ -5,7 +5,7 @@ import { ProductGrid } from "@/components/catalog/ProductGrid";
 import { Filters, type FacetGroup } from "@/components/catalog/Filters";
 import { SortSelect } from "@/components/catalog/SortSelect";
 import { JsonLd, breadcrumbJsonLd } from "@/lib/seo";
-import { SITE_URL } from "@/lib/site";
+import { absoluteUrl, alternatesFor } from "@/lib/alternates";
 import {
   ALL_CATEGORIES,
   filterProducts,
@@ -28,14 +28,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
-  const path = locale === "nl" ? "/nl/thee" : "/en/tea";
   return {
     title: t("catalogTitle"),
     description: t("catalogDescription"),
-    alternates: {
-      canonical: path,
-      languages: { nl: "/nl/thee", en: "/en/tea", "x-default": "/nl/thee" },
-    },
+    alternates: alternatesFor("/thee", locale as AppLocale),
   };
 }
 
@@ -165,14 +161,13 @@ export default async function CatalogPage({
     },
   ];
 
-  const base = locale === "nl" ? "/nl/thee" : "/en/tea";
 
   return (
     <div className="wy-shell" style={{ paddingBlock: "clamp(3rem, 7vw, 6rem)" }}>
       <JsonLd
         data={breadcrumbJsonLd([
-          { name: "Well’s of Yunnan", url: `${SITE_URL}/${locale}` },
-          { name: t("title"), url: `${SITE_URL}${base}` },
+          { name: "Well’s of Yunnan", url: absoluteUrl("/", locale) },
+          { name: t("title"), url: absoluteUrl("/thee", locale) },
         ])}
       />
 

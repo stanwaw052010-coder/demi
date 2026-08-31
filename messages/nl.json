@@ -125,13 +125,14 @@
     "columnOrigin": "Herkomst",
     "columnYear": "Oogst",
     "columnPrice": "Prijs",
-    "oxNone": "Niet geoxideerd, tot 15 %",
+    "oxNone": "geen oxidatie",
     "oxLight": "Licht, 16 tot 45 %",
     "oxMedium": "Middel, 46 tot 70 %",
     "oxFull": "Volledig, vanaf 71 %",
     "priceUnder20": "Tot € 20",
     "price20to35": "€ 20 tot € 35",
-    "priceOver35": "Vanaf € 35"
+    "priceOver35": "Vanaf € 35",
+    "oxPostFermented": "nagefermenteerd"
   },
   "collections": {
     "title": "Collecties",
@@ -361,7 +362,9 @@
     "lede": "Wij zijn met z’n tweeën, wij zitten in Kortrijk, en wij vliegen twee keer per jaar naar China omdat het per e-mail niet werkt.",
     "sealAlt": "Cinnaberrood zegel met de tekens 云南井, Yunnan Well",
     "sealCaption": "Ons zegel. Het staat op het herkomstcertificaat van de Vault en verder nergens.",
-    "certificateTitle": "Herkomstcertificaat"
+    "certificateTitle": "Herkomstcertificaat",
+    "storagePlace": "Bewaarplaats",
+    "vatLabel": "Btw"
   },
   "journal": {
     "title": "Journaal",
@@ -404,7 +407,8 @@
     "formTitle": "Schrijf ons",
     "message": "Bericht",
     "subject": "Onderwerp",
-    "sent": "Verstuurd. U hoort van ons."
+    "sent": "Verstuurd. U hoort van ons.",
+    "quoteOrderNumber": "Wij lezen alle post zelf. Voor een bestelling helpt het als u het bestelnummer vermeldt."
   },
   "newsletter": {
     "emailLabel": "E-mailadres",
@@ -852,6 +856,7 @@
     "withdrawalTitle": "Herroepingsrecht",
     "withdrawalLede": "Uw wettelijke bedenktijd van veertien dagen, en de uitzondering die voor thee geldt.",
     "lastUpdated": "Laatst bijgewerkt op {date}",
-    "changeCookieChoice": "Cookiekeuze wijzigen"
+    "changeCookieChoice": "Cookiekeuze wijzigen",
+    "effectiveDate": "2026-01-01"
   }
 }

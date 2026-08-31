@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getPathname } from "@/i18n/navigation";
 import { routing, type AppLocale, type AppPathname } from "@/i18n/routing";
+import { SITE_URL } from "./site";
 
 type Href =
   | AppPathname
@@ -21,4 +22,13 @@ export function alternatesFor(href: Href, locale: AppLocale): Metadata["alternat
     canonical: languages[locale],
     languages: { ...languages, "x-default": languages[routing.defaultLocale] },
   };
+}
+
+/**
+ * Absolute URL for a route in one locale, for JSON-LD and breadcrumbs. Derived
+ * from the same pathname map as the navigation, so renaming a localised slug
+ * cannot leave structured data pointing at a URL that no longer exists.
+ */
+export function absoluteUrl(href: Href, locale: AppLocale): string {
+  return `${SITE_URL}${getPathname({ href: href as never, locale })}`;
 }

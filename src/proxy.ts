@@ -10,11 +10,13 @@ export default createMiddleware(routing);
 export const config = {
   /**
    * Everything except API routes, Next internals, files with an extension, and
-   * the metadata file conventions. Without that last group the proxy would
-   * redirect /opengraph-image to /nl/opengraph-image and the social card would
-   * 307 instead of rendering.
+   * the metadata routes that live at the root rather than under a locale.
+   *
+   * The Open Graph image is deliberately not in that list: it sits under
+   * [locale], so it needs the same locale handling as a page, and excluding it
+   * left the bare /opengraph-image with no locale to render in.
    */
   matcher: [
-    "/((?!api|_next|_vercel|opengraph-image|twitter-image|apple-icon|icon|sitemap|robots|manifest|.*\\..*).*)",
+    "/((?!api|_next|_vercel|apple-icon|icon|sitemap|robots|manifest|.*\\..*).*)",
   ],
 };

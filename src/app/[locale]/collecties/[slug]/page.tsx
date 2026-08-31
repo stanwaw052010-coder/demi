@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
 import { ProductGrid } from "@/components/catalog/ProductGrid";
 import { JsonLd, breadcrumbJsonLd } from "@/lib/seo";
-import { SITE_URL } from "@/lib/site";
+import { absoluteUrl, alternatesFor } from "@/lib/alternates";
 import { getCollection, getCollections, getProductsByCategory } from "@/lib/catalog";
 
 export function generateStaticParams() {
@@ -24,18 +24,10 @@ export async function generateMetadata({
   const collection = getCollection(slug);
   if (!collection) return {};
 
-  const path = locale === "nl" ? `/nl/collecties/${slug}` : `/en/collections/${slug}`;
   return {
     title: collection.title[locale],
     description: collection.intro[locale].slice(0, 160),
-    alternates: {
-      canonical: path,
-      languages: {
-        nl: `/nl/collecties/${slug}`,
-        en: `/en/collections/${slug}`,
-        "x-default": `/nl/collecties/${slug}`,
-      },
-    },
+    alternates: alternatesFor({ pathname: "/collecties/[slug]", params: { slug } }, locale),
   };
 }
 
@@ -59,14 +51,11 @@ export default async function CollectionPage({
     <div className="wy-shell" style={{ paddingBlock: "clamp(3rem, 7vw, 5.5rem)" }}>
       <JsonLd
         data={breadcrumbJsonLd([
-          { name: "Well’s of Yunnan", url: `${SITE_URL}/${locale}` },
-          {
-            name: t("title"),
-            url: `${SITE_URL}/${locale}/${locale === "nl" ? "collecties" : "collections"}`,
-          },
+          { name: "Well’s of Yunnan", url: absoluteUrl("/", locale) },
+          { name: t("title"), url: absoluteUrl("/collecties", locale) },
           {
             name: collection.title[locale],
-            url: `${SITE_URL}/${locale}/${locale === "nl" ? "collecties" : "collections"}/${slug}`,
+            url: absoluteUrl({ pathname: "/collecties/[slug]", params: { slug } }, locale),
           },
         ])}
       />

@@ -65,8 +65,11 @@ export default async function AboutPage({
           <dl className="text-micro mt-8 max-w-[34rem]">
             {[
               [COMPANY.legalName, `${COMPANY.shop.street}, ${COMPANY.shop.postcode} ${COMPANY.shop.city}`],
-              ["BTW", COMPANY.vat],
-              [locale === "nl" ? "Bewaarplaats" : "Storage", `${COMPANY.warehouse.street}, ${COMPANY.warehouse.postcode} ${COMPANY.warehouse.city}`],
+              [t("vatLabel"), COMPANY.vat],
+              [
+                t("storagePlace"),
+                `${COMPANY.warehouse.street}, ${COMPANY.warehouse.postcode} ${COMPANY.warehouse.city}`,
+              ],
             ].map(([label, value]) => (
               <div
                 key={label}
