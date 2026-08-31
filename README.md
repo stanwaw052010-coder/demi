@@ -157,9 +157,13 @@ schrijven en verder niets. Nummers lopen als `WY-2026-0001`, per jaar.
 ## Op Vercel zetten
 
 Importeren en bouwen, verder niets: er zijn geen verplichte omgevingsvariabelen.
-Zet wel `NEXT_PUBLIC_SITE_URL` op het echte domein, anders wijzen de canonieke
-URL's, de sitemap en de Open Graph-beelden naar `wellsofyunnan.be` in plaats van
-naar uw deploy.
+
+`NEXT_PUBLIC_SITE_URL` bepaalt de canonieke URL's, de sitemap, de hreflang en de
+Open Graph-beelden. Staat hij niet ingevuld, dan wordt het productiedomein van de
+host genomen, en pas daarna `wellsofyunnan.be`. Een schuine streep op het eind,
+een ontbrekend `https://` of spaties eromheen worden opgevangen, en een lege of
+onzinnige waarde geldt als niet ingevuld — die mag hooguit een verkeerde
+canonical kosten, nooit een deploy. Zet hem zodra het echte domein live is.
 
 Twee dingen die u moet weten voor u er echt op verkoopt.
 
