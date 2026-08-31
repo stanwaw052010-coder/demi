@@ -614,3 +614,82 @@
     animation-play-state: var(--wy-pie-state) !important;
   }
 }
+
+/* ── Long-form article typography ────────────────────────────────────────── */
+.wy-article {
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  line-height: 1.75;
+  max-width: var(--measure);
+}
+
+.wy-article p { margin-block: 0 1.15em; }
+
+.wy-article h2 {
+  font-size: 1.625rem;
+  margin-block: 2.4em 0.6em;
+  line-height: 1.2;
+}
+
+.wy-article h3 {
+  font-size: 1.25rem;
+  margin-block: 1.8em 0.4em;
+}
+
+.wy-article strong { font-weight: 600; }
+.wy-article em { font-style: italic; }
+
+.wy-article ul,
+.wy-article ol { margin-block: 0 1.15em; padding-left: 1.2em; }
+.wy-article li { margin-block: 0.35em; }
+.wy-article ul { list-style: none; }
+.wy-article ul > li::before {
+  content: "";
+  display: inline-block;
+  width: 0.4em;
+  height: 1px;
+  background: var(--color-sage);
+  vertical-align: middle;
+  margin-right: 0.6em;
+  margin-left: -1.2em;
+}
+.wy-article ol { list-style: decimal; }
+
+.wy-article a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--color-sage);
+}
+
+.wy-article blockquote {
+  margin: 1.6em 0;
+  padding-left: 1.2em;
+  border-left: 2px solid var(--color-sage);
+  color: var(--color-stone);
+}
+
+.wy-article table {
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  margin-block: 1.6em;
+}
+
+.wy-article th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--color-pine);
+  padding: 0 1.5em 0.5em 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.wy-article td {
+  padding: 0.6em 1.5em 0.6em 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: baseline;
+}
+
+.wy-article hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin-block: 2.4em;
+}

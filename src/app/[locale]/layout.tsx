@@ -100,6 +100,9 @@ export default async function LocaleLayout({
         */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font -- the rule
+            targets the Pages Router's _document; in the App Router this link
+            sits in the single root layout and applies to every page. */}
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500&display=swap"

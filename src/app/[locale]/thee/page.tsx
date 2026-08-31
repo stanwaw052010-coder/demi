@@ -12,7 +12,6 @@ import {
   getAllProducts,
   getRegion,
   harvestYears,
-  inStock,
   sortProducts,
   usedRegionIds,
   OXIDATION_BANDS,

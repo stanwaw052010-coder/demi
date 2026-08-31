@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { REDUCED_MOTION, useMediaQuery } from "@/lib/use-media-query";
 import type { TeaCategory } from "@content/types";
 
 export interface TeaPanel {
@@ -28,25 +29,16 @@ export function EightTeas({ panels }: { panels: TeaPanel[] }) {
   const t = useTranslations("home");
   const outer = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
-  const [jacking, setJacking] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    const wide = window.matchMedia("(min-width: 60rem)");
-    const still = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setJacking(wide.matches && !still.matches);
-    sync();
-    wide.addEventListener("change", sync);
-    still.addEventListener("change", sync);
-    return () => {
-      wide.removeEventListener("change", sync);
-      still.removeEventListener("change", sync);
-    };
-  }, []);
+  // The server renders the swipe carousel, which is the safe variant; the
+  // pinned version only appears once the client confirms both conditions.
+  const wide = useMediaQuery("(min-width: 60rem)");
+  const still = useMediaQuery(REDUCED_MOTION);
+  const jacking = wide && !still;
 
   useEffect(() => {
     if (!jacking) {
-      setProgress(0);
       if (track.current) track.current.style.transform = "";
       return;
     }

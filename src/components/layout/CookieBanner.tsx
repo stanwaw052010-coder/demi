@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { CONSENT_EVENT, readConsent, writeConsent } from "./consent";
@@ -24,6 +24,11 @@ export function CookieBanner() {
     return () => window.removeEventListener(CONSENT_EVENT, sync);
   }, []);
 
+  const decide = useCallback((withAnalytics: boolean) => {
+    writeConsent(withAnalytics);
+    setVisible(false);
+  }, []);
+
   useEffect(() => {
     if (!visible) return;
     const onKey = (event: KeyboardEvent) => {
@@ -31,13 +36,7 @@ export function CookieBanner() {
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
-
-  function decide(withAnalytics: boolean) {
-    writeConsent(withAnalytics);
-    setVisible(false);
-  }
+  }, [visible, decide]);
 
   if (!visible) return null;
 

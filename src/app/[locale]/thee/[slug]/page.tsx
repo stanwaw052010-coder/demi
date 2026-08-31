@@ -86,7 +86,6 @@ export default async function ProductPage({
   const vesselT = await getTranslations("vessel");
   const cartT = await getTranslations("cart");
 
-  const region = product.passport ? getRegion(product.passport.regionId) : undefined;
   const related = getRelated(product, 3);
   const cheapest = cheapestVariant(product);
   const url = `${SITE_URL}/${locale}/${locale === "nl" ? "thee" : "tea"}/${slug}`;
