@@ -1,18 +1,24 @@
+import { getTranslations } from "next-intl/server";
 import type { GuideBlock } from "@content/guide";
 import type { AppLocale } from "@/i18n/routing";
+import { LiquorScale } from "./LiquorScale";
 
 /** Renders the guide's block model. Steps get numbers because they are steps. */
-export function GuideBlocks({
+export async function GuideBlocks({
   blocks,
   locale,
 }: {
   blocks: GuideBlock[];
   locale: AppLocale;
 }) {
+  await getTranslations("guide");
+
   return (
     <div className="space-y-10">
       {blocks.map((block, index) => {
         switch (block.type) {
+          case "liquorScale":
+            return <LiquorScale key={index} />;
           case "h":
             return (
               <h2 key={index} className="text-[1.625rem] pt-4">

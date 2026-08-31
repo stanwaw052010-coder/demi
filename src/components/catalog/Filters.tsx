@@ -5,10 +5,18 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 
+export interface FacetOption {
+  value: string;
+  label: string;
+  count: number;
+  /** Sub-facet that belongs to this option, e.g. the four oolong styles. */
+  children?: { key: string; options: FacetOption[] };
+}
+
 export interface FacetGroup {
   key: string;
   label: string;
-  options: { value: string; label: string; count: number }[];
+  options: FacetOption[];
 }
 
 /**
@@ -30,15 +38,8 @@ export function Filters({
   const router = useRouter();
   const [pending, startTransition] = useTransition();
 
-  const toggle = useCallback(
-    (key: string, value: string) => {
-      const next = new URLSearchParams(params.toString());
-      const current = next.getAll(key);
-      next.delete(key);
-      const updated = current.includes(value)
-        ? current.filter((v) => v !== value)
-        : [...current, value];
-      updated.forEach((v) => next.append(key, v));
+  const commit = useCallback(
+    (next: URLSearchParams) => {
       startTransition(() => {
         router.replace(
           { pathname: pathname as never, query: Object.fromEntries(nextEntries(next)) },
@@ -46,10 +47,53 @@ export function Filters({
         );
       });
     },
-    [params, pathname, router],
+    [pathname, router],
+  );
+
+  const toggle = useCallback(
+    (key: string, value: string, clears?: string) => {
+      const next = new URLSearchParams(params.toString());
+      const current = next.getAll(key);
+      next.delete(key);
+      const updated = current.includes(value)
+        ? current.filter((v) => v !== value)
+        : [...current, value];
+      updated.forEach((v) => next.append(key, v));
+      // Unticking a parent takes its sub-facet with it: a lone ?style=rock
+      // with no ?type=oolong would be a filter nobody can see.
+      if (clears && !updated.includes(value)) next.delete(clears);
+      commit(next);
+    },
+    [commit, params],
   );
 
   const active = groups.some((g) => params.getAll(g.key).length > 0) || params.has("stock");
+
+  const renderOption = (groupKey: string, option: FacetOption) => {
+    const checked = params.getAll(groupKey).includes(option.value);
+    const sub = option.children;
+    const open = sub ? checked || sub.options.some((o) => params.getAll(sub.key).includes(o.value)) : false;
+    return (
+      <li key={option.value}>
+        <label className="wy-facet">
+          <input
+            type="checkbox"
+            checked={checked}
+            onChange={() => toggle(groupKey, option.value, sub?.key)}
+          />
+          <span className={checked ? "text-ink" : "text-stone"}>{option.label}</span>
+          <span className="tnum text-stone ml-auto">{option.count}</span>
+        </label>
+        {sub ? (
+          <div className="wy-facet-sub" data-open={open ? "true" : "false"}>
+            <ul inert={!open}>
+              {sub.options.map((child) => renderOption(sub.key, child))}
+            </ul>
+          </div>
+        ) : null}
+      </li>
+    );
+  };
 
   return (
     <form
@@ -78,34 +122,17 @@ export function Filters({
         <fieldset key={group.key} className="border-0 p-0 py-4 wy-rule-b">
           <legend className="wy-label mb-2">{group.label}</legend>
           <ul className="space-y-1.5">
-            {group.options.map((option) => {
-              const checked = params.getAll(group.key).includes(option.value);
-              return (
-                <li key={option.value}>
-                  <label className="flex items-baseline gap-2.5 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={checked}
-                      onChange={() => toggle(group.key, option.value)}
-                      className="translate-y-0.5"
-                    />
-                    <span className={checked ? "text-ink" : "text-stone"}>{option.label}</span>
-                    <span className="tnum text-stone ml-auto">{option.count}</span>
-                  </label>
-                </li>
-              );
-            })}
+            {group.options.map((option) => renderOption(group.key, option))}
           </ul>
         </fieldset>
       ))}
 
       <div className="py-4">
-        <label className="flex items-baseline gap-2.5 cursor-pointer">
+        <label className="wy-facet">
           <input
             type="checkbox"
             checked={params.get("stock") === "1"}
             onChange={() => toggle("stock", "1")}
-            className="translate-y-0.5"
           />
           <span className={params.get("stock") === "1" ? "text-ink" : "text-stone"}>
             {inStockLabel}

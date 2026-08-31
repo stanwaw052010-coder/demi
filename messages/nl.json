@@ -70,7 +70,7 @@
     "heroFactBatches": "{count} partijen",
     "heroFactYears": "oogst {from} tot {to}",
     "scrollHint": "Scroll",
-    "eightTitle": "Acht soorten thee",
+    "eightTitle": "De zes soorten, en de twee pu-erhs",
     "eightLede": "Geordend zoals ze gemaakt worden: van niet geoxideerd naar volledig nagefermenteerd. De kleur van elk paneel is de werkelijke kleur van het aftreksel.",
     "eightProgress": "Voortgang door de acht soorten",
     "eightOxidation": "Oxidatie",
@@ -96,7 +96,7 @@
   },
   "catalog": {
     "title": "Thee",
-    "lede": "Dertig partijen thee, negen stukken gerei en drie sets. Elke thee heeft een jaar, een gebied en een tuin, of het staat er expliciet bij als wij het niet weten.",
+    "lede": "Vierenveertig partijen thee, acht stukken gerei en vijf sets. Elke thee heeft een jaar, een gebied en een tuin, of het staat er expliciet bij als wij het niet weten.",
     "resultCount": "{count, plural, =0 {Geen resultaten} one {# resultaat} other {# resultaten}}",
     "filters": "Filters",
     "filterType": "Soort",
@@ -132,13 +132,19 @@
     "priceUnder20": "Tot € 20",
     "price20to35": "€ 20 tot € 35",
     "priceOver35": "Vanaf € 35",
-    "oxPostFermented": "nagefermenteerd"
+    "oxPostFermented": "nagefermenteerd",
+    "filterStyle": "Stijl",
+    "sortSamplers": "Proefjes tot € 5",
+    "perGramPrice": "{price} per 100 g",
+    "fromPrice": "vanaf {price}",
+    "samplerFrom": "proefje van 10 g vanaf {price}"
   },
   "collections": {
     "title": "Collecties",
-    "lede": "Tien ingangen. Elke collectie heeft een eigen inleiding, want een collectie zonder inleiding is gewoon een filter.",
+    "lede": "Dertien ingangen, en oolong opent in vier. Elke collectie heeft een eigen inleiding, want een collectie zonder inleiding is gewoon een filter.",
     "count": "{count, plural, one {# partij} other {# partijen}}",
-    "inCollection": "In deze collectie"
+    "inCollection": "In deze collectie",
+    "countItems": "{count, plural, one {# stuk} other {# stuks}}"
   },
   "product": {
     "breadcrumb": "Kruimelpad",
@@ -471,16 +477,19 @@
     "orderTitle": "Bestelling {number}"
   },
   "category": {
+    "shou": "Shu pu-erh",
     "sheng": "Sheng pu-erh",
-    "shou": "Shou pu-erh",
+    "heicha": "Donkere thee",
     "oolong": "Oolong",
+    "gaba": "GABA",
+    "black": "Zwarte thee",
     "white": "Witte thee",
-    "red": "Rode thee",
     "green": "Groene thee",
     "yellow": "Gele thee",
     "matcha": "Matcha",
-    "teaware": "Gerei",
-    "sets": "Sets en cadeau"
+    "flavoured": "Gearomatiseerd",
+    "teaware": "Theeservies",
+    "sets": "Sets & cadeaus"
   },
   "caffeine": {
     "label": "Cafeïne",
@@ -580,7 +589,19 @@
     "roastedRice": "geroosterde rijst",
     "charcoal": "houtskool",
     "pineSmoke": "dennenrook",
-    "mushroom": "paddenstoel"
+    "mushroom": "paddenstoel",
+    "bakedApple": "gebakken appel",
+    "driedMandarin": "gedroogde mandarijnschil",
+    "driedPersimmon": "gedroogde kaki",
+    "narcissus": "narcis",
+    "wildFlowers": "veldbloemen",
+    "bark": "schors",
+    "pineResin": "dennenhars",
+    "sesame": "sesam",
+    "toastedGrain": "geroosterd graan",
+    "ginseng": "ginseng",
+    "steamedRice": "gestoomde rijst",
+    "wetWood": "nat hout"
   },
   "units": {
     "grams": "{value} g",
@@ -860,5 +881,17 @@
     "lastUpdated": "Laatst bijgewerkt op {date}",
     "changeCookieChoice": "Cookiekeuze wijzigen",
     "effectiveDate": "2026-01-01"
+  },
+  "oolongStyle": {
+    "label": "Stijl",
+    "rock": "Rotsthee (Wuyi)",
+    "light": "Lichte oolong (Anxi)",
+    "dancong": "Dan Cong (Guangdong)",
+    "taiwan": "Taiwanese oolong"
+  },
+  "badge": {
+    "new": "Nieuw",
+    "limited": "Beperkte oogst",
+    "sampler": "Proefverpakking"
   }
 }

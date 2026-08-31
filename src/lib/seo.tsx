@@ -1,7 +1,7 @@
 import type { Product } from "@content/types";
 import type { AppLocale } from "@/i18n/routing";
 import { COMPANY, SITE_URL } from "./site";
-import { cheapestVariant, getRegion } from "./catalog";
+import { cheapestVariant, getRegion, variantsFor } from "./catalog";
 
 type Json = Record<string, unknown>;
 
@@ -74,7 +74,7 @@ export function productJsonLd(
           })),
         }
       : {}),
-    offers: product.variants.map((variant) => ({
+    offers: variantsFor(product).map((variant) => ({
       "@type": "Offer",
       sku: variant.sku,
       price: (variant.price / 100).toFixed(2),

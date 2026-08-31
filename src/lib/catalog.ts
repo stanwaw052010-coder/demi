@@ -2,8 +2,10 @@ import { products } from "@content/products";
 import { collections, collectionBySlug } from "@content/collections";
 import { regions, regionById, flavourByKey, flavourAxes } from "@content/taxonomy";
 import type {
+  Badge,
   Category,
   FlavourAxis,
+  OolongStyle,
   Product,
   TeaCategory,
   Variant,
@@ -15,18 +17,113 @@ import type {
  * or Shopify later is a change in one file.
  */
 
+/** Shelf order: the two pu-erhs, the dark family, then by oxidation. */
 export const TEA_CATEGORIES: TeaCategory[] = [
-  "sheng",
   "shou",
+  "sheng",
+  "heicha",
   "oolong",
+  "gaba",
+  "black",
   "white",
-  "red",
   "green",
   "yellow",
   "matcha",
+  "flavoured",
 ];
 
+export const OOLONG_STYLES = ["rock", "light", "dancong", "taiwan"] as const;
+
+/** The price ladder from Pricing. One base per 25 g drives every format. */
+const LADDER: Record<number, number> = {
+  10: 0.45,
+  25: 1,
+  50: 1.8,
+  100: 3.3,
+  250: 7.5,
+};
+
+/** Round to the nearest price ending in ,50 or ,90. */
+export function tidyPrice(cents: number): number {
+  const euros = cents / 100;
+  const base = Math.floor(euros);
+  const candidates = [base - 1 + 0.9, base + 0.5, base + 0.9, base + 1.5];
+  let best = candidates[1];
+  for (const candidate of candidates) {
+    if (candidate > 0 && Math.abs(candidate - euros) < Math.abs(best - euros)) {
+      best = candidate;
+    }
+  }
+  return Math.round(best * 100);
+}
+
+/**
+ * A floor under the 10 g proefje. The ladder puts the sampler at 0,45 x the
+ * 25 g price, which on the cheapest tea in the catalogue lands at € 0,90 — less
+ * than the pouch, the label and the picking cost together, and a price that
+ * reads as a giveaway rather than an invitation. The floor is deliberately low
+ * enough to touch only that one tea.
+ */
+const SAMPLER_FLOOR = 150;
+
+const skuFor = (slug: string, grams: number) =>
+  `WY-${slug.toUpperCase().replace(/[^A-Z0-9]+/g, "").slice(0, 10)}-${grams}`;
+
+/**
+ * Every format a product is sold in. Derived from the ladder where there is a
+ * base price, taken verbatim where there is not (teaware, vouchers, sets).
+ */
+export function variantsFor(product: Product): Variant[] {
+  if (product.variants) return product.variants;
+  const pricing = product.pricing;
+  if (!pricing) return [];
+
+  const stock = pricing.stock ?? 24;
+  const formats = [...new Set([10, ...(pricing.formats ?? [25, 50, 100])])].sort(
+    (a, b) => a - b,
+  );
+
+  const loose: Variant[] = formats.map((grams) => {
+    const laddered = tidyPrice(pricing.base * (LADDER[grams] ?? grams / 25));
+    return {
+      sku: skuFor(product.slug, grams),
+      grams,
+      price: grams === 10 ? Math.max(laddered, SAMPLER_FLOOR) : laddered,
+      stock,
+    };
+  });
+
+  if (!pricing.pressed) return loose;
+
+  const { grams, price, kind, stock: pressedStock } = pricing.pressed;
+  const label =
+    kind === "cake"
+      ? { nl: `cake ${grams} g`, en: `cake ${grams} g` }
+      : kind === "brick"
+        ? { nl: `baksteen ${grams} g`, en: `brick ${grams} g` }
+        : { nl: `tuocha ${grams} g`, en: `tuocha ${grams} g` };
+
+  return [...loose, { sku: skuFor(product.slug, grams), grams, price, stock: pressedStock, label }];
+}
+
+/** Badges shown on the card. The sampler badge follows from the ladder. */
+export function badgesFor(product: Product): Badge[] {
+  const authored = product.badges ?? [];
+  const hasSampler = variantsFor(product).some((v) => v.grams === 10);
+  return hasSampler && !authored.includes("sampler")
+    ? [...authored, "sampler"]
+    : authored;
+}
+
+/** The 10 g sampler, when there is one. Drives the "samplers under €5" sort. */
+export function samplerFor(product: Product): Variant | undefined {
+  return variantsFor(product).find((v) => v.grams === 10);
+}
+
 export const ALL_CATEGORIES: Category[] = [...TEA_CATEGORIES, "teaware", "sets"];
+
+/** The four oolong styles, in the order the sub-facet lists them. */
+export const OOLONG_STYLE_IDS = ["rock", "light", "dancong", "taiwan"] as const;
 
 export function getAllProducts(): Product[] {
   return products;
@@ -82,7 +179,14 @@ export function getRelated(product: Product, limit = 3): Product[] {
 
 /** Cheapest variant, which is what the register row shows. */
 export function cheapestVariant(product: Product): Variant {
-  return product.variants.reduce((a, b) => (b.price < a.price ? b : a));
+  const variants = variantsFor(product);
+  return variants.reduce((a, b) => (b.price < a.price ? b : a));
+}
+
+/** The 25 g reference price, which is what the shelf quotes. */
+export function referenceVariant(product: Product): Variant {
+  const variants = variantsFor(product);
+  return variants.find((v) => v.grams === 25) ?? cheapestVariant(product);
 }
 
 export function priceFrom(product: Product): number {
@@ -90,15 +194,19 @@ export function priceFrom(product: Product): number {
 }
 
 export function inStock(product: Product): boolean {
-  return product.variants.some((v) => v.stock > 0);
+  return variantsFor(product).some((v) => v.stock > 0);
 }
 
 export function totalStock(product: Product): number {
-  return product.variants.reduce((a, v) => a + v.stock, 0);
+  return variantsFor(product).reduce((a, v) => a + v.stock, 0);
 }
 
 export function findVariant(product: Product, sku: string): Variant | undefined {
-  return product.variants.find((v) => v.sku === sku);
+  return variantsFor(product).find((v) => v.sku === sku);
+}
+
+export function getProductsByStyle(style: OolongStyle): Product[] {
+  return products.filter((p) => p.style === style);
 }
 
 /** Price per 100 g, so a 25 g pouch and a 357 g cake can be compared. */
@@ -147,6 +255,8 @@ export function flavourProfile(product: Product): Record<FlavourAxis, number> {
 
 export interface CatalogFilters {
   type?: Category[];
+  /** Oolong only: rock, light, dancong, taiwan. */
+  style?: string[];
   region?: string[];
   year?: number[];
   /** Ids from OXIDATION_BANDS. */
@@ -179,11 +289,13 @@ export type SortKey =
   | "price-desc"
   | "year-desc"
   | "year-asc"
-  | "name";
+  | "name"
+  | "samplers";
 
 export function filterProducts(list: Product[], f: CatalogFilters): Product[] {
   return list.filter((p) => {
     if (f.type?.length && !f.type.includes(p.category)) return false;
+    if (f.style?.length && !(p.style && f.style.includes(p.style))) return false;
     if (f.region?.length && !(p.passport && f.region.includes(p.passport.regionId))) return false;
     if (f.year?.length && !(p.passport?.harvestYear && f.year.includes(p.passport.harvestYear)))
       return false;
@@ -224,6 +336,15 @@ export function sortProducts(list: Product[], key: SortKey): Product[] {
       );
     case "name":
       return copy.sort((a, b) => a.name.localeCompare(b.name));
+    case "samplers": {
+      // Everything with a 10 g sampler under five euro, cheapest first. This is
+      // the sort that removes the fear of buying tea you have never tasted.
+      const cheap = copy.filter((p) => {
+        const sampler = samplerFor(p);
+        return sampler && sampler.price < 500;
+      });
+      return cheap.sort((a, b) => (samplerFor(a)?.price ?? 0) - (samplerFor(b)?.price ?? 0));
+    }
     default:
       return copy.sort(
         (a, b) =>

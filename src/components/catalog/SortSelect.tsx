@@ -19,6 +19,7 @@ export function SortSelect() {
     ["year-desc", t("sortYearDesc")],
     ["year-asc", t("sortYearAsc")],
     ["name", t("sortName")],
+    ["samplers", t("sortSamplers")],
   ] as const;
 
   return (

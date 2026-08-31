@@ -3,7 +3,7 @@ import type { Product } from "@content/types";
 import type { AppLocale } from "@/i18n/routing";
 import { TransitionLink } from "@/components/ui/TransitionLink";
 import { LiquorDrop } from "./LiquorDrop";
-import { cheapestVariant, getRegion, inStock } from "@/lib/catalog";
+import { getRegion, inStock, referenceVariant } from "@/lib/catalog";
 import { formatPrice, formatNumber } from "@/lib/format";
 
 /**
@@ -22,7 +22,7 @@ export async function ProductRow({
 }) {
   const t = await getTranslations("catalog");
   const state = await getTranslations("state");
-  const variant = cheapestVariant(product);
+  const variant = referenceVariant(product);
   const region = product.passport ? getRegion(product.passport.regionId) : undefined;
   const available = inStock(product);
 

@@ -35,14 +35,28 @@ const OXIDATION: Record<string, [number, number]> = {
   green: [0, 5],
   yellow: [5, 10],
   white: [5, 15],
+  oolong: [20, 70],
+  black: [85, 95],
+  heicha: [0, 0],
   sheng: [5, 12],
-  oolong: [20, 60],
-  red: [85, 95],
   shou: [0, 0],
-  matcha: [0, 0],
 };
 
-const PANEL_ORDER = ["green", "yellow", "white", "matcha", "oolong", "red", "sheng", "shou"] as const;
+/**
+ * The six classical Chinese types in processing order, then the two pu-erhs.
+ * Matcha is a Japanese guest, GABA is a method and scented tea is a treatment,
+ * so none of the three belongs in a row about the classical families.
+ */
+const PANEL_ORDER = [
+  "green",
+  "yellow",
+  "white",
+  "oolong",
+  "black",
+  "heicha",
+  "sheng",
+  "shou",
+] as const;
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: raw } = await params;
@@ -69,11 +83,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       label: category(key),
       collectionSlug: collection?.slug ?? "sheng-puerh",
       oxidation:
-        key === "shou"
+        key === "shou" || key === "heicha"
           ? catalog("oxPostFermented")
-          : key === "matcha"
-            ? catalog("oxNone")
-            : catalog("oxidationBand", { from: band[0], to: band[1] }),
+          : catalog("oxidationBand", { from: band[0], to: band[1] }),
       count: items.length,
       note: collection ? collection.intro[locale].split(". ")[0] + "." : "",
     };

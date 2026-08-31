@@ -1,4 +1,4 @@
-import { getAllProducts } from "./catalog";
+import { getAllProducts, variantsFor } from "./catalog";
 import { vatBreakdown, type VatRate } from "./vat";
 import { shippingCost, type ShipCountry, type ShippingMethodId } from "./shipping";
 import { sampleOffers } from "./samples";
@@ -65,8 +65,8 @@ export function priceOrder(
       continue;
     }
 
-    const product = catalogue.find((p) => p.variants.some((v) => v.sku === line.sku));
-    const variant = product?.variants.find((v) => v.sku === line.sku);
+    const product = catalogue.find((p) => variantsFor(p).some((v) => v.sku === line.sku));
+    const variant = product ? variantsFor(product).find((v) => v.sku === line.sku) : undefined;
     if (!product || !variant) return { error: "unknown-sku" };
 
     const vaultYears = product.vaultEligible && line.vaultYears ? line.vaultYears : undefined;

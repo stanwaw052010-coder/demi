@@ -164,6 +164,88 @@ Wat het onderzoek direct oplegt aan het ontwerp:
 
 ---
 
+## 5. Prijscontrole tegen Europese specialisten
+
+De regel uit de opdracht: 15 tot 25 % onder de Europese specialist gaan zitten, met de
+basisprijs per 25 g en een ladder van ×1,8 (50 g), ×3,3 (100 g) en ×7,5 (250 g), plus een
+verplicht proefje van 10 g op ×0,45. Alle schapprijzen zijn inclusief btw — 6 % op thee,
+21 % op gerei en bonnen.
+
+### 5.1 Wat deze controle wel en niet is
+
+Dit is een **onvolledige** controle en dat hoort hier te staan in plaats van in een
+voetnoot. De omgeving waarin deze site gebouwd is, laat geen verkeer naar winkeldomeinen
+toe: elke poging om een productpagina van Paper & Tea, Teasenz.eu, Nio Teas of Mariage
+Frères op te halen wordt door de uitgaande proxy geblokkeerd. Wat hieronder staat komt
+dus uit zoekresultaten, niet van de productpagina's zelf. Eén cijfer is hard genoeg om
+op te sturen; de rest is een meetopdracht die vóór de lancering met de hand gedaan moet
+worden.
+
+Een verzonnen vergelijkingstabel zou hier erger zijn dan geen tabel. Prijzen zijn het
+enige onderdeel van deze site dat rechtstreeks geld kost als het fout staat.
+
+### 5.2 Wat wel vaststaat
+
+| Referentie | Europese specialist | Onze prijs | Oordeel |
+| --- | --- | --- | --- |
+| Ceremoniële matcha, 30 g | Paper & Tea: blikken van 30 g **beginnen rond € 20** | € 24,90 | **Niet onder de referentie.** Wij zitten erboven. |
+
+Dat is de enige regel die deze controle met zekerheid oplevert, en hij spreekt de regel
+uit de opdracht tegen. Het is geen weglaatbaar detail: matcha is het ene product in deze
+catalogus waar de Europese prijs breed bekend is, dus het is ook het product waarop een
+koper ons het snelst narekent.
+
+### 5.3 De vier andere referenties
+
+Deze staan klaar om nagerekend te worden. De middelste kolom moet met de hand ingevuld
+worden vanaf de productpagina's van drie of vier Europese specialisten (voorstel: Paper &
+Tea, Teasenz.eu, Nio Teas, Mariage Frères), omgerekend naar euro per gram.
+
+| Referentie | Onze prijs | Onze prijs per gram | Europese specialist (in te vullen) |
+| --- | --- | --- | --- |
+| Da Hong Pao, 25 g | € 7,50 | € 0,30/g | |
+| Bai Hao Yin Zhen, 25 g | € 9,90 | € 0,40/g | |
+| Long Jing, 25 g | € 7,90 | € 0,32/g | |
+| Shu pu-erh koek, 357 g (Bingdao Gong Ting) | € 89,00 | € 0,25/g | |
+| Shu pu-erh koek, 357 g (Lao Banzhang 2008) | € 105,00 | € 0,29/g | |
+
+Reken per gram, nooit per verpakking: een winkel die alleen 100 g verkoopt lijkt duurder
+dan hij is, en een winkel die alleen 10 g verkoopt lijkt goedkoper. Onze eigen ladder
+doet hetzelfde — 100 g Da Hong Pao is € 24,90, oftewel € 0,25/g, een vijfde onder de
+25 g-prijs — dus de vergelijking gaat per formaat, niet per thee.
+
+### 5.4 Twee dingen die de rekenregel zelf opleverde
+
+**De ladder produceerde een proefje van € 0,90.** Op de goedkoopste thee in de catalogus
+(de shu tuocha, € 2,50 per 25 g) zet ×0,45 het proefje op € 0,90. Dat is minder dan het
+zakje, het etiket en het afwegen samen kosten, en het leest als een weggevertje in plaats
+van een uitnodiging. Er ligt daarom een bodem van € 1,50 onder het proefje, bewust zo laag
+gekozen dat hij precies één thee raakt. De regel zelf blijft ×0,45.
+
+**De opgegeven lijst telt 44 thees, niet 42.** De opdracht noemt 42 thees, maar de
+opgesomde artikelen tellen op tot 44 — 7 shu, 5 sheng, 2 donkere, 10 oolong, 2 GABA,
+5 zwarte, 4 witte, 4 groene, 1 gele, 2 matcha en 2 gearomatiseerde. De catalogus voert de
+opsomming uit, niet het getal: 44 thees, 8 stuks gerei, 5 sets, samen 57 artikelen. De
+oolongs verdelen zich als 3 rotsthee, 2 lichte, 2 Dan Cong en 3 Taiwanese.
+
+### 5.5 Wat er met matcha moet gebeuren
+
+Twee eerlijke wegen, en de keuze is niet aan de bouwer:
+
+1. **Prijs verlagen naar € 18,90 voor 30 g.** Dan klopt de regel weer: ongeveer 5 % onder
+   het instapblik van Paper & Tea, en met ruimte om er 15 tot 25 % onder te zitten zodra
+   de echte referentieprijs bekend is.
+2. **Prijs laten staan op € 24,90 en de claim niet maken.** Verdedigbaar als de ceremoniële
+   Uji uit een hogere laag komt dan het instapblik waarmee vergeleken wordt — maar dan mag
+   nergens op de site staan dat wij onder de Europese specialist zitten, en dat staat er
+   nu ook nergens.
+
+De site staat vandaag op weg 2, omdat de opdracht zelf € 24,90 als prijs opgaf en een
+expliciete prijs zwaarder weegt dan een algemene regel. Zodra de tabel in 5.3 met de hand
+is ingevuld, kan dat in één regel in `content/products.ts` worden omgedraaid.
+
+---
+
 ## Bronnen
 
 - [Thee.be](https://thee.be/) · [losse thee](https://thee.be/en/loose-leaf-tea/) · [groene thee](https://thee.be/en/loose-leaf-tea/green-tea/)
@@ -177,3 +259,5 @@ Wat het onderzoek direct oplegt aan het ontwerp:
 - [bol.com/be — Chinese thee](https://www.bol.com/be/nl/l/chinese-thee/20616/4278093601/) · [Pu-Erh thee](https://www.bol.com/be/nl/l/pu-erh-thee/60240/)
 - [Thee startpagina België — theesalons, speciaalzaken, workshops](https://thee.startpagina.be)
 - Zetadvies-referentie: [Simon Lévelt](https://www.simonlevelt.nl/nl/smaakvraag-perfecte-kop-thee.html), [De Theebaron](https://www.detheebaron.nl/weetjes/zetadvies/), [Huis van Thee](https://www.huisvanthee.nl/service/zetadvies/)
+- Prijsreferentie matcha: [Paper & Tea — matcha](https://www.paperandtea.com/collections/matcha) · [Highest Grade Ceremonial Matcha](https://www.paperandtea.com/products/ceremonial-matcha)
+- Prijsreferentie oolong en pu-erh (niet bereikbaar vanuit de bouwomgeving, wel na te lopen): [Teasenz.eu — Da Hong Pao](https://teasenz.eu/products/da-hong-pao) · [Teasenz.eu — pu-erh](https://teasenz.eu/collections/pu-erh-tea) · [Mariage Frères — Yin Zhen](https://www.mariagefreres.com/en/yin-zhen-t2301-tea-by-the-weight.html)

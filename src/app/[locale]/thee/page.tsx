@@ -4,6 +4,7 @@ import type { AppLocale } from "@/i18n/routing";
 import { ProductGrid } from "@/components/catalog/ProductGrid";
 import { Filters, type FacetGroup } from "@/components/catalog/Filters";
 import { SortSelect } from "@/components/catalog/SortSelect";
+import { TeaLeaf } from "@/components/visuals/TeaLeaf";
 import { JsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { absoluteUrl, alternatesFor } from "@/lib/alternates";
 import {
@@ -14,6 +15,7 @@ import {
   harvestYears,
   sortProducts,
   usedRegionIds,
+  OOLONG_STYLE_IDS,
   OXIDATION_BANDS,
   PRICE_BANDS,
   type CatalogFilters,
@@ -52,6 +54,7 @@ export default async function CatalogPage({
 
   const t = await getTranslations("catalog");
   const categoryT = await getTranslations("category");
+  const styleT = await getTranslations("oolongStyle");
   const caffeineT = await getTranslations("caffeine");
   const formT = await getTranslations("form");
 
@@ -63,6 +66,7 @@ export default async function CatalogPage({
     ),
     region: asArray(query.region),
     year: asArray(query.year).map(Number).filter((n) => !Number.isNaN(n)),
+    style: asArray(query.style),
     caffeine: asArray(query.caffeine),
     form: asArray(query.form),
     oxidation: asArray(query.oxidation),
@@ -88,6 +92,19 @@ export default async function CatalogPage({
         value: category,
         label: categoryT(category),
         count: countFor("type", category),
+        // Oolong is one word for four unrelated teas, so it carries its four
+        // styles as a sub-facet instead of pretending to be one shelf.
+        children:
+          category === "oolong"
+            ? {
+                key: "style",
+                options: OOLONG_STYLE_IDS.map((style) => ({
+                  value: style,
+                  label: styleT(style),
+                  count: countFor("style", style),
+                })).filter((o) => o.count > 0 || filters.style?.includes(o.value)),
+              }
+            : undefined,
       })).filter((o) => o.count > 0 || filters.type?.includes(o.value as Category)),
     },
     {
@@ -193,6 +210,12 @@ export default async function CatalogPage({
 
           {results.length === 0 ? (
             <div className="py-20 max-w-[38ch]">
+              <TeaLeaf
+                size={56}
+                className="wy-leaf-breathe mb-6"
+                tone="color-mix(in srgb, var(--color-sage) 30%, transparent)"
+                edge="color-mix(in srgb, var(--color-pine) 60%, transparent)"
+              />
               <h2 className="text-[1.5rem]">{t("emptyTitle")}</h2>
               <p className="wy-prose mt-3 text-[1rem]">{t("emptyBody")}</p>
             </div>

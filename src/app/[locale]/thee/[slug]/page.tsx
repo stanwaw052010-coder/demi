@@ -10,6 +10,7 @@ import { FlavourWheel } from "@/components/product/FlavourWheel";
 import { Brewing } from "@/components/product/Brewing";
 import { GongfuTimer } from "@/components/product/GongfuTimer";
 import { AddToCart } from "@/components/product/AddToCart";
+import { Badges } from "@/components/catalog/Badges";
 import { StickyBuy } from "@/components/product/StickyBuy";
 import { Reviews } from "@/components/product/Reviews";
 import { ProductRegister } from "@/components/catalog/ProductRegister";
@@ -22,6 +23,8 @@ import {
   getProduct,
   getRegion,
   getRelated,
+  variantsFor,
+  badgesFor,
 } from "@/lib/catalog";
 
 export function generateStaticParams() {
@@ -148,6 +151,12 @@ export default async function ProductPage({
             </p>
           ) : null}
 
+          {badgesFor(product).length > 0 ? (
+            <div className="mt-4">
+              <Badges badges={badgesFor(product)} />
+            </div>
+          ) : null}
+
           <p className="wy-lead mt-5 text-ink">{product.copy.tagline[locale]}</p>
           <p className="wy-prose mt-5">{product.copy.description[locale]}</p>
 
@@ -159,7 +168,7 @@ export default async function ProductPage({
               name={product.name}
               liquor={product.liquor}
               vat={product.vat}
-              variants={product.variants}
+              variants={variantsFor(product)}
               vaultEligible={product.vaultEligible}
               vaultLabel={cartT("vaultOption")}
             />

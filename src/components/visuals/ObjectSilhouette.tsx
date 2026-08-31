@@ -1,5 +1,5 @@
 /**
- * Line drawings of the nine pieces of teaware. Each object is drawn on its own
+ * Line drawings of the eight pieces of teaware. Each object is drawn on its own
  * rather than recoloured from one template, because a shop that draws its own
  * gaiwan looks different from one that does not.
  *

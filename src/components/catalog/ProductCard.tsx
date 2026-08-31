@@ -3,8 +3,9 @@ import type { Product } from "@content/types";
 import type { AppLocale } from "@/i18n/routing";
 import { TransitionLink } from "@/components/ui/TransitionLink";
 import { LiquorDrop } from "./LiquorDrop";
+import { Badges } from "./Badges";
 import { ProductImage } from "@/components/visuals/ProductImage";
-import { cheapestVariant, getRegion, inStock } from "@/lib/catalog";
+import { badgesFor, getRegion, inStock, referenceVariant, samplerFor } from "@/lib/catalog";
 import { formatPrice, formatNumber } from "@/lib/format";
 
 /**
@@ -22,7 +23,9 @@ export async function ProductCard({
 }) {
   const t = await getTranslations("catalog");
   const state = await getTranslations("state");
-  const variant = cheapestVariant(product);
+  const variant = referenceVariant(product);
+  const sampler = samplerFor(product);
+  const badges = badgesFor(product);
   const region = product.passport ? getRegion(product.passport.regionId) : undefined;
   const available = inStock(product);
 
@@ -85,6 +88,19 @@ export async function ProductCard({
             <span className="wy-label ml-2 text-amber-ink">{state("soldOut")}</span>
           ) : null}
         </p>
+
+        {/* The sampler is the whole point of the ladder, so it gets its own line. */}
+        {sampler && sampler.grams !== variant.grams ? (
+          <p className="wy-label mt-1 ml-[1.6rem]">
+            {t("samplerFrom", { price: formatPrice(sampler.price, locale) })}
+          </p>
+        ) : null}
+
+        {badges.length > 0 ? (
+          <div className="mt-3 ml-[1.6rem]">
+            <Badges badges={badges} />
+          </div>
+        ) : null}
       </TransitionLink>
     </li>
   );

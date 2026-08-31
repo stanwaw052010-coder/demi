@@ -70,7 +70,7 @@
     "heroFactBatches": "{count} batches",
     "heroFactYears": "harvests {from} to {to}",
     "scrollHint": "Scroll",
-    "eightTitle": "Eight kinds of tea",
+    "eightTitle": "The six types, and the two pu-erhs",
     "eightLede": "Ordered the way they are made: from unoxidised to fully post-fermented. The colour of each panel is the real colour of the liquor.",
     "eightProgress": "Progress through the eight kinds",
     "eightOxidation": "Oxidation",
@@ -96,7 +96,7 @@
   },
   "catalog": {
     "title": "Tea",
-    "lede": "Thirty batches of tea, nine pieces of teaware and three sets. Every tea has a year, an area and a garden, or it says outright that we do not know.",
+    "lede": "Forty-four batches of tea, eight pieces of teaware and five sets. Every tea has a year, an area and a garden, or it says outright that we do not know.",
     "resultCount": "{count, plural, =0 {No results} one {# result} other {# results}}",
     "filters": "Filters",
     "filterType": "Type",
@@ -132,13 +132,19 @@
     "priceUnder20": "Up to €20",
     "price20to35": "€20 to €35",
     "priceOver35": "From €35",
-    "oxPostFermented": "post-fermented"
+    "oxPostFermented": "post-fermented",
+    "filterStyle": "Style",
+    "sortSamplers": "Samplers under €5",
+    "perGramPrice": "{price} per 100 g",
+    "fromPrice": "from {price}",
+    "samplerFrom": "10 g sampler from {price}"
   },
   "collections": {
     "title": "Collections",
-    "lede": "Ten entrances. Every collection carries its own introduction, because a collection without one is just a filter.",
+    "lede": "Thirteen entrances, and oolong opens into four. Every collection carries its own introduction, because a collection without one is just a filter.",
     "count": "{count, plural, one {# batch} other {# batches}}",
-    "inCollection": "In this collection"
+    "inCollection": "In this collection",
+    "countItems": "{count, plural, one {# item} other {# items}}"
   },
   "product": {
     "breadcrumb": "Breadcrumb",
@@ -471,16 +477,19 @@
     "orderTitle": "Order {number}"
   },
   "category": {
+    "shou": "Shu pu-erh",
     "sheng": "Sheng pu-erh",
-    "shou": "Shou pu-erh",
+    "heicha": "Dark tea",
     "oolong": "Oolong",
+    "gaba": "GABA",
+    "black": "Black tea",
     "white": "White tea",
-    "red": "Red tea",
     "green": "Green tea",
     "yellow": "Yellow tea",
     "matcha": "Matcha",
+    "flavoured": "Scented",
     "teaware": "Teaware",
-    "sets": "Sets and gifts"
+    "sets": "Sets & gifts"
   },
   "caffeine": {
     "label": "Caffeine",
@@ -580,7 +589,19 @@
     "roastedRice": "toasted rice",
     "charcoal": "charcoal",
     "pineSmoke": "pine smoke",
-    "mushroom": "mushroom"
+    "mushroom": "mushroom",
+    "bakedApple": "baked apple",
+    "driedMandarin": "dried mandarin peel",
+    "driedPersimmon": "dried persimmon",
+    "narcissus": "narcissus",
+    "wildFlowers": "wild flowers",
+    "bark": "bark",
+    "pineResin": "pine resin",
+    "sesame": "sesame",
+    "toastedGrain": "toasted grain",
+    "ginseng": "ginseng",
+    "steamedRice": "steamed rice",
+    "wetWood": "wet wood"
   },
   "units": {
     "grams": "{value} g",
@@ -860,5 +881,17 @@
       }
     ],
     "effectiveDate": "2026-01-01"
+  },
+  "oolongStyle": {
+    "label": "Style",
+    "rock": "Rock tea (Wuyi)",
+    "light": "Light oolong (Anxi)",
+    "dancong": "Dan Cong (Guangdong)",
+    "taiwan": "Taiwanese oolong"
+  },
+  "badge": {
+    "new": "New",
+    "limited": "Limited harvest",
+    "sampler": "Sampler"
   }
 }

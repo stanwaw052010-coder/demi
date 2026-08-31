@@ -1,6 +1,8 @@
 import type { I18nText, LiquorKey } from "./types";
 
 export type GuideBlock =
+  /** The six classical types with their real liquor colour. */
+  | { type: "liquorScale" }
   | { type: "p"; text: I18nText }
   | { type: "h"; text: I18nText }
   | { type: "note"; text: I18nText }
@@ -24,6 +26,89 @@ const t = (nl: string, en: string): I18nText => ({ nl, en });
  * procedure and numbers rather than as atmosphere.
  */
 export const guideChapters: GuideChapter[] = [
+  {
+    slug: "zes-soorten-zes-kleuren",
+    hanzi: "六大茶类",
+    liquor: "oolong",
+    minutes: 5,
+    title: t("Zes soorten, zes kleuren, en één vertaalfout", "Six types, six colours, and one translation error"),
+    lede: t(
+      "In China wordt thee ingedeeld naar bewerking, en de namen van die zes families zijn kleuren. Twee ervan worden in Europa stelselmatig verkeerd vertaald, en dat is de reden dat u in de ene winkel iets heel anders krijgt dan in de andere.",
+      "In China tea is classified by processing, and the names of those six families are colours. Two of them are systematically mistranslated in Europe, which is why the same word gets you two different things in two different shops.",
+    ),
+    blocks: [
+      {
+        type: "p",
+        text: t(
+          "Alles komt van dezelfde plant, Camellia sinensis. Wat de zes families onderscheidt is niet waar het blad groeide maar wat er ná de pluk mee gebeurde: hoe hard het gedood is, hoever het mocht oxideren, of het geperst en met microben nagefermenteerd is. De kleuren in de namen slaan op het blad of op het aftreksel, en daar begint de verwarring.",
+          "It all comes from one plant, Camellia sinensis. What separates the six families is not where the leaf grew but what happened to it after picking: how hard it was killed, how far it was allowed to oxidise, whether it was pressed and post-fermented with microbes. The colours in the names refer either to the leaf or to the liquor, and that is where the confusion starts.",
+        ),
+      },
+      { type: "liquorScale" },
+      { type: "h", text: t("De twee die altijd omgedraaid worden", "The two that always get swapped") },
+      {
+        type: "table",
+        head: [t("Chinees", "Chinese"), t("Letterlijk", "Literally"), t("Bij ons", "Our shelf"), t("Wat het is", "What it is")],
+        rows: [
+          [
+            t("红茶 hóngchá", "红茶 hóngchá"),
+            t("rode thee", "red tea"),
+            t("Zwarte thee", "Black tea"),
+            t("Volledig geoxideerd. Wat Europa zwarte thee noemt: Dian Hong, Jin Jun Mei, Keemun.", "Fully oxidised. What Europe calls black tea: Dian Hong, Jin Jun Mei, Keemun."),
+          ],
+          [
+            t("黑茶 hēichá", "黑茶 hēichá"),
+            t("zwarte thee", "black tea"),
+            t("Donkere thee", "Dark tea"),
+            t("Nagefermenteerd met microben: Liu Bao, Fu Zhuan, en strikt genomen ook pu-erh.", "Post-fermented with microbes: Liu Bao, Fu Zhuan, and strictly speaking pu-erh too."),
+          ],
+        ],
+      },
+      {
+        type: "p",
+        text: t(
+          "De Chinese naam kijkt naar het aftreksel, de Europese naar het droge blad. Een volledig geoxideerde Dian Hong heeft bijna zwart blad en een helder roodbruin kopje: China noemt hem rood, Europa zwart. Beide zijn te verdedigen — tot iemand 黑茶 letterlijk vertaalt en er zwarte thee van maakt, want dan staan er twee volstrekt verschillende families onder dezelfde naam.",
+          "The Chinese name looks at the liquor, the European one at the dry leaf. A fully oxidised Dian Hong has nearly black leaf and a clear red-brown cup: China calls it red, Europe calls it black. Both are defensible — until someone translates 黑茶 literally and gets black tea, because then two entirely different families end up under one name.",
+        ),
+      },
+      {
+        type: "note",
+        text: t(
+          "Praktisch: zoekt u wat u in Europa zwarte thee noemt, ga dan naar Zwarte thee. Zoekt u Liu Bao of Fu Zhuan, ga dan naar Donkere thee. Wij zetten de Chinese naam er overal bij, zodat u nooit hoeft te raden welke van de twee bedoeld wordt.",
+          "In practice: if you want what Europe calls black tea, go to Black tea. If you want Liu Bao or Fu Zhuan, go to Dark tea. We print the Chinese name everywhere, so you never have to guess which of the two is meant.",
+        ),
+      },
+      { type: "h", text: t("En de vier die wel kloppen", "And the four that do line up") },
+      {
+        type: "steps",
+        items: [
+          {
+            title: t("绿茶 lǜchá, groene thee", "绿茶 lǜchá, green tea"),
+            text: t("Snel gedood in een pan, dus vrijwel niet geoxideerd. Kastanje en doperwt, geen zeewier — dat laatste is Japans en komt van stomen in plaats van pannen.", "Killed quickly in a pan, so barely oxidised at all. Chestnut and sweet pea, not seaweed — that last one is Japanese and comes from steaming rather than pan firing."),
+          },
+          {
+            title: t("黄茶 huángchá, gele thee", "黄茶 huángchá, yellow tea"),
+            text: t("Groene thee met één extra stap: het warme blad wordt ingepakt en blijft uren tot dagen liggen. De grasachtigheid verdwijnt, honing komt ervoor terug. Bijna uitgestorven.", "Green tea with one extra step: the warm leaf is wrapped and left for hours or days. The grassiness goes and honey arrives in its place. Nearly extinct."),
+          },
+          {
+            title: t("白茶 báichá, witte thee", "白茶 báichá, white tea"),
+            text: t("Verwelken en drogen, verder niets. Geen pan, geen rollen. Vijf tot vijftien procent oxidatie treedt vanzelf op tijdens het verwelken.", "Wither and dry, nothing else. No pan, no rolling. Five to fifteen percent oxidation happens by itself during the withering."),
+          },
+          {
+            title: t("青茶 qīngchá, oolong", "青茶 qīngchá, oolong"),
+            text: t("Letterlijk blauwgroene thee. Gedeeltelijk geoxideerd, van twintig tot zeventig procent, met gekneusde bladranden om die oxidatie te sturen. De breedste familie van de zes.", "Literally blue-green tea. Partially oxidised, from twenty to seventy percent, with bruised leaf edges to steer that oxidation. The broadest family of the six."),
+          },
+        ],
+      },
+      {
+        type: "note",
+        text: t(
+          "Pu-erh valt strikt genomen onder hēichá. Wij geven shu en sheng toch een eigen ingang, omdat het verschil tussen die twee groter is dan het verschil tussen groene en witte thee, en omdat niemand die een cake zoekt hem onder Donkere thee gaat zoeken.",
+          "Strictly speaking pu-erh falls under hēichá. We still give shu and sheng their own entrances, because the difference between those two is greater than the one between green and white tea, and because nobody looking for a cake is going to look under Dark tea.",
+        ),
+      },
+    ],
+  },
   {
     slug: "gongfu",
     hanzi: "功夫茶",
