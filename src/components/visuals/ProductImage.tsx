@@ -73,6 +73,10 @@ export function ProductImage({
         // The shared element for the View Transitions API.
         viewTransitionName: shared ? "product-image" : undefined,
         border: "1px solid var(--rule)",
+        // A soft corner on the drawing, not a card: hairline, no shadow, no
+        // lift. The curve comes from the gaiwan, which is the object in most
+        // of these compositions anyway.
+        borderRadius: "var(--radius-panel)",
       }}
     >
       {hasPhoto ? (

@@ -60,7 +60,7 @@ export default async function ThanksPage({
             {plausible ? t("receivedTitle") : t("notFoundTitle")}
           </h1>
           {plausible ? (
-            <p className="tnum mt-4 text-[var(--text-ui)]">{orderId}</p>
+            <p className="tnum mt-4 text-ui">{orderId}</p>
           ) : null}
           <p className="wy-prose mt-4 mx-auto">
             {plausible ? t("receivedBody") : t("notFoundBody")}

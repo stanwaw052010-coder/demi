@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { LogoMark } from "@/components/brand/Logo";
 import { InfusionStain } from "./InfusionStain";
+import { LeafDrift } from "@/components/visuals/LeafDrift";
 import { getTeas, harvestRange } from "@/lib/catalog";
 
 /**
@@ -19,6 +20,7 @@ export async function Hero() {
       style={{ minHeight: "min(86svh, 46rem)" }}
     >
       <InfusionStain />
+      <LeafDrift />
 
       <div className="wy-shell relative z-10 flex flex-col items-center justify-center text-center"
            style={{ minHeight: "min(86svh, 46rem)", paddingBlock: "clamp(4rem, 10vh, 8rem)" }}>

@@ -15,6 +15,7 @@ import { formatPrice } from "@/lib/format";
 import { amountToFreeShipping } from "@/lib/shipping";
 import { PromoField } from "./PromoField";
 import { CartUpsell } from "./CartUpsell";
+import { TeaLeaf } from "@/components/visuals/TeaLeaf";
 
 export function CartDrawer() {
   const t = useTranslations("cart");
@@ -95,6 +96,8 @@ export function CartDrawer() {
           transform: isOpen ? "translateX(0)" : "translateX(100%)",
           transition: "transform 420ms cubic-bezier(0.22, 1, 0.36, 1)",
           borderLeft: "1px solid var(--rule)",
+          borderTopLeftRadius: "var(--radius-panel)",
+          borderBottomLeftRadius: "var(--radius-panel)",
           visibility: isOpen ? "visible" : "hidden",
         }}
       >
@@ -114,6 +117,12 @@ export function CartDrawer() {
         <div className="flex-1 overflow-y-auto px-6">
           {lines.length === 0 ? (
             <div className="py-10">
+              <TeaLeaf
+                size={56}
+                className="wy-leaf-breathe mb-5"
+                tone="color-mix(in srgb, var(--color-sage) 30%, transparent)"
+                edge="color-mix(in srgb, var(--color-pine) 60%, transparent)"
+              />
               <p className="wy-prose text-[1.0625rem]">{t("empty")}</p>
               <p className="text-micro text-stone mt-2">{t("emptyBody")}</p>
               <Link href="/thee" className="wy-btn mt-6" onClick={close}>
@@ -145,10 +154,10 @@ export function CartDrawer() {
                     </p>
 
                     <div className="mt-2 flex items-center gap-3">
-                      <div className="inline-flex items-center border border-[var(--rule)]">
+                      <div className="wy-stepper">
                         <button
                           type="button"
-                          className="px-2.5 py-1 text-ink"
+                          className="wy-stepper-btn"
                           onClick={() => setQuantity(line.id, line.quantity - 1)}
                           aria-label={actions("decrease")}
                         >
@@ -162,7 +171,7 @@ export function CartDrawer() {
                         </span>
                         <button
                           type="button"
-                          className="px-2.5 py-1 text-ink"
+                          className="wy-stepper-btn"
                           onClick={() => setQuantity(line.id, line.quantity + 1)}
                           aria-label={actions("increase")}
                         >

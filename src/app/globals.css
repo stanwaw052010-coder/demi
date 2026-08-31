@@ -8,8 +8,14 @@
       paper, well under AA. Text is --ink (15:1) or --stone (4.7:1, >= 14px).
    2. --amber and the --liquor-* scale carry information, never decoration.
       Gradients exist only to depict liquor.
+   `static` is deliberate. Tailwind v4 drops theme variables it cannot see used
+   as a utility class, and almost every token here is consumed through an
+   inline `var(--color-liquor-…)` built from data at runtime — the whole liquor
+   scale, the deep tints, the display sizes. Tree-shaking them silently emptied
+   the liquor drops on the catalogue, which is a colour system that carries
+   information, so the block is pinned.
    ─────────────────────────────────────────────────────────────────────────── */
-@theme {
+@theme static {
   --color-paper: #fcfdfa;
   --color-mist: #e7efe3;
   --color-mist-deep: #dbe7d6;
@@ -49,6 +55,11 @@
   --text-h1: 2.75rem;
 
   --radius-drop: 9999px;
+  /* Buttons and controls are round-ended, taking the curve from the liquor
+     drop and the gaiwan rather than from a card. Panels get a soft corner.
+     Nothing on this site is a 12px rounded rectangle with a grey shadow. */
+  --radius-btn: 999px;
+  --radius-panel: 1.5rem;
 
   --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-rise: cubic-bezier(0.32, 0.72, 0, 1);
@@ -109,7 +120,6 @@
   :focus-visible {
     outline: 2px solid var(--color-pine);
     outline-offset: 3px;
-    border-radius: 1px;
   }
 
   /* Inputs never inherit the display face; data stays in the UI face. */
@@ -131,10 +141,14 @@
     outline-offset: 2px;
   }
 
+  select:hover { border-color: var(--color-sage); }
+
   select {
     border: 1px solid var(--rule);
-    padding: 0.55rem 2rem 0.55rem 0.7rem;
+    padding: 0.55rem 2rem 0.55rem 0.9rem;
+    border-radius: var(--radius-btn);
     appearance: none;
+    transition: border-color 220ms var(--ease-settle);
     /* An actual chevron, not two gradients pretending to be one: on this site a
        gradient only ever depicts liquor. */
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%232E4A3A' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -144,12 +158,18 @@
   }
 
   [type="checkbox"], [type="radio"] {
-    width: 1rem;
-    height: 1rem;
+    width: 1.05rem;
+    height: 1.05rem;
     accent-color: var(--color-pine);
     border: 0;
     padding: 0;
+    border-radius: 0.35rem;
+    transition: transform 180ms var(--ease-rise);
   }
+
+  [type="radio"] { border-radius: 999px; }
+
+  [type="checkbox"]:active, [type="radio"]:active { transform: scale(0.86); }
 
   table { border-collapse: collapse; width: 100%; }
 
@@ -244,15 +264,19 @@
     letter-spacing: 0.01em;
   }
 
-  /* ── Button: the fill rises from the bottom, like tea in a cup ─────────── */
+  /* ── Button: the fill rises from the bottom, like tea in a cup ───────────
+     Round-ended, because every other loaded shape on this site is a circle —
+     the drop, the gaiwan seen from above, the six liquor dots — and a square
+     button among them is the one thing that reads as a template. */
   .wy-btn {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.8rem 1.4rem;
+    padding: 0.8rem 1.6rem;
     border: 1px solid var(--color-pine);
+    border-radius: var(--radius-btn);
     color: var(--color-pine);
     background: transparent;
     font-size: var(--text-ui);
@@ -260,6 +284,7 @@
     cursor: pointer;
     isolation: isolate;
     overflow: hidden;
+    transition: transform 220ms var(--ease-rise), border-color 220ms var(--ease-settle);
   }
 
   .wy-btn::before {
@@ -277,16 +302,22 @@
   .wy-btn:focus-visible::before { transform: scaleY(1); }
   .wy-btn:hover, .wy-btn:focus-visible { color: var(--color-paper); }
 
+  /* The cup is set down: a 3 % press, and it comes back on the same curve. */
+  .wy-btn:active { transform: scale(0.97); }
+
   .wy-btn[disabled] { opacity: 0.45; cursor: not-allowed; }
   .wy-btn[disabled]::before { transform: scaleY(0); }
+  .wy-btn[disabled]:active { transform: none; }
 
   .wy-btn-solid { background: var(--color-pine); color: var(--color-paper); }
   .wy-btn-solid::before { background: var(--color-pine-deep); }
 
   .wy-btn-quiet {
     border-color: var(--rule);
-    padding: 0.5rem 0.9rem;
+    padding: 0.5rem 1.05rem;
   }
+
+  .wy-btn-quiet:hover { border-color: var(--color-pine); }
 
   /* ── Link underline that draws in ─────────────────────────────────────── */
   .wy-link {
@@ -714,3 +745,250 @@
   border-top: 1px solid var(--rule);
   margin-block: 2.4em;
 }
+
+/* ── Badges ───────────────────────────────────────────────────────────────
+   Rounded, because a badge is a label and not a field. The colour says which
+   kind: amber for a harvest that will run out, sage for everything else. */
+.wy-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  font-size: var(--text-meta);
+  line-height: 1.5;
+  color: var(--color-stone);
+  white-space: nowrap;
+}
+
+.wy-badge-limited {
+  border-color: color-mix(in srgb, var(--color-amber) 55%, transparent);
+  color: var(--color-amber-ink);
+}
+
+.wy-badge-new {
+  border-color: color-mix(in srgb, var(--color-pine) 40%, transparent);
+  color: var(--color-pine);
+}
+
+/* The six liquor colours in the guide: a cup seen from above. */
+.wy-liquor-dot {
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 5.5rem;
+  background: var(--dot);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 16%, transparent);
+  box-shadow: inset 0 0 0 6px color-mix(in srgb, var(--color-paper) 55%, transparent);
+  transition: transform 420ms var(--ease-settle), box-shadow 420ms var(--ease-settle);
+}
+
+.group:hover .wy-liquor-dot,
+.group:focus-visible .wy-liquor-dot {
+  transform: scale(1.04);
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--color-paper) 55%, transparent);
+}
+
+/* ── The leaf ─────────────────────────────────────────────────────────────
+   One drawing, used four ways: falling through the hero, steeping in the
+   gaiwan, flying to the cart, and turning once when you point at a tea. The
+   two blades are separate paths sharing an origin on the midrib, so scaleX
+   opens the leaf the way hot water does. Transform only, always. */
+.wy-leaf-blade {
+  transform-box: view-box;
+  transform-origin: 17px 16px;
+}
+
+/* Falling through the hero. Five leaves, three nested animations each: a
+   linear fall, a lateral sway on its own period, and a tumble about the long
+   axis. No two leaves ever trace the same path, and none of them slides. */
+.wy-leaf-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  /* Kept off the middle of the screen, so no leaf is ever behind a headline
+     and no measured contrast changes because of decoration. */
+  -webkit-mask-image: radial-gradient(
+    ellipse 62% 46% at 50% 48%,
+    transparent 0%,
+    transparent 46%,
+    #000 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 62% 46% at 50% 48%,
+    transparent 0%,
+    transparent 46%,
+    #000 100%
+  );
+}
+
+.wy-leaf-fall {
+  position: absolute;
+  top: 0;
+  display: block;
+  animation-name: wy-leaf-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes wy-leaf-fall {
+  from { transform: translate3d(0, -14vh, 0); }
+  to   { transform: translate3d(0, 108vh, 0); }
+}
+
+.wy-leaf-sway {
+  display: block;
+  perspective: 600px;
+  animation-name: wy-leaf-sway;
+  animation-timing-function: var(--ease-settle);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes wy-leaf-sway {
+  from { transform: translate3d(calc(var(--wy-sway) * -1), 0, 0); }
+  to   { transform: translate3d(var(--wy-sway), 0, 0); }
+}
+
+/* The leaf turns rather than spins: a full revolution would put it edge-on
+   half the time and it would read as a flickering line instead of a leaf. */
+.wy-leaf-spin {
+  display: block;
+  animation-name: wy-leaf-spin;
+  animation-timing-function: var(--ease-settle);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes wy-leaf-spin {
+  from { transform: rotate3d(0.5, 1, 0.22, -32deg); }
+  to   { transform: rotate3d(0.5, 1, 0.22, 44deg); }
+}
+
+/* Steeping in the gaiwan: one leaf lying in the bottom of the cup, its blades
+   opening over exactly the infusion time and closing again when the timer is
+   reset. It sits behind the countdown at a wash faint enough that the measured
+   contrast of the numerals does not move. */
+.wy-pie-leaf {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 56%;
+  translate: -50% -50%;
+  rotate: -12deg;
+  pointer-events: none;
+}
+
+.wy-pie-leaf svg { height: 100%; width: auto; }
+
+.wy-pie-text { position: relative; }
+
+.wy-pie-leaf .wy-leaf-blade {
+  animation-name: wy-steep-unfurl;
+  animation-timing-function: var(--ease-settle);
+  animation-fill-mode: both;
+  animation-duration: var(--wy-pie-duration);
+  animation-play-state: var(--wy-pie-state);
+}
+
+.wy-pie-leaf .wy-leaf-blade-l { animation-delay: 0.25s; }
+
+@keyframes wy-steep-unfurl {
+  from { transform: scaleX(0.14); }
+  to   { transform: scaleX(1); }
+}
+
+/* ── Facets: oolong is one word for four unrelated teas ──────────────────
+   The four styles hang under their parent and open with it, on grid rows so
+   the height animates without a measured pixel anywhere. */
+.wy-facet {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  cursor: pointer;
+  padding: 0.15rem 0.5rem 0.15rem 0.45rem;
+  margin-inline: -0.45rem;
+  border-radius: var(--radius-btn);
+  transition: background-color 200ms var(--ease-settle);
+}
+
+.wy-facet:hover { background: color-mix(in srgb, var(--color-mist) 55%, transparent); }
+.wy-facet input { translate: 0 0.15rem; }
+
+.wy-facet-sub {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 380ms var(--ease-rise);
+}
+
+.wy-facet-sub[data-open="true"] { grid-template-rows: 1fr; }
+
+.wy-facet-sub > ul {
+  overflow: hidden;
+  margin-left: 1.1rem;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--rule);
+  opacity: 0;
+  transition: opacity 260ms var(--ease-settle) 60ms;
+}
+
+.wy-facet-sub[data-open="true"] > ul {
+  opacity: 1;
+  padding-block: 0.35rem;
+}
+
+/* Reduced motion: the leaves stop falling and settle where they are, rather
+   than vanishing. The steeping leaves hold fully open, which is what a leaf
+   that has finished brewing looks like anyway. */
+@media (prefers-reduced-motion: reduce) {
+  .wy-leaf-fall {
+    animation: none !important;
+    transform: translate3d(0, var(--wy-rest), 0);
+  }
+  .wy-leaf-sway, .wy-leaf-spin { animation: none !important; }
+  .wy-facet-sub > ul { transition: none; }
+}
+
+/* A leaf resting in still water: the blades open and close on a long, uneven
+   cycle. Used in the three quiet moments on the site — an empty cart, a search
+   that found nothing, an order that is finished. */
+.wy-leaf-breathe .wy-leaf-blade {
+  animation: wy-leaf-breathe 7s var(--ease-settle) infinite alternate;
+}
+
+.wy-leaf-breathe .wy-leaf-blade-l { animation-duration: 8.5s; }
+
+@keyframes wy-leaf-breathe {
+  from { transform: scaleX(0.34); }
+  to   { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wy-leaf-breathe .wy-leaf-blade { animation: none !important; transform: scaleX(1); }
+}
+
+/* ── Quantity stepper ─────────────────────────────────────────────────────
+   Round-ended like every other control, and each end lights up on its own
+   rather than the whole pill reacting. */
+.wy-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-btn);
+  overflow: hidden;
+}
+
+.wy-stepper-btn {
+  padding: 0.25rem 0.7rem;
+  color: var(--color-ink);
+  cursor: pointer;
+  background: transparent;
+  transition: background-color 200ms var(--ease-settle), transform 180ms var(--ease-rise);
+}
+
+.wy-stepper-btn:hover { background: var(--color-mist); }
+.wy-stepper-btn:active { transform: scale(0.88); }
+.wy-stepper-btn:first-child { border-start-start-radius: var(--radius-btn); border-end-start-radius: var(--radius-btn); }
+.wy-stepper-btn:last-child { border-start-end-radius: var(--radius-btn); border-end-end-radius: var(--radius-btn); }

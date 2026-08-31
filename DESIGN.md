@@ -297,6 +297,45 @@ Technisch: alleen `transform` en `opacity`, `will-change` puntsgewijs en weer we
 werken, en geen enkele layoutverschuiving (alle beeldvlakken hebben een vaste
 aspect-ratio).
 
+### 6.1 Het blad
+
+Er is één blad op deze site en het wordt vier keer gebruikt. *Camellia sinensis* heeft een
+langwerpig blad met een nerf die nooit helemaal recht loopt en twee helften die nooit even
+breed zijn. Het is hier getekend als **drie delen** — nerf, rechterhelft, linkerhelft —
+en dat is het hele punt: de twee helften zijn aparte paden met hun oorsprong óp de nerf,
+dus `scaleX` op elke helft opent het blad zoals heet water dat doet. Een opgerold blad is
+een droog blad, een open blad is een gezet blad. Het is de enige vorm op deze site die
+bewogen kan worden zonder dat de beweging niets betekent.
+
+| Waar | Wat het doet | Waarom daar |
+| --- | --- | --- |
+| Hero | Vijf bladeren vallen, elk met drie losse animaties: een lineaire val, een zijwaartse zwaai op een eigen periode en een kanteling om de lange as | Geen twee bladeren lopen ooit hetzelfde pad, en geen ervan schuift |
+| Gongfu-timer | Eén blad ligt in de bodem van de gaiwan en opent precies over de infusietijd; de linkerhelft loopt een kwart seconde achter | Het enige wat een blad werkelijk doet terwijl je wacht |
+| In de mand | Hetzelfde blad vliegt naar het mandje en opent onderweg, gevuld met de aftrekselkleur van die thee | De handeling en het product in één beeld |
+| Lege mand, lege zoekopdracht | Een blad ademt: open en dicht op een lange, ongelijke cyclus | De drie stille momenten op de site |
+
+Waarom dit niet het goedkope vallende-bladeren-effect is: **vijf** bladeren en niet vijftig,
+tussen 27 en 47 seconden per val, in één toon met de rest van het palet, anatomisch getekend
+in plaats van een clipart-druppel, en de hele laag is met een `mask-image` weggehaald uit het
+midden van het scherm, zodat er nooit een blad achter een kop staat en er geen enkele gemeten
+contrastwaarde door decoratie verschuift. Bij `prefers-reduced-motion` vallen de bladeren niet
+maar liggen ze stil op hun rustplek, en het blad in de timer staat open — wat een blad dat
+klaar is met zetten sowieso doet.
+
+### 6.2 Ronde hoeken, en waar ze ophouden
+
+Knoppen, selects, de aantalregelaar en de vinkjes zijn rondgemaakt: knoppen en selects
+volledig rond (`--radius-btn: 999px`), de vinkjes met een kleine radius, panelen met
+`--radius-panel: 1.5rem`. De ronding komt niet uit een UI-kit maar uit de vormen die hier
+toch al betekenis dragen: de druppel, de gaiwan van boven, de zes aftrekselkleuren. Een
+hoekige knop tussen die cirkels is precies het onderdeel dat als sjabloon leest.
+
+Waar het ophoudt: **rijen blijven rijen.** Geen kaart met 12 px radius en een zachte grijze
+schaduw, geen lift bij hover, geen rand rondom een productrij. Het productbeeld krijgt wel
+een zachte hoek, maar houdt zijn haarlijn en heeft geen schaduw. Het verschil tussen "rond"
+en "kaartjes" is dat het eerste over de bedieningselementen gaat en het tweede over de
+inhoud.
+
 ---
 
 ## 7. Beeld zonder foto's
@@ -396,6 +435,22 @@ uitsluitend de verschuiving van 8 px. Hetzelfde gebaar, de hele weg leesbaar.
 `alternates` had, erfde de canonical van de hoofdpagina. Opgelost met één helper
 die canonical en hreflang uit de gelokaliseerde padkaart afleidt, zodat ze niet
 uit elkaar kunnen lopen.
+
+**Tailwind gooide zeven van de negen aftrekselkleuren weg.** Het ernstigste van
+allemaal, en het was pas op een schermafdruk te zien: de druppel naast elke
+theenaam in de catalogus was leeg. Tailwind v4 schudt ongebruikte
+`@theme`-variabelen uit de uitvoer, en de aftrekselschaal wordt nergens als
+utility-klasse gebruikt — hij wordt uit data opgebouwd als
+`var(--color-liquor-${liquor})` in een inline `style`. Alleen `sheng` en `oolong`
+overleefden, bij toeval, omdat die twee namen ergens letterlijk in de bron staan.
+Ook `--color-mist-deep`, `--color-sage-soft`, `--text-h1` en `--text-h2` waren
+verdwenen. Het blok staat nu op `@theme static`, wat alle tokens uitschrijft.
+
+Dit is dezelfde valkuil als `text-[var(--text-ui)]` eerder: Tailwind ziet een
+string, niet een bedoeling. De regel voor dit project is daarom: **een token dat
+uit data wordt samengesteld, moet vastgezet worden** — de kleurenschaal draagt
+informatie, en informatie die stilletjes leeg rendert is erger dan informatie die
+lelijk rendert.
 
 ---
 

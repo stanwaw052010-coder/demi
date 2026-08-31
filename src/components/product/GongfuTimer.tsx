@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { Gongfu, LiquorKey } from "@content/types";
 import { infusionColour } from "@/lib/liquor";
+import { TeaLeaf } from "@/components/visuals/TeaLeaf";
 
 interface Step {
   /** 0 is the rinse; 1 and up are real infusions. */
@@ -179,9 +180,19 @@ export function GongfuTimer({
             <span className="wy-pie-fill" />
           </span>
           <span className="wy-pie-face">
-            <span className="wy-label">{label}</span>
-            <strong className="tnum wy-pie-count">{Math.ceil(remaining)}</strong>
-            <span className="wy-label">{vesselLabel}</span>
+            {/* One leaf in the bottom of the gaiwan, opening over exactly the
+                infusion time. It is the only thing a leaf actually does while
+                you wait, so it is the only thing the drawing does. */}
+            <span className="wy-pie-leaf" aria-hidden="true">
+              <TeaLeaf
+                size="100%"
+                tone="color-mix(in srgb, var(--color-pine) 9%, transparent)"
+                outline={false}
+              />
+            </span>
+            <span className="wy-label wy-pie-text">{label}</span>
+            <strong className="tnum wy-pie-count wy-pie-text">{Math.ceil(remaining)}</strong>
+            <span className="wy-label wy-pie-text">{vesselLabel}</span>
           </span>
         </div>
 
