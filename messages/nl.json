@@ -3,7 +3,7 @@
     "name": "Well’s of Yunnan",
     "domain": "wellsofyunnan.be",
     "city": "Kortrijk",
-    "line": "Theehuis in Vlaanderen. Wij kopen per partij, met jaar, berg en tuin erbij."
+    "line": "Chinese thee uit Vlaanderen, per partij gekocht, met jaar, berg en tuin erbij."
   },
   "nav": {
     "tea": "Thee",
@@ -54,7 +54,8 @@
     "increase": "Eén meer",
     "decrease": "Eén minder",
     "close": "Sluiten",
-    "skipAnimation": "Animatie overslaan"
+    "skipAnimation": "Animatie overslaan",
+    "joinWaitlist": "Op de wachtlijst"
   },
   "state": {
     "inStock": "Op voorraad",
@@ -87,12 +88,15 @@
     "brewToGuide": "De volledige zetgids",
     "journalTitle": "Uit het journaal",
     "vaultTitle": "Puerh Vault",
-    "vaultLede": "U koopt een cake, wij bewaren hem drie tot tien jaar in een gelogde klimaatkast in Kortrijk. U krijgt een herkomstcertificaat, onderweg proefstukken, en u haalt hem op wanneer u wil.",
+    "vaultLede": "U koopt een cake, wij bewaren hem drie tot tien jaar in een gelogde klimaatkast in Kortrijk. U krijgt een herkomstcertificaat, onderweg proefstukken, en wij sturen hem op wanneer u wil.",
     "tastingsTitle": "Aan tafel in België",
-    "tastingsLede": "Wij geven proeverijen in Gent, Kortrijk en Brussel. Tien tot veertien plaatsen, een gaiwan per persoon, en u hoeft niets mee te brengen.",
+    "tastingsLede": "Wij geven proeverijen in Gent. Tien tot veertien plaatsen, een gaiwan per persoon, en u hoeft niets mee te brengen.",
     "tastingsNext": "Eerstvolgende",
     "newsletterTitle": "Brief",
-    "newsletterLede": "Acht keer per jaar, als er iets binnenkomt dat het waard is. Geen kortingscodes."
+    "newsletterLede": "Acht keer per jaar, als er iets binnenkomt dat het waard is. Geen kortingscodes.",
+    "tastingsSoonLabel": "Nog niet open",
+    "tastingsSoonTitle": "Er komt een tafel, hij staat er nog niet",
+    "tastingsSoonLede": "Wij zijn voorlopig alleen een webwinkel. Er komt een ruimte in Gent waar u aan tafel gaat en zelf zet, maar zolang die er niet is verkopen wij er geen plaatsen voor. Laat uw e-mailadres achter en u hoort het als de eerste datum vaststaat."
   },
   "catalog": {
     "title": "Thee",
@@ -352,7 +356,7 @@
   },
   "vault": {
     "title": "Puerh Vault",
-    "lede": "U koopt de cake, wij bewaren hem. Drie tot tien jaar in een gelogde klimaatkast in Kortrijk, met een herkomstcertificaat op uw naam en proefstukken onderweg.",
+    "lede": "U koopt de cake, wij bewaren hem. Drie tot tien jaar in een gelogde klimaatkast in Kortrijk, met een herkomstcertificaat op uw naam en proefstukken onderweg. Wij sturen hem op wanneer u wil.",
     "howTitle": "Hoe het loopt",
     "pricingTitle": "Wat het kost",
     "pricingLede": "Per cake, per jaar, vooruit te betalen bij het inbrengen. Langere termijnen zijn goedkoper per jaar, omdat wij de kast dan efficiënter vullen.",
@@ -367,7 +371,7 @@
   },
   "about": {
     "title": "Over ons",
-    "lede": "Wij zijn met z’n tweeën, wij zitten in Kortrijk, en wij vliegen twee keer per jaar naar China omdat het per e-mail niet werkt.",
+    "lede": "Wij zijn met z’n tweeën, wij zitten in Kortrijk, en wij vliegen twee keer per jaar naar China omdat het per e-mail niet werkt. Verkopen doen wij voorlopig alleen online.",
     "sealAlt": "Cinnaberrood zegel met de tekens 云南井, Yunnan Well",
     "sealCaption": "Ons zegel. Het staat op het herkomstcertificaat van de Vault en verder nergens.",
     "certificateTitle": "Herkomstcertificaat",
@@ -384,8 +388,8 @@
     "more": "Meer uit het journaal"
   },
   "tastings": {
-    "title": "Proeverijen in België",
-    "lede": "Gent, Kortrijk en Brussel. Tien tot veertien plaatsen, een gaiwan per persoon, twee uur. U hoeft niets mee te brengen en niets te weten.",
+    "title": "Proeverijen in Gent",
+    "lede": "Tien tot veertien plaatsen, een gaiwan per persoon, twee uur. U hoeft niets mee te brengen en niets te weten.",
     "upcoming": "Eerstvolgende sessies",
     "seatsLeft": "{count, plural, =0 {volzet} one {nog # plaats} other {nog # plaatsen}}",
     "duration": "{minutes} minuten",
@@ -398,7 +402,20 @@
     "submitted": "Genoteerd. U hoort binnen één werkdag van ons.",
     "full": "Deze sessie is volzet. Kies een andere datum of laat uw e-mailadres achter voor de volgende reeks.",
     "privateTitle": "Op verplaatsing",
-    "privateBody": "Wij geven ook sessies bij mensen thuis of op kantoor, vanaf zes personen. Mail ons en wij kijken wat er kan."
+    "privateBody": "Wij geven ook sessies bij mensen thuis of op kantoor, vanaf zes personen. Mail ons en wij kijken wat er kan.",
+    "soonLabel": "Binnenkort",
+    "soonTitle": "Het theehuis is er nog niet",
+    "soonLede": "Well’s of Yunnan is vandaag een webwinkel. Geen winkelpui, geen openingsuren, geen proeverij die u kunt boeken. Wij zoeken een ruimte in Gent, en tot wij die hebben staat hier wat het gaat worden en verder niets.",
+    "soonPlanTitle": "Wat het wordt",
+    "soonPlanBody": "Geen cursus en geen ceremonie. Een tafel, water op de juiste temperatuur, en dezelfde thee die hier in de catalogus staat, zodat u weet wat u koopt voor u het koopt.",
+    "soonPlanOne": "Tien tot veertien plaatsen, een gaiwan per persoon, twee uur. U hoeft niets mee te brengen en niets te weten.",
+    "soonPlanTwo": "Wij beginnen bij water en temperatuur, omdat daar het meeste misgaat, en eindigen bij een thee die u zelf zet.",
+    "soonPlanThree": "Wat u die avond drinkt, staat in het rek. Wie iets meeneemt, neemt het mee met het partijpaspoort erbij.",
+    "waitlistTitle": "Wachtlijst",
+    "waitlistBody": "Eén e-mail wanneer de eerste datum vaststaat, en daarna niets meer tenzij u zich ook op de brief inschrijft. Wij verkopen uw adres aan niemand.",
+    "waitlistConsent": "Alleen voor de opening van het theehuis. U kunt zich altijd uitschrijven.",
+    "waitlistDone": "Genoteerd. U hoort van ons zodra er een datum en een adres zijn.",
+    "privateSoonBody": "Sessies bij mensen thuis of op kantoor kunnen wij pas aanbieden als de ruimte er is; het gerei staat nu nog in dozen. Mail ons gerust, dan zetten wij u bovenaan de lijst."
   },
   "contact": {
     "title": "Contact",
@@ -416,7 +433,11 @@
     "message": "Bericht",
     "subject": "Onderwerp",
     "sent": "Verstuurd. U hoort van ons.",
-    "quoteOrderNumber": "Wij lezen alle post zelf. Voor een bestelling helpt het als u het bestelnummer vermeldt."
+    "quoteOrderNumber": "Wij lezen alle post zelf. Voor een bestelling helpt het als u het bestelnummer vermeldt.",
+    "shopTitle": "Winkel",
+    "shopSoonBody": "Die is er nog niet. Wij verkopen voorlopig alleen online en verzenden vanuit Kortrijk.",
+    "hoursSoonBody": "Geen openingsuren, want er is nog geen deur. E-mail wordt elke werkdag gelezen.",
+    "warehouseSoonBody": "Kortrijk. Nog niet te bezoeken; zodra het theehuis open is, kan dat op afspraak."
   },
   "newsletter": {
     "emailLabel": "E-mailadres",
@@ -449,7 +470,7 @@
   },
   "meta": {
     "homeTitle": "Well’s of Yunnan — Chinese thee met jaar, berg en tuin",
-    "homeDescription": "Belgisch theehuis. Chinese thee rechtstreeks uit Yunnan, Fujian, Guangdong en Zhejiang, met partijpaspoort, gongfu-parameters en een werkende timer. Bewaring van pu-erh en proeverijen in Gent, Kortrijk en Brussel.",
+    "homeDescription": "Belgische webwinkel voor Chinese thee, rechtstreeks uit Yunnan, Fujian, Guangdong en Zhejiang, met partijpaspoort, gongfu-parameters en een werkende timer. Bewaring van pu-erh; een theehuis in Gent volgt.",
     "catalogTitle": "Thee — alle partijen",
     "catalogDescription": "Achtentwintig partijen Chinese thee met oogstjaar, gebied, hoogte en producent. Filter op soort, gebied, jaar, oxidatie, cafeïne en vorm.",
     "productDescription": "{name} uit {region}, oogst {year}. Paspoort, gongfu-parameters en een werkende timer.",
@@ -461,10 +482,10 @@
     "vaultTitle": "Puerh Vault — bewaring en veroudering als dienst",
     "vaultDescription": "Wij bewaren uw cake drie tot tien jaar in een gelogde klimaatkast in Kortrijk, met certificaat en proefstukken onderweg.",
     "aboutTitle": "Over ons",
-    "aboutDescription": "Twee mensen in Kortrijk die twee keer per jaar naar China vliegen om per partij in te kopen.",
+    "aboutDescription": "Twee mensen in Kortrijk die twee keer per jaar naar China vliegen om per partij in te kopen. Voorlopig alleen online.",
     "journalTitle": "Journaal",
     "journalDescription": "Stukken over rijping, rotsthee, water, etiketten en een aankoop die misging.",
-    "tastingsTitle": "Proeverijen in Gent, Kortrijk en Brussel",
+    "tastingsTitle": "Proeverijen in Gent",
     "tastingsDescription": "Reserveer een plaats bij een gongfu-sessie of een verticale proeverij. Tien tot veertien plaatsen per sessie.",
     "checkoutTitle": "Afrekenen",
     "contactTitle": "Contact",
@@ -474,7 +495,9 @@
     "privacyTitle": "Privacybeleid",
     "cookiesTitle": "Cookiebeleid",
     "withdrawalTitle": "Herroepingsrecht",
-    "orderTitle": "Bestelling {number}"
+    "orderTitle": "Bestelling {number}",
+    "tastingsSoonTitle": "Theehuis en proeverijen — binnenkort",
+    "tastingsSoonDescription": "Well’s of Yunnan is voorlopig alleen een webwinkel. Er komt een theehuis in Gent met proeverijen; laat uw e-mailadres achter voor de eerste datum."
   },
   "category": {
     "shou": "Shu pu-erh",
@@ -645,7 +668,7 @@
       },
       {
         "heading": "Waar wij zitten",
-        "body": "De winkel staat in de Baudelostraat in Gent en is open van donderdag tot zaterdag. Het magazijn en de Vault-kast staan in Kortrijk, waar de huur lager is en de kelder droger. Als u de kast wil zien, kan dat op afspraak; wij vinden het redelijk dat u wil kijken waar uw cake ligt."
+        "body": "Nergens waar u kunt aanbellen, nog niet. Wij pakken in en verzenden vanuit Kortrijk, waar de huur lager is en de kelder droger, en daar staat ook de Vault-kast. Een theehuis in Gent is het plan en niet de stand van zaken: zolang er geen ruimte is, staat er op deze site geen adres met openingsuren en verkopen wij geen plaatsen aan een tafel die er niet staat."
       }
     ]
   },
@@ -713,7 +736,7 @@
       },
       {
         "q": "Kan ik bij jullie langskomen?",
-        "a": "De winkel in de Baudelostraat in Gent is open van donderdag tot zaterdag, van 11 tot 18 uur. Voor het magazijn en de Vault-kast in Kortrijk maakt u een afspraak."
+        "a": "Nog niet. Wij zijn vandaag alleen een webwinkel: er is geen winkel in Gent en er zijn geen openingsuren. Er komt een theehuis, en op de proeverijenpagina kunt u op de wachtlijst voor de eerste datum. Het magazijn in Kortrijk is werkruimte en niet te bezoeken."
       },
       {
         "q": "Geven jullie korting bij grotere hoeveelheden?",
@@ -731,7 +754,7 @@
       },
       {
         "heading": "Tarieven",
-        "body": "België: bpost aan huis 4,95 euro, Pakjesautomaat 3,95 euro, Mondial Relay 3,50 euro. Nederland: aan huis 6,95 euro, afhaalpunt 4,95 euro. Rest van de EU: 9,95 euro. Afhalen in Gent is gratis. Vanaf 50 euro is verzending naar België en Nederland gratis; vanaf 75 euro naar de rest van de EU."
+        "body": "België: bpost aan huis 4,95 euro, Pakjesautomaat 3,95 euro, Mondial Relay 3,50 euro. Nederland: aan huis 6,95 euro, afhaalpunt 4,95 euro. Rest van de EU: 9,95 euro. Afhalen bij ons kan niet zolang er geen winkel is. Vanaf 50 euro is verzending naar België en Nederland gratis; vanaf 75 euro naar de rest van de EU."
       },
       {
         "heading": "Levertijd",

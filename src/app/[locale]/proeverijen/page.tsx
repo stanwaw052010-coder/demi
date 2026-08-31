@@ -4,9 +4,11 @@ import { alternatesFor } from "@/lib/alternates";
 import type { AppLocale } from "@/i18n/routing";
 import { tastings } from "@content/tastings";
 import { BookingForm } from "@/components/tastings/BookingForm";
+import { WaitingList } from "@/components/tastings/WaitingList";
 import { JsonLd, eventJsonLd } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/alternates";
 import { formatDate, formatPrice } from "@/lib/format";
+import { VENUE_OPEN } from "@/lib/venue";
 
 export async function generateMetadata({
   params,
@@ -15,7 +17,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
-  return { title: t("tastingsTitle"), description: t("tastingsDescription"),
+  return {
+    title: VENUE_OPEN ? t("tastingsTitle") : t("tastingsSoonTitle"),
+    description: VENUE_OPEN ? t("tastingsDescription") : t("tastingsSoonDescription"),
     alternates: alternatesFor("/proeverijen", locale as AppLocale),
   };
 }
@@ -31,6 +35,58 @@ export default async function TastingsPage({
   const t = await getTranslations("tastings");
 
   const url = absoluteUrl("/proeverijen", locale);
+
+  /*
+    Until there is a room, this page announces rather than sells. No dates, no
+    seats, no Event markup: publishing an event for a venue that does not exist
+    is the kind of thing search engines and customers both remember.
+  */
+  if (!VENUE_OPEN) {
+    return (
+      <div className="wy-shell" style={{ paddingBlock: "clamp(3rem, 7vw, 5.5rem)" }}>
+        <header className="wy-grid">
+          <div className="wy-main">
+            <p className="wy-label">{t("soonLabel")}</p>
+            <h1 className="mt-3">{t("soonTitle")}</h1>
+            <p className="wy-lead mt-5 text-stone">{t("soonLede")}</p>
+          </div>
+        </header>
+
+        <section aria-labelledby="wy-plan" className="wy-grid mt-[var(--section)] gap-y-6">
+          <h2 id="wy-plan" className="wy-margin text-[1.25rem]">
+            {t("soonPlanTitle")}
+          </h2>
+          <div className="wy-main">
+            <p className="wy-prose">{t("soonPlanBody")}</p>
+            <ul className="mt-8">
+              {(["soonPlanOne", "soonPlanTwo", "soonPlanThree"] as const).map((key) => (
+                <li key={key} className="wy-rule py-5 wy-prose text-[1rem]">
+                  {t(key)}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section aria-labelledby="wy-waitlist" className="wy-grid mt-[var(--section)] gap-y-6">
+          <h2 id="wy-waitlist" className="wy-margin text-[1.25rem]">
+            {t("waitlistTitle")}
+          </h2>
+          <div className="wy-main">
+            <p className="wy-prose">{t("waitlistBody")}</p>
+            <WaitingList />
+          </div>
+        </section>
+
+        <section aria-labelledby="wy-private" className="wy-grid mt-[var(--section)] gap-y-3">
+          <h2 id="wy-private" className="wy-margin text-[1.25rem]">
+            {t("privateTitle")}
+          </h2>
+          <p className="wy-main wy-prose">{t("privateSoonBody")}</p>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="wy-shell" style={{ paddingBlock: "clamp(3rem, 7vw, 5.5rem)" }}>

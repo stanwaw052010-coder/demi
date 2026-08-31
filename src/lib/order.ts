@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isShippingMethodId } from "./shipping";
 
 /**
  * Belgian and Dutch address rules differ enough to be worth encoding: BE has a
@@ -55,7 +56,13 @@ export const orderInputSchema = z
     city: z.string().trim().min(1).max(80),
     country: z.enum(countries),
     notes: z.string().trim().max(1000).optional().or(z.literal("")),
-    shippingMethod: z.enum(shippingMethodIds),
+    // The enum is the full set the shop has ever offered; the refinement is the
+    // set it offers today. Collecting in Ghent is in the first and not the
+    // second until the tea house opens, and a posted order saying otherwise is
+    // rejected rather than quietly shipped for free.
+    shippingMethod: z
+      .enum(shippingMethodIds)
+      .refine(isShippingMethodId, { message: "shippingMethodUnavailable" }),
     paymentMethod: z.enum(paymentMethodIds),
     newsletter: z.boolean().default(false),
     terms: z.literal(true),

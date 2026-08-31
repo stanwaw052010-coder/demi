@@ -19,9 +19,9 @@ export function organisationJsonLd(): Json {
     vatID: COMPANY.vat.replace(/[\s.]/g, ""),
     address: {
       "@type": "PostalAddress",
-      streetAddress: COMPANY.shop.street,
-      postalCode: COMPANY.shop.postcode,
-      addressLocality: COMPANY.shop.city,
+      streetAddress: COMPANY.registered.street,
+      postalCode: COMPANY.registered.postcode,
+      addressLocality: COMPANY.registered.city,
       addressCountry: "BE",
     },
     areaServed: ["BE", "NL", "EU"],

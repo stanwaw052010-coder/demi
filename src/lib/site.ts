@@ -47,7 +47,12 @@ export const COMPANY = {
   privacyEmail: "privacy@wellsofyunnan.be",
   phone: "+32 9 396 12 40",
   phoneHref: "+3293961240",
-  shop: {
+  /**
+   * The registered seat, which is a legal detail rather than a shop: there is
+   * no counter here until the tea house opens (see lib/venue.ts). Belgian law
+   * wants a geographic address on a webshop, so it stays on the legal pages.
+   */
+  registered: {
     street: "Baudelostraat 24",
     postcode: "9000",
     city: "Gent",

@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { alternatesFor } from "@/lib/alternates";
 import type { AppLocale } from "@/i18n/routing";
 import { COMPANY } from "@/lib/site";
+import { VENUE_OPEN } from "@/lib/venue";
 
 export async function generateMetadata({
   params,
@@ -26,11 +27,23 @@ export default async function ContactPage({
   const t = await getTranslations("contact");
   const about = await getTranslations("about");
 
-  const blocks = [
-    { title: t("addressTitle"), body: t("addressBody") },
-    { title: t("hoursTitle"), body: t("hoursBody") },
-    { title: t("warehouseTitle"), body: t("warehouseBody") },
-  ];
+  /*
+    With no room open there is no address to visit and no opening hours to keep,
+    so the page says that plainly instead of printing a door somebody would
+    drive to. The registered seat stays further down, where it belongs: it is a
+    legal detail, not an invitation.
+  */
+  const blocks = VENUE_OPEN
+    ? [
+        { title: t("addressTitle"), body: t("addressBody") },
+        { title: t("hoursTitle"), body: t("hoursBody") },
+        { title: t("warehouseTitle"), body: t("warehouseBody") },
+      ]
+    : [
+        { title: t("shopTitle"), body: t("shopSoonBody") },
+        { title: t("hoursTitle"), body: t("hoursSoonBody") },
+        { title: t("warehouseTitle"), body: t("warehouseSoonBody") },
+      ];
 
   return (
     <div className="wy-shell" style={{ paddingBlock: "clamp(3rem, 7vw, 5.5rem)" }}>
@@ -78,7 +91,8 @@ export default async function ContactPage({
             <div className="grid grid-cols-[9rem_minmax(0,1fr)] gap-4 py-2 wy-rule-b">
               <dt className="text-stone">{COMPANY.legalName}</dt>
               <dd>
-                {COMPANY.shop.street}, {COMPANY.shop.postcode} {COMPANY.shop.city}
+                {COMPANY.registered.street}, {COMPANY.registered.postcode}{" "}
+                {COMPANY.registered.city}
               </dd>
             </div>
             <div className="grid grid-cols-[9rem_minmax(0,1fr)] gap-4 py-2 wy-rule-b">

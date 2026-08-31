@@ -196,6 +196,38 @@ Geen enkele pagina importeert `content/products` rechtstreeks; alles loopt via
 `src/lib/catalog.ts`. Wie later naar Sanity of Shopify wil, herschrijft dat ene
 bestand en houdt de vorm uit `content/types.ts` aan.
 
+## Het theehuis openen
+
+Er is nog geen fysieke winkel en geen proeverij. Dat staat op één plek:
+`src/lib/venue.ts`.
+
+```ts
+export const VENUE_OPEN = false;
+```
+
+Zolang die op `false` staat:
+
+- **Afhalen in Gent** is geen verzendmethode. `src/lib/shipping.ts` filtert hem
+  uit de lijst, en omdat `src/lib/order.ts` tegen diezelfde lijst valideert,
+  wordt een bestelling die hem tóch meestuurt afgewezen met
+  `shippingMethodUnavailable` in plaats van gratis verzonden.
+- **`/proeverijen`** kondigt aan in plaats van te verkopen: geen data, geen
+  plaatsen, geen `Event`-markup, wel een wachtlijst die naar
+  `RESEND_TASTINGS_AUDIENCE_ID` gaat.
+- **`/contact`** toont geen bezoekadres en geen openingsuren. De
+  maatschappelijke zetel blijft staan waar hij hoort: onderaan bij de
+  ondernemingsgegevens en op de juridische pagina's, want die is wettelijk
+  verplicht.
+- De blokken op de home, in `over-ons` en in de FAQ zeggen dat wij voorlopig
+  alleen online verkopen.
+
+Op de dag dat de deur opengaat: zet de vlag op `true`, vul
+`content/tastings.ts` met echte sessies, en zet het bezoekadres in
+`COMPANY` (nu heet dat veld `registered`, juist omdat het geen winkel is).
+De teksten voor de open situatie staan al in `messages/*.json` — `contact.
+addressBody`, `contact.hoursBody`, `checkout.pickupNote`,
+`shippingMethods.pickup` — en worden dan vanzelf weer gebruikt.
+
 ## Wat u moet weten voor u iets verandert
 
 - **De aftrekselschaal draagt informatie.** `--liquor-*` is de werkelijke kleur

@@ -85,7 +85,7 @@ export async function SiteFooter() {
         <div className="wy-rule mt-14 pt-6 wy-meta">
           <span>{t("rights", { year: new Date().getFullYear() })}</span>
           <span>{t("vatNumber")}</span>
-          <span>{COMPANY.shop.city}</span>
+          <span>{COMPANY.registered.city}</span>
           <span>{brand("domain")}</span>
           <CookieReset label={legal("changeCookieChoice")} />
         </div>

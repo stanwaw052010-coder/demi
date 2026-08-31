@@ -3,7 +3,7 @@
     "name": "Well’s of Yunnan",
     "domain": "wellsofyunnan.be",
     "city": "Kortrijk",
-    "line": "A tea house in Flanders. We buy by the batch, with the year, the mountain and the garden attached."
+    "line": "Chinese tea from Flanders, bought by the batch, with the year, the mountain and the garden attached."
   },
   "nav": {
     "tea": "Tea",
@@ -54,7 +54,8 @@
     "increase": "One more",
     "decrease": "One fewer",
     "close": "Close",
-    "skipAnimation": "Skip animation"
+    "skipAnimation": "Skip animation",
+    "joinWaitlist": "Join the waiting list"
   },
   "state": {
     "inStock": "In stock",
@@ -87,12 +88,15 @@
     "brewToGuide": "The full brewing guide",
     "journalTitle": "From the journal",
     "vaultTitle": "Puerh Vault",
-    "vaultLede": "You buy a cake, we keep it for three to ten years in a logged climate cabinet in Kortrijk. You get a certificate of origin, samples along the way, and you collect it whenever you want.",
+    "vaultLede": "You buy a cake, we keep it for three to ten years in a logged climate cabinet in Kortrijk. You get a certificate of origin, samples along the way, and we ship it to you whenever you want.",
     "tastingsTitle": "At the table in Belgium",
-    "tastingsLede": "We run tastings in Ghent, Kortrijk and Brussels. Ten to fourteen seats, a gaiwan each, and you need bring nothing.",
+    "tastingsLede": "We run tastings in Ghent. Ten to fourteen seats, a gaiwan each, and you need bring nothing.",
     "tastingsNext": "Next up",
     "newsletterTitle": "Letter",
-    "newsletterLede": "Eight times a year, when something arrives that is worth it. No discount codes."
+    "newsletterLede": "Eight times a year, when something arrives that is worth it. No discount codes.",
+    "tastingsSoonLabel": "Not open yet",
+    "tastingsSoonTitle": "There will be a table. It is not there yet.",
+    "tastingsSoonLede": "For now we are a shop online and nothing else. There will be a room in Ghent where you sit down and brew it yourself, but while there is no room we do not sell seats for it. Leave your address and you will hear when the first date is fixed."
   },
   "catalog": {
     "title": "Tea",
@@ -352,7 +356,7 @@
   },
   "vault": {
     "title": "Puerh Vault",
-    "lede": "You buy the cake, we keep it. Three to ten years in a logged climate cabinet in Kortrijk, with a certificate of origin in your name and samples along the way.",
+    "lede": "You buy the cake, we keep it. Three to ten years in a logged climate cabinet in Kortrijk, with a certificate of origin in your name and samples along the way. We ship it to you whenever you want.",
     "howTitle": "How it runs",
     "pricingTitle": "What it costs",
     "pricingLede": "Per cake, per year, paid up front when it goes in. Longer terms cost less per year, because we fill the cabinet more efficiently.",
@@ -367,7 +371,7 @@
   },
   "about": {
     "title": "About us",
-    "lede": "There are two of us, we are in Kortrijk, and we fly to China twice a year because email does not do it.",
+    "lede": "There are two of us, we are in Kortrijk, and we fly to China twice a year because email does not do it. For now we sell online only.",
     "sealAlt": "Cinnabar red seal with the characters 云南井, Yunnan Well",
     "sealCaption": "Our seal. It appears on the Vault certificate of origin and nowhere else.",
     "certificateTitle": "Certificate of origin",
@@ -384,8 +388,8 @@
     "more": "More from the journal"
   },
   "tastings": {
-    "title": "Tastings in Belgium",
-    "lede": "Ghent, Kortrijk and Brussels. Ten to fourteen seats, a gaiwan each, two hours. You need bring nothing and know nothing.",
+    "title": "Tastings in Ghent",
+    "lede": "Ten to fourteen seats, one gaiwan each, two hours. You need bring nothing and know nothing.",
     "upcoming": "Upcoming sessions",
     "seatsLeft": "{count, plural, =0 {full} one {# seat left} other {# seats left}}",
     "duration": "{minutes} minutes",
@@ -398,7 +402,20 @@
     "submitted": "Noted. You will hear from us within one working day.",
     "full": "This session is full. Pick another date, or leave your email for the next run.",
     "privateTitle": "Away from the table",
-    "privateBody": "We also run sessions at people’s homes or offices, from six people up. Email us and we will see what is possible."
+    "privateBody": "We also run sessions at people’s homes or offices, from six people up. Email us and we will see what is possible.",
+    "soonLabel": "Coming soon",
+    "soonTitle": "The tea house is not there yet",
+    "soonLede": "Well’s of Yunnan is a shop online today. No shopfront, no opening hours, no tasting you can book. We are looking for a room in Ghent, and until we have one this page says what it is going to be and nothing else.",
+    "soonPlanTitle": "What it will be",
+    "soonPlanBody": "Not a course and not a ceremony. A table, water at the right temperature, and the same teas that are in this catalogue, so you know what you are buying before you buy it.",
+    "soonPlanOne": "Ten to fourteen seats, one gaiwan each, two hours. You need bring nothing and know nothing.",
+    "soonPlanTwo": "We start at water and temperature, because that is where most of it goes wrong, and end at a tea you brew yourself.",
+    "soonPlanThree": "Everything you drink that evening is on the shelf. Anyone taking something home takes the batch passport with it.",
+    "waitlistTitle": "Waiting list",
+    "waitlistBody": "One email when the first date is fixed, and nothing after that unless you also sign up for the letter. We sell your address to nobody.",
+    "waitlistConsent": "Only for the opening of the tea house. You can unsubscribe at any time.",
+    "waitlistDone": "Noted. You will hear from us as soon as there is a date and an address.",
+    "privateSoonBody": "Sessions at your home or office have to wait for the room; the ware is still in boxes. Write to us anyway and we will put you at the top of the list."
   },
   "contact": {
     "title": "Contact",
@@ -416,7 +433,11 @@
     "message": "Message",
     "subject": "Subject",
     "sent": "Sent. You will hear from us.",
-    "quoteOrderNumber": "We read all of it ourselves. For an order, quoting the order number helps."
+    "quoteOrderNumber": "We read all of it ourselves. For an order, quoting the order number helps.",
+    "shopTitle": "Shop",
+    "shopSoonBody": "There is not one yet. For now we sell online only and ship from Kortrijk.",
+    "hoursSoonBody": "No opening hours, because there is no door yet. Email is read every working day.",
+    "warehouseSoonBody": "Kortrijk. Not open to visitors yet; once the tea house opens, by appointment."
   },
   "newsletter": {
     "emailLabel": "Email address",
@@ -449,7 +470,7 @@
   },
   "meta": {
     "homeTitle": "Well’s of Yunnan — Chinese tea with year, mountain and garden",
-    "homeDescription": "Belgian tea house. Chinese tea direct from Yunnan, Fujian, Guangdong and Zhejiang, with a batch passport, gongfu parameters and a working timer. Pu-erh storage and tastings in Ghent, Kortrijk and Brussels.",
+    "homeDescription": "Belgian online shop for Chinese tea, direct from Yunnan, Fujian, Guangdong and Zhejiang, with a batch passport, gongfu parameters and a working timer. Pu-erh storage; a tea house in Ghent to follow.",
     "catalogTitle": "Tea — every batch",
     "catalogDescription": "Twenty-eight batches of Chinese tea with harvest year, area, altitude and producer. Filter by type, area, year, oxidation, caffeine and form.",
     "productDescription": "{name} from {region}, harvested {year}. Passport, gongfu parameters and a working timer.",
@@ -461,10 +482,10 @@
     "vaultTitle": "Puerh Vault — storage and ageing as a service",
     "vaultDescription": "We keep your cake for three to ten years in a logged climate cabinet in Kortrijk, with a certificate and samples along the way.",
     "aboutTitle": "About us",
-    "aboutDescription": "Two people in Kortrijk who fly to China twice a year to buy by the batch.",
+    "aboutDescription": "Two people in Kortrijk who fly to China twice a year to buy by the batch. Online only for now.",
     "journalTitle": "Journal",
     "journalDescription": "Pieces on ageing, rock tea, water, labels and a purchase that went wrong.",
-    "tastingsTitle": "Tastings in Ghent, Kortrijk and Brussels",
+    "tastingsTitle": "Tastings in Ghent",
     "tastingsDescription": "Reserve a seat at a gongfu session or a vertical tasting. Ten to fourteen seats per session.",
     "checkoutTitle": "Checkout",
     "contactTitle": "Contact",
@@ -474,7 +495,9 @@
     "privacyTitle": "Privacy policy",
     "cookiesTitle": "Cookie policy",
     "withdrawalTitle": "Right of withdrawal",
-    "orderTitle": "Order {number}"
+    "orderTitle": "Order {number}",
+    "tastingsSoonTitle": "Tea house and tastings — coming soon",
+    "tastingsSoonDescription": "Well’s of Yunnan is a shop online for now. A tea house with tastings is coming to Ghent; leave your address to hear the first date."
   },
   "category": {
     "shou": "Shu pu-erh",
@@ -645,7 +668,7 @@
       },
       {
         "heading": "Where we are",
-        "body": "The shop is on Baudelostraat in Ghent and is open Thursday to Saturday. The warehouse and the Vault cabinet are in Kortrijk, where the rent is lower and the cellar drier. If you want to see the cabinet you can, by appointment; it seems fair to us that you would want to look at where your cake is kept."
+        "body": "Nowhere you can ring the bell, not yet. We pack and ship from Kortrijk, where the rent is lower and the cellar drier, and that is where the Vault cabinet stands too. A tea house in Ghent is the plan, not the current state of affairs: while there is no room, this site gives no address with opening hours and sells no seats at a table that does not exist."
       }
     ]
   },
@@ -714,8 +737,8 @@
         "a": "Within the EU, yes. Free from 75 euro. Outside the EU not for now, because customs formalities for foodstuffs differ per country and we cannot promise that reliably."
       },
       {
-        "q": "Can I come by?",
-        "a": "The shop on Baudelostraat in Ghent is open Thursday to Saturday, 11 to 18. For the warehouse and the Vault cabinet in Kortrijk, make an appointment."
+        "q": "Can I come and visit?",
+        "a": "Not yet. Today we are a shop online and nothing else: there is no shop in Ghent and there are no opening hours. A tea house is coming, and the tastings page has a waiting list for the first date. The warehouse in Kortrijk is a working space and not open to visitors."
       },
       {
         "q": "Do you give a discount on larger quantities?",
@@ -733,7 +756,7 @@
       },
       {
         "heading": "Rates",
-        "body": "Belgium: bpost to your door 4.95 euro, parcel locker 3.95 euro, Mondial Relay 3.50 euro. Netherlands: to your door 6.95 euro, pickup point 4.95 euro. Rest of the EU: 9.95 euro. Collection in Ghent is free. Shipping to Belgium and the Netherlands is free from 50 euro; to the rest of the EU from 75 euro."
+        "body": "Belgium: bpost to your door 4.95 euro, parcel locker 3.95 euro, Mondial Relay 3.50 euro. The Netherlands: to your door 6.95 euro, pickup point 4.95 euro. Rest of the EU: 9.95 euro. Collecting from us is not possible while there is no shop. Free to Belgium and the Netherlands from 50 euro; free to the rest of the EU from 75 euro."
       },
       {
         "heading": "Delivery time",

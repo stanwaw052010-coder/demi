@@ -64,7 +64,7 @@ export default async function AboutPage({
           </h2>
           <dl className="text-micro mt-8 max-w-[34rem]">
             {[
-              [COMPANY.legalName, `${COMPANY.shop.street}, ${COMPANY.shop.postcode} ${COMPANY.shop.city}`],
+              [COMPANY.legalName, `${COMPANY.registered.street}, ${COMPANY.registered.postcode} ${COMPANY.registered.city}`],
               [t("vatLabel"), COMPANY.vat],
               [
                 t("storagePlace"),

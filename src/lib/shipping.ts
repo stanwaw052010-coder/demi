@@ -1,3 +1,5 @@
+import { VENUE_OPEN } from "./venue";
+
 export type ShipCountry = "BE" | "NL" | "EU";
 
 export type ShippingMethodId =
@@ -17,7 +19,7 @@ export interface ShippingMethod {
 export const FREE_SHIPPING_BENELUX = 5000;
 export const FREE_SHIPPING_EU = 7500;
 
-export const shippingMethods: ShippingMethod[] = [
+const ALL_METHODS: ShippingMethod[] = [
   {
     id: "bpost-home",
     price: { BE: 495, NL: 695, EU: 995 },
@@ -39,6 +41,19 @@ export const shippingMethods: ShippingMethod[] = [
     freeFrom: { BE: 0, NL: 0, EU: 0 },
   },
 ];
+
+/**
+ * Collecting an order needs a counter to collect it at. Until the tea house
+ * opens the method is not offered anywhere, and because the order API validates
+ * against this same list it cannot be posted either.
+ */
+export const shippingMethods: ShippingMethod[] = ALL_METHODS.filter(
+  (m) => VENUE_OPEN || m.id !== "pickup-ghent",
+);
+
+export function isShippingMethodId(value: string): value is ShippingMethodId {
+  return shippingMethods.some((m) => m.id === value);
+}
 
 export function methodsFor(country: ShipCountry): ShippingMethod[] {
   return shippingMethods.filter((m) => m.price[country] !== null);

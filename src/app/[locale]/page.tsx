@@ -17,6 +17,7 @@ import {
 } from "@/lib/catalog";
 import { articles } from "@content/journal";
 import { tastings } from "@content/tastings";
+import { VENUE_OPEN } from "@/lib/venue";
 import { collections } from "@content/collections";
 import { formatDate, formatPrice } from "@/lib/format";
 
@@ -186,36 +187,50 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </Reveal>
 
-      {/* ── Tastings ──────────────────────────────────────────────────────── */}
+      {/* ── Tastings ──────────────────────────────────────────────────────
+          There is no room yet, so this announces instead of selling a seat. */}
       <section aria-labelledby="wy-tastings" className="wy-shell wy-section wy-rule">
         <div className="wy-grid gap-y-8 items-end">
           <div className="wy-main">
-            <h2 id="wy-tastings">{t("tastingsTitle")}</h2>
-            <p className="wy-lead mt-4 text-stone">{t("tastingsLede")}</p>
+            <p className="wy-label">{t(VENUE_OPEN ? "tastingsNext" : "tastingsSoonLabel")}</p>
+            <h2 id="wy-tastings" className="mt-3">
+              {t(VENUE_OPEN ? "tastingsTitle" : "tastingsSoonTitle")}
+            </h2>
+            <p className="wy-lead mt-4 text-stone">
+              {t(VENUE_OPEN ? "tastingsLede" : "tastingsSoonLede")}
+            </p>
           </div>
         </div>
 
         <div className="wy-grid mt-10">
           <div className="wy-main">
-            <div className="wy-rule pt-5 flex flex-wrap items-baseline gap-x-8 gap-y-2">
-              <p className="wy-label">{t("tastingsNext")}</p>
-              <h3 className="text-[1.375rem] flex-1 min-w-[16rem]">
-                <Link href="/proeverijen" className="wy-link">
-                  {nextTasting.title[locale]}
+            {VENUE_OPEN && nextTasting ? (
+              <>
+                <div className="wy-rule pt-5 flex flex-wrap items-baseline gap-x-8 gap-y-2">
+                  <p className="wy-label">{t("tastingsNext")}</p>
+                  <h3 className="text-[1.375rem] flex-1 min-w-[16rem]">
+                    <Link href="/proeverijen" className="wy-link">
+                      {nextTasting.title[locale]}
+                    </Link>
+                  </h3>
+                  <p className="wy-meta">
+                    <span>{formatDate(nextTasting.date, locale)}</span>
+                    <span>{nextTasting.venue.split(",")[0]}</span>
+                    <span className="tnum">
+                      {tastingsT("perSeat", { price: formatPrice(nextTasting.price, locale) })}
+                    </span>
+                    <span>{tastingsT("seatsLeft", { count: nextTasting.seatsLeft })}</span>
+                  </p>
+                </div>
+                <Link href="/proeverijen" className="wy-btn mt-8">
+                  {actions("reserveSeat")}
                 </Link>
-              </h3>
-              <p className="wy-meta">
-                <span>{formatDate(nextTasting.date, locale)}</span>
-                <span>{nextTasting.venue.split(",")[0]}</span>
-                <span className="tnum">
-                  {tastingsT("perSeat", { price: formatPrice(nextTasting.price, locale) })}
-                </span>
-                <span>{tastingsT("seatsLeft", { count: nextTasting.seatsLeft })}</span>
-              </p>
-            </div>
-            <Link href="/proeverijen" className="wy-btn mt-8">
-              {actions("reserveSeat")}
-            </Link>
+              </>
+            ) : (
+              <Link href="/proeverijen" className="wy-btn">
+                {actions("joinWaitlist")}
+              </Link>
+            )}
           </div>
         </div>
       </section>
