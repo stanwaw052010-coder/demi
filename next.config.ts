@@ -5,6 +5,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "mdx"],
   images: { formats: ["image/avif", "image/webp"] },
+  // <ProductImage> reads this directory to decide between a real photograph and
+  // the drawn composition. Without this, a serverless function has no /public
+  // and the dynamically rendered catalogue would disagree with the statically
+  // rendered product pages.
+  outputFileTracingIncludes: {
+    "/**": ["./public/products/**"],
+  },
 };
 
 // Turbopack needs loader options to be serialisable, so remark plugins are

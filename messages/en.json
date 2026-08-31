@@ -318,7 +318,9 @@
     "trackingNumber": "Tracking number",
     "questions": "Questions about this order? Email us and quote the order number.",
     "notFoundTitle": "We do not know this order",
-    "notFoundBody": "Check the number in your confirmation email, or email us."
+    "notFoundBody": "Check the number in your confirmation email, or email us.",
+    "receivedTitle": "Your order is noted",
+    "receivedBody": "The details of this order are in the confirmation email. This installation does not keep orders permanently, so we cannot show them again here. Email us with the order number if you want to check something."
   },
   "quiz": {
     "title": "Tea finder",

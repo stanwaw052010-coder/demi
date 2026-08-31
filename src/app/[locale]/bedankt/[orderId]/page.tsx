@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { LogoMark } from "@/components/brand/Logo";
-import { getOrder } from "@/lib/orders/store";
+import { getOrder, isEphemeralStorage } from "@/lib/orders/store";
 import { isValidOrderNumber } from "@/lib/order";
 import { formatDate, formatPrice } from "@/lib/format";
 
@@ -42,14 +42,29 @@ export default async function ThanksPage({
   const order = isValidOrderNumber(orderId) ? await getOrder(orderId) : undefined;
 
   if (!order) {
+    /*
+      A well-formed number that storage cannot produce is not the same thing as
+      a wrong number. On a serverless host the JSON store only lives inside one
+      warm instance, so a customer who just paid can easily land here. Telling
+      them "we do not know this order" would be both alarming and untrue.
+    */
+    const plausible = isValidOrderNumber(orderId) && isEphemeralStorage();
+
     return (
       <div className="wy-shell" style={{ paddingBlock: "clamp(4rem, 12vh, 8rem)" }}>
         <div className="mx-auto text-center" style={{ maxWidth: "42ch" }}>
           <span className="flex justify-center">
             <LogoMark size={48} />
           </span>
-          <h1 className="mt-6 text-[2rem]">{t("notFoundTitle")}</h1>
-          <p className="wy-prose mt-4 mx-auto">{t("notFoundBody")}</p>
+          <h1 className="mt-6 text-[2rem]">
+            {plausible ? t("receivedTitle") : t("notFoundTitle")}
+          </h1>
+          {plausible ? (
+            <p className="tnum mt-4 text-[var(--text-ui)]">{orderId}</p>
+          ) : null}
+          <p className="wy-prose mt-4 mx-auto">
+            {plausible ? t("receivedBody") : t("notFoundBody")}
+          </p>
           <Link href="/thee" className="wy-btn mt-8">
             {actions("continueShopping")}
           </Link>

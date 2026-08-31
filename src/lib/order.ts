@@ -101,6 +101,7 @@ export function orderNumber(year: number, sequence: number): string {
   return `WY-${year}-${String(sequence).padStart(4, "0")}`;
 }
 
+/** WY-2026-0001, optionally with the instance suffix ephemeral storage adds. */
 export function isValidOrderNumber(value: string): boolean {
-  return /^WY-\d{4}-\d{4}$/.test(value);
+  return /^WY-\d{4}-\d{4}(-[A-Z0-9]{2})?$/.test(value);
 }

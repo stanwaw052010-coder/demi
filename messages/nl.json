@@ -318,7 +318,9 @@
     "trackingNumber": "Volgnummer",
     "questions": "Vragen over deze bestelling? Mail ons met het bestelnummer erbij.",
     "notFoundTitle": "Deze bestelling kennen wij niet",
-    "notFoundBody": "Controleer het nummer in uw bevestigingsmail, of mail ons."
+    "notFoundBody": "Controleer het nummer in uw bevestigingsmail, of mail ons.",
+    "receivedTitle": "Uw bestelling is genoteerd",
+    "receivedBody": "De details van deze bestelling staan in de bevestigingsmail. Deze installatie bewaart bestellingen niet blijvend, dus wij kunnen ze hier niet opnieuw tonen. Mail ons met het bestelnummer als u iets wil nakijken."
   },
   "quiz": {
     "title": "Theeproever",

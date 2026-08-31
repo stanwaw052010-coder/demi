@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { readdirSync } from "node:fs";
 import path from "node:path";
 import Image from "next/image";
 import type { Form, LiquorKey } from "@content/types";
@@ -25,6 +25,26 @@ const VIEW_SUFFIX: Record<CompositionView, string> = {
 };
 
 /**
+ * The photo directory is read once per process rather than stat-ed per image.
+ *
+ * Doing it per render was also wrong on a serverless host: statically rendered
+ * product pages resolve at build time, where /public exists, while the
+ * catalogue renders per request inside a lambda, where it does not. The two
+ * would disagree the moment real photographs were added — photos on the
+ * product page, drawings in the catalogue. `outputFileTracingIncludes` in
+ * next.config.ts ships the directory into the function so both agree.
+ */
+const photos: ReadonlySet<string> = (() => {
+  try {
+    return new Set(readdirSync(path.join(process.cwd(), "public", "products")));
+  } catch {
+    // No directory yet, which is the normal state until PHOTOS.md is worked
+    // through. Everything falls back to the drawn composition.
+    return new Set<string>();
+  }
+})();
+
+/**
  * Looks for a real photograph first and falls back to the drawn composition, so
  * replacing the image layer with photography is a matter of dropping files into
  * /public/products. See PHOTOS.md for the shot list.
@@ -41,7 +61,7 @@ export function ProductImage({
   className,
 }: Props) {
   const file = `${slug}${VIEW_SUFFIX[view]}.jpg`;
-  const hasPhoto = existsSync(path.join(process.cwd(), "public", "products", file));
+  const hasPhoto = photos.has(file);
 
   return (
     <div

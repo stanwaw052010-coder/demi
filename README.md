@@ -154,6 +154,38 @@ Opslag zit achter vier functies in `src/lib/orders/store.ts`
 JSON-bestand; Drizzle met SQLite erachter zetten is die vier functies opnieuw
 schrijven en verder niets. Nummers lopen als `WY-2026-0001`, per jaar.
 
+## Op Vercel zetten
+
+Importeren en bouwen, verder niets: er zijn geen verplichte omgevingsvariabelen.
+Zet wel `NEXT_PUBLIC_SITE_URL` op het echte domein, anders wijzen de canonieke
+URL's, de sitemap en de Open Graph-beelden naar `wellsofyunnan.be` in plaats van
+naar uw deploy.
+
+Twee dingen die u moet weten voor u er echt op verkoopt.
+
+**Bestellingen overleven een serverless host niet.** Het bestandssysteem van een
+functie is alleen-lezen, dus `src/lib/orders/store.ts` wijkt daar uit naar de
+tijdelijke map. De kassa blijft werken en de bevestigingsmail gaat gewoon uit,
+maar wat er geschreven wordt leeft alleen binnen één warme instantie en is na
+een nieuwe deploy weg. Concreet: iemand die net betaald heeft en de
+bevestigingspagina opent, kan door een andere instantie bediend worden. Daarom
+toont die pagina in dat geval geen "deze bestelling kennen wij niet" maar
+"uw bestelling is genoteerd", met het nummer erbij en de verwijzing naar de mail.
+
+Voor een echte winkel vervangt u die vier functies door een database. Alles wat
+de rest van de app ervan gebruikt staat in dat ene bestand:
+`nextOrderNumber`, `saveOrder`, `getOrder`, `listOrders`. Met een echte database
+verdwijnt ook het achtervoegsel achter het bestelnummer: dat staat er alleen om
+te voorkomen dat twee instanties hetzelfde nummer uitdelen.
+
+**Foto's moeten meegebundeld worden.** `<ProductImage>` leest
+`public/products` om te kiezen tussen een foto en de tekening. Een functie heeft
+geen `/public`, dus `outputFileTracingIncludes` in `next.config.ts` neemt die map
+mee. Zonder die regel zouden de statisch gebouwde productpagina's foto's tonen en
+de dynamisch gerenderde catalogus tekeningen. Zet u er straks 120 echte foto's
+in, verhuis ze dan naar een CDN of een `<Image loader>` in plaats van ze in elke
+functie mee te sturen.
+
 ## De inhoudslaag vervangen
 
 Geen enkele pagina importeert `content/products` rechtstreeks; alles loopt via
