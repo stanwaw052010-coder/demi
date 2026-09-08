@@ -112,6 +112,13 @@ async def start_request(callback: CallbackQuery, state: FSMContext) -> None:
         await show_date(callback, state)
         return
 
+    # Заявка из раздела омоложения: направление уже известно, но процедуру
+    # клиентка ещё не выбрала — ведём сразу на шаг выбора, минуя «що вас цікавить».
+    if payload == "rejuv":
+        await state.update_data(direction=DIRECTION_REJUVENATION, items=[])
+        await show_items(callback, state)
+        return
+
     service = config.get_any_service(payload) if payload != "-" else None
     if service is not None:
         direction = (
@@ -182,7 +189,11 @@ async def show_items(target: Target, state: FSMContext) -> None:
     await state.set_state(RequestSG.items)
 
     if direction == DIRECTION_REJUVENATION:
-        await _show(target, texts.REQ_STEP_ITEMS_REJUV, kb.request_rejuvenation_keyboard())
+        await _show(
+            target,
+            texts.REQ_STEP_ITEMS_REJUV.format(selection=_selection_summary(selected)),
+            kb.request_rejuvenation_keyboard(selected),
+        )
         return
 
     await _show(
@@ -205,6 +216,27 @@ async def on_item(callback: CallbackQuery, state: FSMContext) -> None:
     direction = data.get("direction")
 
     if direction == DIRECTION_REJUVENATION:
+        # Зоны фотоомоложения набираются несколько (700 грн × количество),
+        # лазерные процедуры — по одной за визит.
+        if config.is_photo_rejuvenation(code):
+            photo_selected = [
+                item for item in data.get("items", []) if config.is_photo_rejuvenation(item)
+            ]
+            if code in photo_selected:
+                photo_selected.remove(code)
+                await callback.answer("Прибрали")
+            else:
+                photo_selected.append(code)
+                await callback.answer("Додали")
+
+            await state.update_data(items=photo_selected)
+            await tg.safe_edit(
+                callback,
+                texts.REQ_STEP_ITEMS_REJUV.format(selection=_selection_summary(photo_selected)),
+                kb.request_rejuvenation_keyboard(photo_selected),
+            )
+            return
+
         await callback.answer()
         await state.update_data(items=[code])
         await show_date(callback, state)

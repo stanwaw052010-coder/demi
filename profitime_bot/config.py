@@ -215,24 +215,36 @@ SERVICES_EPILATION: Final[dict[str, Zone]] = {
                 "price": 800, "package_price": 3200, "duration": 35, "sessions": 6, "interval_days": 42},
     "w_thighs": {"code": "w_thighs", "name": "Стегна", "group": "women",
                  "price": 900, "package_price": 3600, "duration": 40, "sessions": 6, "interval_days": 42},
-    # --- чоловіки ---
-    "m_back": {"code": "m_back", "name": "Спина повністю", "group": "men",
-               "price": 1200, "package_price": 4800, "duration": 45, "sessions": 6, "interval_days": 42},
-    "m_chest": {"code": "m_chest", "name": "Груди", "group": "men",
-                "price": 900, "package_price": 3600, "duration": 35, "sessions": 6, "interval_days": 42},
-    "m_belly": {"code": "m_belly", "name": "Живіт", "group": "men",
-                "price": 800, "package_price": 3200, "duration": 30, "sessions": 6, "interval_days": 42},
-    "m_armpits": {"code": "m_armpits", "name": "Пахви", "group": "men",
-                  "price": 550, "package_price": 2200, "duration": 20, "sessions": 6, "interval_days": 30},
-    "m_arms": {"code": "m_arms", "name": "Руки повністю", "group": "men",
-               "price": 1000, "package_price": 4000, "duration": 40, "sessions": 6, "interval_days": 35},
-    "m_neck": {"code": "m_neck", "name": "Шия", "group": "men",
-               "price": 500, "package_price": 2000, "duration": 20, "sessions": 8, "interval_days": 28},
-    "m_beard_line": {"code": "m_beard_line", "name": "Контур бороди", "group": "men",
-                     "price": 600, "package_price": 2400, "duration": 25, "sessions": 8, "interval_days": 28},
-    "m_legs": {"code": "m_legs", "name": "Ноги повністю", "group": "men",
-               "price": 1600, "package_price": 6400, "duration": 60, "sessions": 6, "interval_days": 42},
 }
+
+# ЧОЛОВІЧІ ЗОНИ — тимчасово вимкнено на прохання клієнтки. Розкоментувати за потреби.
+#
+# Щоб повернути послугу, достатньо перенести ці рядки назад у SERVICES_EPILATION
+# (структура повністю сумісна, group="men" вже підтримується zones_by_group).
+# Крім конфіга доведеться повернути й точки входу в інтерфейс:
+#   • keyboards/client_kb.py — кнопку групи в zone_groups_keyboard(),
+#     чоловічі зони в request_zones_keyboard() і calculator_keyboard(),
+#     розділ ("men", …) у PRICE_SECTIONS;
+#   • handlers/price.py — гілку секції "men";
+#   • handlers/info_epilation.py — групу "men" у show_zones();
+#   • utils/texts.py — заголовки ZONES_GROUP_MEN і PRICE_HEADER_EPIL_MEN.
+#
+# "m_back": {"code": "m_back", "name": "Спина повністю", "group": "men",
+#            "price": 1200, "package_price": 4800, "duration": 45, "sessions": 6, "interval_days": 42},
+# "m_chest": {"code": "m_chest", "name": "Груди", "group": "men",
+#             "price": 900, "package_price": 3600, "duration": 35, "sessions": 6, "interval_days": 42},
+# "m_belly": {"code": "m_belly", "name": "Живіт", "group": "men",
+#             "price": 800, "package_price": 3200, "duration": 30, "sessions": 6, "interval_days": 42},
+# "m_armpits": {"code": "m_armpits", "name": "Пахви", "group": "men",
+#               "price": 550, "package_price": 2200, "duration": 20, "sessions": 6, "interval_days": 30},
+# "m_arms": {"code": "m_arms", "name": "Руки повністю", "group": "men",
+#            "price": 1000, "package_price": 4000, "duration": 40, "sessions": 6, "interval_days": 35},
+# "m_neck": {"code": "m_neck", "name": "Шия", "group": "men",
+#            "price": 500, "package_price": 2000, "duration": 20, "sessions": 8, "interval_days": 28},
+# "m_beard_line": {"code": "m_beard_line", "name": "Контур бороди", "group": "men",
+#                  "price": 600, "package_price": 2400, "duration": 25, "sessions": 8, "interval_days": 28},
+# "m_legs": {"code": "m_legs", "name": "Ноги повністю", "group": "men",
+#            "price": 1600, "package_price": 6400, "duration": 60, "sessions": 6, "interval_days": 42},
 
 
 class Complex(TypedDict):
@@ -286,7 +298,7 @@ class Rejuvenation(TypedDict):
     interval_days: int
 
 
-SERVICES_REJUVENATION: Final[dict[str, Rejuvenation]] = {
+SERVICES_LASER_REJUV: Final[dict[str, Rejuvenation]] = {
     "r_face": {
         "code": "r_face", "name": "Лазерне омолодження обличчя",
         "short": "Запускає вироблення власного колагену. Шкіра стає щільнішою, "
@@ -328,6 +340,63 @@ SERVICES_REJUVENATION: Final[dict[str, Rejuvenation]] = {
         "price": 1500, "package_price": 6000, "duration": 45,
         "sessions": 4, "interval_days": 30,
     },
+}
+
+# --------------------------------------------------------------------------- #
+# ФОТООМОЛОДЖЕННЯ (IPL)
+# --------------------------------------------------------------------------- #
+# Це ОКРЕМА технологія, не лазер. IPL — широкосмугове імпульсне світло, воно
+# працює по пігменту й судинах у поверхневих шарах. Лазерне омолодження вище
+# працює інакше — прогріває глибші шари й запускає синтез колагену.
+# Тому дві послуги живуть у різних довідниках і ніде в текстах не змішуються.
+#
+# Ціна єдина для будь-якої зони. Клієнтка може взяти кілька зон за один візит —
+# сума рахується як PHOTO_REJUV_PRICE × кількість обраних зон.
+#
+# ⚠️ Тривалість, кількість сеансів та інтервал — попередні, за типовим
+#    протоколом IPL. Підтвердити в Анни (CONTENT_TODO.md, пункт 12).
+
+PHOTO_REJUV_PRICE: Final[int] = 700
+PHOTO_REJUV_SESSIONS: Final[int] = 5
+PHOTO_REJUV_INTERVAL_DAYS: Final[int] = 21
+
+# (код, назва зони, тривалість у хвилинах)
+_PHOTO_REJUV_ZONES: Final[tuple[tuple[str, str, int], ...]] = (
+    ("r_photo_face", "Обличчя", 30),
+    ("r_photo_neck", "Шия", 20),
+    ("r_photo_hands", "Руки", 20),
+)
+
+_PHOTO_REJUV_SHORT: Final[str] = (
+    "IPL-спалах поглинається пігментом і розширеними судинами. "
+    "Тон вирівнюється, пігментні плями світлішають, зникає почервоніння "
+    "та судинна сіточка."
+)
+
+SERVICES_PHOTO_REJUV: Final[dict[str, Rejuvenation]] = {
+    code: {
+        "code": code,
+        "name": f"Фотоомолодження — {name.lower()}",
+        "short": _PHOTO_REJUV_SHORT,
+        "price": PHOTO_REJUV_PRICE,
+        "package_price": PHOTO_REJUV_PRICE * 4,
+        "duration": duration,
+        "sessions": PHOTO_REJUV_SESSIONS,
+        "interval_days": PHOTO_REJUV_INTERVAL_DAYS,
+    }
+    for code, name, duration in _PHOTO_REJUV_ZONES
+}
+
+# Назви зон у тому вигляді, в якому вони йдуть у прайс: «обличчя, шия, руки».
+PHOTO_REJUV_ZONE_NAMES: Final[str] = ", ".join(
+    name.lower() for _, name, _ in _PHOTO_REJUV_ZONES
+)
+
+# Спільний довідник омолодження — лазер плюс IPL. Потрібен там, де послугу
+# треба просто знайти за кодом: калькулятор, заявки, трекер курсу, повний прайс.
+SERVICES_REJUVENATION: Final[dict[str, Rejuvenation]] = {
+    **SERVICES_LASER_REJUV,
+    **SERVICES_PHOTO_REJUV,
 }
 
 # --------------------------------------------------------------------------- #
@@ -563,6 +632,16 @@ def get_rejuvenation(code: str) -> Rejuvenation | None:
 
 def zones_by_group(group: str) -> list[Zone]:
     return [zone for zone in SERVICES_EPILATION.values() if zone["group"] == group]
+
+
+def epilation_zones() -> list[Zone]:
+    """Усі активні зони епіляції. Зараз це лише жіночі — чоловічі вимкнено."""
+    return list(SERVICES_EPILATION.values())
+
+
+def is_photo_rejuvenation(code: str) -> bool:
+    """Чи це зона фотоомолодження (IPL), а не лазерна процедура."""
+    return code in SERVICES_PHOTO_REJUV
 
 
 def get_any_service(code: str) -> Zone | Complex | Rejuvenation | None:

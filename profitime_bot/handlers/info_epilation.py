@@ -94,6 +94,15 @@ async def show_zone_groups(callback: CallbackQuery) -> None:
 
 @router.callback_query(F.data.startswith(f"{kb.CB_ZONE_GROUP}:"))
 async def show_zones(callback: CallbackQuery) -> None:
+    """
+    Комплексы зон.
+
+    Раньше сюда вёл ещё и выбор группы «жінки / чоловіки». Мужские зоны
+    отключены, поэтому зоны показываются сразу в zone_groups_keyboard(),
+    а здесь остались только комплексы. Старые callback'и (zg:women,
+    zg:men) из уже открытых у клиенток сообщений вернут список зон,
+    а не ошибку.
+    """
     await callback.answer()
     group = callback.data.split(":", 1)[1]
 
@@ -101,16 +110,7 @@ async def show_zones(callback: CallbackQuery) -> None:
         await tg.safe_edit(callback, texts.COMPLEXES_MENU, kb.zones_keyboard(group))
         return
 
-    if group not in ("women", "men"):
-        await tg.safe_edit(callback, texts.ZONES_MENU, kb.zone_groups_keyboard())
-        return
-
-    header = texts.ZONES_GROUP_WOMEN if group == "women" else texts.ZONES_GROUP_MEN
-    await tg.safe_edit(
-        callback,
-        f"{texts.E_LASER} <b>{header}</b>\n{texts.DIVIDER}\n\nОберіть зону 👇",
-        kb.zones_keyboard(group),
-    )
+    await tg.safe_edit(callback, texts.ZONES_MENU, kb.zone_groups_keyboard())
 
 
 @router.callback_query(F.data.startswith(f"{kb.CB_EPIL}:"))
@@ -146,13 +146,13 @@ async def show_service_card(callback: CallbackQuery) -> None:
         return
 
     # Возврат ведёт туда, откуда услуга родом.
-    if code in config.SERVICES_REJUVENATION:
+    if config.is_photo_rejuvenation(code):
+        back = f"{kb.CB_REJUV}:photo"
+    elif code in config.SERVICES_REJUVENATION:
         back = f"{kb.CB_REJUV}:types"
     elif code in config.COMPLEXES:
         back = f"{kb.CB_ZONE_GROUP}:complex"
     else:
-        zone = config.get_zone(code)
-        group = zone["group"] if zone else "women"
-        back = f"{kb.CB_ZONE_GROUP}:{group}"
+        back = kb.CB_EPIL_ZONES
 
     await tg.safe_edit(callback, card, kb.service_card_keyboard(code, back))

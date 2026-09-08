@@ -124,11 +124,14 @@ EPILATION_SCREENS: tuple[tuple[str, str], ...] = (
 )
 
 REJUVENATION_SCREENS: tuple[tuple[str, str], ...] = (
-    ("what", "Що це і як працює"),
+    ("what", "💎 Лазерне омолодження — що це"),
     ("problems", "З чим працює"),
-    ("types", "Види процедур"),
+    ("types", "Види лазерних процедур"),
     ("sessions", "Сеанси, інтервал, сезонність"),
     ("rehab", "Реабілітація"),
+    # Фотоомоложение (IPL) — другая технология, поэтому отдельным пунктом
+    # рядом, а не внутри «видів процедур».
+    ("photo", "🔆 Фотоомолодження (IPL)"),
     ("contra", "Протипоказання"),
     ("result", "Результат по сеансах"),
 )
@@ -170,10 +173,26 @@ def info_screen_keyboard(back_callback: str) -> InlineKeyboardMarkup:
 
 
 def zone_groups_keyboard() -> InlineKeyboardMarkup:
+    """
+    Зоны эпиляции одним списком.
+
+    Раньше здесь был шаг «жінки / чоловіки». Мужские зоны отключены, выбор
+    группы стал выбором из одного пункта — и его убрали: клиентка сразу
+    видит зоны, комплексы вынесены отдельной кнопкой внизу.
+    """
     builder = InlineKeyboardBuilder()
-    builder.row(InlineKeyboardButton(text=texts.ZONES_GROUP_WOMEN, callback_data=f"{CB_ZONE_GROUP}:women"))
-    builder.row(InlineKeyboardButton(text=texts.ZONES_GROUP_MEN, callback_data=f"{CB_ZONE_GROUP}:men"))
-    builder.row(InlineKeyboardButton(text=texts.ZONES_COMPLEXES, callback_data=f"{CB_ZONE_GROUP}:complex"))
+
+    for service in config.epilation_zones():
+        builder.row(
+            InlineKeyboardButton(
+                text=f"{service['name']} · {service['price']} {config.CURRENCY}",
+                callback_data=f"{CB_SERVICE}:{service['code']}",
+            )
+        )
+
+    builder.row(
+        InlineKeyboardButton(text=texts.ZONES_COMPLEXES, callback_data=f"{CB_ZONE_GROUP}:complex")
+    )
     builder.row(
         InlineKeyboardButton(text=texts.BTN_BACK, callback_data=f"{CB_EPIL}:menu"),
         InlineKeyboardButton(text=texts.BTN_MENU, callback_data=CB_MENU),
@@ -182,7 +201,7 @@ def zone_groups_keyboard() -> InlineKeyboardMarkup:
 
 
 def zones_keyboard(group: str) -> InlineKeyboardMarkup:
-    """Список зон одной группы. Цена в кнопке — чтобы не открывать каждую."""
+    """Список услуг одной группы. Цена в кнопке — чтобы не открывать каждую."""
     builder = InlineKeyboardBuilder()
 
     if group == "complex":
@@ -205,14 +224,43 @@ def zones_keyboard(group: str) -> InlineKeyboardMarkup:
 
 
 def rejuvenation_types_keyboard() -> InlineKeyboardMarkup:
+    """
+    Виды ЛАЗЕРНОГО омоложения.
+
+    Фотоомоложение сюда не подмешивается: это другая технология, у неё
+    свой экран с объяснением разницы (кнопка «Фотоомолодження» в меню).
+    """
     builder = InlineKeyboardBuilder()
-    for service in config.SERVICES_REJUVENATION.values():
+    for service in config.SERVICES_LASER_REJUV.values():
         builder.row(
             InlineKeyboardButton(
                 text=f"{service['name']} · {service['price']} {config.CURRENCY}",
                 callback_data=f"{CB_SERVICE}:{service['code']}",
             )
         )
+    builder.row(
+        InlineKeyboardButton(text=texts.BTN_BACK, callback_data=f"{CB_REJUV}:menu"),
+        InlineKeyboardButton(text=texts.BTN_MENU, callback_data=CB_MENU),
+    )
+    return builder.as_markup()
+
+
+def photo_rejuvenation_keyboard() -> InlineKeyboardMarkup:
+    """Зоны фотоомоложения. Цена у всех одна, поэтому в кнопке только название."""
+    builder = InlineKeyboardBuilder()
+    for service in config.SERVICES_PHOTO_REJUV.values():
+        builder.row(
+            InlineKeyboardButton(
+                text=f"{service['name']} · {service['price']} {config.CURRENCY}",
+                callback_data=f"{CB_SERVICE}:{service['code']}",
+            )
+        )
+    builder.row(bookon_button())
+    builder.row(
+        InlineKeyboardButton(
+            text=texts.BTN_LEAVE_REQUEST, callback_data=f"{CB_REQ_START}:rejuv"
+        )
+    )
     builder.row(
         InlineKeyboardButton(text=texts.BTN_BACK, callback_data=f"{CB_REJUV}:menu"),
         InlineKeyboardButton(text=texts.BTN_MENU, callback_data=CB_MENU),
@@ -262,7 +310,7 @@ def request_zones_keyboard(selected: list[str]) -> InlineKeyboardMarkup:
     """Мультивыбор зон: выбранные отмечены галочкой, тап переключает."""
     builder = InlineKeyboardBuilder()
 
-    for service in config.zones_by_group("women"):
+    for service in config.epilation_zones():
         mark = "✅ " if service["code"] in selected else ""
         builder.row(
             InlineKeyboardButton(
@@ -278,14 +326,6 @@ def request_zones_keyboard(selected: list[str]) -> InlineKeyboardMarkup:
                 callback_data=f"{CB_REQ_ITEM}:{service['code']}",
             )
         )
-    for service in config.zones_by_group("men"):
-        mark = "✅ " if service["code"] in selected else ""
-        builder.row(
-            InlineKeyboardButton(
-                text=f"{mark}👨 {service['name']} · {service['price']} {config.CURRENCY}",
-                callback_data=f"{CB_REQ_ITEM}:{service['code']}",
-            )
-        )
 
     if selected:
         builder.row(
@@ -295,13 +335,38 @@ def request_zones_keyboard(selected: list[str]) -> InlineKeyboardMarkup:
     return builder.as_markup()
 
 
-def request_rejuvenation_keyboard() -> InlineKeyboardMarkup:
+def request_rejuvenation_keyboard(selected: list[str] | None = None) -> InlineKeyboardMarkup:
+    """
+    Выбор процедуры омоложения.
+
+    Лазерные процедуры взаимоисключающие — тап сразу ведёт дальше.
+    Зоны фотоомоложения можно набрать несколько: они отмечаются галочкой,
+    а сумма считается как 700 грн × количество зон.
+    """
+    selected = selected or []
     builder = InlineKeyboardBuilder()
-    for service in config.SERVICES_REJUVENATION.values():
+
+    for service in config.SERVICES_LASER_REJUV.values():
         builder.row(
             InlineKeyboardButton(
                 text=f"{service['name']} · {service['price']} {config.CURRENCY}",
                 callback_data=f"{CB_REQ_ITEM}:{service['code']}",
+            )
+        )
+
+    for service in config.SERVICES_PHOTO_REJUV.values():
+        mark = "✅ " if service["code"] in selected else ""
+        builder.row(
+            InlineKeyboardButton(
+                text=f"{mark}{texts.E_PHOTO} {service['name']} · {service['price']} {config.CURRENCY}",
+                callback_data=f"{CB_REQ_ITEM}:{service['code']}",
+            )
+        )
+
+    if selected:
+        builder.row(
+            InlineKeyboardButton(
+                text=f"{texts.BTN_DONE} ({len(selected)})", callback_data=CB_REQ_ITEMS_OK
             )
         )
     _request_nav(builder, "direction")
@@ -389,7 +454,7 @@ def client_reschedule_keyboard(request_id: int) -> InlineKeyboardMarkup:
 def calculator_keyboard(selected: list[str]) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
 
-    for service in config.zones_by_group("women"):
+    for service in config.epilation_zones():
         mark = "✅ " if service["code"] in selected else ""
         builder.row(
             InlineKeyboardButton(
@@ -397,11 +462,13 @@ def calculator_keyboard(selected: list[str]) -> InlineKeyboardMarkup:
                 callback_data=f"{CB_CALC_ITEM}:{service['code']}",
             )
         )
-    for service in config.zones_by_group("men"):
+
+    # Фотоомоложение считается так же — 700 грн × количество выбранных зон.
+    for service in config.SERVICES_PHOTO_REJUV.values():
         mark = "✅ " if service["code"] in selected else ""
         builder.row(
             InlineKeyboardButton(
-                text=f"{mark}👨 {service['name']} · {service['price']} {config.CURRENCY}",
+                text=f"{mark}{texts.E_PHOTO} {service['name']} · {service['price']} {config.CURRENCY}",
                 callback_data=f"{CB_CALC_ITEM}:{service['code']}",
             )
         )
@@ -479,10 +546,10 @@ def quiz_result_keyboard(verdict: str) -> InlineKeyboardMarkup:
 # --------------------------------------------------------------------------- #
 
 PRICE_SECTIONS: tuple[tuple[str, str], ...] = (
-    ("women", "👩 Епіляція — жінки"),
-    ("men", "👨 Епіляція — чоловіки"),
+    ("epil", "✨ Лазерна епіляція"),
     ("complex", "🎯 Комплекси зон"),
-    ("rejuv", "💎 Омолодження обличчя"),
+    ("rejuv", "💎 Лазерне омолодження"),
+    ("photo", "🔆 Фотоомолодження"),
     ("all", "📄 Повний прайс"),
 )
 

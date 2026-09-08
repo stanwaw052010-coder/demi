@@ -48,10 +48,20 @@ async def show_rejuvenation_screen(callback: CallbackQuery) -> None:
     if code == "types":
         await tg.safe_edit(
             callback,
-            f"{texts.E_FACE} <b>Види процедур</b>\n{texts.DIVIDER}\n\n"
+            f"{texts.E_FACE} <b>Види лазерних процедур</b>\n{texts.DIVIDER}\n\n"
             "Оберіть процедуру — покажемо опис, тривалість, ціну "
             "та рекомендований курс 👇",
             kb.rejuvenation_types_keyboard(),
+        )
+        return
+
+    # Фотоомоложение — другая технология, поэтому свой экран с объяснением
+    # разницы. В «види лазерних процедур» оно не подмешивается.
+    if code == "photo":
+        await tg.safe_edit(
+            callback,
+            texts.format_photo_intro(),
+            kb.photo_rejuvenation_keyboard(),
         )
         return
 

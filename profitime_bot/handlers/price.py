@@ -23,50 +23,39 @@ logger = logging.getLogger(__name__)
 router = Router(name="price")
 
 
+def _epilation_section() -> str:
+    return texts.format_price_section(texts.PRICE_HEADER_EPIL, config.epilation_zones())
+
+
+def _complex_section() -> str:
+    return texts.format_price_section(texts.PRICE_HEADER_COMPLEX, list(config.COMPLEXES.values()))
+
+
+def _laser_rejuv_section() -> str:
+    return texts.format_price_section(
+        texts.PRICE_HEADER_REJUV, list(config.SERVICES_LASER_REJUV.values())
+    )
+
+
 def _section_text(section: str) -> str:
-    if section == "women":
-        return (
-            texts.format_price_section(
-                texts.PRICE_HEADER_EPIL_WOMEN, config.zones_by_group("women")
-            )
-            + texts.PRICE_FOOTER
-        )
-    if section == "men":
-        return (
-            texts.format_price_section(texts.PRICE_HEADER_EPIL_MEN, config.zones_by_group("men"))
-            + texts.PRICE_FOOTER
-        )
+    if section == "epil":
+        return _epilation_section() + texts.PRICE_FOOTER
     if section == "complex":
-        return (
-            texts.format_price_section(
-                texts.PRICE_HEADER_COMPLEX, list(config.COMPLEXES.values())
-            )
-            + texts.PRICE_FOOTER
-        )
+        return _complex_section() + texts.PRICE_FOOTER
     if section == "rejuv":
-        return (
-            texts.format_price_section(
-                texts.PRICE_HEADER_REJUV, list(config.SERVICES_REJUVENATION.values())
-            )
-            + texts.PRICE_FOOTER
-        )
+        return _laser_rejuv_section() + texts.PRICE_FOOTER
+    if section == "photo":
+        # Фотоомоложение — одна строка «700 грн / зона»: цена от зоны не зависит.
+        return texts.format_photo_price_section() + texts.PRICE_FOOTER
 
     # Полный прайс — все секции подряд.
     return (
         "\n\n".join(
             (
-                texts.format_price_section(
-                    texts.PRICE_HEADER_EPIL_WOMEN, config.zones_by_group("women")
-                ),
-                texts.format_price_section(
-                    texts.PRICE_HEADER_COMPLEX, list(config.COMPLEXES.values())
-                ),
-                texts.format_price_section(
-                    texts.PRICE_HEADER_EPIL_MEN, config.zones_by_group("men")
-                ),
-                texts.format_price_section(
-                    texts.PRICE_HEADER_REJUV, list(config.SERVICES_REJUVENATION.values())
-                ),
+                _epilation_section(),
+                _complex_section(),
+                _laser_rejuv_section(),
+                texts.format_photo_price_section(),
             )
         )
         + texts.PRICE_FOOTER
