@@ -1,0 +1,29 @@
+# Завдання за розкладом для бота Profi Time.
+#
+# Встановити (від root):
+#     sudo crontab -l > /tmp/cron.bak 2>/dev/null; \
+#     sudo crontab /opt/profitime-bot/profitime_bot/deploy/crontab
+#
+# Перевірити, що встало:
+#     sudo crontab -l
+#
+# Час — за годинником сервера. Часовий пояс сервера має бути Europe/Kyiv
+# (див. DEPLOY.md, крок 7): sudo timedatectl set-timezone Europe/Kyiv
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+DB_PATH=/var/lib/profitime-bot/bot.db
+LOG_DIR=/var/log/profitime-bot
+BACKUP_DIR=/var/backups/profitime-bot
+
+# Резервна копія бази — щодня о 04:00.
+# Час обраний навмисно: клієнток о четвертій ранку немає, база спокійна.
+# Копію робить sudo -u botuser, щоб файли належали боту, а не root.
+0 4 * * * sudo -u botuser /opt/profitime-bot/profitime_bot/deploy/backup.sh >> /var/log/profitime-bot/backup.log 2>&1
+
+# Сторож — кожні 10 хвилин. Перезапускає бота, якщо той завис.
+*/10 * * * * /opt/profitime-bot/profitime_bot/deploy/healthcheck.sh >> /var/log/profitime-bot/healthcheck.log 2>&1
+
+# Прибирання власних логів cron — раз на тиждень, щоб вони не росли вічно.
+# Логи самого бота ротує Python (RotatingFileHandler), їх чіпати не треба.
+0 5 * * 1 find /var/log/profitime-bot -name '*.log' -size +20M -exec truncate -s 0 {} \;

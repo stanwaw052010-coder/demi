@@ -1,0 +1,88 @@
+# systemd-юніт бота Profi Time.
+#
+# Куди покласти:  /etc/systemd/system/profitime-bot.service
+# Після зміни:    sudo systemctl daemon-reload && sudo systemctl restart profitime-bot
+#
+# Що це дає:
+#   • бот піднімається сам після перезавантаження сервера;
+#   • падає — перезапускається через 10 секунд;
+#   • логи йдуть у journald, читаються через journalctl;
+#   • процес не може з'їсти всю пам'ять і завалити сервер.
+
+[Unit]
+Description=Profi Time — Telegram-бот студії лазерної епіляції
+Documentation=file:/opt/profitime-bot/DEPLOY.md
+# Чекаємо на мережу: без неї перший запит до Telegram все одно впаде.
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=botuser
+Group=botuser
+WorkingDirectory=/opt/profitime-bot/profitime_bot
+
+# --- Шляхи: дані окремо від коду ---
+# Через це `git pull` і deploy.sh фізично не можуть зачепити базу з заявками.
+Environment=DB_PATH=/var/lib/profitime-bot/bot.db
+Environment=LOG_DIR=/var/log/profitime-bot
+Environment=BACKUP_DIR=/var/backups/profitime-bot
+Environment=LOG_TO_FILE=1
+Environment=PYTHONUNBUFFERED=1
+Environment=TZ=Europe/Kyiv
+
+# Секрети (BOT_TOKEN, ADMIN_IDS) бот читає сам із .env — сюди вони не потрапляють,
+# щоб не світитися в `systemctl show` і в journald.
+
+ExecStart=/opt/profitime-bot/venv/bin/python bot.py
+
+# --- Перезапуск ---
+# always, а не on-failure: бот має підніматися навіть після штатного виходу.
+Restart=always
+RestartSec=10
+# Якщо бот падає 5 разів за 5 хвилин — щось зламано насправді,
+# нескінченний цикл перезапусків лише навантажує сервер.
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+# --- Зупинка ---
+# SIGTERM бот обробляє сам: дочікує поточні апдейти й закриває базу.
+KillSignal=SIGTERM
+TimeoutStopSec=45
+
+# --- Логи ---
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=profitime-bot
+
+# --- Обмеження ресурсів ---
+# Заміряно: у спокої процес займає ~170 МБ RSS, і під навантаженням
+# (200 клієнток × 10 натискань) не росте — більшість це aiogram 3.31
+# з pydantic v2, вони важкі самі по собі.
+#
+# Тому стеля 500 МБ, а не 300: між робочим станом і лімітом має бути
+# запас, інакше systemd почне вбивати живого бота на кожному сплеску.
+# MemoryHigh=400M — м'який поріг: за ним ядро тисне на процес, але не
+# вбиває; MemoryMax=500M — жорсткий, спрацює лише при справжньому витоку.
+MemoryMax=500M
+MemoryHigh=400M
+# Один воркер, довгі HTTP-запити — процесор майже не потрібен.
+CPUQuota=80%
+TasksMax=64
+
+# --- Безпека ---
+# Бот не має жодних причин писати кудись, крім своїх трьох каталогів.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/profitime-bot /var/log/profitime-bot /var/backups/profitime-bot
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target
