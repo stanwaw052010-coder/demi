@@ -661,3 +661,125 @@ async def save_quiz_result(user_id: int, answers: dict, verdict: str) -> None:
         )
 
     await run_write(_save)
+
+
+# --------------------------------------------------------------------------- #
+# Эксплуатация: блокировки, состояние, журнал ошибок, суточная сводка
+# --------------------------------------------------------------------------- #
+
+
+async def mark_user_blocked(user_id: int, blocked: bool = True) -> None:
+    """
+    Отметить, что клиентка заблокировала бота.
+
+    Нужно не для статистики: заблокировавшей бессмысленно слать напоминания
+    о визите и приглашения на следующий сеанс — Telegram всё равно откажет,
+    а каждая попытка это лишний запрос и запись в логе.
+    """
+    now_db = dt.to_db(dt.now()) if blocked else None
+
+    def _mark(conn: sqlite3.Connection) -> None:
+        conn.execute(
+            "UPDATE users SET is_blocked = ?, blocked_at = ? WHERE user_id = ?",
+            (1 if blocked else 0, now_db, user_id),
+        )
+
+    await run_write(_mark)
+
+
+async def is_user_blocked(user_id: int) -> bool:
+    def _check(conn: sqlite3.Connection) -> bool:
+        row = conn.execute(
+            "SELECT is_blocked FROM users WHERE user_id = ?", (user_id,)
+        ).fetchone()
+        return bool(row and row["is_blocked"])
+
+    return await run(_check)
+
+
+async def set_state(key: str, value: str) -> None:
+    """Служебная пометка в bot_state. Используется для heartbeat."""
+    now_db = dt.to_db(dt.now())
+
+    def _set(conn: sqlite3.Connection) -> None:
+        conn.execute(
+            "INSERT INTO bot_state (key, value, updated_at) VALUES (?, ?, ?) "
+            "ON CONFLICT(key) DO UPDATE SET value = excluded.value, "
+            "updated_at = excluded.updated_at",
+            (key, value, now_db),
+        )
+
+    await run_write(_set)
+
+
+async def get_state(key: str) -> str | None:
+    def _get(conn: sqlite3.Connection) -> str | None:
+        row = conn.execute("SELECT value FROM bot_state WHERE key = ?", (key,)).fetchone()
+        return row["value"] if row else None
+
+    return await run(_get)
+
+
+async def log_error(kind: str, message: str) -> None:
+    """
+    Записать факт ошибки. Полный traceback уходит в лог и админу в Telegram,
+    здесь хранится только тип и короткий текст — этого хватает, чтобы
+    посчитать ошибки за сутки в ежедневной сводке.
+    """
+    now_db = dt.to_db(dt.now())
+
+    def _log(conn: sqlite3.Connection) -> None:
+        conn.execute(
+            "INSERT INTO error_log (occurred_at, kind, message) VALUES (?, ?, ?)",
+            (now_db, kind, message),
+        )
+
+    await run_write(_log)
+
+
+async def purge_old_errors(days: int = 30) -> int:
+    """Журнал ошибок не должен расти вечно. Возвращает число удалённых строк."""
+    cutoff = dt.to_db(dt.now() - timedelta(days=days))
+
+    def _purge(conn: sqlite3.Connection) -> int:
+        cursor = conn.execute("DELETE FROM error_log WHERE occurred_at < ?", (cutoff,))
+        return cursor.rowcount or 0
+
+    return await run_write(_purge)
+
+
+async def daily_counters() -> dict[str, int]:
+    """
+    Сводка за последние сутки для отчёта владелице.
+
+    Одним заходом в базу: новые заявки, подтверждённые записи,
+    отклонённые, ошибки и сколько заявок висит без ответа прямо сейчас.
+    """
+    since = dt.to_db(dt.now() - timedelta(days=1))
+
+    def _count(conn: sqlite3.Connection) -> dict[str, int]:
+        def scalar(sql: str, *params: object) -> int:
+            row = conn.execute(sql, params).fetchone()
+            return int(row[0]) if row and row[0] is not None else 0
+
+        return {
+            "new_requests": scalar(
+                "SELECT COUNT(*) FROM requests WHERE created_at >= ?", since
+            ),
+            "confirmed": scalar(
+                "SELECT COUNT(*) FROM requests WHERE status = ? AND updated_at >= ?",
+                STATUS_CONFIRMED, since,
+            ),
+            "declined": scalar(
+                "SELECT COUNT(*) FROM requests WHERE status = ? AND updated_at >= ?",
+                STATUS_DECLINED, since,
+            ),
+            "pending_now": scalar(
+                "SELECT COUNT(*) FROM requests WHERE status = ?", STATUS_PENDING
+            ),
+            "errors": scalar(
+                "SELECT COUNT(*) FROM error_log WHERE occurred_at >= ?", since
+            ),
+        }
+
+    return await run(_count)

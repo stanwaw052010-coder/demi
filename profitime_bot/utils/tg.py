@@ -13,6 +13,21 @@ from aiogram.types import CallbackQuery, FSInputFile, InlineKeyboardMarkup, Mess
 logger = logging.getLogger(__name__)
 
 
+async def _mark_blocked(chat_id: int) -> None:
+    """
+    Отметить в базе, что бота заблокировали.
+
+    Импорт внутри функции намеренно: queries тянет за собой config и db,
+    а tg импортируется отовсюду — на верхнем уровне вышел бы цикл.
+    """
+    try:
+        from database import queries
+
+        await queries.mark_user_blocked(chat_id)
+    except Exception:  # noqa: BLE001 — это лишь пометка, ронять отправку она не должна
+        logger.debug("Не вдалося позначити %s як заблокованого", chat_id)
+
+
 async def safe_edit(
     callback: CallbackQuery,
     text: str,
@@ -69,7 +84,10 @@ async def notify(
         await bot.send_message(chat_id, text, reply_markup=markup)
         return True
     except TelegramForbiddenError:
-        logger.warning("Користувач %s заблокував бота — повідомлення не доставлено", chat_id)
+        logger.info("Користувач %s заблокував бота — повідомлення не доставлено", chat_id)
+        # Позначаємо в базі, щоб більше його не турбувати: наступні
+        # нагадування й запрошення на курс цьому чату не підуть.
+        await _mark_blocked(chat_id)
         return False
     except TelegramRetryAfter as error:
         logger.warning("Ліміт Telegram, повтор через %s c", error.retry_after)

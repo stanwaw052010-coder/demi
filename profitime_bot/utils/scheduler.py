@@ -23,7 +23,7 @@ import config
 from database import queries
 from keyboards import admin_kb
 from keyboards import client_kb
-from utils import dt, texts, tg
+from utils import dt, health, reports, texts, tg
 
 logger = logging.getLogger(__name__)
 
@@ -213,13 +213,60 @@ def setup_scheduler(bot: Bot) -> AsyncIOScheduler:
         misfire_grace_time=3600,
     )
 
+    # --- Експлуатація ---
+    # Ці три завдання не стосуються клієнток: вони тримають бота під
+    # наглядом і доносять стан сервера до людини, яка в сервер не заходить.
+
+    scheduler.add_job(
+        health.touch,
+        trigger="interval",
+        minutes=config.HEARTBEAT_INTERVAL_MIN,
+        id="heartbeat",
+        replace_existing=True,
+        max_instances=1,
+        coalesce=True,
+        misfire_grace_time=600,
+        next_run_time=dt.now() + timedelta(seconds=5),
+    )
+
+    scheduler.add_job(
+        reports.send_daily_report,
+        trigger="cron",
+        hour=config.DAILY_REPORT_HOUR,
+        minute=0,
+        args=(bot,),
+        id="daily_report",
+        replace_existing=True,
+        max_instances=1,
+        coalesce=True,
+        misfire_grace_time=3600,
+    )
+
+    scheduler.add_job(
+        reports.send_backup_to_admin,
+        trigger="cron",
+        day_of_week=config.BACKUP_SEND_WEEKDAY,
+        hour=config.BACKUP_SEND_HOUR,
+        minute=30,
+        args=(bot,),
+        id="weekly_backup",
+        replace_existing=True,
+        max_instances=1,
+        coalesce=True,
+        # Пів доби форою: якщо сервер був вимкнений у неділю ввечері,
+        # копія все одно піде, щойно бот підніметься.
+        misfire_grace_time=12 * 3600,
+    )
+
     scheduler.start()
     logger.info(
         "Планувальник запущено: нагадування за %s та %s год, "
-        "контроль заявок кожні %s хв, запрошення на курс о %s:00",
+        "контроль заявок кожні %s хв, запрошення на курс о %s:00, "
+        "звіт о %s:00, копія бази раз на тиждень",
         REMIND_24H,
         REMIND_2H,
         max(config.SCHEDULER_INTERVAL_MIN, 15),
         config.COURSE_REMINDER_HOUR,
+        config.DAILY_REPORT_HOUR,
     )
     return scheduler

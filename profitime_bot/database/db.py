@@ -18,11 +18,17 @@ import threading
 from pathlib import Path
 from typing import Callable, TypeVar
 
+import config
+from database.migrations import apply_migrations
 from database.models import INDEXES, MIGRATIONS, TABLES
 
 logger = logging.getLogger(__name__)
 
-DB_PATH: Path = Path(__file__).resolve().parent.parent / "bot.db"
+# Шлях задається в config і на сервері вказує поза каталогом коду
+# (/var/lib/profitime-bot/bot.db). Завдяки цьому `git pull` і deploy.sh
+# фізично не можуть зачепити базу із заявками, а бекап знає єдине місце,
+# де її шукати.
+DB_PATH: Path = config.DB_PATH
 
 _write_lock = threading.Lock()
 
@@ -62,7 +68,17 @@ async def run_write(func: Callable[[sqlite3.Connection], T]) -> T:
 
 
 async def init_db() -> None:
-    """Создать файл БД и схему, если их ещё нет, и догнать миграции."""
+    """
+    Підготувати базу до роботи.
+
+    Три кроки, саме в такому порядку:
+      1) базова схема з models.py — ідемпотентна, на робочій базі нічого
+         не змінює, на порожній створює структуру;
+      2) ранні ALTER-и звідти ж — залишок механізму, що діяв до появи
+         версійованих міграцій;
+      3) версійовані міграції — усе, що додано після переходу в production.
+    """
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
     def _init(conn: sqlite3.Connection) -> None:
         for statement in TABLES:
@@ -78,6 +94,8 @@ async def init_db() -> None:
 
         for statement in INDEXES:
             conn.execute(statement)
+
+        apply_migrations(conn)
 
     await run_write(_init)
     logger.info("База даних готова: %s", DB_PATH)
