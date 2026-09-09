@@ -108,13 +108,25 @@ if not exist ".venv\Scripts\python.exe" (
         pause
         exit /b 1
     )
-    echo Zagruzhayu biblioteki...
-    ".venv\Scripts\python.exe" -m pip install --quiet --upgrade pip
-    ".venv\Scripts\python.exe" -m pip install --quiet -r requirements.txt
+    echo Zagruzhayu biblioteki, eto mozhet zanyat neskolko minut...
+    rem --timeout 120: standartnyy limit pip - 15 sekund, i na medlennom
+    rem internete zagruzka pydantic_core (2 MB) v nego ne ukladyvaetsya.
+    rem --retries 10: pri obryve pip prodolzhit s togo zhe mesta, uzhe
+    rem skachannoe lezhit v keshe.
+    ".venv\Scripts\python.exe" -m pip install --quiet --timeout 120 --retries 10 --upgrade pip
+    ".venv\Scripts\python.exe" -m pip install --timeout 120 --retries 10 -r requirements.txt
     if errorlevel 1 (
         echo.
-        echo [!] Ne udalos ustanovit zavisimosti.
-        echo     Proverte internet i zapustite fayl snova.
+        echo ============================================
+        echo   [!] Ne udalos zagruzit biblioteki.
+        echo ============================================
+        echo.
+        echo   Chashche vsego eto medlennyy ili nestabilnyy internet.
+        echo   Prosto zapustite etot fayl snova - uzhe skachannoe
+        echo   sokhraneno, zagruzka prodolzhitsya s togo zhe mesta.
+        echo.
+        echo   Esli povtoryaetsya - poprobuyte druguyu set
+        echo   ili razdachu s telefona.
         echo.
         pause
         exit /b 1

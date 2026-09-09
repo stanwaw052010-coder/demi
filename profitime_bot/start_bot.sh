@@ -16,7 +16,9 @@ if [ ! -x .venv/bin/python ]; then
     echo "Первый запуск: создаю окружение..."
     python3 -m venv .venv || { echo "[!] Не найден python3"; exit 1; }
     .venv/bin/python -m pip install --quiet --upgrade pip
-    .venv/bin/python -m pip install --quiet -r requirements.txt
+    # --timeout/--retries: на повільному з'єднанні стандартні 15 c
+    # не вистачає на завантаження pydantic_core, і pip падає.
+    .venv/bin/python -m pip install --quiet --timeout 120 --retries 10 -r requirements.txt
 fi
 
 # Бот упал (например, оборвался интернет) — поднимаем заново.
