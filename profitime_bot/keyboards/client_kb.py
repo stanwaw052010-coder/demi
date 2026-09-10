@@ -123,7 +123,7 @@ EPILATION_SCREENS: tuple[tuple[str, str], ...] = (
     ("myths", "Міфи"),
 )
 
-REJUVENATION_SCREENS: tuple[tuple[str, str], ...] = (
+_REJUVENATION_SCREENS_ALL: tuple[tuple[str, str], ...] = (
     ("what", "💎 Лазерне омолодження — що це"),
     ("problems", "З чим працює"),
     ("types", "Види лазерних процедур"),
@@ -134,6 +134,12 @@ REJUVENATION_SCREENS: tuple[tuple[str, str], ...] = (
     ("photo", "🔆 Фотоомолодження (IPL)"),
     ("contra", "Протипоказання"),
     ("result", "Результат по сеансах"),
+)
+
+# Пункт фотоомоложения исчезает из меню вместе с услугой.
+REJUVENATION_SCREENS: tuple[tuple[str, str], ...] = tuple(
+    item for item in _REJUVENATION_SCREENS_ALL
+    if item[0] != "photo" or config.PHOTO_REJUV_ENABLED
 )
 
 
@@ -545,12 +551,17 @@ def quiz_result_keyboard(verdict: str) -> InlineKeyboardMarkup:
 # Прайс, FAQ, контакты, курс, рефералы
 # --------------------------------------------------------------------------- #
 
-PRICE_SECTIONS: tuple[tuple[str, str], ...] = (
+_PRICE_SECTIONS_ALL: tuple[tuple[str, str], ...] = (
     ("epil", "✨ Лазерна епіляція"),
     ("complex", "🎯 Комплекси зон"),
     ("rejuv", "💎 Лазерне омолодження"),
     ("photo", "🔆 Фотоомолодження"),
     ("all", "📄 Повний прайс"),
+)
+
+PRICE_SECTIONS: tuple[tuple[str, str], ...] = tuple(
+    item for item in _PRICE_SECTIONS_ALL
+    if item[0] != "photo" or config.PHOTO_REJUV_ENABLED
 )
 
 

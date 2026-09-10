@@ -401,6 +401,14 @@ SERVICES_LASER_REJUV: Final[dict[str, Rejuvenation]] = {
 # ⚠️ Тривалість, кількість сеансів та інтервал — попередні, за типовим
 #    протоколом IPL. Підтвердити в Анни (CONTENT_TODO.md, пункт 12).
 
+# ФОТООМОЛОДЖЕННЯ ВИМКНЕНО: студія цю послугу не надає (Анна, 10.09.2026).
+#
+# Щоб повернути — поставити True. Більше нічого робити не треба: опис,
+# ціна, зони й усі екрани лишилися на місці й піднімуться самі.
+# Вимкнено саме перемикачем, а не видаленням, бо послуга вже була
+# описана, перевірена й може повернутися.
+PHOTO_REJUV_ENABLED: Final[bool] = False
+
 PHOTO_REJUV_PRICE: Final[int] = 700
 PHOTO_REJUV_SESSIONS: Final[int] = 5
 PHOTO_REJUV_INTERVAL_DAYS: Final[int] = 21
@@ -418,7 +426,7 @@ _PHOTO_REJUV_SHORT: Final[str] = (
     "та судинна сіточка."
 )
 
-SERVICES_PHOTO_REJUV: Final[dict[str, Rejuvenation]] = {
+_PHOTO_REJUV_ALL: Final[dict[str, Rejuvenation]] = {
     code: {
         "code": code,
         "name": f"Фотоомолодження — {name.lower()}",
@@ -431,6 +439,12 @@ SERVICES_PHOTO_REJUV: Final[dict[str, Rejuvenation]] = {
     }
     for code, name, duration in _PHOTO_REJUV_ZONES
 }
+
+# Порожній довідник, коли послуга вимкнена: усі цикли по ньому нічого
+# не малюють, і жоден екран про фотоомолодження не з'являється.
+SERVICES_PHOTO_REJUV: Final[dict[str, Rejuvenation]] = (
+    _PHOTO_REJUV_ALL if PHOTO_REJUV_ENABLED else {}
+)
 
 # Назви зон у тому вигляді, в якому вони йдуть у прайс: «обличчя, шия, руки».
 PHOTO_REJUV_ZONE_NAMES: Final[str] = ", ".join(

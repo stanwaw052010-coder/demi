@@ -44,20 +44,17 @@ def _section_text(section: str) -> str:
         return _complex_section() + texts.PRICE_FOOTER
     if section == "rejuv":
         return _laser_rejuv_section() + texts.PRICE_FOOTER
-    if section == "photo":
+    if section == "photo" and config.PHOTO_REJUV_ENABLED:
         # Фотоомоложение — одна строка «700 грн / зона»: цена от зоны не зависит.
         return texts.format_photo_price_section() + texts.PRICE_FOOTER
 
     # Полный прайс — все секции подряд.
+    sections = [_epilation_section(), _complex_section(), _laser_rejuv_section()]
+    if config.PHOTO_REJUV_ENABLED:
+        sections.append(texts.format_photo_price_section())
+
     return (
-        "\n\n".join(
-            (
-                _epilation_section(),
-                _complex_section(),
-                _laser_rejuv_section(),
-                texts.format_photo_price_section(),
-            )
-        )
+        "\n\n".join(sections)
         + texts.PRICE_FOOTER
     )
 
