@@ -52,11 +52,13 @@ STATUS_EMOJI: dict[str, str] = {
 
 DIRECTION_EPILATION = "epil"
 DIRECTION_REJUVENATION = "rejuv"
+DIRECTION_SUGARING = "sugar"
 DIRECTION_CONSULT = "consult"
 
 DIRECTION_TITLES: dict[str, str] = {
     DIRECTION_EPILATION: "Лазерна епіляція",
     DIRECTION_REJUVENATION: "Омолодження обличчя",
+    DIRECTION_SUGARING: "Шугаринг",
     DIRECTION_CONSULT: "Консультація",
 }
 

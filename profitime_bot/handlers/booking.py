@@ -24,6 +24,7 @@ from database.models import (
     DIRECTION_CONSULT,
     DIRECTION_EPILATION,
     DIRECTION_REJUVENATION,
+    DIRECTION_SUGARING,
     Request,
 )
 from keyboards import admin_kb
@@ -119,13 +120,19 @@ async def start_request(callback: CallbackQuery, state: FSMContext) -> None:
         await show_items(callback, state)
         return
 
+    if payload == "sugar":
+        await state.update_data(direction=DIRECTION_SUGARING, items=[])
+        await show_items(callback, state)
+        return
+
     service = config.get_any_service(payload) if payload != "-" else None
     if service is not None:
-        direction = (
-            DIRECTION_REJUVENATION
-            if payload in config.SERVICES_REJUVENATION
-            else DIRECTION_EPILATION
-        )
+        if payload in config.SERVICES_REJUVENATION:
+            direction = DIRECTION_REJUVENATION
+        elif config.is_sugaring(payload):
+            direction = DIRECTION_SUGARING
+        else:
+            direction = DIRECTION_EPILATION
         await state.update_data(direction=direction, items=[payload])
         await show_date(callback, state)
         return
@@ -163,7 +170,12 @@ async def on_direction(callback: CallbackQuery, state: FSMContext) -> None:
     await callback.answer()
     direction = callback.data.split(":", 2)[2]
 
-    if direction not in (DIRECTION_EPILATION, DIRECTION_REJUVENATION, DIRECTION_CONSULT):
+    if direction not in (
+        DIRECTION_EPILATION,
+        DIRECTION_REJUVENATION,
+        DIRECTION_SUGARING,
+        DIRECTION_CONSULT,
+    ):
         await show_direction(callback, state)
         return
 
@@ -191,8 +203,16 @@ async def show_items(target: Target, state: FSMContext) -> None:
     if direction == DIRECTION_REJUVENATION:
         await _show(
             target,
-            texts.REQ_STEP_ITEMS_REJUV.format(selection=_selection_summary(selected)),
-            kb.request_rejuvenation_keyboard(selected),
+            texts.REQ_STEP_ITEMS_REJUV,
+            kb.request_rejuvenation_keyboard(),
+        )
+        return
+
+    if direction == DIRECTION_SUGARING:
+        await _show(
+            target,
+            texts.REQ_STEP_ITEMS_SUGAR.format(selection=_selection_summary(selected)),
+            kb.request_sugaring_keyboard(selected),
         )
         return
 
@@ -216,32 +236,13 @@ async def on_item(callback: CallbackQuery, state: FSMContext) -> None:
     direction = data.get("direction")
 
     if direction == DIRECTION_REJUVENATION:
-        # Зоны фотоомоложения набираются несколько (700 грн × количество),
-        # лазерные процедуры — по одной за визит.
-        if config.is_photo_rejuvenation(code):
-            photo_selected = [
-                item for item in data.get("items", []) if config.is_photo_rejuvenation(item)
-            ]
-            if code in photo_selected:
-                photo_selected.remove(code)
-                await callback.answer("Прибрали")
-            else:
-                photo_selected.append(code)
-                await callback.answer("Додали")
-
-            await state.update_data(items=photo_selected)
-            await tg.safe_edit(
-                callback,
-                texts.REQ_STEP_ITEMS_REJUV.format(selection=_selection_summary(photo_selected)),
-                kb.request_rejuvenation_keyboard(photo_selected),
-            )
-            return
-
+        # И лазер, и фотоомоложение — одна процедура за визит.
         await callback.answer()
         await state.update_data(items=[code])
         await show_date(callback, state)
         return
 
+    # Эпиляция и шугаринг — мультивыбор: за визит делают несколько зон.
     selected: list[str] = list(data.get("items", []))
     if code in selected:
         selected.remove(code)
@@ -251,6 +252,15 @@ async def on_item(callback: CallbackQuery, state: FSMContext) -> None:
         await callback.answer("Додали")
 
     await state.update_data(items=selected)
+
+    if direction == DIRECTION_SUGARING:
+        await tg.safe_edit(
+            callback,
+            texts.REQ_STEP_ITEMS_SUGAR.format(selection=_selection_summary(selected)),
+            kb.request_sugaring_keyboard(selected),
+        )
+        return
+
     await tg.safe_edit(
         callback,
         texts.REQ_STEP_ITEMS_EPIL.format(selection=_selection_summary(selected)),

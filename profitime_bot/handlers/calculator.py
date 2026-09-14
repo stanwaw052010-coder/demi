@@ -60,19 +60,29 @@ def _find_better_complex(selected: list[str]) -> tuple[dict, int] | None:
     return best
 
 
-def _course_sessions(selected: list[str]) -> int:
+def _course_sessions(selected: list[str]) -> tuple[int, int]:
     """
-    Сколько сеансов считать для курса.
+    Вилка курса по выбранным зонам: (минимум, максимум).
 
-    Берём максимум по выбранным зонам: если в наборе есть лицо (8 сеансов),
-    курс не закончится на шестом.
+    Берём максимум по обоим краям: если хоть одной зоне нужно больше
+    сеансов, курс не закончится раньше неё.
     """
-    sessions = [
-        service["sessions"]
+    services = [
+        service
         for code in selected
         if (service := config.get_any_service(code)) is not None
     ]
-    return max(sessions) if sessions else 6
+    if not services:
+        return config.EPIL_SESSIONS_MIN, config.EPIL_SESSIONS_MAX
+
+    low = max(service["sessions"] for service in services)
+    high = max(service.get("sessions_max") or service["sessions"] for service in services)
+    return low, max(low, high)
+
+
+def _amount_range(low: int, high: int) -> str:
+    """«4500–5400» или просто «4500», если края совпали."""
+    return f"{low}–{high}" if high != low else str(low)
 
 
 # --------------------------------------------------------------------------- #
@@ -94,7 +104,9 @@ async def open_calculator(message: Message, state: FSMContext) -> None:
 @router.callback_query(F.data.startswith(f"{kb.CB_CALC_ITEM}:"))
 async def toggle_item(callback: CallbackQuery, state: FSMContext) -> None:
     code = callback.data.split(":", 2)[2]
-    if config.get_any_service(code) is None:
+    # Калькулятор считает курс, поэтому в него идут только зоны эпиляции
+    # и комплексы. Шугаринг и фотоомоложение курсом не продаются.
+    if code not in config.SERVICES_EPILATION and code not in config.COMPLEXES:
         await callback.answer()
         return
 
@@ -140,18 +152,21 @@ async def show_result(callback: CallbackQuery, state: FSMContext) -> None:
         return
 
     per_session = texts.items_total(selected)
-    sessions = _course_sessions(selected)
-    course = per_session * sessions
+    sessions_low, sessions_high = _course_sessions(selected)
+    course_low = per_session * sessions_low
+    course_high = per_session * sessions_high
 
     # Пакет из 5 сеансов + недостающие сеансы по обычной цене.
+    # Услуги без цены пакета в калькулятор не попадают, но проверка
+    # оставлена: иначе старый callback подставил бы сюда ноль.
     package_base = sum(
         service["package_price"]
         for code in selected
         if (service := config.get_any_service(code)) is not None
+        and config.has_package(service)
     )
-    extra_sessions = max(sessions - 5, 0)
-    package = package_base + per_session * extra_sessions
-    package_saving = course - package
+    package_low = package_base + per_session * max(sessions_low - 5, 0)
+    package_high = package_base + per_session * max(sessions_high - 5, 0)
 
     complex_hint = ""
     better = _find_better_complex(selected)
@@ -170,11 +185,11 @@ async def show_result(callback: CallbackQuery, state: FSMContext) -> None:
         texts.CALC_RESULT.format(
             items=texts.format_items(selected),
             per_session=per_session,
-            sessions=sessions,
-            sessions_word=dt.plural_sessions(sessions),
-            course=course,
-            package=package,
-            package_saving=max(package_saving, 0),
+            sessions=_amount_range(sessions_low, sessions_high),
+            sessions_word=dt.plural_sessions(sessions_high),
+            course=_amount_range(course_low, course_high),
+            package=_amount_range(package_low, package_high),
+            package_saving=max(course_low - package_low, 0),
             complex_hint=complex_hint,
             currency=config.CURRENCY,
         ),

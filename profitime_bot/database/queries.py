@@ -406,9 +406,11 @@ async def next_session_info(
     если владелица заносит задним числом визит, который был раньше уже
     записанных, нумерация всё равно останется хронологической.
     """
-    service = config.get_any_service(service_code)
-    total = service["sessions"] if service else 1
-    interval = service["interval_days"] if service else 30
+    # У шугаринга курса нет: ни «sessions», ни «interval_days» в справочнике.
+    # Тогда это разовый визит — 1 из 1, и трекер по нему ничего не обещает.
+    service = config.get_any_service(service_code) or {}
+    total = service.get("sessions") or 1
+    interval = service.get("interval_days") or 30
 
     if user_id is None:
         return 1, total, interval

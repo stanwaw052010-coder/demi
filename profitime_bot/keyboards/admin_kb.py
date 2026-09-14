@@ -177,7 +177,7 @@ def cancel_keyboard() -> InlineKeyboardMarkup:
 
 
 def manual_services_keyboard() -> InlineKeyboardMarkup:
-    """Список услуг для ручной записи: зоны, комплексы, омоложение."""
+    """Список услуг для ручной записи: зоны, комплексы, омоложение, шугаринг."""
     builder = InlineKeyboardBuilder()
     for service in config.SERVICES_EPILATION.values():
         builder.row(
@@ -195,6 +195,13 @@ def manual_services_keyboard() -> InlineKeyboardMarkup:
         builder.row(
             InlineKeyboardButton(
                 text=f"💎 {service['name']}", callback_data=f"{CB_MANUAL_SERVICE}:{service['code']}"
+            )
+        )
+    for service in config.SERVICES_SUGARING.values():
+        builder.row(
+            InlineKeyboardButton(
+                text=f"{texts.E_SUGAR} {service['name']}",
+                callback_data=f"{CB_MANUAL_SERVICE}:{service['code']}",
             )
         )
     builder.row(InlineKeyboardButton(text=texts.BTN_CANCEL, callback_data=CB_ADM_CANCEL))

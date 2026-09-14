@@ -25,7 +25,8 @@ router = Router(name="info_epilation")
 # Экран -> готовый текст. Динамические собираются в _build_screen().
 STATIC_SCREENS: dict[str, str] = {
     "what": texts.EPIL_WHAT_IS,
-    "sessions": texts.EPIL_SESSIONS,
+    "indications": texts.EPIL_INDICATIONS,
+    "ingrown": texts.EPIL_INGROWN,
     "pain": texts.EPIL_PAIN,
     "suitable": texts.EPIL_SUITABLE,
     "result": texts.EPIL_RESULT,
@@ -39,7 +40,10 @@ def _build_screen(code: str) -> str | None:
         return STATIC_SCREENS[code]
 
     if code == "device":
-        return texts.EPIL_DEVICE.format(laser=config.LASER_MODEL)
+        return texts.format_epilation_device()
+
+    if code == "sessions":
+        return texts.format_epilation_sessions()
 
     if code == "intervals":
         return (
@@ -49,18 +53,24 @@ def _build_screen(code: str) -> str | None:
         )
 
     if code == "contra":
+        # Методичка делит противопоказания на абсолютные и относительные,
+        # и для клиентки это разные новости: «нельзя» против «не сейчас».
+        rules = config.CONTRAINDICATIONS
         return (
             texts.EPIL_CONTRA_HEADER
-            + texts.format_numbered(config.CONTRAINDICATIONS["epilation"])
+            + texts.EPIL_CONTRA_ABSOLUTE_HEADER
+            + texts.format_numbered(rules["epilation_absolute"])
+            + texts.EPIL_CONTRA_RELATIVE_HEADER
+            + texts.format_numbered(rules["epilation_relative"])
             + texts.EPIL_CONTRA_FOOTER
         )
 
     if code == "prep":
         rules = config.PREP_RULES
         body = (
-            f"\n<b>За 2 тижні до візиту</b>\n{texts.format_rules(rules['weeks_2'])}\n"
-            f"\n<b>За 3 дні</b>\n{texts.format_rules(rules['days_3'])}\n"
-            f"\n<b>У день процедури</b>\n{texts.format_rules(rules['day_of'])}\n"
+            f"\n<b>За 4 тижні до візиту</b>\n{texts.format_rules(rules['weeks_4'])}\n"
+            f"\n<b>За 2 тижні</b>\n{texts.format_rules(rules['weeks_2'])}\n"
+            f"\n<b>За добу до процедури</b>\n{texts.format_rules(rules['day_of'])}\n"
         )
         return texts.EPIL_PREP_HEADER + body + texts.EPIL_PREP_FOOTER
 
@@ -68,7 +78,8 @@ def _build_screen(code: str) -> str | None:
         rules = config.AFTERCARE_RULES
         body = (
             f"\n<b>Перші 24 години</b>\n{texts.format_rules(rules['first_24h'])}\n"
-            f"\n<b>Перший тиждень</b>\n{texts.format_rules(rules['first_week'])}\n"
+            f"\n<b>Перші 3 дні</b>\n{texts.format_rules(rules['days_3'])}\n"
+            f"\n<b>Перші 2 тижні</b>\n{texts.format_rules(rules['weeks_2'])}\n"
         )
         return texts.EPIL_AFTER_HEADER + body + texts.EPIL_AFTER_FOOTER
 
@@ -146,7 +157,9 @@ async def show_service_card(callback: CallbackQuery) -> None:
         return
 
     # Возврат ведёт туда, откуда услуга родом.
-    if config.is_photo_rejuvenation(code):
+    if config.is_sugaring(code):
+        back = f"{kb.CB_SUGAR}:menu"
+    elif config.is_photo_rejuvenation(code):
         back = f"{kb.CB_REJUV}:photo"
     elif code in config.SERVICES_REJUVENATION:
         back = f"{kb.CB_REJUV}:types"

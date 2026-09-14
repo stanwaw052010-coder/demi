@@ -119,8 +119,13 @@ INSTAGRAM_LABEL: Final[str] = "@profitime_ka"
 # Онлайн-запись. Единственный источник правды по реальному свободному времени.
 BOOKON_URL: Final[str] = "https://bookon.ua/s/profitime_ka"
 
-# ⚠️ УТОЧНИТЬ У КЛИЕНТКИ (см. CONTENT_TODO.md, пункт 1).
-LASER_MODEL: Final[str] = "діодний лазер з системою охолодження"
+# Тип лазера и диапазон длины волны — из методички студии (Анна, 14.09.2026).
+# ⚠️ Производитель и модель всё ещё не названы (см. CONTENT_TODO.md, пункт 1).
+LASER_MODEL: Final[str] = "діодний лазер, довжина хвилі 700–808 нм"
+
+# Диапазон, в котором меланин поглощает свет лучше всего. Цифра из методички,
+# она же звучит на экране «На чому працюємо».
+LASER_WAVELENGTH: Final[str] = "700–808 нм"
 
 CURRENCY: Final[str] = "грн"
 TIMEZONE: Final[str] = "Europe/Kyiv"
@@ -203,10 +208,17 @@ REFERRAL_BONUS_INVITER: Final[str] = "знижка 10% на наступний �
 # Клиентка пришлёт реальный прайс — заменить здесь (CONTENT_TODO.md, пункт 2).
 #
 # price          — за один сеанс
-# package_price  — за пакет из 5 сеансов (выгоднее, чем 5 отдельных)
+# package_price  — за пакет из 5 сеансов (выгоднее, чем 5 отдельных).
+#                  Может отсутствовать: у шугаринга пакетов нет.
 # duration       — минут
-# sessions       — рекомендованное количество сеансов курса
+# sessions       — минимальное количество сеансов курса
+# sessions_max   — верхняя граница курса; вместе с sessions даёт «10–12»
 # interval_days  — интервал между сеансами именно для этой зоны
+
+# Длина курса лазерной эпиляции — из методички студии (Анна, 14.09.2026):
+# «зазвичай 10–12 сеансів». Раньше в боте стояло 6 для тела и 8 для лица.
+EPIL_SESSIONS_MIN: Final[int] = 10
+EPIL_SESSIONS_MAX: Final[int] = 12
 
 
 class Zone(TypedDict):
@@ -217,49 +229,50 @@ class Zone(TypedDict):
     package_price: int
     duration: int
     sessions: int
+    sessions_max: int
     interval_days: int
 
 
 SERVICES_EPILATION: Final[dict[str, Zone]] = {
     # --- жінки: обличчя та шия ---
     "w_face": {"code": "w_face", "name": "Обличчя повністю", "group": "women",
-               "price": 700, "package_price": 2800, "duration": 30, "sessions": 8, "interval_days": 28},
+               "price": 700, "package_price": 2800, "duration": 30, "sessions": 10, "sessions_max": 12, "interval_days": 28},
     "w_lip": {"code": "w_lip", "name": "Верхня губа", "group": "women",
-              "price": 250, "package_price": 1000, "duration": 10, "sessions": 8, "interval_days": 28},
+              "price": 250, "package_price": 1000, "duration": 10, "sessions": 10, "sessions_max": 12, "interval_days": 28},
     "w_chin": {"code": "w_chin", "name": "Підборіддя", "group": "women",
-               "price": 300, "package_price": 1200, "duration": 15, "sessions": 8, "interval_days": 28},
+               "price": 300, "package_price": 1200, "duration": 15, "sessions": 10, "sessions_max": 12, "interval_days": 28},
     "w_neck": {"code": "w_neck", "name": "Шия", "group": "women",
-               "price": 400, "package_price": 1600, "duration": 20, "sessions": 8, "interval_days": 28},
+               "price": 400, "package_price": 1600, "duration": 20, "sessions": 10, "sessions_max": 12, "interval_days": 28},
     # --- жінки: руки та тіло ---
     "w_armpits": {"code": "w_armpits", "name": "Пахви", "group": "women",
-                  "price": 450, "package_price": 1800, "duration": 15, "sessions": 6, "interval_days": 30},
+                  "price": 450, "package_price": 1800, "duration": 15, "sessions": 10, "sessions_max": 12, "interval_days": 30},
     "w_arms_full": {"code": "w_arms_full", "name": "Руки повністю", "group": "women",
-                    "price": 900, "package_price": 3600, "duration": 40, "sessions": 6, "interval_days": 35},
+                    "price": 900, "package_price": 3600, "duration": 40, "sessions": 10, "sessions_max": 12, "interval_days": 35},
     "w_arms_half": {"code": "w_arms_half", "name": "Руки до ліктя", "group": "women",
-                    "price": 600, "package_price": 2400, "duration": 25, "sessions": 6, "interval_days": 35},
+                    "price": 600, "package_price": 2400, "duration": 25, "sessions": 10, "sessions_max": 12, "interval_days": 35},
     "w_belly_line": {"code": "w_belly_line", "name": "Лінія живота", "group": "women",
-                     "price": 250, "package_price": 1000, "duration": 10, "sessions": 6, "interval_days": 35},
+                     "price": 250, "package_price": 1000, "duration": 10, "sessions": 10, "sessions_max": 12, "interval_days": 35},
     "w_belly": {"code": "w_belly", "name": "Живіт повністю", "group": "women",
-                "price": 600, "package_price": 2400, "duration": 25, "sessions": 6, "interval_days": 35},
+                "price": 600, "package_price": 2400, "duration": 25, "sessions": 10, "sessions_max": 12, "interval_days": 35},
     "w_chest": {"code": "w_chest", "name": "Груди (ареоли)", "group": "women",
-                "price": 300, "package_price": 1200, "duration": 15, "sessions": 6, "interval_days": 35},
+                "price": 300, "package_price": 1200, "duration": 15, "sessions": 10, "sessions_max": 12, "interval_days": 35},
     "w_back": {"code": "w_back", "name": "Спина повністю", "group": "women",
-               "price": 900, "package_price": 3600, "duration": 40, "sessions": 6, "interval_days": 42},
+               "price": 900, "package_price": 3600, "duration": 40, "sessions": 10, "sessions_max": 12, "interval_days": 42},
     "w_lower_back": {"code": "w_lower_back", "name": "Поперек", "group": "women",
-                     "price": 450, "package_price": 1800, "duration": 20, "sessions": 6, "interval_days": 42},
+                     "price": 450, "package_price": 1800, "duration": 20, "sessions": 10, "sessions_max": 12, "interval_days": 42},
     "w_buttocks": {"code": "w_buttocks", "name": "Сідниці", "group": "women",
-                   "price": 600, "package_price": 2400, "duration": 25, "sessions": 6, "interval_days": 42},
+                   "price": 600, "package_price": 2400, "duration": 25, "sessions": 10, "sessions_max": 12, "interval_days": 42},
     # --- жінки: бікіні та ноги ---
     "w_bikini_classic": {"code": "w_bikini_classic", "name": "Класичне бікіні", "group": "women",
-                         "price": 600, "package_price": 2400, "duration": 25, "sessions": 6, "interval_days": 30},
+                         "price": 600, "package_price": 2400, "duration": 25, "sessions": 10, "sessions_max": 12, "interval_days": 30},
     "w_bikini_deep": {"code": "w_bikini_deep", "name": "Глибоке бікіні", "group": "women",
-                      "price": 900, "package_price": 3600, "duration": 35, "sessions": 8, "interval_days": 30},
+                      "price": 900, "package_price": 3600, "duration": 35, "sessions": 10, "sessions_max": 12, "interval_days": 30},
     "w_legs_full": {"code": "w_legs_full", "name": "Ноги повністю", "group": "women",
-                    "price": 1400, "package_price": 5600, "duration": 60, "sessions": 6, "interval_days": 42},
+                    "price": 1400, "package_price": 5600, "duration": 60, "sessions": 10, "sessions_max": 12, "interval_days": 42},
     "w_shins": {"code": "w_shins", "name": "Гомілки", "group": "women",
-                "price": 800, "package_price": 3200, "duration": 35, "sessions": 6, "interval_days": 42},
+                "price": 800, "package_price": 3200, "duration": 35, "sessions": 10, "sessions_max": 12, "interval_days": 42},
     "w_thighs": {"code": "w_thighs", "name": "Стегна", "group": "women",
-                 "price": 900, "package_price": 3600, "duration": 40, "sessions": 6, "interval_days": 42},
+                 "price": 900, "package_price": 3600, "duration": 40, "sessions": 10, "sessions_max": 12, "interval_days": 42},
 }
 
 # ЧОЛОВІЧІ ЗОНИ — тимчасово вимкнено на прохання клієнтки. Розкоментувати за потреби.
@@ -309,25 +322,25 @@ COMPLEXES: Final[dict[str, Complex]] = {
         "code": "cx_start", "name": "Старт: пахви + класичне бікіні",
         "zones": ("w_armpits", "w_bikini_classic"),
         "price": 850, "package_price": 3400, "duration": 40,
-        "sessions": 6, "interval_days": 30,
+        "sessions": 10, "sessions_max": 12, "interval_days": 30,
     },
     "cx_classic": {
         "code": "cx_classic", "name": "Класика: пахви + глибоке бікіні + гомілки",
         "zones": ("w_armpits", "w_bikini_deep", "w_shins"),
         "price": 1800, "package_price": 7200, "duration": 70,
-        "sessions": 6, "interval_days": 30,
+        "sessions": 10, "sessions_max": 12, "interval_days": 30,
     },
     "cx_legs": {
         "code": "cx_legs", "name": "Гладкі ніжки: ноги повністю + глибоке бікіні + пахви",
         "zones": ("w_legs_full", "w_bikini_deep", "w_armpits"),
         "price": 2400, "package_price": 9600, "duration": 90,
-        "sessions": 6, "interval_days": 30,
+        "sessions": 10, "sessions_max": 12, "interval_days": 30,
     },
     "cx_total": {
         "code": "cx_total", "name": "Максимум: усе тіло",
         "zones": ("w_legs_full", "w_bikini_deep", "w_armpits", "w_arms_full", "w_belly", "w_face"),
         "price": 3600, "package_price": 14400, "duration": 150,
-        "sessions": 6, "interval_days": 30,
+        "sessions": 10, "sessions_max": 12, "interval_days": 30,
     },
 }
 
@@ -395,49 +408,57 @@ SERVICES_LASER_REJUV: Final[dict[str, Rejuvenation]] = {
 # працює інакше — прогріває глибші шари й запускає синтез колагену.
 # Тому дві послуги живуть у різних довідниках і ніде в текстах не змішуються.
 #
-# Ціна єдина для будь-якої зони. Клієнтка може взяти кілька зон за один візит —
-# сума рахується як PHOTO_REJUV_PRICE × кількість обраних зон.
+# Історія послуги, щоб не було плутанини:
+#   10.09.2026 — Анна сказала, що студія її не надає, послугу вимкнули.
+#   14.09.2026 — Анна повернула її з новими цінами: «800 (база), 1500
+#                повноцінний догляд (кислотний пілінг, маска)».
+#
+# Модель ціни змінилася. Раніше було 700 грн за зону (обличчя / шия / руки)
+# з підсумовуванням зон. Тепер це два варіанти однієї процедури, і зони
+# клієнтка не називала — тому вибору зон більше немає.
 #
 # ⚠️ Тривалість, кількість сеансів та інтервал — попередні, за типовим
 #    протоколом IPL. Підтвердити в Анни (CONTENT_TODO.md, пункт 12).
 
-# ФОТООМОЛОДЖЕННЯ ВИМКНЕНО: студія цю послугу не надає (Анна, 10.09.2026).
-#
-# Щоб повернути — поставити True. Більше нічого робити не треба: опис,
-# ціна, зони й усі екрани лишилися на місці й піднімуться самі.
-# Вимкнено саме перемикачем, а не видаленням, бо послуга вже була
-# описана, перевірена й може повернутися.
-PHOTO_REJUV_ENABLED: Final[bool] = False
+# Перемикач лишається: послугу вже двічі вмикали й вимикали.
+# False — і всі екрани, кнопки та рядки прайсу зникають, нічого більше
+# правити не треба.
+PHOTO_REJUV_ENABLED: Final[bool] = True
 
-PHOTO_REJUV_PRICE: Final[int] = 700
+PHOTO_REJUV_PRICE_BASE: Final[int] = 800
+PHOTO_REJUV_PRICE_CARE: Final[int] = 1500
+
+# ⚠️ Не підтверджено клієнткою — типовий протокол IPL.
 PHOTO_REJUV_SESSIONS: Final[int] = 5
 PHOTO_REJUV_INTERVAL_DAYS: Final[int] = 21
 
-# (код, назва зони, тривалість у хвилинах)
-_PHOTO_REJUV_ZONES: Final[tuple[tuple[str, str, int], ...]] = (
-    ("r_photo_face", "Обличчя", 30),
-    ("r_photo_neck", "Шия", 20),
-    ("r_photo_hands", "Руки", 20),
-)
-
-_PHOTO_REJUV_SHORT: Final[str] = (
-    "IPL-спалах поглинається пігментом і розширеними судинами. "
-    "Тон вирівнюється, пігментні плями світлішають, зникає почервоніння "
-    "та судинна сіточка."
-)
-
 _PHOTO_REJUV_ALL: Final[dict[str, Rejuvenation]] = {
-    code: {
-        "code": code,
-        "name": f"Фотоомолодження — {name.lower()}",
-        "short": _PHOTO_REJUV_SHORT,
-        "price": PHOTO_REJUV_PRICE,
-        "package_price": PHOTO_REJUV_PRICE * 4,
-        "duration": duration,
+    "r_photo_base": {
+        "code": "r_photo_base",
+        "name": "Фотоомолодження (база)",
+        "short": "IPL-спалах поглинається пігментом і розширеними судинами. "
+                 "Тон вирівнюється, пігментні плями світлішають, зникає "
+                 "почервоніння та судинна сіточка.",
+        "price": PHOTO_REJUV_PRICE_BASE,
+        # 0 — пакета немає: клієнтка ціни за курс не називала, а вигадувати
+        # її не можна. Нуль прибирає рядок «Пакет 5 сеансів» з картки.
+        "package_price": 0,
+        "duration": 30,
         "sessions": PHOTO_REJUV_SESSIONS,
         "interval_days": PHOTO_REJUV_INTERVAL_DAYS,
-    }
-    for code, name, duration in _PHOTO_REJUV_ZONES
+    },
+    "r_photo_care": {
+        "code": "r_photo_care",
+        "name": "Фотоомолодження + догляд",
+        "short": "Та сама IPL-процедура плюс догляд за обличчям: "
+                 "кислотний пілінг і маска. Пілінг знімає зроговілий шар, "
+                 "маска заспокоює шкіру після спалаху.",
+        "price": PHOTO_REJUV_PRICE_CARE,
+        "package_price": 0,
+        "duration": 60,
+        "sessions": PHOTO_REJUV_SESSIONS,
+        "interval_days": PHOTO_REJUV_INTERVAL_DAYS,
+    },
 }
 
 # Порожній довідник, коли послуга вимкнена: усі цикли по ньому нічого
@@ -446,16 +467,46 @@ SERVICES_PHOTO_REJUV: Final[dict[str, Rejuvenation]] = (
     _PHOTO_REJUV_ALL if PHOTO_REJUV_ENABLED else {}
 )
 
-# Назви зон у тому вигляді, в якому вони йдуть у прайс: «обличчя, шия, руки».
-PHOTO_REJUV_ZONE_NAMES: Final[str] = ", ".join(
-    name.lower() for _, name, _ in _PHOTO_REJUV_ZONES
-)
+# Що входить у «повноцінний догляд» — словами клієнтки.
+PHOTO_REJUV_CARE_INCLUDES: Final[str] = "кислотний пілінг, маска"
 
 # Спільний довідник омолодження — лазер плюс IPL. Потрібен там, де послугу
 # треба просто знайти за кодом: калькулятор, заявки, трекер курсу, повний прайс.
 SERVICES_REJUVENATION: Final[dict[str, Rejuvenation]] = {
     **SERVICES_LASER_REJUV,
     **SERVICES_PHOTO_REJUV,
+}
+
+# --------------------------------------------------------------------------- #
+# ШУГАРИНГ
+# --------------------------------------------------------------------------- #
+# Ціни прислала Анна 14.09.2026 — це ЄДИНИЙ повністю підтверджений прайс
+# у цьому файлі. Нічого не додано й не перераховано.
+#
+# Шугаринг — разова процедура, а не курс: пакетів, інтервалів і кількості
+# сеансів у нього немає. Тому окремий тип, а не Zone: у картці не буде
+# ні «пакет 5 сеансів», ні «курс», ні «інтервал» — нічого вигаданого.
+#
+# ⚠️ Тривалість процедур клієнтка не називала. Свідомо не проставлена:
+#    краще не показати, ніж показати навмання (CONTENT_TODO.md, пункт 13).
+
+
+class Sugaring(TypedDict):
+    code: str
+    name: str
+    price: int
+
+
+SERVICES_SUGARING: Final[dict[str, Sugaring]] = {
+    "s_bikini_classic": {"code": "s_bikini_classic", "name": "Класичне бікіні", "price": 500},
+    "s_bikini_deep": {"code": "s_bikini_deep", "name": "Глибоке бікіні", "price": 650},
+    "s_arms_half": {"code": "s_arms_half", "name": "Руки до ліктя", "price": 500},
+    "s_arms_full": {"code": "s_arms_full", "name": "Руки повністю", "price": 700},
+    "s_shins": {"code": "s_shins", "name": "Гомілки та коліна", "price": 600},
+    "s_legs_full": {"code": "s_legs_full", "name": "Ноги повністю", "price": 800},
+    "s_armpits": {"code": "s_armpits", "name": "Пахви", "price": 200},
+    "s_face": {"code": "s_face", "name": "Ділянка обличчя", "price": 200},
+    "s_neck": {"code": "s_neck", "name": "Окантовка шиї", "price": 200},
 }
 
 # --------------------------------------------------------------------------- #
@@ -509,24 +560,46 @@ PROMOTIONS: Final[tuple[Promotion, ...]] = (
 # Противопоказания, подготовка, уход
 # --------------------------------------------------------------------------- #
 
+# Списки переписаны по методичке студии (Анна, 14.09.2026). До этого стояли
+# типовые формулировки «по практике» — они не совпадали с тем, что студия
+# реально говорит клиенткам.
+#
+# Методичка делит противопоказания на два разряда, и это важное различие:
+# абсолютные — процедуру не делают вообще, относительные — делают после
+# консультации врача или когда состояние пройдёт.
+
+CONTRAINDICATIONS_EPILATION_ABSOLUTE: Final[tuple[str, ...]] = (
+    "світле, сиве або руде волосся в зоні епіляції — ефекту видалення не буде",
+    "алергія на випромінювання, близьке до інфрачервоного",
+    "прийом антикоагулянтів та/або імунодепресантів",
+    "напади епілепсії, пов'язані з впливом світла",
+    "соматичне захворювання шкіри",
+    "вагітність та період годування груддю",
+    "цукровий діабет у стадії декомпенсації",
+    "паралельний прийом антибіотиків тетрациклінового або фторхінолонового "
+    "ряду — вони підвищують чутливість до сонця",
+    "гострі форми герпесу в зоні епіляції",
+    "імунні захворювання",
+    "онкологічні захворювання",
+)
+
+CONTRAINDICATIONS_EPILATION_RELATIVE: Final[tuple[str, ...]] = (
+    "гострі хронічні захворювання",
+    "свіжа засмага до 14 днів — для діодного лазера це не протипоказання, "
+    "але майстер має подивитися шкіру",
+    "множинні родимки в місцях впливу лазера",
+    "варикозне розширення вен",
+    "схильність до утворення келоїдних рубців",
+    "застуда, грип, ГРВІ в активній фазі, алергія в стадії загострення",
+)
+
 CONTRAINDICATIONS: Final[dict[str, tuple[str, ...]]] = {
-    "epilation": (
-        "вагітність та період лактації",
-        "онкологічні захворювання",
-        "цукровий діабет у стадії декомпенсації",
-        "епілепсія",
-        "гострі інфекційні захворювання, підвищена температура",
-        "загострення хронічних шкірних захворювань у зоні обробки "
-        "(псоріаз, екзема, дерматит)",
-        "герпес у стадії загострення",
-        "свіжа засмага — менше ніж 2 тижні тому",
-        "прийом фотосенсибілізуючих препаратів "
-        "(деякі антибіотики, ретиноїди, звіробій)",
-        "варикозне розширення вен у зоні обробки, тромбофлебіт",
-        "родимки та новоутворення безпосередньо в зоні обробки",
-        "порушення цілісності шкіри: рани, опіки, свіжі шви",
-        "імплантати та золоті нитки в зоні обробки",
-    ),
+    "epilation_absolute": CONTRAINDICATIONS_EPILATION_ABSOLUTE,
+    "epilation_relative": CONTRAINDICATIONS_EPILATION_RELATIVE,
+    # Общий список — для мест, где разделение на разряды не нужно.
+    "epilation": CONTRAINDICATIONS_EPILATION_ABSOLUTE + CONTRAINDICATIONS_EPILATION_RELATIVE,
+    # ⚠️ Омоложение методичка не покрывает — список остался типовым
+    #    (CONTENT_TODO.md, пункт 12).
     "rejuvenation": (
         "вагітність та період лактації",
         "онкологічні захворювання",
@@ -542,41 +615,49 @@ CONTRAINDICATIONS: Final[dict[str, tuple[str, ...]]] = {
     ),
 }
 
+# Сроки — из методички студии (Анна, 14.09.2026). Два из них отличались
+# от того, что бот показывал раньше, и это не мелочь:
+#   • другие виды эпиляции исключаются за 4 НЕДЕЛИ, а не за 2;
+#   • зона бреется за СУТКИ, а не за 8–12 часов.
+
 PREP_RULES: Final[dict[str, tuple[str, ...]]] = {
-    "weeks_2": (
-        "Не засмагайте — ні на сонці, ні в солярії. Шкіра має бути свого природного тону.",
-        "Не використовуйте автозасмагу та засоби з ефектом бронзатора.",
-        "Відмовтеся від воску, шугарингу та пінцета. Лазеру потрібна ціла "
-        "волосяна цибулина — інакше сеанс просто не спрацює.",
-        "Якщо приймаєте антибіотики — попередьте майстра, деякі підвищують "
-        "чутливість до світла.",
+    "weeks_4": (
+        "Виключіть усі інші види епіляції, окрім гоління: віск, шугаринг, "
+        "пінцет, епілятор. Лазеру потрібна ціла волосяна цибулина — якщо "
+        "волосок вирвано з коренем, променю нема за що зачепитися.",
     ),
-    "days_3": (
-        "Не робіть пілінги та скраби в зоні обробки.",
-        "Не наносьте кислоти та ретиноїди на цю ділянку.",
-        "Не відвідуйте сауну та лазню.",
+    "weeks_2": (
+        "Не засмагайте — ні на сонці, ні в солярії. Це стосується і двох "
+        "тижнів після процедури.",
+        "Не приймайте антибіотики тетрациклінового ряду та препарати "
+        "фторхінолонового ряду — вони підвищують чутливість до світла. "
+        "Якщо курс призначив лікар, скажіть про це майстру.",
     ),
     "day_of": (
-        "Поголіть зону станком за 8–12 годин до сеансу — так лазер працює "
-        "по цибулині, а не по видимій частині волоска.",
-        "Прийдіть з чистою сухою шкірою: без кремів, олій, дезодорантів і макіяжу "
-        "в зоні обробки.",
-        "Одягніть вільний одяг з натуральної тканини — після сеансу шкіра "
-        "буде чутливою.",
+        "Ретельно виголіть зону станком — так лазер працює по цибулині, "
+        "а не по видимій частині волоска.",
+        "Не наносьте на зону спиртовмісні засоби: лосьйони, дезодоранти, "
+        "парфуми, тоніки.",
     ),
 }
 
+# Первые два пункта — из методички. Остальное оставлено из прежней версии:
+# страница методички с уходом обрезана на фотографии, дальше её текста нет.
+# ⚠️ Дать Анне вычитать (CONTENT_TODO.md, пункт 9).
 AFTERCARE_RULES: Final[dict[str, tuple[str, ...]]] = {
     "first_24h": (
         "Легке почервоніння та відчуття тепла — нормальна реакція, минає за кілька годин.",
-        "Не приймайте гарячий душ, не відвідуйте сауну, лазню та басейн.",
+        "Не приймайте гарячий душ.",
         "Не займайтеся спортом — піт подразнює розігріту шкіру.",
         "Не наносьте дезодорант, парфуми та спиртові засоби на зону обробки.",
         "За потреби нанесіть пантенол або засіб, який порекомендував майстер.",
     ),
-    "first_week": (
-        "Уникайте прямого сонця, користуйтеся SPF 30+ на відкритих ділянках.",
+    "days_3": (
+        "Не відвідуйте баню, сауну та басейн.",
+    ),
+    "weeks_2": (
         "Не засмагайте та не відвідуйте солярій.",
+        "Уникайте прямого сонця, користуйтеся SPF 30+ на відкритих ділянках.",
         "Не робіть пілінги та скраби в зоні обробки.",
         "Волоски починають випадати на 7–14 день — це не новий ріст, "
         "а вихід оброблених. Не висмикуйте їх, дайте вийти самим.",
@@ -610,9 +691,10 @@ FAQ: Final[tuple[FaqItem, ...]] = (
                "нестабільний: результат буде непередбачуваним, а гроші й час — "
                "витраченими даремно. Краще повернутися після завершення лактації."},
     {"code": "f_tan", "question": "А якщо я засмагла?",
-     "answer": "Потрібно почекати щонайменше 2 тижні після засмаги. На засмаглій шкірі "
-               "лазер працює агресивніше й може дати опік: меланін у шкірі забирає "
-               "енергію на себе. Це не примха, а безпека."},
+     "answer": "Свіжа засмага до 14 днів — відносне протипоказання: майстер має "
+               "подивитися шкіру. Для діодного лазера, на якому ми працюємо, вона "
+               "блокуючою не є, але параметри доведеться знизити. На дуже свіжій "
+               "засмазі краще зачекати: меланін у шкірі забирає енергію на себе."},
     {"code": "f_regrow", "question": "Чи виросте волосся назад?",
      "answer": "Оброблена цибулина не відновлюється — ці волоски не повернуться. "
                "Але з часом організм може активувати «сплячі» фолікули, особливо "
@@ -621,12 +703,12 @@ FAQ: Final[tuple[FaqItem, ...]] = (
     {"code": "f_tweezers", "question": "Чому не можна висмикувати волоски перед сеансом?",
      "answer": "Лазер бачить не волосок, а пігмент у його цибулині. Якщо ви вирвали "
                "волосок з коренем, цибулина порожня — променю нема за що зачепитися, "
-               "і сеанс для цієї зони пройде даремно. Тому за 2 тижні до візиту — "
+               "і сеанс для цієї зони пройде даремно. Тому за 4 тижні до візиту — "
                "тільки станок."},
     {"code": "f_shave", "question": "Як правильно поголитися перед процедурою?",
-     "answer": "Звичайним станком за 8–12 годин до сеансу, по напрямку росту волосся, "
-               "на розпарену шкіру. Не напередодні тижня, не за годину — саме "
-               "напередодні ввечері або зранку в день візиту."},
+     "answer": "Звичайним станком за добу до сеансу, по напрямку росту волосся, "
+               "на розпарену шкіру. Не за тиждень і не за годину — саме "
+               "напередодні."},
     {"code": "f_result_when", "question": "Коли буде видно результат?",
      "answer": "Перше випадіння почнеться на 7–14 день після першого сеансу. "
                "Помітне порідіння — після 2–3 сеансу. Стійкий результат — "
@@ -634,15 +716,15 @@ FAQ: Final[tuple[FaqItem, ...]] = (
     {"code": "f_pain", "question": "Чи боляче?",
      "answer": "Відчуття схоже на короткий гарячий доторк або клацання гумкою. "
                "Апарат має систему охолодження, тому терпимо навіть у чутливих зонах. "
-               "Більшість клієнток порівнює з шугарингом не на користь останнього."},
+               "Більшість клієнток порівнює з воском не на користь останнього."},
     {"code": "f_grey", "question": "Чи бере лазер світле та сиве волосся?",
      "answer": "Ні. Лазер працює по меланіну — темному пігменту. Сиве волосся "
                "пігменту не має взагалі, світле пушкове має його надто мало. "
                "Чесно: на таких волосках результату не буде, і ми про це "
                "попереджаємо до оплати, а не після."},
     {"code": "f_interval", "question": "Чому не можна прийти раніше за інтервал?",
-     "answer": "Лазер діє тільки на волоски в активній фазі росту — це приблизно "
-               "20% від усіх одночасно. Решта в цей момент «спить». Інтервал "
+     "answer": "Лазер діє тільки на волоски в активній фазі росту (анаген) — це "
+               "20–30% від усіх одночасно. Решта в цей момент «спить». Інтервал "
                "потрібен, щоб наступна порція встигла прокинутися. Прийти раніше — "
                "означає обробити порожню шкіру."},
     {"code": "f_hormones", "question": "Гормональний збій впливає на результат?",
@@ -689,6 +771,38 @@ def get_rejuvenation(code: str) -> Rejuvenation | None:
     return SERVICES_REJUVENATION.get(code)
 
 
+def get_sugaring(code: str) -> Sugaring | None:
+    return SERVICES_SUGARING.get(code)
+
+
+def is_sugaring(code: str) -> bool:
+    """Шугаринг — разовая процедура: ни курса, ни пакета, ни интервала."""
+    return code in SERVICES_SUGARING
+
+
+def has_package(service: dict) -> bool:
+    """
+    Есть ли у услуги цена пакета.
+
+    Ноль и отсутствие ключа значат «пакета нет»: так помечены услуги,
+    по которым клиентка цену за курс не называла. Выдумывать её нельзя,
+    поэтому строка про пакет в таких карточках просто не печатается.
+    """
+    return bool(service.get("package_price"))
+
+
+def sessions_label(service: dict) -> str:
+    """
+    Курс одной строкой: «10–12» или «4», смотря что задано.
+
+    Верхняя граница есть только у эпиляции — клиентка назвала диапазон.
+    У процедур омоложения одно число, и рисовать «4–4» незачем.
+    """
+    low = service.get("sessions", 0)
+    high = service.get("sessions_max")
+    return f"{low}–{high}" if high and high != low else str(low)
+
+
 def zones_by_group(group: str) -> list[Zone]:
     return [zone for zone in SERVICES_EPILATION.values() if zone["group"] == group]
 
@@ -703,15 +817,21 @@ def is_photo_rejuvenation(code: str) -> bool:
     return code in SERVICES_PHOTO_REJUV
 
 
-def get_any_service(code: str) -> Zone | Complex | Rejuvenation | None:
-    """Услуга по коду в любом из трёх справочников."""
-    return SERVICES_EPILATION.get(code) or COMPLEXES.get(code) or SERVICES_REJUVENATION.get(code)
+def get_any_service(code: str) -> Zone | Complex | Rejuvenation | Sugaring | None:
+    """Услуга по коду в любом из справочников."""
+    return (
+        SERVICES_EPILATION.get(code)
+        or COMPLEXES.get(code)
+        or SERVICES_REJUVENATION.get(code)
+        or SERVICES_SUGARING.get(code)
+    )
 
 
-def iter_all_services() -> Iterator[Zone | Complex | Rejuvenation]:
+def iter_all_services() -> Iterator[Zone | Complex | Rejuvenation | Sugaring]:
     yield from SERVICES_EPILATION.values()
     yield from COMPLEXES.values()
     yield from SERVICES_REJUVENATION.values()
+    yield from SERVICES_SUGARING.values()
 
 
 def get_time_window(code: str) -> TimeWindow | None:

@@ -37,6 +37,7 @@ from handlers import (
     course_tracker,
     info_epilation,
     info_rejuvenation,
+    info_sugaring,
     price,
     promotions,
     quiz,
@@ -96,6 +97,7 @@ def build_dispatcher() -> Dispatcher:
     dispatcher.include_router(booking.router)
     dispatcher.include_router(info_epilation.router)
     dispatcher.include_router(info_rejuvenation.router)
+    dispatcher.include_router(info_sugaring.router)
     dispatcher.include_router(calculator.router)
     dispatcher.include_router(quiz.router)
     dispatcher.include_router(course_tracker.router)

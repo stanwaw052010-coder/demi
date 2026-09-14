@@ -22,6 +22,7 @@ CB_BOOKON = "bookon"
 CB_EPIL = "ep"                  # ep:<screen>
 CB_EPIL_ZONES = "ep:zones"
 CB_REJUV = "rj"                 # rj:<screen>
+CB_SUGAR = "sg"                 # sg:<screen>
 
 CB_SERVICE = "svc"              # svc:<code>
 CB_ZONE_GROUP = "zg"            # zg:women | zg:men | zg:complex
@@ -73,6 +74,7 @@ def main_menu() -> ReplyKeyboardMarkup:
         KeyboardButton(text=texts.BTN_BOOKON),
         KeyboardButton(text=texts.BTN_EPILATION),
         KeyboardButton(text=texts.BTN_REJUVENATION),
+        KeyboardButton(text=texts.BTN_SUGARING),
         KeyboardButton(text=texts.BTN_CALCULATOR),
         KeyboardButton(text=texts.BTN_QUIZ),
         KeyboardButton(text=texts.BTN_PRICE),
@@ -81,7 +83,7 @@ def main_menu() -> ReplyKeyboardMarkup:
         KeyboardButton(text=texts.BTN_HOW),
         KeyboardButton(text=texts.BTN_CONTACTS),
     )
-    builder.adjust(1, 2, 2, 2, 2, 1)
+    builder.adjust(1, 2, 2, 2, 2, 2)
     return builder.as_markup(resize_keyboard=True, input_field_placeholder=texts.MENU_PROMPT)
 
 
@@ -112,8 +114,10 @@ def bookon_keyboard(*, with_request: bool = True, service_code: str | None = Non
 EPILATION_SCREENS: tuple[tuple[str, str], ...] = (
     ("what", "Що це і як діє"),
     ("device", "На чому працюємо"),
-    ("sessions", "Скільки потрібно сеансів"),
+    ("indications", "Кому і навіщо"),
+    ("sessions", "Чому потрібен курс процедур"),
     ("intervals", "Інтервал між сеансами"),
+    ("ingrown", "Вростання волосся"),
     ("pain", "Чи боляче"),
     ("suitable", "Кому підходить"),
     ("contra", "Протипоказання"),
@@ -121,6 +125,12 @@ EPILATION_SCREENS: tuple[tuple[str, str], ...] = (
     ("after", "Догляд після"),
     ("result", "Який буде результат"),
     ("myths", "Міфи"),
+)
+
+SUGARING_SCREENS: tuple[tuple[str, str], ...] = (
+    ("what", "Що це таке"),
+    ("price", "💰 Зони та ціни"),
+    ("laser", "⚠️ Якщо плануєте лазер"),
 )
 
 _REJUVENATION_SCREENS_ALL: tuple[tuple[str, str], ...] = (
@@ -158,6 +168,18 @@ def rejuvenation_menu() -> InlineKeyboardMarkup:
     for code, title in REJUVENATION_SCREENS:
         builder.row(InlineKeyboardButton(text=title, callback_data=f"{CB_REJUV}:{code}"))
     builder.row(bookon_button())
+    builder.row(InlineKeyboardButton(text=texts.BTN_MENU, callback_data=CB_MENU))
+    return builder.as_markup()
+
+
+def sugaring_menu() -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    for code, title in SUGARING_SCREENS:
+        builder.row(InlineKeyboardButton(text=title, callback_data=f"{CB_SUGAR}:{code}"))
+    builder.row(bookon_button())
+    builder.row(
+        InlineKeyboardButton(text=texts.BTN_LEAVE_REQUEST, callback_data=f"{CB_REQ_START}:sugar")
+    )
     builder.row(InlineKeyboardButton(text=texts.BTN_MENU, callback_data=CB_MENU))
     return builder.as_markup()
 
@@ -252,7 +274,7 @@ def rejuvenation_types_keyboard() -> InlineKeyboardMarkup:
 
 
 def photo_rejuvenation_keyboard() -> InlineKeyboardMarkup:
-    """Зоны фотоомоложения. Цена у всех одна, поэтому в кнопке только название."""
+    """Два варианта фотоомоложения: база и с полноценным уходом."""
     builder = InlineKeyboardBuilder()
     for service in config.SERVICES_PHOTO_REJUV.values():
         builder.row(
@@ -307,6 +329,7 @@ def request_direction_keyboard() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.row(InlineKeyboardButton(text=texts.BTN_EPILATION, callback_data=f"{CB_REQ_DIR}:epil"))
     builder.row(InlineKeyboardButton(text=texts.BTN_REJUVENATION, callback_data=f"{CB_REQ_DIR}:rejuv"))
+    builder.row(InlineKeyboardButton(text=texts.BTN_SUGARING, callback_data=f"{CB_REQ_DIR}:sugar"))
     builder.row(InlineKeyboardButton(text="💬 Консультація", callback_data=f"{CB_REQ_DIR}:consult"))
     _request_nav(builder, None)
     return builder.as_markup()
@@ -343,13 +366,12 @@ def request_zones_keyboard(selected: list[str]) -> InlineKeyboardMarkup:
 
 def request_rejuvenation_keyboard(selected: list[str] | None = None) -> InlineKeyboardMarkup:
     """
-    Выбор процедуры омоложения.
+    Выбор процедуры омоложения — одна за визит.
 
-    Лазерные процедуры взаимоисключающие — тап сразу ведёт дальше.
-    Зоны фотоомоложения можно набрать несколько: они отмечаются галочкой,
-    а сумма считается как 700 грн × количество зон.
+    Раньше зоны фотоомоложения набирались по несколько (цена была за зону).
+    Клиентка сменила модель на два варианта одной процедуры, поэтому
+    мультивыбор убран: и лазер, и IPL выбираются по одному.
     """
-    selected = selected or []
     builder = InlineKeyboardBuilder()
 
     for service in config.SERVICES_LASER_REJUV.values():
@@ -361,10 +383,26 @@ def request_rejuvenation_keyboard(selected: list[str] | None = None) -> InlineKe
         )
 
     for service in config.SERVICES_PHOTO_REJUV.values():
+        builder.row(
+            InlineKeyboardButton(
+                text=f"{texts.E_PHOTO} {service['name']} · {service['price']} {config.CURRENCY}",
+                callback_data=f"{CB_REQ_ITEM}:{service['code']}",
+            )
+        )
+
+    _request_nav(builder, "direction")
+    return builder.as_markup()
+
+
+def request_sugaring_keyboard(selected: list[str]) -> InlineKeyboardMarkup:
+    """Мультивыбор зон шугаринга: за один визит их делают несколько."""
+    builder = InlineKeyboardBuilder()
+
+    for service in config.SERVICES_SUGARING.values():
         mark = "✅ " if service["code"] in selected else ""
         builder.row(
             InlineKeyboardButton(
-                text=f"{mark}{texts.E_PHOTO} {service['name']} · {service['price']} {config.CURRENCY}",
+                text=f"{mark}{service['name']} · {service['price']} {config.CURRENCY}",
                 callback_data=f"{CB_REQ_ITEM}:{service['code']}",
             )
         )
@@ -469,16 +507,8 @@ def calculator_keyboard(selected: list[str]) -> InlineKeyboardMarkup:
             )
         )
 
-    # Фотоомоложение считается так же — 700 грн × количество выбранных зон.
-    for service in config.SERVICES_PHOTO_REJUV.values():
-        mark = "✅ " if service["code"] in selected else ""
-        builder.row(
-            InlineKeyboardButton(
-                text=f"{mark}{texts.E_PHOTO} {service['name']} · {service['price']} {config.CURRENCY}",
-                callback_data=f"{CB_CALC_ITEM}:{service['code']}",
-            )
-        )
-
+    # Фотоомоложение и шугаринг сюда не попадают: калькулятор считает
+    # стоимость КУРСА, а у них курса нет — ни числа сеансов, ни пакета.
     if selected:
         builder.row(
             InlineKeyboardButton(text="🧮 Порахувати", callback_data=CB_CALC_RESULT),
@@ -556,6 +586,7 @@ _PRICE_SECTIONS_ALL: tuple[tuple[str, str], ...] = (
     ("complex", "🎯 Комплекси зон"),
     ("rejuv", "💎 Лазерне омолодження"),
     ("photo", "🔆 Фотоомолодження"),
+    ("sugar", "🍯 Шугаринг"),
     ("all", "📄 Повний прайс"),
 )
 
