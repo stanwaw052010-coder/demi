@@ -55,8 +55,8 @@ async def show_rejuvenation_screen(callback: CallbackQuery) -> None:
         )
         return
 
-    # Фотоомоложение — другая технология, поэтому свой экран с объяснением
-    # разницы. В «види лазерних процедур» оно не подмешивается.
+    # Фотоомоложение: свой экран, потому что известны только цены — ни курса,
+    # ни интервала клиентка по нему не называла, и карточка была бы пустой.
     if code == "photo" and config.PHOTO_REJUV_ENABLED:
         await tg.safe_edit(
             callback,
