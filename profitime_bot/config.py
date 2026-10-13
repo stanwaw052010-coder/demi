@@ -105,7 +105,8 @@ DISK_ALERT_GB: Final[float] = 2.0
 # --------------------------------------------------------------------------- #
 
 SALON_NAME: Final[str] = "Profi Time"
-SLOGAN: Final[str] = "лазерна епіляція та омолодження"
+# ⚠️ Справжній слоган студії досі не відомий (CONTENT_TODO.md, пункт 7).
+SLOGAN: Final[str] = "лазерна епіляція, шугаринг, фотоомолодження"
 
 ADDRESS: Final[str] = "м. Вишгород, пл. Шевченка, 3"
 MAP_LINK: Final[str] = "https://www.google.com/maps/search/?api=1&query=Вишгород+площа+Шевченка+3"
@@ -356,7 +357,16 @@ class Rejuvenation(TypedDict):
     interval_days: int
 
 
-SERVICES_LASER_REJUV: Final[dict[str, Rejuvenation]] = {
+# ЛАЗЕРНЕ ОМОЛОДЖЕННЯ ВИМКНЕНО: такої процедури в студії немає.
+# Анна, 13.10.2026: «Це з бота треба прибрати… У нас немає такої процедури».
+#
+# Шість позицій нижче вигадав автор першої версії бота — ні назв, ні цін
+# клієнтка ніколи не давала. Дані лишилися в коді лише тому, що так
+# зроблено з усіма послугами, які студія вмикала й вимикала. True — і
+# розділ «Омолодження обличчя» повернеться з усіма екранами.
+LASER_REJUV_ENABLED: Final[bool] = False
+
+_LASER_REJUV_ALL: Final[dict[str, Rejuvenation]] = {
     "r_face": {
         "code": "r_face", "name": "Лазерне омолодження обличчя",
         "short": "Запускає вироблення власного колагену. Шкіра стає щільнішою, "
@@ -399,6 +409,10 @@ SERVICES_LASER_REJUV: Final[dict[str, Rejuvenation]] = {
         "sessions": 4, "interval_days": 30,
     },
 }
+
+SERVICES_LASER_REJUV: Final[dict[str, Rejuvenation]] = (
+    _LASER_REJUV_ALL if LASER_REJUV_ENABLED else {}
+)
 
 # --------------------------------------------------------------------------- #
 # ФОТООМОЛОДЖЕННЯ
@@ -721,9 +735,8 @@ FAQ: Final[tuple[FaqItem, ...]] = (
                "гормональних препаратів волосся може відростати активніше. "
                "Курс усе одно працює, але сеансів може знадобитися більше. "
                "Скажіть про це майстру на консультації."},
-    {"code": "f_makeup", "question": "Чи можна фарбувати обличчя після омолодження?",
-     "answer": "Перші 24 години — ні. Далі можна, але краще мінеральна косметика "
-               "й обов'язково SPF. Повна реабілітація займає 3–5 днів."},
+    # f_makeup («Чи можна фарбувати обличчя після омолодження?») прибрано:
+    # відповідь була про реабілітацію лазерного омолодження, якого в студії немає.
     {"code": "f_how_many", "question": "Скільки коштує весь курс?",
      "answer": "Залежить від зон. Найшвидше порахувати в боті: розділ "
                "«🧮 Розрахувати вартість курсу» — оберіть зони й побачите суму "
@@ -804,6 +817,18 @@ def epilation_zones() -> list[Zone]:
 def is_photo_rejuvenation(code: str) -> bool:
     """Чи це фотоомолодження. Потрібно лише щоб приховати його разом з послугою."""
     return code in SERVICES_PHOTO_REJUV
+
+
+def service_name(code: str) -> str | None:
+    """
+    Назва послуги для старих заявок у базі.
+
+    Вимкнена послуга зникає з довідників, але заявка з її кодом могла
+    лишитися в історії. Тоді шукаємо назву й серед вимкнених — інакше
+    власниця побачила б у картці «r_face» замість людської назви.
+    """
+    service = get_any_service(code) or _LASER_REJUV_ALL.get(code) or _PHOTO_REJUV_ALL.get(code)
+    return service["name"] if service else None
 
 
 def get_any_service(code: str) -> Zone | Complex | Rejuvenation | Sugaring | None:

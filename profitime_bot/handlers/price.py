@@ -42,7 +42,7 @@ def _section_text(section: str) -> str:
         return _epilation_section() + texts.PRICE_FOOTER
     if section == "complex":
         return _complex_section() + texts.PRICE_FOOTER
-    if section == "rejuv":
+    if section == "rejuv" and config.LASER_REJUV_ENABLED:
         return _laser_rejuv_section() + texts.PRICE_FOOTER
     if section == "photo" and config.PHOTO_REJUV_ENABLED:
         # У фотоомоложения и шугаринга пакетов нет, поэтому общий футер
@@ -52,7 +52,9 @@ def _section_text(section: str) -> str:
         return texts.format_sugaring_price_section() + texts.PRICE_FOOTER_SUGAR
 
     # Полный прайс — все секции подряд.
-    sections = [_epilation_section(), _complex_section(), _laser_rejuv_section()]
+    sections = [_epilation_section(), _complex_section()]
+    if config.LASER_REJUV_ENABLED:
+        sections.append(_laser_rejuv_section())
     if config.PHOTO_REJUV_ENABLED:
         sections.append(texts.format_photo_price_section())
     sections.append(texts.format_sugaring_price_section())

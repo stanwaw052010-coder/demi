@@ -52,7 +52,17 @@ E_WARN: Final[str] = "⚠️"
 
 BTN_BOOKON: Final[str] = f"{E_BOOK} Записатися онлайн"
 BTN_EPILATION: Final[str] = f"{E_LASER} Лазерна епіляція"
-BTN_REJUVENATION: Final[str] = f"{E_FACE} Омолодження обличчя"
+# Кнопка розділу омолодження. Поки лазерного омолодження немає, у розділі
+# лишилося тільки фотоомолодження — так кнопка й називається.
+BTN_REJUVENATION: Final[str] = (
+    f"{E_FACE} Омолодження обличчя" if config.LASER_REJUV_ENABLED
+    else f"{E_PHOTO} Фотоомолодження"
+)
+# Під полем вводу в чатах клієнток може лишитися стара клавіатура.
+BTN_REJUVENATION_LEGACY: Final[tuple[str, ...]] = (
+    f"{E_FACE} Омолодження обличчя",
+    f"{E_PHOTO} Фотоомолодження",
+)
 BTN_CALCULATOR: Final[str] = f"{E_CALC} Розрахувати вартість курсу"
 BTN_QUIZ: Final[str] = f"{E_QUIZ} Чи підходить мені лазер"
 BTN_SUGARING: Final[str] = f"{E_SUGAR} Шугаринг"
@@ -91,7 +101,8 @@ WELCOME: Final[str] = (
     "<i>{slogan}</i>\n"
     f"{DIVIDER}\n\n"
     "Вітаємо, {name}!\n\n"
-    "Тут ви знайдете все про лазерну епіляцію та омолодження: як це працює, "
+    "Тут ви знайдете все про лазерну епіляцію, шугаринг і фотоомолодження: "
+    "як це працює, "
     "скільки коштує, чи підходить саме вам — і зможете записатися.\n\n"
     "Оберіть, з чого почнемо 👇"
 )
@@ -111,8 +122,8 @@ HELP: Final[str] = (
     f"{DIVIDER}\n\n"
     f"{BTN_BOOKON} — миттєве бронювання: видно реальний вільний час, "
     "підтвердження одразу.\n\n"
-    f"{BTN_EPILATION} / {BTN_REJUVENATION} — усе про процедури: як діють, "
-    "скільки сеансів, підготовка, догляд.\n\n"
+    f"{BTN_EPILATION} / {BTN_SUGARING} / {BTN_REJUVENATION} — усе про "
+    "процедури й ціни.\n\n"
     f"{BTN_CALCULATOR} — порахувати вартість курсу під ваші зони.\n\n"
     f"{BTN_QUIZ} — короткий тест, чи є протипоказання.\n\n"
     f"{BTN_COURSE} — ваш прогрес і дата наступного сеансу.\n\n"
@@ -1505,8 +1516,7 @@ def format_intervals() -> str:
 
 def service_title(code: str) -> str:
     """Название услуги по коду. Неизвестный код возвращается как есть."""
-    service = config.get_any_service(code)
-    return service["name"] if service else code
+    return config.service_name(code) or code
 
 
 def format_service_card(code: str) -> str | None:

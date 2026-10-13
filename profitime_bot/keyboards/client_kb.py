@@ -289,10 +289,15 @@ def photo_rejuvenation_keyboard() -> InlineKeyboardMarkup:
             text=texts.BTN_LEAVE_REQUEST, callback_data=f"{CB_REQ_START}:rejuv"
         )
     )
-    builder.row(
-        InlineKeyboardButton(text=texts.BTN_BACK, callback_data=f"{CB_REJUV}:menu"),
-        InlineKeyboardButton(text=texts.BTN_MENU, callback_data=CB_MENU),
-    )
+    # Без лазерного омоложения этот экран и есть раздел — «Назад» вёл бы
+    # на него же. Остаётся только главное меню.
+    if config.LASER_REJUV_ENABLED:
+        builder.row(
+            InlineKeyboardButton(text=texts.BTN_BACK, callback_data=f"{CB_REJUV}:menu"),
+            InlineKeyboardButton(text=texts.BTN_MENU, callback_data=CB_MENU),
+        )
+    else:
+        builder.row(InlineKeyboardButton(text=texts.BTN_MENU, callback_data=CB_MENU))
     return builder.as_markup()
 
 
@@ -590,9 +595,11 @@ _PRICE_SECTIONS_ALL: tuple[tuple[str, str], ...] = (
     ("all", "📄 Повний прайс"),
 )
 
+# Разделы прайса исчезают вместе с услугами.
 PRICE_SECTIONS: tuple[tuple[str, str], ...] = tuple(
     item for item in _PRICE_SECTIONS_ALL
-    if item[0] != "photo" or config.PHOTO_REJUV_ENABLED
+    if (item[0] != "photo" or config.PHOTO_REJUV_ENABLED)
+    and (item[0] != "rejuv" or config.LASER_REJUV_ENABLED)
 )
 
 

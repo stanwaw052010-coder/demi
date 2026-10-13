@@ -1,8 +1,10 @@
 """
-Раздел «Лазерне омолодження обличчя».
+Раздел омоложения.
 
-Структура та же, что у эпиляции: каждый текст — отдельный экран.
-Список процедур и противопоказания берутся из config.
+Сейчас лазерного омоложения в студии нет (config.LASER_REJUV_ENABLED),
+и раздел — это одно фотоомоложение: кнопка меню сразу открывает его экран
+с двумя ценами. Экраны про лазер остались в коде и вернутся вместе
+с переключателем.
 """
 
 from __future__ import annotations
@@ -30,16 +32,33 @@ STATIC_SCREENS: dict[str, str] = {
 }
 
 
-@router.message(F.text == texts.BTN_REJUVENATION)
+def _section_entry() -> tuple[str, object]:
+    """Первый экран раздела: меню лазерного омоложения или сразу фотоомоложение."""
+    if config.LASER_REJUV_ENABLED:
+        return texts.REJUV_MENU, kb.rejuvenation_menu()
+    return texts.format_photo_intro(), kb.photo_rejuvenation_keyboard()
+
+
+# Старая подпись кнопки тоже ловится: у клиенток под полем ввода может
+# остаться клавиатура с «Омолодження обличчя».
+@router.message(F.text.in_(texts.BTN_REJUVENATION_LEGACY))
 async def menu_rejuvenation(message: Message, state: FSMContext) -> None:
     await state.clear()
-    await message.answer(texts.REJUV_MENU, reply_markup=kb.rejuvenation_menu())
+    text, markup = _section_entry()
+    await message.answer(text, reply_markup=markup)
 
 
 @router.callback_query(F.data.startswith(f"{kb.CB_REJUV}:"))
 async def show_rejuvenation_screen(callback: CallbackQuery) -> None:
     await callback.answer()
     code = callback.data.split(":", 1)[1]
+
+    # Без лазерного омоложения любая кнопка раздела — в том числе из старых
+    # сообщений про коллаген и реабилитацию — ведёт на фотоомоложение.
+    if not config.LASER_REJUV_ENABLED:
+        text, markup = _section_entry()
+        await tg.safe_edit(callback, text, markup)
+        return
 
     if code == "menu":
         await tg.safe_edit(callback, texts.REJUV_MENU, kb.rejuvenation_menu())

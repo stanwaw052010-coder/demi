@@ -57,7 +57,9 @@ DIRECTION_CONSULT = "consult"
 
 DIRECTION_TITLES: dict[str, str] = {
     DIRECTION_EPILATION: "Лазерна епіляція",
-    DIRECTION_REJUVENATION: "Омолодження обличчя",
+    # Код направления прежний («rejuv»), чтобы старые заявки в базе
+    # читались. Сейчас за ним стоит только фотоомоложение.
+    DIRECTION_REJUVENATION: "Фотоомолодження",
     DIRECTION_SUGARING: "Шугаринг",
     DIRECTION_CONSULT: "Консультація",
 }
