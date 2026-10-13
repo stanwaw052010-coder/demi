@@ -34,7 +34,7 @@ export function PriceList() {
               aria-selected={i === active}
               onClick={() => setActive(i)}
               className={cn(
-                "relative z-10 flex-1 cursor-pointer rounded-full px-6 py-3 text-[0.92rem] font-bold tracking-[-0.01em] whitespace-nowrap transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 sm:px-8",
+                "relative z-10 flex-1 cursor-pointer rounded-full px-4 py-3 text-[0.92rem] font-bold tracking-[-0.01em] whitespace-nowrap transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 sm:px-8",
                 i === active ? "text-white" : "text-graphite-600 hover:text-brand-800",
               )}
             >
